@@ -131,3 +131,25 @@ void Hooks::D3D11::HookedPresentFunction(IDXGISwapChain* self, UINT SyncInterval
 
 	place_catch_bytes((size_t)present_func);
 }
+
+BOOL CALLBACK EnumWindowsCallback(HWND hWnd, LPARAM lParam)
+{
+	HandleData& data = *(HandleData*)lParam;
+	DWORD pid = 0;
+	GetWindowThreadProcessId(hWnd, &pid);
+	if (pid == data.pid && GetWindow(hWnd, GW_OWNER) == HWND(0) && IsWindowVisible(hWnd))
+	{
+		data.hWnd = hWnd;
+		return FALSE;
+	}
+
+	return TRUE;
+}
+
+HWND Hooks::D3D11::FindMainWindow(DWORD dwPID)
+{
+	HandleData handleData{ 0 };
+	handleData.pid = dwPID;
+	EnumWindows(EnumWindowsCallback, (LPARAM)&handleData);
+	return handleData.hWnd;
+}

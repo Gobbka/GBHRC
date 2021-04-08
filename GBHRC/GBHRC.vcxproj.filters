@@ -33,6 +33,9 @@
     <ClCompile Include="Application\Render\d3d\Vertex.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="Application\UI\Panel\Panel.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CheatApi\Hooks\d3d11\d3d11hook.h">
@@ -69,6 +72,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Application\UI\IElement\IElement.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\UI\Panel\Panel.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

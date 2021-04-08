@@ -146,6 +146,7 @@
     <ClCompile Include="Application\Render\d3d\Vertex.cpp" />
     <ClCompile Include="Application\Render\Engine\Engine.cpp" />
     <ClCompile Include="Application\Render\Scene\Scene.cpp" />
+    <ClCompile Include="Application\UI\Panel\Panel.cpp" />
     <ClCompile Include="CheatApi\Hooks\d3d11\d3d11hook.cpp" />
     <ClCompile Include="Application\UI\IElement\IElement.cpp" />
     <ClCompile Include="main.cpp" />
@@ -157,6 +158,7 @@
     <ClInclude Include="Application\Render\d3d\Vertex.h" />
     <ClInclude Include="Application\Render\Engine\Engine.h" />
     <ClInclude Include="Application\Render\Scene\Scene.h" />
+    <ClInclude Include="Application\UI\Panel\Panel.h" />
     <ClInclude Include="CheatApi\Hooks\d3d11\d3d11hook.h" />
     <ClInclude Include="CheatApi\Hooks\d3d11\D3D11_VMT.h" />
     <ClInclude Include="Application\UI\IElement\IElement.h" />

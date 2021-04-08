@@ -18,7 +18,7 @@ namespace Application
 		{
 			float x; float y; float width; float height;
 		};
-		
+
 		class Engine;
 		class Scene;
 	}
@@ -26,9 +26,6 @@ namespace Application
 	namespace UI
 	{
 		class IElement;
-
-		class Panel;
-		class Checkbox;
 	}
 
 	class Form;

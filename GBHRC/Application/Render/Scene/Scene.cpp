@@ -17,7 +17,7 @@ void Application::Render::Scene::render(ID3D11DeviceContext* pContext)
 {
 	DRAW_ASSERT
 
-		UINT stride = sizeof(GVertex::Vertex);
+	UINT stride = sizeof(GVertex::Vertex);
 	UINT offset = 0;
 
 	pContext->IASetVertexBuffers(0, 1, &this->pVBuffer->buffer, &stride, &offset);
