@@ -11,8 +11,9 @@ namespace Application
 	{
 		class Scene
 		{
-		protected:
+		private:
 			GVertex::VertexBuffer* pVBuffer;
+		protected:
 			std::vector<Application::UI::IElement*> pElements;
 			Render::Resolution resolution;
 		public:

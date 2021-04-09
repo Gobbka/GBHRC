@@ -186,9 +186,6 @@ DirectX::XMMATRIX Engine::get_ortho_matrix()
 	);
 }
 
-/// <summary>
-/// Updating vertex buffer in video cart memory
-/// </summary>
 void Engine::update_scene()
 {
 	for (auto* scene : pScenes)

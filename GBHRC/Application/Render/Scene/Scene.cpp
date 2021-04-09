@@ -23,7 +23,9 @@ void Application::Render::Scene::render(ID3D11DeviceContext* pContext)
 	pContext->IASetVertexBuffers(0, 1, &this->pVBuffer->buffer, &stride, &offset);
 
 	for (auto* element : this->pElements)
+	{
 		element->__draw(pContext);
+	}
 
 }
 

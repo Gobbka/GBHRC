@@ -150,6 +150,7 @@
     <ClCompile Include="Application\UI\Panel\Panel.cpp" />
     <ClCompile Include="CheatApi\Hooks\d3d11\d3d11hook.cpp" />
     <ClCompile Include="Application\UI\IElement\IElement.cpp" />
+    <ClCompile Include="Forms\Menu\MenuMain.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -164,6 +165,7 @@
     <ClInclude Include="CheatApi\Hooks\d3d11\d3d11hook.h" />
     <ClInclude Include="CheatApi\Hooks\d3d11\D3D11_VMT.h" />
     <ClInclude Include="Application\UI\IElement\IElement.h" />
+    <ClInclude Include="Forms\Menu\MenuMain.h" />
     <ClInclude Include="includes\d3d.h" />
     <ClInclude Include="includes\logger.h" />
     <ClInclude Include="includes\win.h" />
