@@ -8,9 +8,10 @@ void Application::Render::Scene::update(ID3D11DeviceContext* pContext) const
 {
 	DRAW_ASSERT
 
-		D3D11_MAPPED_SUBRESOURCE subdata;
+	D3D11_MAPPED_SUBRESOURCE subdata;
 	pContext->Map(this->pVBuffer->buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &subdata);
 	memcpy(subdata.pData, this->pVBuffer->data, this->pVBuffer->size * sizeof(GVertex::Vertex));
+	pContext->Unmap(this->pVBuffer->buffer, 0);
 }
 
 void Application::Render::Scene::render(ID3D11DeviceContext* pContext)
