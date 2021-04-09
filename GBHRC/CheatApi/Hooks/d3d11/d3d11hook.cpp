@@ -102,7 +102,7 @@ void Hooks::D3D11::hook(fnPresent present_func, fnInitCallback init_callback)
 void Hooks::D3D11::HookedPresentFunction(IDXGISwapChain* self, UINT SyncInterval, UINT Flags)
 {
 	// if this function called first time
-// we make instance of own graphic engine
+	// we make instance of own graphic engine
 	if (pRenderEngine == nullptr)
 	{
 		//

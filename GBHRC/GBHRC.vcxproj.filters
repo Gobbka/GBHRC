@@ -36,6 +36,9 @@
     <ClCompile Include="Application\UI\Panel\Panel.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="Application\Form\Form.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CheatApi\Hooks\d3d11\d3d11hook.h">
@@ -75,6 +78,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Application\UI\Panel\Panel.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Form\Form.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

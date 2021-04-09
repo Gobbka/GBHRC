@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../../../includes/d3d.h"
-#include "../../../includes/logger.h"
-#include "../../../includes/win.h"
+#include "../includes/d3d.h"
+#include "../includes/logger.h"
+#include "../includes/win.h"
 
 namespace Application
 {
@@ -27,8 +27,6 @@ namespace Application
 	{
 		class IElement;
 	}
-
-	class Form;
 }
 
 
