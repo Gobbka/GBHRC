@@ -8,6 +8,11 @@ namespace Application
 {
 	namespace Render
 	{
+		struct Color
+		{
+			float r; float g; float b;
+		};
+		
 		struct Resolution
 		{
 			UINT width;
@@ -29,6 +34,11 @@ namespace Application
 		typedef IElement* UIElementEventArgs;
 	}
 
+	namespace Managers
+	{
+		class Rectangle;
+	}
+
 	class Form;
 
 	void register_form(Form* form);
@@ -43,3 +53,5 @@ namespace Application
 #include "Render/Scene/Scene.h"
 
 #include "UI/IElement/IElement.h"
+
+#include "Managers/RectangleManager.h"

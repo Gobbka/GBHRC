@@ -152,12 +152,14 @@
     <ClCompile Include="CheatApi\Hooks\d3d11\d3d11hook.cpp" />
     <ClCompile Include="Application\UI\IElement\IElement.cpp" />
     <ClCompile Include="CheatApi\Hooks\wndproc\wndprochook.cpp" />
+    <ClCompile Include="Application\UI\Checkbox\Checkbox.cpp" />
     <ClCompile Include="Forms\Menu\MenuMain.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Application.h" />
     <ClInclude Include="Application\Form\Form.h" />
+    <ClInclude Include="Application\Managers\RectangleManager.h" />
     <ClInclude Include="Application\Render\d3d\ConstantBuffer.h" />
     <ClInclude Include="Application\Render\d3d\szShadez.h" />
     <ClInclude Include="Application\Render\d3d\Vertex.h" />
@@ -169,6 +171,7 @@
     <ClInclude Include="CheatApi\Hooks\d3d11\D3D11_VMT.h" />
     <ClInclude Include="Application\UI\IElement\IElement.h" />
     <ClInclude Include="CheatApi\Hooks\wndproc\wndprochook.h" />
+    <ClInclude Include="Application\UI\Checkbox\Checkbox.h" />
     <ClInclude Include="Forms\Menu\MenuMain.h" />
     <ClInclude Include="includes\d3d.h" />
     <ClInclude Include="includes\logger.h" />

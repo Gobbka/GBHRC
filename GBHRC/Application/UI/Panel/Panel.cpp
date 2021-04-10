@@ -5,9 +5,9 @@ void Application::UI::Panel::__draw(ID3D11DeviceContext* pContext)
 	pContext->Draw(5, this->index);
 }
 
-Application::UI::Panel::Panel(Render::Position position, Render::Resolution resolution, float r, float g, float b)
+Application::UI::Panel::Panel(Render::Position position, Render::Resolution resolution, Render::Color color)
 {
-	this->init_values = new Panel::InitValues{ r,g,b };
+	this->color = color;
 	this->position = position;
 	this->resolution = resolution;
 }
@@ -24,9 +24,7 @@ void Application::UI::Panel::init(Application::Render::Scene* pScene)
 	this->pScene = pScene;
 
 	this->set_pos(position.x, position.y);
-	this->set_color(init_values->r, init_values->g, init_values->b);
-
-	delete this->init_values;
+	this->set_color(color.r, color.g, color.b);
 }
 
 Application::UI::IElement* Application::UI::Panel::set_pos(float x, float y)

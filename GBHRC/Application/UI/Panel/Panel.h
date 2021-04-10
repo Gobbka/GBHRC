@@ -8,15 +8,8 @@ namespace Application
 		
 		class Panel final : public UI::IElement
 		{
-		public:
-			struct InitValues
-			{
-				float r;
-				float g;
-				float b;
-			};
 		private:
-			InitValues* init_values;
+			Render::Color color;
 			Render::Resolution resolution;
 		private:
 			void __draw(ID3D11DeviceContext* pContext) override;
@@ -25,7 +18,7 @@ namespace Application
 			{
 				return 5;
 			}
-			Panel(Render::Position position,Render::Resolution resolution, float r, float g, float b);
+			Panel(Render::Position position,Render::Resolution resolution, Render::Color color);
 
 			bool point_belongs(POINT point) override;
 			void init(Application::Render::Scene* pScene) override;
