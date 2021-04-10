@@ -10,13 +10,12 @@ namespace Application
 		{
 		public:
 			virtual ~IElement() = default;
-			typedef IElement UIElementEventArgs;
-			typedef void(*EventCallback)(UIElementEventArgs* args);
+			typedef void(*EventCallback)(UIElementEventArgs args);
 		protected:
 			Application::Render::Scene* pScene = nullptr;
 			UINT index = 0;
-			Render::Position position{ 0,0,0,0 };
-			static void default_event_callback(UIElementEventArgs* args) {};
+			Render::Position position{ 0,0 };
+			static void default_event_callback(UIElementEventArgs args) {};
 		public:
 			bool hovered = false;
 
@@ -30,6 +29,7 @@ namespace Application
 			virtual void __draw(ID3D11DeviceContext* pContext) = 0;
 			virtual UI::IElement* set_pos(float x, float y) = 0;
 			virtual UI::IElement* set_color(float r, float g, float b) = 0;
+			virtual bool point_belongs(POINT point);
 			virtual void init(Render::Scene* pScene) = 0;
 
 			virtual UINT size() = 0;

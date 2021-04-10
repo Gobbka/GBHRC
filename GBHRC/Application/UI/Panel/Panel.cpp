@@ -5,10 +5,18 @@ void Application::UI::Panel::__draw(ID3D11DeviceContext* pContext)
 	pContext->Draw(5, this->index);
 }
 
-Application::UI::Panel::Panel(Render::Position position, float r, float g, float b)
+Application::UI::Panel::Panel(Render::Position position, Render::Resolution resolution, float r, float g, float b)
 {
 	this->init_values = new Panel::InitValues{ r,g,b };
 	this->position = position;
+	this->resolution = resolution;
+}
+
+bool Application::UI::Panel::point_belongs(POINT point)
+{
+	return
+		(point.x >= position.x && point.x <= position.x + resolution.width) &&
+		(point.y <= position.y && point.y >= (position.y - resolution.height));
 }
 
 void Application::UI::Panel::init(Application::Render::Scene* pScene)
@@ -23,8 +31,8 @@ void Application::UI::Panel::init(Application::Render::Scene* pScene)
 
 Application::UI::IElement* Application::UI::Panel::set_pos(float x, float y)
 {
-	const auto height = position.height;
-	const auto width = position.width;
+	const auto height = resolution.height;
+	const auto width = resolution.width;
 	auto* ptr = this->get_ptr();
 
 	ptr[0].pos = DirectX::XMFLOAT3(x, y, 1.f);

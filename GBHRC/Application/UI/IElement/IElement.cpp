@@ -5,6 +5,11 @@ Application::Render::Position Application::UI::IElement::get_position() const
 	return this->position;
 }
 
+bool Application::UI::IElement::point_belongs(POINT point)
+{
+	return false;
+}
+
 void Application::UI::IElement::set_index(UINT index)
 {
 	this->index = index;

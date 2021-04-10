@@ -143,6 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Application\Application.cpp" />
     <ClCompile Include="Application\Form\Form.cpp" />
     <ClCompile Include="Application\Render\d3d\Vertex.cpp" />
     <ClCompile Include="Application\Render\Engine\Engine.cpp" />
@@ -150,6 +151,7 @@
     <ClCompile Include="Application\UI\Panel\Panel.cpp" />
     <ClCompile Include="CheatApi\Hooks\d3d11\d3d11hook.cpp" />
     <ClCompile Include="Application\UI\IElement\IElement.cpp" />
+    <ClCompile Include="CheatApi\Hooks\wndproc\wndprochook.cpp" />
     <ClCompile Include="Forms\Menu\MenuMain.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -162,9 +164,11 @@
     <ClInclude Include="Application\Render\Engine\Engine.h" />
     <ClInclude Include="Application\Render\Scene\Scene.h" />
     <ClInclude Include="Application\UI\Panel\Panel.h" />
+    <ClInclude Include="CheatApi\BrokeProtocol\BPStructs.h" />
     <ClInclude Include="CheatApi\Hooks\d3d11\d3d11hook.h" />
     <ClInclude Include="CheatApi\Hooks\d3d11\D3D11_VMT.h" />
     <ClInclude Include="Application\UI\IElement\IElement.h" />
+    <ClInclude Include="CheatApi\Hooks\wndproc\wndprochook.h" />
     <ClInclude Include="Forms\Menu\MenuMain.h" />
     <ClInclude Include="includes\d3d.h" />
     <ClInclude Include="includes\logger.h" />

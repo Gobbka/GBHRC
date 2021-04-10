@@ -2,12 +2,14 @@
 
 #include "includes/win.h"
 #include "CheatApi/Hooks/d3d11/d3d11hook.h"
+#include "CheatApi/Hooks/wndproc/wndprochook.h"
 #include "Application/Form/Form.h"
 
 #include "Forms/Menu/MenuMain.h"
 
 
 Application::Form* menu;
+void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam);
 
 void init_callback(Application::Render::Engine* instance)
 {
@@ -17,6 +19,8 @@ void init_callback(Application::Render::Engine* instance)
 
     instance
         ->append_scene(menu);
+
+    Application::register_form(menu);
 }
 
 void MainThread()
@@ -27,13 +31,63 @@ void MainThread()
     auto nigger = freopen("CONOUT$", "w", stdout);
     nigger = freopen("CONIN$", "r", stdin);
 #endif
-    
-    //WndProcHook::init_hook(hwnd);
-    //WndProcHook::callback(wnd_key_hook);
+
+    Hooks::WndProc::init_hook(hwnd);
+    Hooks::WndProc::callback(wnd_key_hook);
 
     Hooks::D3D11::hook(Hooks::D3D11::GetPresentAddress(), init_callback);
 
     //WndProcHook::setInputState(false);
+}
+
+void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
+{
+    Application::wnd_proc(msg, wParam, lParam);
+
+    if (msg == WM_KEYUP)
+    {
+        if (wParam == VK_DELETE)
+        {
+
+        }
+
+        if (wParam == VK_INSERT)
+        {
+            static bool interactive_state = true;
+
+            menu->hidden = interactive_state;
+            Hooks::WndProc::setInputState(interactive_state);
+
+            interactive_state = !interactive_state;
+        }
+
+        if (wParam == VK_F5)
+        {
+            //DEBUG_LOG("[GBP] INITING");
+            //local_player = BPMemory::GetLocalPlayer();
+            //local_player->WeightLimit = 5000.f;
+            //ENetHook::hook();
+        }
+
+        if (wParam == VK_RIGHT)
+        {
+            //UIDrawer::instance()->menu_layer->move_inner_by(5.f, 0.f);
+            //local_player->StartSpeed += 5.f;
+            //DEBUG_LOG("[GBP] SPEED: " << local_player->StartSpeed);
+        }
+
+        if (wParam == VK_LEFT)
+        {
+            //UIDrawer::instance()->menu_layer->move_inner_by(-5.f, 0.f);
+            //local_player->StartSpeed -= 5.f;
+            //DEBUG_LOG("[GBP] SPEED: " << local_player->StartSpeed);
+        }
+    }
+    else
+    {
+
+    }
+
 }
 
 BOOL WINAPI DllMain(

@@ -16,7 +16,7 @@ namespace Application
 
 		struct Position
 		{
-			float x; float y; float width; float height;
+			float x; float y;
 		};
 
 		class Engine;
@@ -26,7 +26,13 @@ namespace Application
 	namespace UI
 	{
 		class IElement;
+		typedef IElement* UIElementEventArgs;
 	}
+
+	class Form;
+
+	void register_form(Form* form);
+	void wnd_proc(UINT msg, WPARAM wParam, LPARAM lParam);
 }
 
 
