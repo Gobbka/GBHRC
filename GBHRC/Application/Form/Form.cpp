@@ -24,7 +24,7 @@ void Application::Form::window_proc(UINT msg, WPARAM wParam, LPARAM lParam)
 					element->hovered = true;
 					element->onMouseEnter(element);
 				}
-				element->onMouseMove(element);
+				element->onMouseMove(element,cursor.x,cursor.y);
 				e_handled = true;
 			}
 			else if (element->hovered == true)
@@ -41,7 +41,15 @@ void Application::Form::window_proc(UINT msg, WPARAM wParam, LPARAM lParam)
 	{
 		for (auto* element : this->pElements)
 			if (element->hovered == true)
-				element->onMouseClick(element);
+				element->onMouseUp(element);
+		return;
+	}
+
+	if (msg == WM_LBUTTONDOWN)
+	{
+		for (auto* element : this->pElements)
+			if (element->hovered == true)
+				element->onMouseDown(element);
 		return;
 	}
 }

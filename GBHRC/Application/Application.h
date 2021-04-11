@@ -41,8 +41,12 @@ namespace Application
 
 	class Form;
 
+	void set_main_hwnd(HWND hwnd);
+
 	void register_form(Form* form);
 	void wnd_proc(UINT msg, WPARAM wParam, LPARAM lParam);
+
+	POINT nigger();
 }
 
 

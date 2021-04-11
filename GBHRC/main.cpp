@@ -26,6 +26,7 @@ void init_callback(Application::Render::Engine* instance)
 void MainThread()
 {
     HWND hwnd = Hooks::D3D11::FindMainWindow(GetCurrentProcessId());
+    Application::set_main_hwnd(hwnd);
 #ifdef _DEBUG
     AllocConsole();
     auto nigger = freopen("CONOUT$", "w", stdout);

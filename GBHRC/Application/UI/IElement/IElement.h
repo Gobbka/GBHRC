@@ -23,8 +23,10 @@ namespace Application
 
 			EventCallback onMouseEnter = default_event_callback;
 			EventCallback onMouseLeave = default_event_callback;
-			EventCallback onMouseMove = default_event_callback;
-			EventCallback onMouseClick = default_event_callback;
+			typedef void(*tMouseMoveCallbackEvent)(UIElementEventArgs args,float mX,float mY);
+			tMouseMoveCallbackEvent onMouseMove = [](UIElementEventArgs,float,float){};
+			EventCallback onMouseUp = default_event_callback;
+			EventCallback onMouseDown = default_event_callback;
 
 			virtual void __draw(ID3D11DeviceContext* pContext) = 0;
 			virtual UI::IElement* set_pos(float x, float y) = 0;
