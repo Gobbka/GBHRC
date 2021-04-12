@@ -9,7 +9,7 @@ enum class MoveState : int32_t
 	Walking = 0
 };
 
-class LcPlayer
+class ClPlayer
 {
 public:
 	char pad_0000[304]; //0x0000

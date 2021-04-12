@@ -149,6 +149,8 @@
     <ClCompile Include="Application\Render\Engine\Engine.cpp" />
     <ClCompile Include="Application\Render\Scene\Scene.cpp" />
     <ClCompile Include="Application\UI\Panel\Panel.cpp" />
+    <ClCompile Include="CheatApi\BrokeProtocol\BrokeProtocol.cpp" />
+    <ClCompile Include="CheatApi\BrokeProtocol\Mono\Mono.cpp" />
     <ClCompile Include="CheatApi\Hooks\d3d11\d3d11hook.cpp" />
     <ClCompile Include="Application\UI\IElement\IElement.cpp" />
     <ClCompile Include="CheatApi\Hooks\wndproc\wndprochook.cpp" />
@@ -166,7 +168,9 @@
     <ClInclude Include="Application\Render\Engine\Engine.h" />
     <ClInclude Include="Application\Render\Scene\Scene.h" />
     <ClInclude Include="Application\UI\Panel\Panel.h" />
+    <ClInclude Include="CheatApi\BrokeProtocol\BrokeProtocol.h" />
     <ClInclude Include="CheatApi\BrokeProtocol\BPStructs.h" />
+    <ClInclude Include="CheatApi\BrokeProtocol\Mono\Mono.h" />
     <ClInclude Include="CheatApi\Hooks\d3d11\d3d11hook.h" />
     <ClInclude Include="CheatApi\Hooks\d3d11\D3D11_VMT.h" />
     <ClInclude Include="Application\UI\IElement\IElement.h" />

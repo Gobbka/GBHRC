@@ -7,6 +7,9 @@
 
 #include "Forms/Menu/MenuMain.h"
 
+#include "CheatApi/BrokeProtocol/Mono/Mono.h"
+#include "CheatApi/BrokeProtocol/BrokeProtocol.h"
+
 
 Application::Form* menu;
 void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam);
@@ -26,18 +29,20 @@ void init_callback(Application::Render::Engine* instance)
 void MainThread()
 {
     HWND hwnd = Hooks::D3D11::FindMainWindow(GetCurrentProcessId());
+	
     Application::set_main_hwnd(hwnd);
 #ifdef _DEBUG
     AllocConsole();
     auto nigger = freopen("CONOUT$", "w", stdout);
     nigger = freopen("CONIN$", "r", stdin);
 #endif
-
+	
     Hooks::WndProc::init_hook(hwnd);
     Hooks::WndProc::callback(wnd_key_hook);
 
     Hooks::D3D11::hook(Hooks::D3D11::GetPresentAddress(), init_callback);
 
+	
     //WndProcHook::setInputState(false);
 }
 
@@ -64,12 +69,36 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
 
         if (wParam == VK_F5)
         {
-            //DEBUG_LOG("[GBP] INITING");
-            //local_player = BPMemory::GetLocalPlayer();
-            //local_player->WeightLimit = 5000.f;
-            //ENetHook::hook();
+            auto* image = Mono::mono_image_loaded("D:\\Steam\\steamapps\\common\\BROKE PROTOCOL\\BrokeProtocol_Data\\Managed\\Scripts.dll");
+            auto* method_desc = Mono::mono_method_desc_new("BrokeProtocol.Entities.ShPlayer:Jump()", true);
+            auto* pClass = Mono::mono_class_from_name(image, method_desc->namespace_name, method_desc->class_name);
+            DEBUG_LOG("CLASS: " << pClass);
+            auto* method = Mono::mono_class_get_method_from_name(pClass, method_desc->method_name, -1);//Mono::mono_method_desc_search_in_class(method_desc, pClass);//
+            DEBUG_LOG("METHOD: " << method);
+            Mono::mono_method_desc_free(method_desc);
+
+            Mono::mono_thread_attach(Mono::mono_get_root_domain());
+            Mono::mono_runtime_invoke(method, BrokeProtocol::GetLocalPlayer(), nullptr, nullptr);
+
+            DEBUG_LOG("============INVOKED============");
         }
 
+        if(wParam == VK_F4)
+        {
+            auto* image = Mono::mono_image_loaded("D:\\Steam\\steamapps\\common\\BROKE PROTOCOL\\BrokeProtocol_Data\\Managed\\Scripts.dll");
+            auto* method_desc = Mono::mono_method_desc_new("BrokeProtocol.Entities.ShPlayer:ClearInjuries()", true);
+            auto* pClass = Mono::mono_class_from_name(image, method_desc->namespace_name, method_desc->class_name);
+            DEBUG_LOG("CLASS: " << pClass);
+            auto* method = Mono::mono_class_get_method_from_name(pClass, method_desc->method_name, -1);
+            DEBUG_LOG("METHOD: " << method);
+            Mono::mono_method_desc_free(method_desc);
+
+            Mono::mono_thread_attach(Mono::mono_get_root_domain());
+            Mono::mono_runtime_invoke(method, BrokeProtocol::GetLocalPlayer(), nullptr, nullptr);
+
+            DEBUG_LOG("============INVOKED============");
+        }
+    	
         if (wParam == VK_RIGHT)
         {
             //UIDrawer::instance()->menu_layer->move_inner_by(5.f, 0.f);
