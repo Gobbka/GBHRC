@@ -3,7 +3,12 @@
 
 namespace BrokeProtocol
 {
-	ClPlayer* GetLocalPlayer();
-	void* get_nigger();
+	ShPlayer* GetLocalPlayer();
+	void* GetPlayersCollection();
+
+	void send_nigger();
+	void send_slave_ff();
 };
+
+
 

@@ -1,80 +1,96 @@
-#pragma once
-#include <cstdint>
 // Created with ReClass.NET 1.2 by KN4CK3R
 
-enum class MoveState : int32_t
-{
-	CantMove = 2,
-	Running = 0,
-	Walking = 0
-};
+#include <cstdint>
 
-class ClPlayer
+class ShPlayer
 {
 public:
 	char pad_0000[304]; //0x0000
-	float Health; //0x0130
-	float MaxHealth; //0x0134
-	char pad_0138[48]; //0x0138
-	bool isMoving; //0x0168
-	char pad_0169[23]; //0x0169
-	float StartSpeed; //0x0180
-	float MaxWalkSpeed; //0x0184
-	char pad_0188[80]; //0x0188
-	class PlayerHand* HandItem; //0x01D8
+	float health; //0x0130
+	float healthLimit; //0x0134
+	char pad_0138[72]; //0x0138
+	float speed; //0x0180
+	float speedLimit; //0x0184
+	void* rotationT; //0x0188
+	class ClPlayer* clPlayer; //0x0190
+	void* svPlayer; //0x0198
+	void* specPlayer; //0x01A0
+	class String* username; //0x01A8
+	void* displayName; //0x01B0
+	void* wearableOptions; //0x01B8
+	void* capsule; //0x01C0
+	char pad_01C8[16]; //0x01C8
+	class Equipable* curEquipable; //0x01D8
 	char pad_01E0[24]; //0x01E0
-	class MountableEntity* MountedEntityPtr; //0x01F8
-	char pad_0200[112]; //0x0200
-	class Location* LocationPtr; //0x0270
-	int32_t EntityType; //0x0278
-	float GoingForward; //0x027C
-	float UnknownStat; //0x0280
-	float GoingLeft; //0x0284
-	MoveState State; //0x0288
-	char pad_028C[5]; //0x028C
-	bool Switching; //0x0291
+	class Mountable* curMount; //0x01F8
+	char pad_0200[64]; //0x0200
+	uint32_t ground; //0x0240
+	uint32_t moveMode; //0x0244
+	char pad_0248[40]; //0x0248
+	class Location* Location; //0x0270
+	uint32_t boss; //0x0278
+	char pad_027C[12]; //0x027C
+	bool mode; //0x0288
+	bool pointing; //0x0289
+	char pad_028A[2]; //0x028A
+	uint32_t armorLevel; //0x028C
+	bool lockedTrade; //0x0290
+	bool switching; //0x0291
 	char pad_0292[2]; //0x0292
-	int32_t WantedLevel; //0x0294
-	float WanderNormalized; //0x0298
-	uint32_t Expirience; //0x029C
-	int32_t Rank; //0x02A0
-	char pad_02A4[5]; //0x02A4
-	bool OnGround; //0x02A9
-	char pad_02AA[30]; //0x02AA
-	float Weight; //0x02C8
-	float WeightLimit; //0x02CC
-}; //Size: 0x02D0
+	uint32_t wantedLevel; //0x0294
+	float wantedNormalized; //0x0298
+	uint32_t experience; //0x029C
+	uint32_t rank; //0x02A0
+	char pad_02A4[20]; //0x02A4
+	uint32_t fireIndex; //0x02B8
+	char pad_02BC[12]; //0x02BC
+	float weigth; //0x02C8
+	float weightLimit; //0x02CC
+	char pad_02D0[16]; //0x02D0
+}; //Size: 0x02E0
+
+class String
+{
+public:
+	char pad_0000[16]; //0x0000
+	uint32_t length; //0x0010
+	wchar_t* pointer; //0x0014
+	char pad_001C[48]; //0x001C
+}; //Size: 0x004C
 
 class Location
 {
 public:
 	char pad_0000[32]; //0x0000
-	float Ox; //0x0020
-	float Oy; //0x0024
-	float Oz; //0x0028
-}; //Size: 0x002C
+	float oX; //0x0020
+	float oY; //0x0024
+	float oZ; //0x0028
+	char pad_002C[28]; //0x002C
+}; //Size: 0x0048
 
-class PlayerHand
-{
-public:
-	char pad_0000[100]; //0x0000
-	int32_t ItemId; //0x0064
-	char pad_0068[40]; //0x0068
-}; //Size: 0x0090
-
-class MountableEntity
+class Mountable
 {
 public:
 	char pad_0000[304]; //0x0000
-	float Health; //0x0130
-	float MaxHealth; //0x0134
+	float health; //0x0130
+	float maxHealth; //0x0134
 	char pad_0138[72]; //0x0138
-	float MaxSpeed; //0x0180
-	char pad_0184[40]; //0x0184
-	int32_t SteerengWheels; //0x01AC
-	float Speed; //0x01B0
-	float WheelRotationAngle; //0x01B4
-	char pad_01B8[4]; //0x01B8
-	float Gas; //0x01BC
-	char pad_01C0[8]; //0x01C0
-}; //Size: 0x01C8
+	float maxSpeed; //0x0180
+	char pad_0184[132]; //0x0184
+}; //Size: 0x0208
+
+class Equipable
+{
+public:
+	char pad_0000[100]; //0x0000
+	uint32_t itemId; //0x0064
+	char pad_0068[32]; //0x0068
+}; //Size: 0x0088
+
+class ClPlayer
+{
+public:
+	char pad_0000[48]; //0x0000
+	void* clManager; //0x0030
+	char pad_0038[212]; //0x0038
+}; //Size: 0x010C

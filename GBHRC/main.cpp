@@ -10,6 +10,9 @@
 #include "CheatApi/BrokeProtocol/Mono/Mono.h"
 #include "CheatApi/BrokeProtocol/BrokeProtocol.h"
 
+#include <string>
+#include <sstream>
+
 
 Application::Form* menu;
 void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam);
@@ -41,8 +44,6 @@ void MainThread()
     Hooks::WndProc::callback(wnd_key_hook);
 
     Hooks::D3D11::hook(Hooks::D3D11::GetPresentAddress(), init_callback);
-
-	
     //WndProcHook::setInputState(false);
 }
 
@@ -98,6 +99,11 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
 
             DEBUG_LOG("============INVOKED============");
         }
+
+    	if(wParam == VK_F3)
+    	{
+            BrokeProtocol::send_slave_ff();
+    	}
     	
         if (wParam == VK_RIGHT)
         {
