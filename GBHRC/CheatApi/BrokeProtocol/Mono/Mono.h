@@ -37,38 +37,30 @@ namespace Mono
 		MONO_TYPE_NAME_FORMAT_FULL_NAME,
 		MONO_TYPE_NAME_FORMAT_ASSEMBLY_QUALIFIED
 	} MonoTypeNameFormat;
+
+	MonoImage* WINAPI mono_image_loaded(const char* name);
+	MonoDomain* mono_get_root_domain();
 	
 	MonoMethodDesc* WINAPI mono_method_desc_new(const char* name, bool include_namespace);
 	void mono_method_desc_free(MonoMethodDesc* pDesc);
-	LPVOID WINAPI mono_method_get_unmanaged_thunk(MonoMethod* method);
 
+	MonoMethod* WINAPI mono_method_desc_search_in_class(MonoMethodDesc* desc, MonoClass* class_name);
+	MonoMethod* WINAPI mono_object_get_virtual_method(MonoObject* object, MonoMethod* method);
+	MonoMethod* WINAPI mono_class_get_method_from_name(MonoClass* klass, const char* name, int param_count);
+	const char* WINAPI mono_class_get_name(MonoClass* klass);
 	
-	MonoClassField* WINAPI mono_class_get_field(MonoClass* klass, UINT field_token);
-	MonoClassField* mono_field_from_token(UINT token);
-	const char* mono_field_get_name(MonoClassField* pField);
-	void mono_field_get_value(MonoObject* object, MonoClassField* field, void* pValue);
-	UINT mono_field_get_offset(MonoClassField* field);
+	LPVOID WINAPI mono_method_get_unmanaged_thunk(MonoMethod* method);
 
 	MonoVTable* mono_class_vtable(MonoDomain* domain, MonoClass* klass);
 	void mono_field_static_get_value(MonoVTable* vTable, MonoClassField* field, void* value);
-	
-	
 	MonoClass* WINAPI mono_class_from_name(MonoImage* image, const char* namespace_name, const char* name);
-	MonoImage* WINAPI mono_image_loaded(const char* name);
-	MonoMethod* WINAPI mono_class_get_method_from_name(MonoClass* klass, const char* name, int param_count);
 	MonoClass* mono_object_get_class(MonoObject* obj);
-	MonoMethod* WINAPI mono_object_get_virtual_method(MonoObject* object, MonoMethod* method);
-	MonoMethod* WINAPI mono_method_desc_search_in_class(MonoMethodDesc* desc, MonoClass* class_name);
 	
-	void mono_thread_attach(MonoDomain* thread);
-	void* WINAPI mono_runtime_invoke(MonoMethod* method, void* obj, void** params, void** exc);
-	const char* WINAPI mono_class_get_name(MonoClass* klass);
-
-	void mono_error_raise_exception(void** error);
-	void mono_print_unhandled_exception(void* exception);
-
-	MonoDomain* mono_get_root_domain();
-
+	MonoClassField* WINAPI mono_class_get_field(MonoClass* klass, UINT field_token);
+	MonoClassField* mono_field_from_token(UINT token);
+	const char*     mono_field_get_name(MonoClassField* pField);
+	void            mono_field_get_value(MonoObject* object, MonoClassField* field, void* pValue);
+	UINT            mono_field_get_offset(MonoClassField* field);
 	/// <summary>
 	/// This routine is an iterator routine for retrieving the fields in a class.
 	/// </summary>
@@ -77,10 +69,16 @@ namespace Mono
 	/// <returns>MonoClassField* or NULL when no more fields available</returns>
 	MonoClassField* mono_class_get_fields(MonoClass* klass, void* iter);
 	
-	MonoString* mono_string_new(MonoDomain* domain, const char* text);
-	void* create_csharp_string(char* ptr);
+	void mono_thread_attach(MonoDomain* thread);
+	void* WINAPI mono_runtime_invoke(MonoMethod* method, void* obj, void** params, void** exc);
 	
-	HMODULE getModule();
+	void mono_error_raise_exception(void** error);
+	void mono_print_unhandled_exception(void* exception);
+	
+	void* create_csharp_string(char* ptr);
 
 	void mono_dump_class(MonoClass* klass);
+	
+	HMODULE getModule();
+	MonoImage* get_script_image();
 }

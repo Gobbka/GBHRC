@@ -197,12 +197,6 @@ Mono::MonoClassField* Mono::mono_class_get_fields(MonoClass* klass, void* iter)
 	return ((MonoClassField * (__stdcall*)(MonoDomain*, void*))proc)(klass, iter);
 }
 
-Mono::MonoString* Mono::mono_string_new(MonoDomain* domain, const char* text)
-{
-	STATIC_PROCEDURE("mono_string_new")
-	return ((MonoString * (__stdcall*)(MonoDomain*,const char*))proc)(domain,text);
-}
-
 void* Mono::create_csharp_string(char* ptr)
 {
 	//CtorCharPtr
@@ -241,6 +235,15 @@ HMODULE Mono::getModule()
 		hModule = GetModuleHandle(L"mono-2.0-bdwgc.dll");
 	
 	return hModule;
+}
+
+Mono::MonoImage* Mono::get_script_image()
+{
+	static MonoImage* image;
+	if(image == nullptr)
+		image = Mono::mono_image_loaded("D:\\Steam\\steamapps\\common\\BROKE PROTOCOL\\BrokeProtocol_Data\\Managed\\Scripts.dll");
+	
+	return image;
 }
 
 void Mono::mono_dump_class(MonoClass* klass)
