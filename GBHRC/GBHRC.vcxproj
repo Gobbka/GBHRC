@@ -170,6 +170,8 @@
     <ClInclude Include="Application\UI\Panel\Panel.h" />
     <ClInclude Include="CheatApi\BrokeProtocol\BrokeProtocol.h" />
     <ClInclude Include="CheatApi\BrokeProtocol\BPStructs.h" />
+    <ClInclude Include="CheatApi\BrokeProtocol\Enum\PacketFlags.h" />
+    <ClInclude Include="CheatApi\BrokeProtocol\Enum\SvPacket.h" />
     <ClInclude Include="CheatApi\BrokeProtocol\Mono\Mono.h" />
     <ClInclude Include="CheatApi\Hooks\d3d11\d3d11hook.h" />
     <ClInclude Include="CheatApi\Hooks\d3d11\D3D11_VMT.h" />

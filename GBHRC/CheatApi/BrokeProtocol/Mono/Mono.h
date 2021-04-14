@@ -12,7 +12,12 @@ namespace Mono
 	typedef struct _MonoImage MonoImage;
 	typedef void MonoDomain;
 	typedef void MonoDomain;
-	typedef void MonoObject;
+	typedef void MonoType;
+
+	typedef struct {
+		MonoVTable* vtable;
+		void* synchronisation;
+	} MonoObject;
 
 	typedef struct
 	{
@@ -38,23 +43,42 @@ namespace Mono
 		MONO_TYPE_NAME_FORMAT_ASSEMBLY_QUALIFIED
 	} MonoTypeNameFormat;
 
-	MonoImage* WINAPI mono_image_loaded(const char* name);
-	MonoDomain* mono_get_root_domain();
+	typedef struct {
+		UINT length;
+		UINT lower_bound;
+	} MonoArrayBounds;
+
+	typedef struct {
+		MonoObject obj;
+		/* bounds is NULL for szarrays */
+		MonoArrayBounds* bounds;
+		/* total number of elements of the array */
+		UINT max_length;
+		/* we use double to ensure proper alignment on platforms that need it */
+		__int64 vector[0];
+	} MonoArray;
+
+	MonoArray*  WINAPI mono_array_new(MonoDomain* domain, MonoClass* eclass, uintptr_t n);
+
+	MonoObject* WINAPI mono_object_new(MonoDomain* domain, MonoClass* klass);
+	
+	MonoImage*  WINAPI mono_image_loaded(const char* name);
+	MonoDomain* WINAPI mono_get_root_domain();
 	
 	MonoMethodDesc* WINAPI mono_method_desc_new(const char* name, bool include_namespace);
-	void mono_method_desc_free(MonoMethodDesc* pDesc);
+	void        WINAPI mono_method_desc_free(MonoMethodDesc* pDesc);
 
 	MonoMethod* WINAPI mono_method_desc_search_in_class(MonoMethodDesc* desc, MonoClass* class_name);
 	MonoMethod* WINAPI mono_object_get_virtual_method(MonoObject* object, MonoMethod* method);
 	MonoMethod* WINAPI mono_class_get_method_from_name(MonoClass* klass, const char* name, int param_count);
 	const char* WINAPI mono_class_get_name(MonoClass* klass);
 	
-	LPVOID WINAPI mono_method_get_unmanaged_thunk(MonoMethod* method);
+	LPVOID      WINAPI mono_method_get_unmanaged_thunk(MonoMethod* method);
 
-	MonoVTable* mono_class_vtable(MonoDomain* domain, MonoClass* klass);
-	void mono_field_static_get_value(MonoVTable* vTable, MonoClassField* field, void* value);
-	MonoClass* WINAPI mono_class_from_name(MonoImage* image, const char* namespace_name, const char* name);
-	MonoClass* mono_object_get_class(MonoObject* obj);
+	MonoVTable* WINAPI mono_class_vtable(MonoDomain* domain, MonoClass* klass);
+	void        WINAPI mono_field_static_get_value(MonoVTable* vTable, MonoClassField* field, void* value);
+	MonoClass*  WINAPI mono_class_from_name(MonoImage* image, const char* namespace_name, const char* name);
+	MonoClass*  WINAPI mono_object_get_class(MonoObject* obj);
 	
 	MonoClassField* WINAPI mono_class_get_field(MonoClass* klass, UINT field_token);
 	MonoClassField* mono_field_from_token(UINT token);
@@ -68,17 +92,21 @@ namespace Mono
 	/// <param name="iter">pointer that points to zero</param>
 	/// <returns>MonoClassField* or NULL when no more fields available</returns>
 	MonoClassField* mono_class_get_fields(MonoClass* klass, void* iter);
+
+	char* mono_type_get_name(MonoType* type);
 	
-	void mono_thread_attach(MonoDomain* thread);
-	void* WINAPI mono_runtime_invoke(MonoMethod* method, void* obj, void** params, void** exc);
+	void  WINAPI mono_thread_attach(MonoDomain* thread);
+	void* WINAPI mono_runtime_invoke(MonoMethod* method, void* obj, void** params, MonoObject** exc);
 	
-	void mono_error_raise_exception(void** error);
-	void mono_print_unhandled_exception(void* exception);
+	void  WINAPI mono_error_raise_exception(void** error);
+	void  WINAPI mono_print_unhandled_exception(void* exception);
 	
-	void* create_csharp_string(char* ptr);
+	MonoObject* create_csharp_string(char* ptr);
+	MonoClass* get_object_class();
 
 	void mono_dump_class(MonoClass* klass);
 	
 	HMODULE getModule();
 	MonoImage* get_script_image();
+	MonoImage* get_mscorlib();
 }

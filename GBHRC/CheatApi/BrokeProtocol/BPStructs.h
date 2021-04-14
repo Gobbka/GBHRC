@@ -1,11 +1,11 @@
-// Created with ReClass.NET 1.2 by KN4CK3R
-
 #include <cstdint>
 
 class ShPlayer
 {
 public:
-	char pad_0000[304]; //0x0000
+	char pad_0000[132]; //0x0000
+	uint32_t ID; //0x0084
+	char pad_0088[168]; //0x0088
 	float health; //0x0130
 	float healthLimit; //0x0134
 	char pad_0138[72]; //0x0138
@@ -47,6 +47,12 @@ public:
 	float weigth; //0x02C8
 	float weightLimit; //0x02CC
 	char pad_02D0[16]; //0x02D0
+
+
+	Equipable* current_weapon() const
+	{
+		return this->curEquipable;
+	}
 }; //Size: 0x02E0
 
 class String
@@ -82,10 +88,23 @@ public:
 class Equipable
 {
 public:
-	char pad_0000[100]; //0x0000
-	uint32_t itemId; //0x0064
-	char pad_0068[32]; //0x0068
-}; //Size: 0x0088
+	char pad_0000[32]; //0x0000
+	void* clEntity; //0x0020
+	void* svEntity; //0x0028
+	char pad_0030[60]; //0x0030
+	uint32_t itemId; //0x006C
+	char pad_0070[16]; //0x0070
+	bool isHuman; //0x0080
+	bool isWorldEntity; //0x0081
+	bool hasInventory; //0x0082
+	bool shop; //0x0083
+	uint32_t ID; //0x0084
+	uint32_t index; //0x0088
+	int32_t Value; //0x008C
+	char pad_0090[304]; //0x0090
+	uint32_t damage; //0x01C0
+	char pad_01C4[8]; //0x01C4
+}; //Size: 0x01CC
 
 class ClPlayer
 {

@@ -102,7 +102,12 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
 
     	if(wParam == VK_F3)
     	{
-            BrokeProtocol::send_slave_ff();
+            Mono::mono_dump_class(
+                Mono::mono_object_get_class(
+                    (Mono::MonoObject*)BrokeProtocol::GetLocalPlayer()->current_weapon()
+                )
+            );
+            //BrokeProtocol::send_global_chat((char*)"FEFE FUCKING SLAVE MAZAFAKA");
     	}
     	
         if (wParam == VK_RIGHT)

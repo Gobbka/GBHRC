@@ -25,69 +25,70 @@ void* BrokeProtocol::GetPlayersCollection()
     return nullptr;
 }
 
-void BrokeProtocol::send_nigger()
+void BrokeProtocol::fire()
 {
-    auto* image = Mono::mono_image_loaded("D:\\Steam\\steamapps\\common\\BROKE PROTOCOL\\BrokeProtocol_Data\\Managed\\Scripts.dll");
-    auto* method_desc = Mono::mono_method_desc_new("BrokeProtocol.Managers.ClManager:SendToServer(int,int,object[])", true);
+	
+}
+
+void BrokeProtocol::SendToServer(PacketFlags flags, BrokeProtocol::SvPacket packet, Mono::MonoArray* array)
+{
+    auto* image = Mono::get_script_image();
+    auto* method_desc = Mono::mono_method_desc_new("BrokeProtocol.Managers.ClManager:SendToServer(string)", true);
 
     auto* pClass = Mono::mono_class_from_name(image, method_desc->namespace_name, method_desc->class_name);
-    
+    auto* method = Mono::mono_class_get_method_from_name(pClass, method_desc->method_name, -1);
 
-    DEBUG_LOG("CLASS: " << pClass);
+    Mono::mono_method_desc_free(method_desc);
 
-    auto* method = Mono::mono_class_get_method_from_name(pClass, "SendToServer", -1);
+    Mono::MonoObject* exception = nullptr;
 
-    DEBUG_LOG("METHOD: " << method);
+    void* args[3];
 
-    auto* player = BrokeProtocol::GetLocalPlayer();
+    args[0] = &flags;
+    args[1] = &packet;
+    args[2] = array;
 
-    DEBUG_LOG("PLAYER: " << player);
+    Mono::mono_runtime_invoke(method, BrokeProtocol::GetLocalPlayer()->clPlayer->clManager, args, &exception);
 
-    void* params[3];
+    if (exception != nullptr)
+    {
+        DEBUG_LOG("[BP] CANNOT SEND TO SERVER");
+        Mono::mono_print_unhandled_exception(exception);
+    }
+}
 
-    params[0] = new int(0x1);
-    params[1] = new int(0x12);
-    params[2] = new int[40];
+void BrokeProtocol::show_local_message(char*text)
+{
+    auto* image = Mono::get_script_image();
+    auto* method_desc = Mono::mono_method_desc_new("BrokeProtocol.Managers.ClManager:ShowGameMessage(string)", true);
+
+    auto* pClass = Mono::mono_class_from_name(image, method_desc->namespace_name, method_desc->class_name);
+
+    auto* method = Mono::mono_class_get_method_from_name(pClass, method_desc->method_name, -1);
+
+    void* params[1];
 	
-    void* excepion = nullptr;
+    params[0] = Mono::create_csharp_string(text);
 	
-    Mono::mono_thread_attach(Mono::mono_get_root_domain());
-    Mono::mono_runtime_invoke(method, player->clPlayer->clManager, params, &excepion);
+    Mono::MonoObject* exception = nullptr;
+	
+    Mono::mono_runtime_invoke(method, BrokeProtocol::GetLocalPlayer()->clPlayer->clManager, params, &exception);
 
-	if(excepion!=nullptr)
+	if(exception!=nullptr)
 	{
         DEBUG_LOG("NIGGER ERROR");
-        Mono::mono_print_unhandled_exception(excepion);
+        Mono::mono_print_unhandled_exception(exception);
 	}
 
     Mono::mono_method_desc_free(method_desc);
 }
 
-void BrokeProtocol::send_slave_ff()
+void BrokeProtocol::send_global_chat(char* text)
 {
-    auto* image = Mono::mono_image_loaded("D:\\Steam\\steamapps\\common\\BROKE PROTOCOL\\BrokeProtocol_Data\\Managed\\Scripts.dll");
-    auto* method_desc = Mono::mono_method_desc_new("BrokeProtocol.Entities.SvPlayer:SvGlobalChatMessage(string)", true);
+    auto* ptr = Mono::create_csharp_string(text);
 
-    auto* pClass = Mono::mono_class_from_name(image, method_desc->namespace_name, method_desc->class_name);
+    Mono::MonoArray* theArray = Mono::mono_array_new(Mono::mono_get_root_domain(), Mono::get_object_class(), 1);
+    theArray->vector[0] = (__int64)ptr;
 
-    DEBUG_LOG("CLASS: " << pClass);
-
-    auto* method = Mono::mono_class_get_method_from_name(pClass, method_desc->method_name, -1);
-
-    DEBUG_LOG("METHOD: " << method);
-
-    void* params[1];
-
-    params[0] = Mono::create_csharp_string((char*)("FEFE GAY!!!"));
-
-    void* excepion = nullptr;
-    auto* player = BrokeProtocol::GetLocalPlayer();
-    Mono::mono_thread_attach(Mono::mono_get_root_domain());
-    Mono::mono_runtime_invoke(method, player->svPlayer, params, &excepion);
-
-    if (excepion != nullptr)
-    {
-        DEBUG_LOG("NIGGER ERROR");
-        Mono::mono_print_unhandled_exception(excepion);
-    }
+    BrokeProtocol::SendToServer(PacketFlags::Reliable, SvPacket::GlobalMessage, theArray);
 }

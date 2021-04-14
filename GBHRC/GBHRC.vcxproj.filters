@@ -122,5 +122,11 @@
     <ClInclude Include="CheatApi\BrokeProtocol\BrokeProtocol.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="CheatApi\BrokeProtocol\Enum\PacketFlags.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="CheatApi\BrokeProtocol\Enum\SvPacket.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

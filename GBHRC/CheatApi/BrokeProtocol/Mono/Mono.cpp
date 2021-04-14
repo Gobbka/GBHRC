@@ -96,6 +96,18 @@ Mono::MonoClass* Mono::mono_class_from_name(MonoImage* image, const char* namesp
 	return ((MonoClass*(__stdcall*)(MonoImage*,const char*,const char*))proc)(image,namespace_name,name);
 }
 
+Mono::MonoArray* Mono::mono_array_new(MonoDomain* domain, MonoClass* eclass, uintptr_t n)
+{
+	STATIC_PROCEDURE("mono_array_new")
+	return ((MonoArray* (__stdcall*)(MonoDomain*, MonoClass*,uintptr_t))proc)(domain, eclass,n);
+}
+
+Mono::MonoObject* Mono::mono_object_new(MonoDomain* domain, MonoClass* klass)
+{
+	STATIC_PROCEDURE("mono_object_new")
+	return ((MonoObject * (__stdcall*)(MonoDomain*,MonoClass*))proc)(domain,klass);
+}
+
 Mono::MonoImage* Mono::mono_image_loaded(const char* name)
 {
 	static LPVOID proc;
@@ -157,13 +169,13 @@ void Mono::mono_thread_attach(MonoDomain* thread)
 	return ((void(__stdcall*)(MonoDomain*))proc)(thread);
 }
 
-void* Mono::mono_runtime_invoke(MonoMethod* method, void* obj, void** params, void** exc)
+void* Mono::mono_runtime_invoke(MonoMethod* method, void* obj, void** params, MonoObject** exc)
 {
 	static LPVOID proc;
 	if (proc == nullptr)
 		proc = GetProcAddress(getModule(), "mono_runtime_invoke");
 
-	return ((void*(__stdcall*)(MonoMethod * method, void* obj, void** params, void** exc))proc)(method,obj,params,exc);
+	return ((void*(__stdcall*)(MonoMethod * method, void* obj, void** params, MonoObject** exc))proc)(method,obj,params,exc);
 }
 
 const char* Mono::mono_class_get_name(MonoClass* klass)
@@ -197,25 +209,25 @@ Mono::MonoClassField* Mono::mono_class_get_fields(MonoClass* klass, void* iter)
 	return ((MonoClassField * (__stdcall*)(MonoDomain*, void*))proc)(klass, iter);
 }
 
-void* Mono::create_csharp_string(char* ptr)
+char* Mono::mono_type_get_name(MonoType* type)
 {
-	//CtorCharPtr
-	auto* image = Mono::mono_image_loaded("D:\\Steam\\steamapps\\common\\BROKE PROTOCOL\\BrokeProtocol_Data\\Managed\\mscorlib.dll");
+	STATIC_PROCEDURE("mono_type_get_name")
+	return ((char * (__stdcall*)(MonoType*))proc)(type);
+}
 
+Mono::MonoObject* Mono::create_csharp_string(char* ptr)
+{
+	auto* image = get_mscorlib();
 	auto* pClass = Mono::mono_class_from_name(image, "System.Runtime.InteropServices", "Marshal");
-
-	DEBUG_LOG("CLASS: " << pClass);
-	// char* ptr,int bytelenght
 	auto* method = mono_class_get_method_from_name(pClass, "PtrToStringUTF8", -1);
-	DEBUG_LOG("METHOD: " << method);
 
 	void* params[2];
 	params[0] = &ptr;
 	params[1] = new int(strlen(ptr));
 
-	void* excepion = nullptr;
+	MonoObject* excepion = nullptr;
 
-	void* nigger = Mono::mono_runtime_invoke(method, NULL, params, &excepion);
+	auto* nigger = (MonoObject*)Mono::mono_runtime_invoke(method, NULL, params, &excepion);
 
 	if (excepion != nullptr)
 	{
@@ -223,9 +235,12 @@ void* Mono::create_csharp_string(char* ptr)
 		Mono::mono_print_unhandled_exception(excepion);
 	}
 
-	DEBUG_LOG("STRING:"<<nigger);
-
 	return nigger;
+}
+
+Mono::MonoClass* Mono::get_object_class()
+{
+	return mono_class_from_name(get_mscorlib(), "System", "Object");
 }
 
 HMODULE Mono::getModule()
@@ -243,6 +258,15 @@ Mono::MonoImage* Mono::get_script_image()
 	if(image == nullptr)
 		image = Mono::mono_image_loaded("D:\\Steam\\steamapps\\common\\BROKE PROTOCOL\\BrokeProtocol_Data\\Managed\\Scripts.dll");
 	
+	return image;
+}
+
+Mono::MonoImage* Mono::get_mscorlib()
+{
+	static MonoImage* image;
+	if (image == nullptr)
+		image = Mono::mono_image_loaded("D:\\Steam\\steamapps\\common\\BROKE PROTOCOL\\BrokeProtocol_Data\\Managed\\mscorlib.dll");
+
 	return image;
 }
 
