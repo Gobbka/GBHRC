@@ -3,16 +3,27 @@
 #include "../../includes/logger.h"
 #include "Mono/Mono.h"
 
+ShManager* BrokeProtocol::get_manager()
+{
+    static ShManager* manager;
+
+	if(manager==nullptr)
+	{
+        auto* const unity_player = GetModuleHandle(L"UnityPlayer.dll");
+        manager = (ShManager*)*(size_t*)(*(size_t*)(*(size_t*)(*(size_t*)((size_t)unity_player + 0X19DD788) + 0X218) + 0X60) + 0X18);
+	}
+	
+    return reinterpret_cast<ShManager*>(manager);
+}
+
 ShPlayer* BrokeProtocol::GetLocalPlayer()
 {
-	auto* const unity_player = GetModuleHandle(L"UnityPlayer.dll");
-	auto ptr = *(size_t*)(*(size_t*)(*(size_t*)(*(size_t*)((size_t)unity_player + 0x19E0D60) + 0x80) + 0x3C8) + 0x108);
-	return reinterpret_cast<ShPlayer*>(ptr);
+    return get_manager()->clManager->myPlayer;
 }
 
 void* BrokeProtocol::GetPlayersCollection()
 {
-    auto* image = Mono::mono_image_loaded("D:\\Steam\\steamapps\\common\\BROKE PROTOCOL\\BrokeProtocol_Data\\Managed\\Scripts.dll");
+    auto* image = Mono::get_script_image();
     auto* method_desc = Mono::mono_method_desc_new("BrokeProtocol.Collections.EntityCollections:n()", true);
 	
     auto* pClass = Mono::mono_class_from_name(image, method_desc->namespace_name, method_desc->class_name);

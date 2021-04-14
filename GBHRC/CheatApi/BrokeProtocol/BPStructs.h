@@ -108,10 +108,29 @@ public:
 	char pad_01C4[8]; //0x01C4
 }; //Size: 0x01CC
 
+class ShManager
+{
+public:
+	char pad_0000[24]; //0x0000
+	class ClManager* clManager; //0x0018
+	char(*svManager)[4]; //0x0020
+	char pad_0028[232]; //0x0028
+}; //Size: 0x0110
+
+class ClManager
+{
+public:
+	char pad_0000[24]; //0x0000
+	class ShManager* manager; //0x0018
+	char pad_0020[184]; //0x0020
+	class ShPlayer* myPlayer; //0x00D8
+	char pad_00E0[48]; //0x00E0
+}; //Size: 0x0110
+
 class ClPlayer
 {
 public:
 	char pad_0000[48]; //0x0000
-	void* clManager; //0x0030
+	class ClManager* clManager; //0x0030
 	char pad_0038[212]; //0x0038
 }; //Size: 0x010C

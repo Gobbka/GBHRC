@@ -6,6 +6,7 @@
 
 namespace BrokeProtocol
 {
+	ShManager* get_manager();
 	ShPlayer* GetLocalPlayer();
 	void* GetPlayersCollection();
 

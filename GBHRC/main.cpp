@@ -100,43 +100,33 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
             DEBUG_LOG("============INVOKED============");
         }
 
-    	if(wParam == VK_F3)
+    	if(wParam == VK_F2)
     	{
+    		
+            DEBUG_LOG(BrokeProtocol::GetLocalPlayer()->health);
+
+            return;
+    		
+            Mono::mono_dump_class(
+                Mono::mono_class_from_name(
+                    Mono::get_script_image(),
+                    "BrokeProtocol.Managers",
+                    "ClManager"
+                )
+            );
+    	}
+    }
+
+	if(msg == WM_KEYDOWN)
+	{
+        if (wParam == VK_F3)
+        {
             BrokeProtocol::fire();
             BrokeProtocol::GetLocalPlayer()->current_weapon()
                 ->cannot_shoot = 0xFFFFFF;
             //BrokeProtocol::send_global_chat((char*)"FEFE FUCKING SLAVE MAZAFAKA");
-    	}
-
-    	if(wParam == VK_F2)
-    	{
-            Mono::mono_dump_class(
-                Mono::mono_class_from_name(
-                    Mono::get_script_image(),
-                    "BrokeProtocol.Entities",
-                    "ShMountable"
-                )
-            );
-    	}
-    	
-        if (wParam == VK_RIGHT)
-        {
-            //UIDrawer::instance()->menu_layer->move_inner_by(5.f, 0.f);
-            //local_player->StartSpeed += 5.f;
-            //DEBUG_LOG("[GBP] SPEED: " << local_player->StartSpeed);
         }
-
-        if (wParam == VK_LEFT)
-        {
-            //UIDrawer::instance()->menu_layer->move_inner_by(-5.f, 0.f);
-            //local_player->StartSpeed -= 5.f;
-            //DEBUG_LOG("[GBP] SPEED: " << local_player->StartSpeed);
-        }
-    }
-    else
-    {
-
-    }
+	}
 
 }
 
