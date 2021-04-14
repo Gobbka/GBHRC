@@ -30,10 +30,21 @@ void* BrokeProtocol::GetPlayersCollection()
     DEBUG_LOG("NIGGER FIELD");
     Mono::mono_method_desc_free(method_desc);
     DEBUG_LOG("CLASS: " << pClass);
-    auto* pField = Mono::mono_class_get_field(pClass, 0x170000F3);
-    DEBUG_LOG("FIELD: " << pField);
+    auto* vTable = (Mono::MonoVTable*)Mono::mono_class_vtable(Mono::mono_get_root_domain(),pClass);
 
-    return nullptr;
+    auto* pField = Mono::mono_class_get_field(
+        Mono::mono_object_get_class((Mono::MonoObject*)vTable),
+        0x0400103F
+    );
+
+    void* humans = nullptr;
+    Mono::mono_field_static_get_value(vTable, pField, &humans);
+
+    auto* collection = Mono::mono_object_get_class((Mono::MonoObject*)humans);
+
+    pField = Mono::mono_class_get_field(collection, 0x04002FB6);
+	
+    return (void*)((__int64)humans + Mono::mono_field_get_offset(pField));
 }
 
 void BrokeProtocol::fire()

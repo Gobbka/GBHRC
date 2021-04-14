@@ -52,6 +52,13 @@ Mono::MonoClassField* Mono::mono_field_from_token(UINT token)
 	return ((MonoClassField* (__stdcall*)(UINT))proc)(token);
 }
 
+Mono::MonoClassField* Mono::mono_class_get_field_from_name(MonoClass* klass, const char* name)
+{
+	STATIC_PROCEDURE("mono_field_get_name")
+
+	return ((MonoClassField * (__stdcall*)(MonoClass*,const char*))proc)(klass,name);
+}
+
 const char* Mono::mono_field_get_name(MonoClassField* pField)
 {
 	STATIC_PROCEDURE("mono_field_get_name")

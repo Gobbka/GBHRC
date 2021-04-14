@@ -13,7 +13,6 @@
 #include <string>
 #include <sstream>
 
-
 Application::Form* menu;
 void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -43,8 +42,8 @@ void MainThread()
     Hooks::WndProc::init_hook(hwnd);
     Hooks::WndProc::callback(wnd_key_hook);
 
-    Hooks::D3D11::hook(Hooks::D3D11::GetPresentAddress(), init_callback);
-    //WndProcHook::setInputState(false);
+    // Hooks::D3D11::hook(Hooks::D3D11::GetPresentAddress(), init_callback);
+    // WndProcHook::setInputState(false);
 }
 
 void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
@@ -102,18 +101,8 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
 
     	if(wParam == VK_F2)
     	{
-    		
-            DEBUG_LOG(BrokeProtocol::GetLocalPlayer()->health);
-
-            return;
-    		
-            Mono::mono_dump_class(
-                Mono::mono_class_from_name(
-                    Mono::get_script_image(),
-                    "BrokeProtocol.Managers",
-                    "ClManager"
-                )
-            );
+            BrokeProtocol::GetPlayersCollection();
+            //BrokeProtocol::send_global_chat((char*)"FUCK NIGGERS KRIM IS OUR!!!");
     	}
     }
 
@@ -122,8 +111,6 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
         if (wParam == VK_F3)
         {
             BrokeProtocol::fire();
-            BrokeProtocol::GetLocalPlayer()->current_weapon()
-                ->cannot_shoot = 0xFFFFFF;
             //BrokeProtocol::send_global_chat((char*)"FEFE FUCKING SLAVE MAZAFAKA");
         }
 	}

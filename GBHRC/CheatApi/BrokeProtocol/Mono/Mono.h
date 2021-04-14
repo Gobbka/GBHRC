@@ -80,8 +80,9 @@ namespace Mono
 	MonoClass*  WINAPI mono_class_from_name(MonoImage* image, const char* namespace_name, const char* name);
 	MonoClass*  WINAPI mono_object_get_class(MonoObject* obj);
 	
-	MonoClassField* WINAPI mono_class_get_field(MonoClass* klass, UINT field_token);
+	MonoClassField* mono_class_get_field(MonoClass* klass, UINT field_token);
 	MonoClassField* mono_field_from_token(UINT token);
+	MonoClassField* mono_class_get_field_from_name(MonoClass* klass, const char* name);
 	const char*     mono_field_get_name(MonoClassField* pField);
 	void            mono_field_get_value(MonoObject* object, MonoClassField* field, void* pValue);
 	UINT            mono_field_get_offset(MonoClassField* field);
