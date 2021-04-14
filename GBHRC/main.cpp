@@ -102,12 +102,21 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
 
     	if(wParam == VK_F3)
     	{
+            BrokeProtocol::fire();
+            BrokeProtocol::GetLocalPlayer()->current_weapon()
+                ->cannot_shoot = 0xFFFFFF;
+            //BrokeProtocol::send_global_chat((char*)"FEFE FUCKING SLAVE MAZAFAKA");
+    	}
+
+    	if(wParam == VK_F2)
+    	{
             Mono::mono_dump_class(
-                Mono::mono_object_get_class(
-                    (Mono::MonoObject*)BrokeProtocol::GetLocalPlayer()->current_weapon()
+                Mono::mono_class_from_name(
+                    Mono::get_script_image(),
+                    "BrokeProtocol.Entities",
+                    "ShMountable"
                 )
             );
-            //BrokeProtocol::send_global_chat((char*)"FEFE FUCKING SLAVE MAZAFAKA");
     	}
     	
         if (wParam == VK_RIGHT)

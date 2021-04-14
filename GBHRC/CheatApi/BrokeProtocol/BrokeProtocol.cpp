@@ -27,7 +27,17 @@ void* BrokeProtocol::GetPlayersCollection()
 
 void BrokeProtocol::fire()
 {
-	
+    auto* image = Mono::get_script_image();
+    auto* method_desc = Mono::mono_method_desc_new("BrokeProtocol.Entities.ShPlayer:Fire(int)", true);
+
+    auto* pClass = Mono::mono_class_from_name(image, method_desc->namespace_name, method_desc->class_name);
+    auto* method = Mono::mono_class_get_method_from_name(pClass, method_desc->method_name, -1);
+    auto* player = BrokeProtocol::GetLocalPlayer();
+
+    void* args[1];
+    args[0] = &player->current_weapon()->index;
+
+    Mono::mono_runtime_invoke(method, player, args, nullptr);
 }
 
 void BrokeProtocol::SendToServer(PacketFlags flags, BrokeProtocol::SvPacket packet, Mono::MonoArray* array)

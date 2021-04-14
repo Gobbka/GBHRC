@@ -101,7 +101,9 @@ public:
 	uint32_t ID; //0x0084
 	uint32_t index; //0x0088
 	int32_t Value; //0x008C
-	char pad_0090[304]; //0x0090
+	char pad_0090[144]; //0x0090
+	uint32_t cannot_shoot; //0x0120
+	char pad_0124[156]; //0x0124
 	uint32_t damage; //0x01C0
 	char pad_01C4[8]; //0x01C4
 }; //Size: 0x01CC
