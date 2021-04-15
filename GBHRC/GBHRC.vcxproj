@@ -156,6 +156,7 @@
     <ClCompile Include="CheatApi\Hooks\wndproc\wndprochook.cpp" />
     <ClCompile Include="Application\UI\Checkbox\Checkbox.cpp" />
     <ClCompile Include="Forms\Menu\MenuMain.cpp" />
+    <ClCompile Include="CheatApi\BrokeProtocol\classes\ICollection\ICollection.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -179,6 +180,7 @@
     <ClInclude Include="CheatApi\Hooks\wndproc\wndprochook.h" />
     <ClInclude Include="Application\UI\Checkbox\Checkbox.h" />
     <ClInclude Include="Forms\Menu\MenuMain.h" />
+    <ClInclude Include="CheatApi\BrokeProtocol\classes\ICollection\ICollection.h" />
     <ClInclude Include="includes\d3d.h" />
     <ClInclude Include="includes\logger.h" />
     <ClInclude Include="includes\win.h" />

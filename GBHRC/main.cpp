@@ -13,6 +13,7 @@
 #include <string>
 #include <sstream>
 
+HINSTANCE DllInst;
 Application::Form* menu;
 void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -37,6 +38,7 @@ void MainThread()
     AllocConsole();
     auto nigger = freopen("CONOUT$", "w", stdout);
     nigger = freopen("CONIN$", "r", stdin);
+    system("clear");
 #endif
 	
     Hooks::WndProc::init_hook(hwnd);
@@ -99,10 +101,15 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
             DEBUG_LOG("============INVOKED============");
         }
 
-    	if(wParam == VK_F2)
-    	{
-            BrokeProtocol::GetPlayersCollection();
+    	if(wParam == VK_F2){
+    		
+            DEBUG_LOG(BrokeProtocol::GetPlayersCollection());
             //BrokeProtocol::send_global_chat((char*)"FUCK NIGGERS KRIM IS OUR!!!");
+    	}
+
+    	if(wParam == VK_F1)
+    	{
+            FreeLibrary(DllInst);
     	}
     }
 
@@ -125,6 +132,7 @@ BOOL WINAPI DllMain(
     switch (fdwReason)
     {
     case DLL_PROCESS_ATTACH:
+        DllInst = hinstDLL;
         CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)MainThread, nullptr, 0, nullptr);
         break;
 

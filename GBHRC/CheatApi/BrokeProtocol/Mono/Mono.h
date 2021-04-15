@@ -86,6 +86,10 @@ namespace Mono
 	const char*     mono_field_get_name(MonoClassField* pField);
 	void            mono_field_get_value(MonoObject* object, MonoClassField* field, void* pValue);
 	UINT            mono_field_get_offset(MonoClassField* field);
+
+	MonoProperty* mono_class_get_property_from_name(MonoClass* klass, const char* name);
+	MonoMethod* mono_property_get_get_method(MonoProperty* prop);
+	
 	/// <summary>
 	/// This routine is an iterator routine for retrieving the fields in a class.
 	/// </summary>
@@ -93,6 +97,7 @@ namespace Mono
 	/// <param name="iter">pointer that points to zero</param>
 	/// <returns>MonoClassField* or NULL when no more fields available</returns>
 	MonoClassField* mono_class_get_fields(MonoClass* klass, void* iter);
+	MonoMethod*     mono_class_get_methods(MonoClass* klass, void* iter);
 
 	char* mono_type_get_name(MonoType* type);
 	

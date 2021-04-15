@@ -80,6 +80,18 @@ UINT Mono::mono_field_get_offset(MonoClassField* field)
 	return ((UINT(__stdcall*)(MonoClassField*))proc)(field);
 }
 
+Mono::MonoProperty* Mono::mono_class_get_property_from_name(MonoClass* klass, const char* name)
+{
+	STATIC_PROCEDURE("mono_class_get_property_from_name")
+	return ((MonoProperty * (__stdcall*)(MonoClass*, const char*))proc)(klass,name);
+}
+
+Mono::MonoMethod* Mono::mono_property_get_get_method(MonoProperty* prop)
+{
+	STATIC_PROCEDURE("mono_property_get_get_method")
+	return ((MonoMethod * (__stdcall*)(MonoProperty*))proc)(prop);
+}
+
 Mono::MonoVTable* Mono::mono_class_vtable(MonoDomain* domain, MonoClass* klass)
 {
 	STATIC_PROCEDURE("mono_class_vtable")
@@ -214,6 +226,12 @@ Mono::MonoClassField* Mono::mono_class_get_fields(MonoClass* klass, void* iter)
 {
 	STATIC_PROCEDURE("mono_class_get_fields")
 	return ((MonoClassField * (__stdcall*)(MonoDomain*, void*))proc)(klass, iter);
+}
+
+Mono::MonoMethod* Mono::mono_class_get_methods(MonoClass* klass, void* iter)
+{
+	STATIC_PROCEDURE("mono_class_get_methods")
+	return ((MonoMethod * (__stdcall*)(MonoDomain*, void*))proc)(klass, iter);
 }
 
 char* Mono::mono_type_get_name(MonoType* type)

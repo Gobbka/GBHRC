@@ -57,6 +57,9 @@
     <ClCompile Include="CheatApi\BrokeProtocol\BrokeProtocol.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="CheatApi\BrokeProtocol\classes\ICollection\ICollection.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CheatApi\Hooks\d3d11\d3d11hook.h">
@@ -126,6 +129,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="CheatApi\BrokeProtocol\Enum\SvPacket.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="CheatApi\BrokeProtocol\classes\ICollection\ICollection.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

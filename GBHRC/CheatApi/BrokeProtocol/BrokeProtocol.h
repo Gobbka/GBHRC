@@ -3,6 +3,7 @@
 #include "Enum/PacketFlags.h"
 #include "Enum/SvPacket.h"
 #include "Mono/Mono.h"
+#include "classes/ICollection/ICollection.h"
 
 namespace BrokeProtocol
 {
