@@ -150,6 +150,9 @@
     <ClCompile Include="Application\Render\Scene\Scene.cpp" />
     <ClCompile Include="Application\UI\Panel\Panel.cpp" />
     <ClCompile Include="CheatApi\BrokeProtocol\BrokeProtocol.cpp" />
+    <ClCompile Include="CheatApi\BrokeProtocol\classes\Managers\Managers.cpp" />
+    <ClCompile Include="CheatApi\BrokeProtocol\classes\Players\Players.cpp" />
+    <ClCompile Include="CheatApi\BrokeProtocol\Mono\Images\Script\ScriptImage.cpp" />
     <ClCompile Include="CheatApi\BrokeProtocol\Mono\Mono.cpp" />
     <ClCompile Include="CheatApi\Hooks\d3d11\d3d11hook.cpp" />
     <ClCompile Include="Application\UI\IElement\IElement.cpp" />
@@ -171,9 +174,13 @@
     <ClInclude Include="Application\UI\Panel\Panel.h" />
     <ClInclude Include="CheatApi\BrokeProtocol\BrokeProtocol.h" />
     <ClInclude Include="CheatApi\BrokeProtocol\BPStructs.h" />
+    <ClInclude Include="CheatApi\BrokeProtocol\classes\Managers\Managers.h" />
+    <ClInclude Include="CheatApi\BrokeProtocol\classes\Players\Players.h" />
     <ClInclude Include="CheatApi\BrokeProtocol\Enum\PacketFlags.h" />
     <ClInclude Include="CheatApi\BrokeProtocol\Enum\SvPacket.h" />
     <ClInclude Include="CheatApi\BrokeProtocol\Mono\Mono.h" />
+    <ClInclude Include="CheatApi\BrokeProtocol\Mono\MonoDefs.h" />
+    <ClInclude Include="CheatApi\BrokeProtocol\Mono\Images\Script\ScriptImage.h" />
     <ClInclude Include="CheatApi\Hooks\d3d11\d3d11hook.h" />
     <ClInclude Include="CheatApi\Hooks\d3d11\D3D11_VMT.h" />
     <ClInclude Include="Application\UI\IElement\IElement.h" />

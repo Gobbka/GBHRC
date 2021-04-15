@@ -71,18 +71,7 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
 
         if (wParam == VK_F5)
         {
-            auto* image = Mono::mono_image_loaded("D:\\Steam\\steamapps\\common\\BROKE PROTOCOL\\BrokeProtocol_Data\\Managed\\Scripts.dll");
-            auto* method_desc = Mono::mono_method_desc_new("BrokeProtocol.Entities.ShPlayer:Jump()", true);
-            auto* pClass = Mono::mono_class_from_name(image, method_desc->namespace_name, method_desc->class_name);
-            DEBUG_LOG("CLASS: " << pClass);
-            auto* method = Mono::mono_class_get_method_from_name(pClass, method_desc->method_name, -1);//Mono::mono_method_desc_search_in_class(method_desc, pClass);//
-            DEBUG_LOG("METHOD: " << method);
-            Mono::mono_method_desc_free(method_desc);
-
-            Mono::mono_thread_attach(Mono::mono_get_root_domain());
-            Mono::mono_runtime_invoke(method, BrokeProtocol::GetLocalPlayer(), nullptr, nullptr);
-
-            DEBUG_LOG("============INVOKED============");
+            BrokeProtocol::jump();
         }
 
         if(wParam == VK_F4)
@@ -103,24 +92,20 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
 
     	if(wParam == VK_F2){
     		
-            DEBUG_LOG(BrokeProtocol::GetPlayersCollection());
-            //BrokeProtocol::send_global_chat((char*)"FUCK NIGGERS KRIM IS OUR!!!");
+            BrokeProtocol::send_global_chat((char*)"FUCK NIGGERS KRIM IS OUR!!!");
     	}
 
     	if(wParam == VK_F1)
     	{
             FreeLibrary(DllInst);
     	}
-    }
 
-	if(msg == WM_KEYDOWN)
-	{
         if (wParam == VK_F3)
         {
             BrokeProtocol::fire();
             //BrokeProtocol::send_global_chat((char*)"FEFE FUCKING SLAVE MAZAFAKA");
         }
-	}
+    }
 
 }
 

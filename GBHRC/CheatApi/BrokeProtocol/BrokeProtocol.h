@@ -1,14 +1,14 @@
 #pragma once
-#include "BPStructs.h"
 #include "Enum/PacketFlags.h"
 #include "Enum/SvPacket.h"
 #include "Mono/Mono.h"
-#include "classes/ICollection/ICollection.h"
+#include "classes/Players/Players.h"
+#include "classes/Managers/Managers.h"
 
 namespace BrokeProtocol
 {
-	ShManager* get_manager();
-	ShPlayer* GetLocalPlayer();
+	Managers::ShManager* get_manager();
+	Players::ShPlayer* GetLocalPlayer();
 	void* GetPlayersCollection();
 
 	void fire();
@@ -17,6 +17,7 @@ namespace BrokeProtocol
 	
 	void show_local_message(char*text);
 	void send_global_chat(char*text);
+	void jump();
 };
 
 
