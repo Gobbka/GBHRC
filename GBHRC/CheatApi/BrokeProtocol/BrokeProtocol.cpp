@@ -13,8 +13,8 @@ BrokeProtocol::Managers::ShManager* BrokeProtocol::get_manager()
 
 	if(manager==nullptr)
 	{
-        auto* const unity_player = GetModuleHandle(L"UnityPlayer.dll");
-        manager = (Managers::ShManager*)*(size_t*)(*(size_t*)(*(size_t*)(*(size_t*)((size_t)unity_player + 0X19DD788) + 0X218) + 0X60) + 0X18);
+        auto* const unity_player = GetModuleHandle(L"mono-2.0-bdwgc.dll");
+        manager = (Managers::ShManager*)(*(size_t*)(*(size_t*)(*(size_t*)(*(size_t*)((size_t)unity_player + 0X4A7518) + 0X360) + 0X68) + 0X160)+0x280);
 	}
 	
     return reinterpret_cast<Managers::ShManager*>(manager);
@@ -22,6 +22,17 @@ BrokeProtocol::Managers::ShManager* BrokeProtocol::get_manager()
 
 BrokeProtocol::Players::ShPlayer* BrokeProtocol::GetLocalPlayer()
 {
+    auto* manager = get_manager();
+    if (manager->host == nullptr)
+    {
+        DEBUG_LOG("U ARE NOT IN GAME!");
+        return nullptr;
+    }
+    DEBUG_LOG("PLAYER: " << get_manager()->clManager->myPlayer);
+    Mono::mono_dump_class(
+        Mono::mono_object_get_class((Mono::MonoObject*)get_manager()->clManager->myPlayer)
+    );
+    return nullptr;
     return get_manager()->clManager->myPlayer;
 }
 

@@ -91,15 +91,19 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
         }
 
     	if(wParam == VK_F2){
-    		
+
+            BrokeProtocol::GetLocalPlayer();
+            return;
             auto* pdict = BrokeProtocol::GetPlayersCollection();
+            auto* array = Mono::mono_array_new(
+                Mono::mono_get_root_domain(),
+                Mono::mono_class_from_name(Mono::get_script_image(), "BrokeProtocol.Entities", "ShPlayer"),
+                pdict->count
+            );
+            DEBUG_LOG(array);
+    		
             DEBUG_LOG("DICK: "<<pdict);
             DEBUG_LOG(BrokeProtocol::GetLocalPlayer());
-    	}
-
-    	if(wParam == VK_F1)
-    	{
-            FreeLibrary(DllInst);
     	}
 
         if (wParam == VK_F3)
