@@ -1,5 +1,7 @@
 #include "Form.h"
 
+#include <windowsx.h>
+
 void Application::Form::window_proc(UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	if (msg == WM_MOUSEMOVE)

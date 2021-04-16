@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../includes/d3d.h"
-#include "../includes/logger.h"
-#include "../includes/win.h"
+#include "../GBHRC/includes/d3d.h"
+#include "../GBHRC/includes/logger.h"
+#include "../GBHRC/includes/win.h"
 
 namespace Application
 {

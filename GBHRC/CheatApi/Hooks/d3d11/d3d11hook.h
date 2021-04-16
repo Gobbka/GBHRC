@@ -1,6 +1,6 @@
 #pragma once
 #include "../../../includes/d3d.h"
-#include "../../../Application/Application.h"
+#include "Application.h"
 
 namespace Hooks
 {

@@ -3,7 +3,7 @@
 #include "includes/win.h"
 #include "CheatApi/Hooks/d3d11/d3d11hook.h"
 #include "CheatApi/Hooks/wndproc/wndprochook.h"
-#include "Application/Form/Form.h"
+#include "Form/Form.h"
 
 #include "Forms/Menu/MenuMain.h"
 
