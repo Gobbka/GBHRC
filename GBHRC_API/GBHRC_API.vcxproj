@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{95b8b76b-21c8-49df-a94a-957c10245eee}</ProjectGuid>
-    <RootNamespace>GBHRC</RootNamespace>
+    <ProjectGuid>{116fa4db-7e87-41d0-858f-45917e946269}</ProjectGuid>
+    <RootNamespace>GBHRCAPI</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -90,7 +90,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -104,7 +104,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -118,7 +118,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -132,7 +132,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -143,56 +143,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Application\Application.cpp" />
-    <ClCompile Include="Application\Form\Form.cpp" />
-    <ClCompile Include="Application\Render\d3d\Vertex.cpp" />
-    <ClCompile Include="Application\Render\Engine\Engine.cpp" />
-    <ClCompile Include="Application\Render\Scene\Scene.cpp" />
-    <ClCompile Include="Application\UI\Panel\Panel.cpp" />
-    <ClCompile Include="CheatApi\BrokeProtocol\BrokeProtocol.cpp" />
-    <ClCompile Include="CheatApi\BrokeProtocol\classes\Dictionary\Dictionary.cpp" />
-    <ClCompile Include="CheatApi\BrokeProtocol\classes\Managers\Managers.cpp" />
-    <ClCompile Include="CheatApi\BrokeProtocol\classes\Players\Players.cpp" />
-    <ClCompile Include="CheatApi\BrokeProtocol\Mono\Images\Script\ScriptImage.cpp" />
-    <ClCompile Include="CheatApi\BrokeProtocol\Mono\Mono.cpp" />
-    <ClCompile Include="CheatApi\Hooks\d3d11\d3d11hook.cpp" />
-    <ClCompile Include="Application\UI\IElement\IElement.cpp" />
-    <ClCompile Include="CheatApi\Hooks\wndproc\wndprochook.cpp" />
-    <ClCompile Include="Application\UI\Checkbox\Checkbox.cpp" />
-    <ClCompile Include="Forms\Menu\MenuMain.cpp" />
-    <ClCompile Include="CheatApi\BrokeProtocol\classes\ICollection\ICollection.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Application\Application.h" />
-    <ClInclude Include="Application\Form\Form.h" />
-    <ClInclude Include="Application\Managers\RectangleManager.h" />
-    <ClInclude Include="Application\Render\d3d\ConstantBuffer.h" />
-    <ClInclude Include="Application\Render\d3d\szShadez.h" />
-    <ClInclude Include="Application\Render\d3d\Vertex.h" />
-    <ClInclude Include="Application\Render\Engine\Engine.h" />
-    <ClInclude Include="Application\Render\Scene\Scene.h" />
-    <ClInclude Include="Application\UI\Panel\Panel.h" />
-    <ClInclude Include="CheatApi\BrokeProtocol\BrokeProtocol.h" />
-    <ClInclude Include="CheatApi\BrokeProtocol\BPStructs.h" />
-    <ClInclude Include="CheatApi\BrokeProtocol\classes\Dictionary\Dictionary.h" />
-    <ClInclude Include="CheatApi\BrokeProtocol\classes\Managers\Managers.h" />
-    <ClInclude Include="CheatApi\BrokeProtocol\classes\Players\Players.h" />
-    <ClInclude Include="CheatApi\BrokeProtocol\Enum\PacketFlags.h" />
-    <ClInclude Include="CheatApi\BrokeProtocol\Enum\SvPacket.h" />
-    <ClInclude Include="CheatApi\BrokeProtocol\Mono\Mono.h" />
-    <ClInclude Include="CheatApi\BrokeProtocol\Mono\MonoDefs.h" />
-    <ClInclude Include="CheatApi\BrokeProtocol\Mono\Images\Script\ScriptImage.h" />
-    <ClInclude Include="CheatApi\Hooks\d3d11\d3d11hook.h" />
-    <ClInclude Include="CheatApi\Hooks\d3d11\D3D11_VMT.h" />
-    <ClInclude Include="Application\UI\IElement\IElement.h" />
-    <ClInclude Include="CheatApi\Hooks\wndproc\wndprochook.h" />
-    <ClInclude Include="Application\UI\Checkbox\Checkbox.h" />
-    <ClInclude Include="Forms\Menu\MenuMain.h" />
-    <ClInclude Include="CheatApi\BrokeProtocol\classes\ICollection\ICollection.h" />
-    <ClInclude Include="includes\d3d.h" />
-    <ClInclude Include="includes\logger.h" />
-    <ClInclude Include="includes\win.h" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

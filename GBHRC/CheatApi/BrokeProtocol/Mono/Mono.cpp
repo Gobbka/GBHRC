@@ -80,6 +80,13 @@ UINT Mono::mono_field_get_offset(MonoClassField* field)
 	return ((UINT(__stdcall*)(MonoClassField*))proc)(field);
 }
 
+UINT Mono::mono_class_get_field_token(MonoClassField* field)
+{
+	STATIC_PROCEDURE("mono_class_get_field_token")
+
+	return ((UINT(__stdcall*)(MonoClassField*))proc)(field);
+}
+
 Mono::MonoProperty* Mono::mono_class_get_property_from_name(MonoClass* klass, const char* name)
 {
 	STATIC_PROCEDURE("mono_class_get_property_from_name")
@@ -104,6 +111,16 @@ void Mono::mono_field_static_get_value(MonoVTable* vTable, MonoClassField* field
 	STATIC_PROCEDURE("mono_field_static_get_value")
 
 	return ((void(__stdcall*)(MonoVTable * vTable, MonoClassField * field, void* value))proc)(vTable,field,value);
+}
+
+void Mono::mono_get_static_field_value(MonoClass* klass, UINT token,void*value)
+{
+	auto* vTable = (Mono::MonoVTable*)Mono::mono_class_vtable(Mono::mono_get_root_domain(), klass);
+
+	auto* static_class = Mono::mono_object_get_class((Mono::MonoObject*)vTable);
+	auto* pPlayersCollectionField = Mono::mono_class_get_field(static_class, token);
+
+	Mono::mono_field_static_get_value(vTable, pPlayersCollectionField, value);
 }
 
 Mono::MonoClass* Mono::mono_class_from_name(MonoImage* image, const char* namespace_name, const char* name)

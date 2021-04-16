@@ -23,6 +23,7 @@ namespace Mono
 
 	MonoVTable* WINAPI mono_class_vtable(MonoDomain* domain, MonoClass* klass);
 	void        WINAPI mono_field_static_get_value(MonoVTable* vTable, MonoClassField* field, void* value);
+	void        WINAPI mono_get_static_field_value(MonoClass* klass, UINT token,void* value);
 	MonoClass*  WINAPI mono_class_from_name(MonoImage* image, const char* namespace_name, const char* name);
 	MonoClass*  WINAPI mono_object_get_class(MonoObject* obj);
 	
@@ -32,9 +33,10 @@ namespace Mono
 	const char*     mono_field_get_name(MonoClassField* pField);
 	void            mono_field_get_value(MonoObject* object, MonoClassField* field, void* pValue);
 	UINT            mono_field_get_offset(MonoClassField* field);
+	UINT            mono_class_get_field_token(MonoClassField* field);
 
-	MonoProperty* mono_class_get_property_from_name(MonoClass* klass, const char* name);
-	MonoMethod* mono_property_get_get_method(MonoProperty* prop);
+	MonoProperty*   mono_class_get_property_from_name(MonoClass* klass, const char* name);
+	MonoMethod*     mono_property_get_get_method(MonoProperty* prop);
 	
 	/// <summary>
 	/// This routine is an iterator routine for retrieving the fields in a class.
@@ -54,7 +56,7 @@ namespace Mono
 	void  WINAPI mono_print_unhandled_exception(void* exception);
 	
 	MonoObject* create_csharp_string(char* ptr);
-	MonoClass* get_object_class();
+	MonoClass*  get_object_class();
 	
 	void mono_dump_class(MonoClass* klass);
 	

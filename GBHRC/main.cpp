@@ -92,7 +92,9 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
 
     	if(wParam == VK_F2){
     		
-            BrokeProtocol::send_global_chat((char*)"FUCK NIGGERS KRIM IS OUR!!!");
+            auto* pdict = BrokeProtocol::GetPlayersCollection();
+            DEBUG_LOG("DICK: "<<pdict);
+            DEBUG_LOG(BrokeProtocol::GetLocalPlayer());
     	}
 
     	if(wParam == VK_F1)

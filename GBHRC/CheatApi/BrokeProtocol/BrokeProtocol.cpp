@@ -25,49 +25,37 @@ BrokeProtocol::Players::ShPlayer* BrokeProtocol::GetLocalPlayer()
     return get_manager()->clManager->myPlayer;
 }
 
-void* BrokeProtocol::GetPlayersCollection()
+Dictionary* BrokeProtocol::GetPlayersCollection()
 {
-    auto* image = Mono::get_script_image();
-    auto* method_desc = Mono::mono_method_desc_new("BrokeProtocol.Collections.EntityCollections:n()", true);
+    static Dictionary* players;
+
+	if(players==nullptr)
+	{
+        auto* image = Mono::get_script_image();
+        auto* method_desc = Mono::mono_method_desc_new("BrokeProtocol.Collections.EntityCollections:n()", true);
+
+        auto* pClass = Mono::mono_class_from_name(image, method_desc->namespace_name, method_desc->class_name);
+        Mono::mono_method_desc_free(method_desc);
+
+        Mono::MonoObject* pPlayersCollection = nullptr;
+        Mono::mono_get_static_field_value(
+            pClass, 
+            0x400103F, // ENTITY_COLLECTION::HUMANS
+            &pPlayersCollection
+        );
+
+        // dictionary
+        auto* pField = Mono::mono_class_get_field(
+            Mono::mono_object_get_class(pPlayersCollection),
+            0x04002FBA // KeyedCollection::dict
+        );
+
+        Mono::mono_field_get_value(pPlayersCollection, pField, &players);
+
+        Mono::mono_dump_class(Mono::mono_object_get_class((Mono::MonoObject*)players));
+	}
 	
-    auto* pClass = Mono::mono_class_from_name(image, method_desc->namespace_name, method_desc->class_name);
-    Mono::mono_method_desc_free(method_desc);
-    DEBUG_LOG("CLASS: " << pClass);
-    auto* vTable = (Mono::MonoVTable*)Mono::mono_class_vtable(Mono::mono_get_root_domain(),pClass);
-
-    auto* collectionClass = Mono::mono_object_get_class((Mono::MonoObject*)vTable);
-
-
-    void* pointer = NULL;
-    Mono::MonoClassField* field = NULL;
-
-    while ((field = Mono::mono_class_get_fields(collectionClass, &pointer)))
-    {
-    	if(strcmp("<JFOPDLAIMGM>k__BackingField", mono_field_get_name(field))!=0)
-    	{
-            DEBUG_LOG("0x" << std::hex << mono_field_get_offset(field) << " : " << mono_field_get_name(field));
-
-            Mono::MonoObject* humans = nullptr;
-            Mono::mono_field_static_get_value(vTable, field, &humans);
-
-            auto* collection = Mono::mono_object_get_class((Mono::MonoObject*)humans);
-
-            auto* pField = Mono::mono_class_get_field(
-                collection,
-                0x04002FB6
-            );
-
-            DEBUG_LOG("FIELD: " << Mono::mono_field_get_name(pField));
-
-            int nigger_count = -1;
-            Mono::mono_field_get_value(humans, pField, &nigger_count);
-
-            DEBUG_LOG("COUNT: " << nigger_count);
-            DEBUG_LOG("=========================");
-    	}
-    }
-
-    return nullptr;
+    return players;
 }
 
 void BrokeProtocol::fire()

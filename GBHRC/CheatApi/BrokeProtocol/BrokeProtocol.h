@@ -4,12 +4,13 @@
 #include "Mono/Mono.h"
 #include "classes/Players/Players.h"
 #include "classes/Managers/Managers.h"
+#include "classes/Dictionary/Dictionary.h"
 
 namespace BrokeProtocol
 {
 	Managers::ShManager* get_manager();
 	Players::ShPlayer* GetLocalPlayer();
-	void* GetPlayersCollection();
+	Dictionary* GetPlayersCollection();
 
 	void fire();
 	
