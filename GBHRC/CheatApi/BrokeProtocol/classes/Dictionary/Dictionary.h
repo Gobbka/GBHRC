@@ -18,4 +18,5 @@ public:
 	uint32_t freeCount; //0x004C
 
 	void copy_to(Mono::MonoArray*array,int index);
+	bool contains(void* item);
 };

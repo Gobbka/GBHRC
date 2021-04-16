@@ -92,18 +92,18 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
 
     	if(wParam == VK_F2){
 
-            BrokeProtocol::GetLocalPlayer();
-            return;
             auto* pdict = BrokeProtocol::GetPlayersCollection();
             auto* array = Mono::mono_array_new(
                 Mono::mono_get_root_domain(),
                 Mono::mono_class_from_name(Mono::get_script_image(), "BrokeProtocol.Entities", "ShPlayer"),
                 pdict->count
             );
-            DEBUG_LOG(array);
-    		
+    		// саша лох
             DEBUG_LOG("DICK: "<<pdict);
-            DEBUG_LOG(BrokeProtocol::GetLocalPlayer());
+            //pdict->copy_to(array, 0);
+            DEBUG_LOG(pdict->contains(BrokeProtocol::GetLocalPlayer()));
+            //DEBUG_LOG("COPIED");
+            //DEBUG_LOG(((BrokeProtocol::Players::ShPlayer*)array->vector[0])->health);
     	}
 
         if (wParam == VK_F3)

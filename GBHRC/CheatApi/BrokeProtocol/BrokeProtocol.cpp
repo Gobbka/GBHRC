@@ -28,11 +28,7 @@ BrokeProtocol::Players::ShPlayer* BrokeProtocol::GetLocalPlayer()
         DEBUG_LOG("U ARE NOT IN GAME!");
         return nullptr;
     }
-    DEBUG_LOG("PLAYER: " << get_manager()->clManager->myPlayer);
-    Mono::mono_dump_class(
-        Mono::mono_object_get_class((Mono::MonoObject*)get_manager()->clManager->myPlayer)
-    );
-    return nullptr;
+
     return get_manager()->clManager->myPlayer;
 }
 
@@ -51,14 +47,14 @@ Dictionary* BrokeProtocol::GetPlayersCollection()
         Mono::MonoObject* pPlayersCollection = nullptr;
         Mono::mono_get_static_field_value(
             pClass, 
-            0x400103F, // ENTITY_COLLECTION::HUMANS
+            0x0400111C, // ENTITY_COLLECTION::HUMANS
             &pPlayersCollection
         );
 
         // dictionary
         auto* pField = Mono::mono_class_get_field(
             Mono::mono_object_get_class(pPlayersCollection),
-            0x04002FBA // KeyedCollection::dict
+            0x04002FBB // KeyedCollection::dict
         );
 
         Mono::mono_field_get_value(pPlayersCollection, pField, &players);
