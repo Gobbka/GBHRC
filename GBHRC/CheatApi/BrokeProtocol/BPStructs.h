@@ -1,6 +1,20 @@
 #include <cstdint>
 
 namespace BrokeProtocol {
+	namespace Managers {
+		class ClManager;
+		class ShManager;
+	}
+}
+
+namespace BrokeProtocol {
+	namespace Players {
+		class ClPlayer;
+		class ShPlayer;
+	}
+}
+
+namespace BrokeProtocol {
 	namespace Structs {
 
 		class String
@@ -56,6 +70,23 @@ namespace BrokeProtocol {
 			char pad_01C4[8]; //0x01C4
 		}; //Size: 0x01CC
 
+		class GlobalTypes
+		{
+		public:
+			char pad_0000[16]; //0x0000
+			Players::ShPlayer* player; //0x0010
+			Players::ClPlayer* clPlayer; //0x0018
+			Managers::ShManager* manager; //0x0020
+			Managers::ClManager* clManager; //0x0028
+		};
 
+		class Evaluator
+		{
+		public:
+			char pad_0000[16]; //0x0000
+			void* ScriptDict; //0x0010
+			char pad_0018[24]; //0x0018
+			GlobalTypes* GlobalTypes; //0x0030
+		};
 	}
 }

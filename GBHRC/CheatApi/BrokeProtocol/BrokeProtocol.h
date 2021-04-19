@@ -8,6 +8,8 @@
 
 namespace BrokeProtocol
 {
+	Structs::Evaluator* get_evaluator();
+	Structs::GlobalTypes* get_global_types();
 	Managers::ShManager* get_manager();
 	Players::ShPlayer* GetLocalPlayer();
 	Dictionary* GetPlayersCollection();
@@ -19,6 +21,9 @@ namespace BrokeProtocol
 	void show_local_message(char*text);
 	void send_global_chat(char*text);
 	void jump();
+	void ShowTextMenu(float xMin, float yMin, float xMax, float yMax,const char* title,const char* text);
+	// shows panel in top-right angle
+	void ShowTextPanel(const char* text);
 };
 
 

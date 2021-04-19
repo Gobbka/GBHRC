@@ -1,5 +1,7 @@
 #include "Mono.h"
 
+
+#include "../BPStructs.h"
 #include "../../../includes/logger.h"
 
 #define STATIC_PROCEDURE(proc_name) static LPVOID proc; if(proc==nullptr) proc = GetProcAddress(getModule(),proc_name);
@@ -32,6 +34,13 @@ LPVOID Mono::mono_method_get_unmanaged_thunk(MonoMethod* method)
 	if (proc == nullptr)
 		proc = (tMonoMethodDescNew)GetProcAddress(getModule(), "mono_method_get_unmanaged_thunk");
 	return proc(method);
+}
+
+const char* Mono::mono_method_get_name(MonoMethod* method)
+{
+	STATIC_PROCEDURE("mono_method_get_name")
+
+	return ((const char * (__stdcall*)(MonoMethod*))proc)(method);
 }
 
 Mono::MonoClassField* Mono::mono_class_get_field(MonoClass* klass, UINT field_token)
@@ -71,6 +80,13 @@ void Mono::mono_field_get_value(MonoObject* object, MonoClassField* field, void*
 	STATIC_PROCEDURE("mono_field_get_value")
 	
 	((void(__stdcall*)(MonoObject*,MonoClassField*,void*))proc)(object,field,pValue);
+}
+
+void Mono::mono_field_from_name_get_value(MonoObject* object, const char* name, void* pValue)
+{
+	auto* pClass = mono_object_get_class(object);
+	auto* field = mono_class_get_field_from_name(pClass, name);
+	mono_field_get_value(object, field, pValue);
 }
 
 UINT Mono::mono_field_get_offset(MonoClassField* field)
@@ -237,6 +253,15 @@ void Mono::mono_print_unhandled_exception(void* exception)
 		proc = GetProcAddress(getModule(), "mono_print_unhandled_exception");
 
 	((const char* (__stdcall*)(void*))proc)(exception);
+}
+
+void Mono::mono_print_system_exception(void* exception)
+{
+	auto* klass = Mono::mono_class_from_name(get_mscorlib(), "System", "Exception");
+	auto* field = Mono::mono_class_get_field_from_name(klass, "_message");
+	BrokeProtocol::Structs::String* value;
+	mono_field_get_value((MonoObject*)exception, field, &value);
+	DEBUG_LOG("<ERROR> "<<(char*)(value->pointer));
 }
 
 Mono::MonoClassField* Mono::mono_class_get_fields(MonoClass* klass, void* iter)

@@ -2,6 +2,48 @@
 #include "../../BrokeProtocol.h"
 #include "../../../../includes/logger.h"
 
+bool Enumerator::MoveNext()
+{
+	auto* klass = Mono::mono_object_get_class((Mono::MonoObject*)this);
+
+	if(this->version != this->dictionary->version)
+	{
+		DEBUG_LOG("U ARe A nigger");
+		return false;
+	}
+	
+	auto* method = Mono::mono_class_get_method_from_name(
+		klass,
+		"MoveNext",
+		-1
+	);
+	DEBUG_LOG("MOVE NEXT METHOD:" << method);
+
+	Mono::MonoObject* exception;
+
+	bool result = (bool)Mono::mono_runtime_invoke(method, this, nullptr, &exception);
+	if(exception!=nullptr)
+	{
+		Mono::mono_print_system_exception(exception);
+		return false;
+	}
+	return result;
+}
+
+int Dictionary::FindEntry(int key)
+{
+	auto* klass = Mono::mono_object_get_class((Mono::MonoObject*)this);
+
+	auto* method = Mono::mono_class_get_method_from_name(
+		klass,
+		"FindEntry",
+		-1
+	);
+
+	void* args[1]{ &key };
+	return (int)Mono::mono_runtime_invoke(method, this, args, nullptr);
+}
+
 void Dictionary::copy_to(Mono::MonoArray* array, int index)
 {
 	void* args[1];
@@ -49,4 +91,32 @@ bool Dictionary::contains(void* item)
 		"ContainsValue",-1
 	);
 	return (bool)Mono::mono_runtime_invoke(method, this, args, nullptr);
+}
+
+void Dictionary::clear()
+{
+	// GetEnumerator
+	auto* klass = Mono::mono_object_get_class((Mono::MonoObject*)this);
+
+	auto* method = Mono::mono_class_get_method_from_name(
+		klass,
+		"Clear",
+		-1
+	);
+
+	Mono::mono_runtime_invoke(method, this, nullptr, nullptr);
+}
+
+Enumerator* Dictionary::get_enumerator()
+{
+	// GetEnumerator
+	auto* klass = Mono::mono_object_get_class((Mono::MonoObject*)this);
+
+	auto* method = Mono::mono_class_get_method_from_name(
+		klass,
+		"GetEnumerator",
+		-1
+	);
+
+	return (Enumerator*)Mono::mono_runtime_invoke(method, this, nullptr, nullptr);
 }

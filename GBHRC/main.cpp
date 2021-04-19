@@ -38,14 +38,30 @@ void MainThread()
     AllocConsole();
     auto nigger = freopen("CONOUT$", "w", stdout);
     nigger = freopen("CONIN$", "r", stdin);
-    system("clear");
 #endif
 	
     Hooks::WndProc::init_hook(hwnd);
     Hooks::WndProc::callback(wnd_key_hook);
 
-    // Hooks::D3D11::hook(Hooks::D3D11::GetPresentAddress(), init_callback);
-    // WndProcHook::setInputState(false);
+    Mono::mono_thread_attach(Mono::mono_get_root_domain());
+    BrokeProtocol::show_local_message((char*)"<color=#39d668>[info]</color> GBHRC injected | press <color=#39d668>INSERT</color> to show menu!");
+    BrokeProtocol::show_local_message((char*)"<color=#3966d6>[info]</color> join our discord: https://discord.gg/4jRzSHz3 ");
+
+    DEBUG_LOG("ENTER POINTER OF SHIT TO DUMP");
+
+	while(1)
+	{
+        __int64 gobka=0;
+        std::cin >> gobka;
+        DEBUG_LOG("ENTERED: " << gobka);
+		if(gobka ==0)
+            continue;
+        Mono::mono_thread_attach(Mono::mono_get_root_domain());
+        Mono::mono_dump_class(
+            Mono::mono_object_get_class(
+            (Mono::MonoObject*)gobka)
+        );
+	}
 }
 
 void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
@@ -92,18 +108,10 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
 
     	if(wParam == VK_F2){
 
-            auto* pdict = BrokeProtocol::GetPlayersCollection();
-            auto* array = Mono::mono_array_new(
-                Mono::mono_get_root_domain(),
-                Mono::mono_class_from_name(Mono::get_script_image(), "BrokeProtocol.Entities", "ShPlayer"),
-                pdict->count
-            );
-    		// саша лох
-            DEBUG_LOG("DICK: "<<pdict);
-            //pdict->copy_to(array, 0);
-            DEBUG_LOG(pdict->contains(BrokeProtocol::GetLocalPlayer()));
-            //DEBUG_LOG("COPIED");
-            //DEBUG_LOG(((BrokeProtocol::Players::ShPlayer*)array->vector[0])->health);
+            /*Mono::mono_dump_class(
+                Mono::mono_object_get_class((Mono::MonoObject*)BrokeProtocol::get_evaluator())
+            );*/
+
     	}
 
         if (wParam == VK_F3)

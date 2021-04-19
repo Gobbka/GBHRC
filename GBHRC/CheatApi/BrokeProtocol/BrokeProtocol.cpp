@@ -7,29 +7,42 @@
 #define STATIC_METHOD(name,inc_namespace) static Mono::MonoMethod* pMethod; \
 	if(pMethod == nullptr) pMethod = Mono::ScriptImage::mono_get_method_from_name(name, inc_namespace)
 
+BrokeProtocol::Structs::Evaluator* BrokeProtocol::get_evaluator()
+{
+    static size_t pointer;
+
+    if (pointer == 0)
+    {
+        auto* const unity_player = GetModuleHandle(L"UnityPlayer.dll");
+        size_t step = *(size_t*)((size_t)unity_player + 0X1982398);
+        step = *(size_t*)(step + 0X0);
+        step = *(size_t*)(step + 0X10);
+        pointer = step;
+
+    	//step = *(size_t*)(step + 0X340);
+        //manager = (Structs::Evaluator**)(step + 0x340);
+    }
+    auto buffer = pointer;
+    buffer = *(size_t*)(buffer + 0X198);
+    buffer = *(size_t*)(buffer + 0x340);
+
+	
+    return (Structs::Evaluator*)buffer;
+}
+
+BrokeProtocol::Structs::GlobalTypes* BrokeProtocol::get_global_types()
+{
+    return get_evaluator()->GlobalTypes;
+}
+
 BrokeProtocol::Managers::ShManager* BrokeProtocol::get_manager()
 {
-    static Managers::ShManager* manager;
-
-	if(manager==nullptr)
-	{
-        auto* const unity_player = GetModuleHandle(L"mono-2.0-bdwgc.dll");
-        manager = (Managers::ShManager*)(*(size_t*)(*(size_t*)(*(size_t*)(*(size_t*)((size_t)unity_player + 0X4A7518) + 0X360) + 0X68) + 0X160)+0x280);
-	}
-	
-    return reinterpret_cast<Managers::ShManager*>(manager);
+    return get_global_types()->manager;
 }
 
 BrokeProtocol::Players::ShPlayer* BrokeProtocol::GetLocalPlayer()
 {
-    auto* manager = get_manager();
-    if (manager->host == nullptr)
-    {
-        DEBUG_LOG("U ARE NOT IN GAME!");
-        return nullptr;
-    }
-
-    return get_manager()->clManager->myPlayer;
+    return get_global_types()->player;
 }
 
 Dictionary* BrokeProtocol::GetPlayersCollection()
@@ -47,7 +60,7 @@ Dictionary* BrokeProtocol::GetPlayersCollection()
         Mono::MonoObject* pPlayersCollection = nullptr;
         Mono::mono_get_static_field_value(
             pClass, 
-            0x0400111C, // ENTITY_COLLECTION::HUMANS
+            0x0400111D, // ENTITY_COLLECTION::PLAYERS
             &pPlayersCollection
         );
 
@@ -58,7 +71,8 @@ Dictionary* BrokeProtocol::GetPlayersCollection()
         );
 
         Mono::mono_field_get_value(pPlayersCollection, pField, &players);
-
+        DEBUG_LOG("PLAYERS: " << players);
+        players->clear();
         Mono::mono_dump_class(Mono::mono_object_get_class((Mono::MonoObject*)players));
 	}
 	
@@ -94,13 +108,17 @@ void BrokeProtocol::SendToServer(PacketFlags flags, BrokeProtocol::SvPacket pack
 
 void BrokeProtocol::show_local_message(char*text)
 {
+	DEBUG_LOG(    Mono::mono_class_get_name(
+        Mono::mono_object_get_class((Mono::MonoObject*)get_global_types()->clManager)
+    ));
+	
     STATIC_METHOD("BrokeProtocol.Managers.ClManager:ShowGameMessage(string)", true);
 	
     void* params[1] {Mono::create_csharp_string(text)};
 	
     Mono::MonoObject* exception = nullptr;
 	
-    Mono::mono_runtime_invoke(pMethod, BrokeProtocol::GetLocalPlayer()->clPlayer->clManager, params, &exception);
+    Mono::mono_runtime_invoke(pMethod, BrokeProtocol::get_global_types()->clManager, params, &exception);
 
 	if(exception!=nullptr)
 	{
@@ -124,4 +142,35 @@ void BrokeProtocol::jump()
     STATIC_METHOD("BrokeProtocol.Entities.ShPlayer:Jump()", true);
 	
     Mono::mono_runtime_invoke(pMethod, BrokeProtocol::GetLocalPlayer(), nullptr, nullptr);
+}
+
+void BrokeProtocol::ShowTextMenu(float xMin, float yMin, float xMax, float yMax,const char* title,const char* text)
+{
+    STATIC_METHOD("BrokeProtocol.Managers.ClManager:ShowTextPanel()",true);
+
+    auto* title_str = Mono::create_csharp_string((char*)"<color=#FFFFFF>NIGGER</color>");
+    auto* text_str = Mono::create_csharp_string((char*)text);
+
+    void* args[]{ title_str };
+
+    DEBUG_LOG("METHOD:" << pMethod);
+    DEBUG_LOG("PISKA: " << BrokeProtocol::GetLocalPlayer()->clPlayer->clManager);
+
+    Mono::MonoObject* exc;
+	
+    Mono::mono_runtime_invoke(pMethod, BrokeProtocol::get_manager()->clManager,args,&exc);
+
+	if(exc!=nullptr)
+	{
+        DEBUG_LOG("NIGGER ERROR");
+	}
+}
+
+void BrokeProtocol::ShowTextPanel(const char* text)
+{
+    STATIC_METHOD("BrokeProtocol.Managers.ClManager:ShowTextPanel()", true);
+
+    void* args[]{ Mono::create_csharp_string((char*)text) };
+
+    Mono::mono_runtime_invoke(pMethod, BrokeProtocol::get_global_types()->clManager, args, nullptr);
 }

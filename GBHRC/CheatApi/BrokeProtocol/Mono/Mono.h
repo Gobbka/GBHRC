@@ -20,6 +20,7 @@ namespace Mono
 	const char* WINAPI mono_class_get_name(MonoClass* klass);
 	
 	LPVOID      WINAPI mono_method_get_unmanaged_thunk(MonoMethod* method);
+	const char* WINAPI mono_method_get_name(MonoMethod* method);
 
 	MonoVTable* WINAPI mono_class_vtable(MonoDomain* domain, MonoClass* klass);
 	void        WINAPI mono_field_static_get_value(MonoVTable* vTable, MonoClassField* field, void* value);
@@ -32,6 +33,7 @@ namespace Mono
 	MonoClassField* mono_class_get_field_from_name(MonoClass* klass, const char* name);
 	const char*     mono_field_get_name(MonoClassField* pField);
 	void            mono_field_get_value(MonoObject* object, MonoClassField* field, void* pValue);
+	void            mono_field_from_name_get_value(MonoObject* object, const char* name,void*pValue);
 	UINT            mono_field_get_offset(MonoClassField* field);
 	UINT            mono_class_get_field_token(MonoClassField* field);
 
@@ -54,6 +56,7 @@ namespace Mono
 	
 	void  WINAPI mono_error_raise_exception(void** error);
 	void  WINAPI mono_print_unhandled_exception(void* exception);
+	void  WINAPI mono_print_system_exception(void* exception);
 	
 	MonoObject* create_csharp_string(char* ptr);
 	MonoClass*  get_object_class();

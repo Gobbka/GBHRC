@@ -9,7 +9,7 @@ namespace BrokeProtocol
 		public:
 
 			char pad_0000[132]; //0x0000
-			uint32_t ID; //0x0084
+			uint32_t ID; //0x0084 // needed 8C
 			char pad_0088[176]; //0x0088
 			float health; //0x0138
 			float healthLimit; //0x013C
