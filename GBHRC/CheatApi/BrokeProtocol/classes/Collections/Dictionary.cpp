@@ -2,6 +2,8 @@
 #include "../../BrokeProtocol.h"
 #include "../../../../includes/logger.h"
 
+using namespace Collections;
+
 bool Enumerator::MoveNext()
 {
 	auto* klass = Mono::mono_object_get_class((Mono::MonoObject*)this);

@@ -4,6 +4,8 @@
 #include "Mono/Mono.h"
 #include "Mono/Images/Script/ScriptImage.h"
 
+using namespace Collections;
+
 #define STATIC_METHOD(name,inc_namespace) static Mono::MonoMethod* pMethod; \
 	if(pMethod == nullptr) pMethod = Mono::ScriptImage::mono_get_method_from_name(name, inc_namespace)
 
@@ -45,9 +47,9 @@ BrokeProtocol::Players::ShPlayer* BrokeProtocol::GetLocalPlayer()
     return get_global_types()->player;
 }
 
-KeyedCollection* BrokeProtocol::GetPlayersCollection()
+KeyedCollection<BrokeProtocol::Players::ShPlayer*>* BrokeProtocol::GetPlayersCollection()
 {
-    static KeyedCollection* players;
+    static KeyedCollection<Players::ShPlayer*>* players;
 
 	if(players==nullptr)
 	{

@@ -148,7 +148,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CheatApi\BrokeProtocol\BrokeProtocol.cpp" />
-    <ClCompile Include="CheatApi\BrokeProtocol\classes\Dictionary\Dictionary.cpp" />
+    <ClCompile Include="CheatApi\BrokeProtocol\classes\Collections\Dictionary.cpp" />
     <ClCompile Include="CheatApi\BrokeProtocol\classes\Managers\Managers.cpp" />
     <ClCompile Include="CheatApi\BrokeProtocol\classes\Players\Players.cpp" />
     <ClCompile Include="CheatApi\BrokeProtocol\Mono\Images\Script\ScriptImage.cpp" />
@@ -162,7 +162,9 @@
   <ItemGroup>
     <ClInclude Include="CheatApi\BrokeProtocol\BrokeProtocol.h" />
     <ClInclude Include="CheatApi\BrokeProtocol\BPStructs.h" />
-    <ClInclude Include="CheatApi\BrokeProtocol\classes\Dictionary\Dictionary.h" />
+    <ClInclude Include="CheatApi\BrokeProtocol\classes\Collections\KeyedCollection.h" />
+    <ClInclude Include="CheatApi\BrokeProtocol\classes\Collections\List.h" />
+    <ClInclude Include="CheatApi\BrokeProtocol\classes\Collections\Dictionary.h" />
     <ClInclude Include="CheatApi\BrokeProtocol\classes\Managers\Managers.h" />
     <ClInclude Include="CheatApi\BrokeProtocol\classes\Players\Players.h" />
     <ClInclude Include="CheatApi\BrokeProtocol\Enum\PacketFlags.h" />

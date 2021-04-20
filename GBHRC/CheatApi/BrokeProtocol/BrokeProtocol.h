@@ -4,7 +4,8 @@
 #include "Mono/Mono.h"
 #include "classes/Players/Players.h"
 #include "classes/Managers/Managers.h"
-#include "classes/Dictionary/Dictionary.h"
+#include "classes/Collections/Dictionary.h"
+#include "classes/Collections/KeyedCollection.h"
 
 namespace BrokeProtocol
 {
@@ -12,7 +13,7 @@ namespace BrokeProtocol
 	Structs::GlobalTypes* get_global_types();
 	Managers::ShManager* get_manager();
 	Players::ShPlayer* GetLocalPlayer();
-	KeyedCollection* GetPlayersCollection();
+	Collections::KeyedCollection<Players::ShPlayer*>* GetPlayersCollection();
 
 	void fire();
 	
