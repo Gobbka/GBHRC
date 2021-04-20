@@ -107,14 +107,13 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
         }
 
     	if(wParam == VK_F2){
-            DEBUG_LOG("COUNT: " << BrokeProtocol::GetPlayersCollection()->items->_items);
 
-            BrokeProtocol::GetPlayersCollection()->items->_items[0]->health;
-            
-            /*Mono::mono_dump_class(
-                Mono::mono_object_get_class((Mono::MonoObject*)BrokeProtocol::get_evaluator())
-            );*/
-
+            auto* ptr = BrokeProtocol::GetPlayersCollection()->items;
+            auto* player_pointer = ptr->pointer();
+    		for(int i =0;i<ptr->size();i++)
+    		{
+                DEBUG_LOG(player_pointer[i]->ID<<": "<<player_pointer[i]->health);
+    		}
     	}
 
         if (wParam == VK_F3)
