@@ -27,6 +27,27 @@ public:
 	void* value; //0x0020
 };
 
+class List
+{
+public:
+	char pad_0000[16]; //0x0000
+	void** _items; //0x0010
+	uint32_t _size; //0x0018
+	uint32_t _version; //0x001C
+};
+
+class KeyedCollection
+{
+public:
+	char pad_0000[16]; //0x0000
+	List* items; //0x0010
+	void* _syncRoot; //0x0018
+	void* comparer; //0x0020
+	Dictionary* dict; //0x0028
+	uint32_t keyCount; //0x0030
+	uint32_t threshold; //0x0034
+};
+
 class Dictionary
 {
 public:

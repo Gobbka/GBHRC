@@ -12,7 +12,7 @@ namespace BrokeProtocol
 	Structs::GlobalTypes* get_global_types();
 	Managers::ShManager* get_manager();
 	Players::ShPlayer* GetLocalPlayer();
-	Dictionary* GetPlayersCollection();
+	KeyedCollection* GetPlayersCollection();
 
 	void fire();
 	

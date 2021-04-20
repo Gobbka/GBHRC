@@ -45,9 +45,9 @@ BrokeProtocol::Players::ShPlayer* BrokeProtocol::GetLocalPlayer()
     return get_global_types()->player;
 }
 
-Dictionary* BrokeProtocol::GetPlayersCollection()
+KeyedCollection* BrokeProtocol::GetPlayersCollection()
 {
-    static Dictionary* players;
+    static KeyedCollection* players;
 
 	if(players==nullptr)
 	{
@@ -57,22 +57,21 @@ Dictionary* BrokeProtocol::GetPlayersCollection()
         auto* pClass = Mono::mono_class_from_name(image, method_desc->namespace_name, method_desc->class_name);
         Mono::mono_method_desc_free(method_desc);
 
-        Mono::MonoObject* pPlayersCollection = nullptr;
+        //Mono::MonoObject* pPlayersCollection = nullptr;
         Mono::mono_get_static_field_value(
             pClass, 
-            0x0400111D, // ENTITY_COLLECTION::PLAYERS
-            &pPlayersCollection
+            0x0400111C, // ENTITY_COLLECTION::HUMANS
+            &players
         );
 
         // dictionary
-        auto* pField = Mono::mono_class_get_field(
-            Mono::mono_object_get_class(pPlayersCollection),
-            0x04002FBB // KeyedCollection::dict
-        );
+        //auto* pField = Mono::mono_class_get_field(
+        //    Mono::mono_object_get_class(pPlayersCollection),
+        //    0x04002FB7 // Collection::items
+        //);
 
-        Mono::mono_field_get_value(pPlayersCollection, pField, &players);
-        DEBUG_LOG("PLAYERS: " << players);
-        players->clear();
+        //Mono::mono_field_get_value(pPlayersCollection, pField, &players);
+        
         Mono::mono_dump_class(Mono::mono_object_get_class((Mono::MonoObject*)players));
 	}
 	
