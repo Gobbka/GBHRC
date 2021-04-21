@@ -6,8 +6,7 @@
 
 using namespace Collections;
 
-#define STATIC_METHOD(name,inc_namespace) static Mono::MonoMethod* pMethod; \
-	if(pMethod == nullptr) pMethod = Mono::ScriptImage::mono_get_method_from_name(name, inc_namespace)
+#define STATIC_METHOD(name,inc_namespace) static Mono::MonoMethod* pMethod = Mono::ScriptImage::mono_get_method_from_name(name, inc_namespace)
 
 BrokeProtocol::Structs::Evaluator* BrokeProtocol::get_evaluator()
 {
@@ -59,20 +58,11 @@ KeyedCollection<BrokeProtocol::Players::ShPlayer*>* BrokeProtocol::GetPlayersCol
         auto* pClass = Mono::mono_class_from_name(image, method_desc->namespace_name, method_desc->class_name);
         Mono::mono_method_desc_free(method_desc);
 
-        //Mono::MonoObject* pPlayersCollection = nullptr;
         Mono::mono_get_static_field_value(
             pClass, 
             0x0400111C, // ENTITY_COLLECTION::HUMANS
             &players
         );
-
-        // dictionary
-        //auto* pField = Mono::mono_class_get_field(
-        //    Mono::mono_object_get_class(pPlayersCollection),
-        //    0x04002FB7 // Collection::items
-        //);
-
-        //Mono::mono_field_get_value(pPlayersCollection, pField, &players);
         
         Mono::mono_dump_class(Mono::mono_object_get_class((Mono::MonoObject*)players));
 	}
@@ -109,9 +99,6 @@ void BrokeProtocol::SendToServer(PacketFlags flags, BrokeProtocol::SvPacket pack
 
 void BrokeProtocol::show_local_message(char*text)
 {
-	DEBUG_LOG(    Mono::mono_class_get_name(
-        Mono::mono_object_get_class((Mono::MonoObject*)get_global_types()->clManager)
-    ));
 	
     STATIC_METHOD("BrokeProtocol.Managers.ClManager:ShowGameMessage(string)", true);
 	
@@ -136,13 +123,6 @@ void BrokeProtocol::send_global_chat(char* text)
     theArray->vector[0] = (__int64)ptr;
 
     BrokeProtocol::SendToServer(PacketFlags::Reliable, SvPacket::GlobalMessage, theArray);
-}
-
-void BrokeProtocol::jump()
-{
-    STATIC_METHOD("BrokeProtocol.Entities.ShPlayer:Jump()", true);
-	
-    Mono::mono_runtime_invoke(pMethod, BrokeProtocol::GetLocalPlayer(), nullptr, nullptr);
 }
 
 void BrokeProtocol::ShowTextMenu(float xMin, float yMin, float xMax, float yMax,const char* title,const char* text)

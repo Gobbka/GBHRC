@@ -48,6 +48,9 @@
     <ClCompile Include="CheatApi\BrokeProtocol\classes\Collections\Dictionary.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="CheatApi\BrokeProtocol\classes\Transform\Transform.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CheatApi\Hooks\d3d11\d3d11hook.h">
@@ -108,6 +111,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="CheatApi\BrokeProtocol\classes\Collections\KeyedCollection.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="CheatApi\BrokeProtocol\classes\Transform\Transform.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

@@ -239,6 +239,18 @@ const char* Mono::mono_class_get_name(MonoClass* klass)
 	return ((const char * (__stdcall*)(MonoClass *))proc)(klass);
 }
 
+Mono::MonoMethod* Mono::mono_get_method_from_image(MonoImage* image, const char* desc, bool include_namespace)
+{
+	auto* method_desc = Mono::mono_method_desc_new(desc, include_namespace);
+
+	auto* pClass = Mono::mono_class_from_name(image, method_desc->namespace_name, method_desc->class_name);
+	auto* method = Mono::mono_class_get_method_from_name(pClass, method_desc->method_name, -1);
+
+	Mono::mono_method_desc_free(method_desc);
+
+	return method;
+}
+
 void Mono::mono_error_raise_exception(void** error)
 {
 	STATIC_PROCEDURE("mono_error_raise_exception")
@@ -333,6 +345,13 @@ Mono::MonoImage* Mono::get_mscorlib()
 	static MonoImage* image;
 	if (image == nullptr)
 		image = Mono::mono_image_loaded("D:\\Steam\\steamapps\\common\\BROKE PROTOCOL\\BrokeProtocol_Data\\Managed\\mscorlib.dll");
+
+	return image;
+}
+
+Mono::MonoImage* Mono::get_UE_CoreModule()
+{
+	static MonoImage* image = Mono::mono_image_loaded("D:\\Steam\\steamapps\\common\\BROKE PROTOCOL\\BrokeProtocol_Data\\Managed\\UnityEngine.CoreModule.dll");
 
 	return image;
 }

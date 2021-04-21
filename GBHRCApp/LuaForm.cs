@@ -15,11 +15,12 @@ namespace GBHRCApp
         public LuaForm()
         {
             InitializeComponent();
+            
         }
 
         public string get_text()
         {
-            return this.richTextBox1.Text;
+            return this.fastColoredTextBox1.Text;
         }
     }
 }

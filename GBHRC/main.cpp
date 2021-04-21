@@ -87,39 +87,25 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
 
         if (wParam == VK_F5)
         {
-            BrokeProtocol::jump();
+            BrokeProtocol::GetLocalPlayer()->jump();
         }
 
         if(wParam == VK_F4)
         {
-            auto* image = Mono::mono_image_loaded("D:\\Steam\\steamapps\\common\\BROKE PROTOCOL\\BrokeProtocol_Data\\Managed\\Scripts.dll");
-            auto* method_desc = Mono::mono_method_desc_new("BrokeProtocol.Entities.ShPlayer:ClearInjuries()", true);
-            auto* pClass = Mono::mono_class_from_name(image, method_desc->namespace_name, method_desc->class_name);
-            DEBUG_LOG("CLASS: " << pClass);
-            auto* method = Mono::mono_class_get_method_from_name(pClass, method_desc->method_name, -1);
-            DEBUG_LOG("METHOD: " << method);
-            Mono::mono_method_desc_free(method_desc);
-
-            Mono::mono_thread_attach(Mono::mono_get_root_domain());
-            Mono::mono_runtime_invoke(method, BrokeProtocol::GetLocalPlayer(), nullptr, nullptr);
-
-            DEBUG_LOG("============INVOKED============");
+            BrokeProtocol::GetLocalPlayer()->clear_injuries();
         }
 
     	if(wParam == VK_F2){
 
             auto* ptr = BrokeProtocol::GetPlayersCollection()->items;
             auto* player_pointer = ptr->pointer();
-    		for(int i =0;i<ptr->size();i++)
-    		{
-                DEBUG_LOG(player_pointer[i]->ID<<": "<<player_pointer[i]->health);
-    		}
+    		
+            BrokeProtocol::GetLocalPlayer()->rotationT->rotate(0, 25.f, 0);
     	}
 
         if (wParam == VK_F3)
         {
-            BrokeProtocol::fire();
-            //BrokeProtocol::send_global_chat((char*)"FEFE FUCKING SLAVE MAZAFAKA");
+            BrokeProtocol::GetLocalPlayer()->fire();
         }
     }
 

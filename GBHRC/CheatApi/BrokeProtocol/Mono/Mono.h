@@ -18,6 +18,7 @@ namespace Mono
 	MonoMethod* WINAPI mono_object_get_virtual_method(MonoObject* object, MonoMethod* method);
 	MonoMethod* WINAPI mono_class_get_method_from_name(MonoClass* klass, const char* name, int param_count);
 	const char* WINAPI mono_class_get_name(MonoClass* klass);
+	MonoMethod* WINAPI mono_get_method_from_image(MonoImage* image, const char* desc, bool include_namespace=true);
 	
 	LPVOID      WINAPI mono_method_get_unmanaged_thunk(MonoMethod* method);
 	const char* WINAPI mono_method_get_name(MonoMethod* method);
@@ -67,4 +68,5 @@ namespace Mono
 	
 	MonoImage* get_script_image();
 	MonoImage* get_mscorlib();
+	MonoImage* get_UE_CoreModule();
 }

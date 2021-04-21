@@ -1,5 +1,6 @@
 #pragma once
 #include "../../BPStructs.h"
+#include "../Transform/Transform.h"
 
 namespace BrokeProtocol
 {
@@ -16,7 +17,7 @@ namespace BrokeProtocol
 			char pad_0140[72]; //0x0140
 			float speed; //0x0188
 			float speedLimit; //0x018C
-			void* rotationT; //0x0190
+			Transform* rotationT; //0x0190
 			class ClPlayer* clPlayer; //0x0198
 			void* svPlayer; //0x01A0
 			void* specPlayer; //0x01A8
@@ -58,6 +59,8 @@ namespace BrokeProtocol
 			Structs::Equipable* current_weapon() const;
 
 			void jump();
+			void clear_injuries();
+			void fire();
 		};
 
 		class ClPlayer

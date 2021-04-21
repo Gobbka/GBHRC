@@ -1,5 +1,7 @@
 #include "ScriptImage.h"
 
+#include "../../../../../includes/logger.h"
+
 Mono::MonoMethod* Mono::ScriptImage::mono_get_method_from_name(const char* name, bool include_namespace)
 {
     auto* image = Mono::get_script_image();
