@@ -3,7 +3,7 @@
 #include "includes/win.h"
 #include "CheatApi/Hooks/d3d11/d3d11hook.h"
 #include "CheatApi/Hooks/wndproc/wndprochook.h"
-#include "Form/Form.h"
+#include "Form/InteractiveForm.h"
 
 #include "Forms/Menu/MenuMain.h"
 
@@ -14,12 +14,12 @@
 #include <sstream>
 
 HINSTANCE DllInst;
-Application::Form* menu;
+Application::InteractiveForm* menu;
 void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam);
 
 void init_callback(Application::Render::Engine* instance)
 {
-    menu = new Application::Form();
+    menu = new Application::InteractiveForm();
 
     MainMenuMarkup(menu, instance);
 
@@ -27,7 +27,12 @@ void init_callback(Application::Render::Engine* instance)
         ->append_scene(menu);
 
     Application::register_form(menu);
+
+    menu->hidden = true;
+
 }
+
+void esp_();
 
 void MainThread()
 {
@@ -43,26 +48,38 @@ void MainThread()
     Hooks::WndProc::init_hook(hwnd);
     Hooks::WndProc::callback(wnd_key_hook);
 
+    //Hooks::D3D11::hook(Hooks::D3D11::GetPresentAddress(), init_callback);
+	
     Mono::mono_thread_attach(Mono::mono_get_root_domain());
     BrokeProtocol::show_local_message((char*)"<color=#39d668>[info]</color> GBHRC injected | press <color=#39d668>INSERT</color> to show menu!");
     BrokeProtocol::show_local_message((char*)"<color=#3966d6>[info]</color> join our discord: https://discord.gg/4jRzSHz3 ");
 
-    DEBUG_LOG("ENTER POINTER OF SHIT TO DUMP");
+    esp_();
+}
 
+void esp_()
+{
 	while(1)
 	{
-        __int64 gobka=0;
-        std::cin >> gobka;
-        DEBUG_LOG("ENTERED: " << gobka);
-		if(gobka ==0)
-            continue;
-        Mono::mono_thread_attach(Mono::mono_get_root_domain());
-        Mono::mono_dump_class(
-            Mono::mono_object_get_class(
-            (Mono::MonoObject*)gobka)
-        );
+		if(BrokeProtocol::get_manager()->host != nullptr)
+		{
+            auto* players = BrokeProtocol::GetPlayersCollection();
+            auto* ptr = players->items->pointer();
+            const auto size = players->items->size();
+			for(int i = 0;i<size;i++)
+			{
+                auto* player = ptr[i];
+                auto* pos = player->get_position();
+                auto* angle = player->get_eulerAngles();
+                DEBUG_LOG(std::dec<<player->ID<<": " << angle->x << " " <<angle->y << " " << angle->z);
+			}
+		}
+        
+        Sleep(5);
+        system("cls");
 	}
 }
+
 
 void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -77,12 +94,10 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
 
         if (wParam == VK_INSERT)
         {
-            static bool interactive_state = true;
+            bool state = menu->hidden;
 
-            menu->hidden = interactive_state;
-            Hooks::WndProc::setInputState(interactive_state);
-
-            interactive_state = !interactive_state;
+            menu->hidden = !state;
+            Hooks::WndProc::setInputState(!state);
         }
 
         if (wParam == VK_F5)
@@ -97,8 +112,7 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
 
     	if(wParam == VK_F2){
 
-            auto* ptr = BrokeProtocol::GetPlayersCollection()->items;
-            auto* player_pointer = ptr->pointer();
+            Mono::mono_dump_object((Mono::MonoObject*)BrokeProtocol::GetLocalPlayer()->get_worldToLocalMatrix());
     		
             BrokeProtocol::GetLocalPlayer()->rotationT->rotate(0, 25.f, 0);
     	}

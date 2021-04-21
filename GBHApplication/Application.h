@@ -39,14 +39,13 @@ namespace Application
 		class Rectangle;
 	}
 
-	class Form;
-
+	class InteractiveForm;
+	
 	void set_main_hwnd(HWND hwnd);
 
-	void register_form(Form* form);
+	void register_form(InteractiveForm* form);
 	void wnd_proc(UINT msg, WPARAM wParam, LPARAM lParam);
 
-	POINT nigger();
 }
 
 

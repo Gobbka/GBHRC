@@ -15,7 +15,7 @@ void panel_leave(Application::UI::UIElementEventArgs args)
 	args->set_color(FLOAT_COLORS_BLACK);
 }
 
-void MainMenuMarkup(Application::Form* form,Application::Render::Engine*pEngine)
+void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engine*pEngine)
 {
 	form->add_markup_elements(
 		2,

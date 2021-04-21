@@ -59,10 +59,11 @@ namespace Mono
 	void  WINAPI mono_print_unhandled_exception(void* exception);
 	void  WINAPI mono_print_system_exception(void* exception);
 	
-	MonoObject* create_csharp_string(char* ptr);
-	MonoClass*  get_object_class();
+	MonoObject*  create_csharp_string(char* ptr);
+	MonoClass*   get_object_class();
 	
-	void mono_dump_class(MonoClass* klass);
+	void         mono_dump_class(MonoClass* klass);
+	void         mono_dump_object(MonoObject* obj);
 	
 	HMODULE getModule();
 	

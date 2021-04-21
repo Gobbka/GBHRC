@@ -1,4 +1,5 @@
 #include "IElement.h"
+#include "../../Form/InteractiveForm.h"
 
 Application::Render::Position Application::UI::IElement::get_position() const
 {
@@ -28,5 +29,5 @@ void Application::UI::IElement::move_by(float x, float y)
 
 GVertex::Vertex* Application::UI::IElement::get_ptr() const
 {
-	return this->pScene->get_ptr() + this->index;
+	return this->pForm->get_ptr() + this->index;
 }

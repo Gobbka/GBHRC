@@ -17,7 +17,7 @@ namespace Application
 			EventCallback onChange = default_event_callback;
 
 			Checkbox(Render::Position position,Render::Resolution resolution, Render::Color color);
-			void init(Render::Scene* pScene) override;
+			void init(Application::InteractiveForm* pForm) override;
 
 			UI::IElement* set_pos(float x, float y) override;
 			UI::IElement* set_color(float r, float g, float b) override;

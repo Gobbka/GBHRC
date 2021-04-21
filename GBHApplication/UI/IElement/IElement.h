@@ -12,7 +12,7 @@ namespace Application
 			virtual ~IElement() = default;
 			typedef void(*EventCallback)(UIElementEventArgs args);
 		protected:
-			Application::Render::Scene* pScene = nullptr;
+			Application::InteractiveForm* pForm = nullptr;
 			UINT index = 0;
 			Render::Position position{ 0,0 };
 			static void default_event_callback(UIElementEventArgs args) {};
@@ -32,7 +32,7 @@ namespace Application
 			virtual UI::IElement* set_pos(float x, float y) = 0;
 			virtual UI::IElement* set_color(float r, float g, float b) = 0;
 			virtual bool point_belongs(POINT point);
-			virtual void init(Render::Scene* pScene) = 0;
+			virtual void init(Application::InteractiveForm* pForm) = 0;
 
 			virtual UINT size() = 0;
 			void set_index(UINT index);

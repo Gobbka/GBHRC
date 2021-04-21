@@ -16,6 +16,7 @@ namespace Application
 		protected:
 			std::vector<Application::UI::IElement*> pElements;
 			Render::Resolution resolution;
+			void alloc_vbuffer(Render::Engine*pEngine);
 		public:
 			// public variables
 			
@@ -25,7 +26,6 @@ namespace Application
 			
 			void update(ID3D11DeviceContext*pContext) const;
 			void render(ID3D11DeviceContext* pContext);
-			void update_markup(Render::Engine* pEngine);
 		public:
 			// public setters
 			

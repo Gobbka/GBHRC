@@ -17,6 +17,20 @@ namespace BrokeProtocol {
 namespace BrokeProtocol {
 	namespace Structs {
 
+		struct Matrix4X4
+		{
+			float matrix[4][4];
+		};
+		
+		class Vector3
+		{
+		public:
+			char pad_0000[16]; //0x0000
+			float x; //0x0010
+			float y; //0x0014
+			float z; //0x0018
+		};
+		
 		class String
 		{
 		public:

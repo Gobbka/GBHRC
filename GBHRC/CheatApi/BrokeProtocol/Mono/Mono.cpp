@@ -368,3 +368,8 @@ void Mono::mono_dump_class(MonoClass* klass)
 	}
 	DEBUG_LOG("=========================");
 }
+
+void Mono::mono_dump_object(MonoObject* obj)
+{
+	mono_dump_class(Mono::mono_object_get_class(obj));
+}

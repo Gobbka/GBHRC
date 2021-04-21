@@ -144,7 +144,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
-    <ClCompile Include="Form\Form.cpp" />
+    <ClCompile Include="Form\InteractiveForm.cpp" />
     <ClCompile Include="Render\d3d\Vertex.cpp" />
     <ClCompile Include="Render\Engine\Engine.cpp" />
     <ClCompile Include="Render\Scene\Scene.cpp" />
@@ -154,7 +154,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
-    <ClInclude Include="Form\Form.h" />
+    <ClInclude Include="Form\InteractiveForm.h" />
     <ClInclude Include="Managers\RectangleManager.h" />
     <ClInclude Include="Render\d3d\ConstantBuffer.h" />
     <ClInclude Include="Render\d3d\szShadez.h" />

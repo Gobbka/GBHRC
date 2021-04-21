@@ -4,6 +4,19 @@
 
 #define DRAW_ASSERT if(this->hidden==true) return;
 
+void Application::Render::Scene::alloc_vbuffer(Render::Engine* pEngine)
+{
+	delete this->pVBuffer;
+	UINT size = 0;
+
+	for (auto* element : this->pElements)
+	{
+		size += element->size();
+	}
+
+	this->pVBuffer = pEngine->make_vertex_buffer(size);
+}
+
 void Application::Render::Scene::update(ID3D11DeviceContext* pContext) const
 {
 	DRAW_ASSERT
@@ -28,28 +41,6 @@ void Application::Render::Scene::render(ID3D11DeviceContext* pContext)
 		element->__draw(pContext);
 	}
 
-}
-
-void Application::Render::Scene::update_markup(Render::Engine* pEngine)
-{
-	delete this->pVBuffer;
-	UINT size = 0;
-
-	for (auto* element : this->pElements)
-	{
-		size += element->size();
-	}
-
-	this->pVBuffer = pEngine->make_vertex_buffer(size);
-
-	size = 0;
-	for (auto* element : this->pElements)
-	{
-		element->set_index(size);
-		element->init(this);
-
-		size += element->size();
-	}
 }
 
 void Application::Render::Scene::set_resolution(Resolution resolution)

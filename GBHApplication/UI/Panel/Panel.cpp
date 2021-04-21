@@ -1,25 +1,9 @@
 #include "Panel.h"
+#include "../../Form/InteractiveForm.h"
 
 void Application::UI::Panel::__draw(ID3D11DeviceContext* pContext)
 {
 	pContext->Draw(5, this->index);
-}
-
-void Application::UI::Panel::DragMove()
-{
-	this->dragged_at = Application::nigger();
-	//this->old_mouse_move = this->onMouseMove;
-	this->onMouseMove = [](Application::UI::UIElementEventArgs args,float mX,float mY)
-	{
-		//auto point = Application::nigger();
-		//DEBUG_LOG("X: "<< std::dec << point.x << " Y: " << point.y);
-		args->set_pos(mX-5, mY+5);
-	};
-}
-
-void Application::UI::Panel::FreeDragMove()
-{
-	//this->onMouseMove = old_mouse_move;
 }
 
 Application::UI::Panel::Panel(Render::Position position, Render::Resolution resolution, Render::Color color)
@@ -31,13 +15,7 @@ Application::UI::Panel::Panel(Render::Position position, Render::Resolution reso
 	this->onMouseDown = [](UI::UIElementEventArgs args)
 	{
 		Panel* panel = (Panel * )args;
-		panel->DragMove();
-	};
-
-	this->onMouseUp = [](UI::UIElementEventArgs args)
-	{
-		Panel* panel = (Panel*)args;
-		panel->FreeDragMove();
+		panel->pForm->drag_move(panel);
 	};
 }
 
@@ -48,9 +26,9 @@ bool Application::UI::Panel::point_belongs(POINT point)
 		(point.y <= position.y && point.y >= (position.y - resolution.height));
 }
 
-void Application::UI::Panel::init(Render::Scene* pScene)
+void Application::UI::Panel::init(Application::InteractiveForm* pForm)
 {
-	this->pScene = pScene;
+	this->pForm = pForm;
 
 	this->set_pos(position.x, position.y);
 	this->set_color(color.r, color.g, color.b);
