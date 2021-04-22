@@ -132,11 +132,12 @@ void Mono::mono_field_static_get_value(MonoVTable* vTable, MonoClassField* field
 void Mono::mono_get_static_field_value(MonoClass* klass, UINT token,void*value)
 {
 	auto* vTable = (Mono::MonoVTable*)Mono::mono_class_vtable(Mono::mono_get_root_domain(), klass);
-
+	
 	auto* static_class = Mono::mono_object_get_class((Mono::MonoObject*)vTable);
-	auto* pPlayersCollectionField = Mono::mono_class_get_field(static_class, token);
-
-	Mono::mono_field_static_get_value(vTable, pPlayersCollectionField, value);
+	
+	auto* pstatic_field = Mono::mono_class_get_field(static_class, token);
+	
+	Mono::mono_field_static_get_value(vTable, pstatic_field, value);
 }
 
 Mono::MonoClass* Mono::mono_class_from_name(MonoImage* image, const char* namespace_name, const char* name)
@@ -183,6 +184,13 @@ Mono::MonoClass* Mono::mono_object_get_class(MonoObject* obj)
 	STATIC_PROCEDURE("mono_object_get_class")
 
 	return ((MonoClass * (__stdcall*)(MonoObject*))proc)(obj);
+}
+
+Mono::MonoClass* Mono::mono_class_get_parent(MonoClass* klass)
+{
+	STATIC_PROCEDURE("mono_class_get_parent")
+
+	return ((MonoClass * (__stdcall*)(MonoClass*))proc)(klass);
 }
 
 Mono::MonoMethod* Mono::mono_object_get_virtual_method(MonoObject* object, MonoMethod* method)
@@ -271,7 +279,7 @@ void Mono::mono_print_system_exception(void* exception)
 {
 	auto* klass = Mono::mono_class_from_name(get_mscorlib(), "System", "Exception");
 	auto* field = Mono::mono_class_get_field_from_name(klass, "_message");
-	BrokeProtocol::Structs::String* value;
+	UnityTypes::String* value;
 	mono_field_get_value((MonoObject*)exception, field, &value);
 	DEBUG_LOG("<ERROR> "<<(char*)(value->pointer));
 }

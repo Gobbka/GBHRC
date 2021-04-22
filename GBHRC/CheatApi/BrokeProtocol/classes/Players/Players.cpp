@@ -1,4 +1,6 @@
 #include "Players.h"
+
+#include "../../../../includes/logger.h"
 #include "../../Mono/Images/Script/ScriptImage.h"
 
 #define STATIC_METHOD(name,inc_namespace) static Mono::MonoMethod* pMethod = Mono::ScriptImage::mono_get_method_from_name(name, inc_namespace)
@@ -27,33 +29,36 @@ void BrokeProtocol::Players::ShPlayer::fire()
 	Mono::mono_runtime_invoke(pMethod, this, args, nullptr);
 }
 
-BrokeProtocol::Structs::Vector3* BrokeProtocol::Players::ShPlayer::get_position() const
+UnityTypes::Vector3* BrokeProtocol::Players::ShPlayer::get_position() const
 {
 	static auto* pGetPosMethod = Mono::mono_property_get_get_method(Mono::mono_class_get_property_from_name(
 		Mono::mono_class_from_name(Mono::get_UE_CoreModule(), "UnityEngine", "Transform"),
 		"position"
 	));
-
-	return (Structs::Vector3*)Mono::mono_runtime_invoke(pGetPosMethod, this->rotationT, nullptr, nullptr);
+	
+	return (UnityTypes::Vector3*)Mono::mono_runtime_invoke(pGetPosMethod, this->rotationT, nullptr, nullptr);
 }
 
-BrokeProtocol::Structs::Vector3* BrokeProtocol::Players::ShPlayer::get_eulerAngles() const
+UnityTypes::Vector3* BrokeProtocol::Players::ShPlayer::get_eulerAngles() const
 {
 	static auto* pGetPosMethod = Mono::mono_property_get_get_method(Mono::mono_class_get_property_from_name(
 		Mono::mono_class_from_name(Mono::get_UE_CoreModule(), "UnityEngine", "Transform"),
 		"eulerAngles"
 	));
 
-	return (Structs::Vector3*)Mono::mono_runtime_invoke(pGetPosMethod, this->rotationT, nullptr, nullptr);
+	return (UnityTypes::Vector3*)Mono::mono_runtime_invoke(pGetPosMethod, this->rotationT, nullptr, nullptr);
 }
 
-Matrix4X4* BrokeProtocol::Players::ShPlayer::get_worldToLocalMatrix() const
-{
-	static auto* pGetPosMethod = Mono::mono_property_get_get_method(Mono::mono_class_get_property_from_name(
-		Mono::mono_class_from_name(Mono::get_UE_CoreModule(), "UnityEngine", "Transform"),
-		"worldToLocalMatrix"
-	));
-	Mono::MonoObject* exc;
-	return (Matrix4X4*)
-		((size_t)Mono::mono_runtime_invoke(pGetPosMethod, this->rotationT, nullptr, &exc)+0x10);
-}
+//Matrix4X4* BrokeProtocol::Players::ShPlayer::get_worldToLocalMatrix() const
+//{
+//	static auto* pGetPosMethod = Mono::mono_property_get_get_method(Mono::mono_class_get_property_from_name(
+//		Mono::mono_class_from_name(Mono::get_UE_CoreModule(), "UnityEngine", "Transform"),
+//		"worldToLocalMatrix"
+//	));
+//	Mono::MonoObject* exc;
+//	auto* matrix = (Matrix4X4*)
+//		((size_t)Mono::mono_runtime_invoke(pGetPosMethod, this->rotationT, nullptr, &exc)+0x10);
+//	if (exc != nullptr)
+//		return nullptr;
+//	return matrix;
+//}

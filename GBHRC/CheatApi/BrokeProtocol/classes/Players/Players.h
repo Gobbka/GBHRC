@@ -1,7 +1,5 @@
 #pragma once
-#include "../../../Tools/3dMatrix.h"
 #include "../../BPStructs.h"
-#include "../Transform/Transform.h"
 
 namespace BrokeProtocol
 {
@@ -18,11 +16,11 @@ namespace BrokeProtocol
 			char pad_0140[72]; //0x0140
 			float speed; //0x0188
 			float speedLimit; //0x018C
-			Transform* rotationT; //0x0190
+			UnityEngine::Transform* rotationT; //0x0190
 			class ClPlayer* clPlayer; //0x0198
 			void* svPlayer; //0x01A0
 			void* specPlayer; //0x01A8
-			Structs::String* username; //0x01B0
+			UnityTypes::String* username; //0x01B0
 			void* displayName; //0x01B8
 			void* wearableOptions; //0x01C0
 			void* capsule; //0x01C8
@@ -64,9 +62,9 @@ namespace BrokeProtocol
 			void clear_injuries();
 			void fire();
 
-			Structs::Vector3* get_position() const;
-			Structs::Vector3* get_eulerAngles() const;
-			Matrix4X4* get_worldToLocalMatrix() const;
+			UnityTypes::Vector3* get_position() const;
+			UnityTypes::Vector3* get_eulerAngles() const;
+			// Matrix4X4* get_worldToLocalMatrix() const;
 		};
 
 		class ClPlayer

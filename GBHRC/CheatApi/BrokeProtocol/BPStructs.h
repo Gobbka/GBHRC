@@ -1,4 +1,13 @@
 #include <cstdint>
+#include "UnityTypes.h"
+#include "classes/Transform/Transform.h"
+#include "classes/Transform/Camera.h"
+
+namespace UnityEngine {
+	class Camera;
+	class Transform;
+}
+
 
 namespace BrokeProtocol {
 	namespace Managers {
@@ -17,25 +26,16 @@ namespace BrokeProtocol {
 namespace BrokeProtocol {
 	namespace Structs {
 
-
-		
-		class Vector3
+		class MainCamera
 		{
 		public:
-			char pad_0000[16]; //0x0000
-			float x; //0x0010
-			float y; //0x0014
-			float z; //0x0018
+			char pad_0000[48]; //0x0000
+			UnityEngine::Transform* worldCameraT; //0x0030
+			UnityEngine::Camera* worldCamera; //0x0038
+			char pad_0040[24]; //0x0040
+			Managers::ClManager* ClManager; //0x0058
+			Players::ShPlayer* ShPlayer; //0x0060
 		};
-		
-		class String
-		{
-		public:
-			char pad_0000[16]; //0x0000
-			uint32_t length; //0x0010
-			wchar_t* pointer; //0x0014
-			char pad_001C[48]; //0x001C
-		}; //Size: 0x004C
 
 		class Location
 		{

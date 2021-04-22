@@ -8,6 +8,23 @@ using namespace Collections;
 
 #define STATIC_METHOD(name,inc_namespace) static Mono::MonoMethod* pMethod = Mono::ScriptImage::mono_get_method_from_name(name, inc_namespace)
 
+BrokeProtocol::Structs::MainCamera* BrokeProtocol::get_camera()
+{
+    Structs::MainCamera* camera = nullptr;
+	if(camera==nullptr)
+	{
+        auto* pclass = Mono::mono_class_from_name(Mono::get_script_image(), "BrokeProtocol.Client.UI", "MainCamera");
+        auto* parent = Mono::mono_class_get_parent(pclass);
+        Mono::mono_get_static_field_value(
+            parent,
+            0x04000075, // MonoBehaviourSingleton::CKMGNJHFDLL
+            &camera
+        );
+	}
+
+    return camera;
+}
+
 BrokeProtocol::Structs::Evaluator* BrokeProtocol::get_evaluator()
 {
     static size_t pointer;
@@ -19,9 +36,6 @@ BrokeProtocol::Structs::Evaluator* BrokeProtocol::get_evaluator()
         step = *(size_t*)(step + 0X0);
         step = *(size_t*)(step + 0X10);
         pointer = step;
-
-    	//step = *(size_t*)(step + 0X340);
-        //manager = (Structs::Evaluator**)(step + 0x340);
     }
     auto buffer = pointer;
     buffer = *(size_t*)(buffer + 0X198);

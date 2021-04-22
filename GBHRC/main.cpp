@@ -22,7 +22,12 @@ void draw_esp(Application::Render::Scene* pScene)
 {
     if(BrokeProtocol::get_manager()->host != nullptr)
 	{
-        auto* local_matrix = BrokeProtocol::GetLocalPlayer()->get_worldToLocalMatrix();
+        system("cls");
+    	
+        auto* local_matrix = BrokeProtocol::get_camera();
+        if (local_matrix == nullptr)
+            return;
+    	
         auto* players = BrokeProtocol::GetPlayersCollection();
         auto* ptr = players->items->pointer();
         const auto size = players->items->size();
@@ -30,13 +35,24 @@ void draw_esp(Application::Render::Scene* pScene)
     	
    		for(int i = 0;i<size;i++)
    		{
-   			
+            auto* player = ptr[i];
+            auto* pos = player->get_position();
+            
+            UnityTypes::Vector3* nigger = local_matrix->worldCamera->WorldToScreenPoint(pos);
+            DEBUG_LOG("X: " << nigger->x << " Y: " << nigger->y << " W: "<<nigger->z);
+            //auto* position = player->get_position();
+            /*auto nigger = WorldToScreen(
+                { position->x,position->y,position->z }, local_matrix
+            );
+            DEBUG_LOG("X: " << nigger.x << " Y: " << nigger.y);*/
    		}
    	}
 }
 
 void init_callback(Application::Render::Engine* instance)
 {
+    Mono::mono_thread_attach(Mono::mono_get_root_domain());
+
 	
     menu = new Application::InteractiveForm();
 
@@ -136,16 +152,10 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
         }
 
     	if(wParam == VK_F2){
-            auto* matrix = BrokeProtocol::GetLocalPlayer()->get_worldToLocalMatrix();
-
-            system("cls");
+            // CKMGNJHFDLL
+            
     		
-            DEBUG_LOG(
-                matrix->matrix[0][0] << " " << matrix->matrix[0][1] << " " << matrix->matrix[0][2] << " " << matrix->matrix[0][3] << "\n" <<
-                matrix->matrix[1][0] << " " << matrix->matrix[1][1] << " " << matrix->matrix[1][2] << " " << matrix->matrix[1][3] << "\n" <<
-                matrix->matrix[2][0] << " " << matrix->matrix[2][1] << " " << matrix->matrix[2][2] << " " << matrix->matrix[2][3] << "\n" <<
-                matrix->matrix[3][0] << " " << matrix->matrix[3][1] << " " << matrix->matrix[3][2] << " " << matrix->matrix[3][3]
-            );
+            Mono::mono_dump_object((Mono::MonoObject*)BrokeProtocol::get_camera()->worldCamera);
     	}
 
         if (wParam == VK_F3)

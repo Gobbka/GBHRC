@@ -51,6 +51,12 @@
     <ClCompile Include="CheatApi\BrokeProtocol\classes\Transform\Transform.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="CheatApi\Tools\3dMatrix.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="CheatApi\BrokeProtocol\classes\Transform\Camera.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CheatApi\Hooks\d3d11\d3d11hook.h">
@@ -117,6 +123,12 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="CheatApi\Tools\3dMatrix.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="CheatApi\BrokeProtocol\classes\Transform\Camera.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="CheatApi\BrokeProtocol\UnityTypes.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

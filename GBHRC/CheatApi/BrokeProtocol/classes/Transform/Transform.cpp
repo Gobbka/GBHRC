@@ -6,7 +6,7 @@
 
 #define STATIC_METHOD(name,inc_namespace) static Mono::MonoMethod* pMethod = Mono::mono_get_method_from_image(Mono::get_UE_CoreModule(),name, inc_namespace)
 
-void Transform::rotate(float x, float y, float z)
+void UnityEngine::Transform::rotate(float x, float y, float z)
 {
 	STATIC_METHOD("UnityEngine.Transform:Rotate()", true);
 

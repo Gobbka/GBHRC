@@ -28,6 +28,7 @@ namespace Mono
 	void        WINAPI mono_get_static_field_value(MonoClass* klass, UINT token,void* value);
 	MonoClass*  WINAPI mono_class_from_name(MonoImage* image, const char* namespace_name, const char* name);
 	MonoClass*  WINAPI mono_object_get_class(MonoObject* obj);
+	MonoClass*  WINAPI mono_class_get_parent(MonoClass* klass);
 	
 	MonoClassField* mono_class_get_field(MonoClass* klass, UINT field_token);
 	MonoClassField* mono_field_from_token(UINT token);

@@ -1,7 +1,10 @@
 #pragma once
 
-class Transform
+namespace UnityEngine
 {
-public:
-	void rotate(float x, float y, float z);
-};
+	class Transform
+	{
+	public:
+		void rotate(float x, float y, float z);
+	};
+}

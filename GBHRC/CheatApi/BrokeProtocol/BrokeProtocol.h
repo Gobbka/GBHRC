@@ -4,11 +4,12 @@
 #include "Mono/Mono.h"
 #include "classes/Players/Players.h"
 #include "classes/Managers/Managers.h"
-#include "classes/Collections/Dictionary.h"
 #include "classes/Collections/KeyedCollection.h"
 
 namespace BrokeProtocol
 {
+	Structs::MainCamera* get_camera();
+	
 	Structs::Evaluator* get_evaluator();
 	Structs::GlobalTypes* get_global_types();
 	Managers::ShManager* get_manager();
