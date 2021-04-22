@@ -16,15 +16,16 @@ namespace Application
 		protected:
 			std::vector<Application::UI::IElement*> pElements;
 			Render::Resolution resolution;
-			void alloc_vbuffer(Render::Engine*pEngine);
 		public:
 			// public variables
-			
+			typedef void(__stdcall* tRenderCallback)(Scene*self);
+			tRenderCallback render_callback = nullptr;
 			bool hidden = false;
 		public:
 			// public void's
-			
-			void update(ID3D11DeviceContext*pContext) const;
+			void alloc_vbuffer(Render::Engine* pEngine);
+
+			void update(ID3D11DeviceContext*pContext);
 			void render(ID3D11DeviceContext* pContext);
 		public:
 			// public setters

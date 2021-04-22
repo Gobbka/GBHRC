@@ -17,10 +17,7 @@ namespace BrokeProtocol {
 namespace BrokeProtocol {
 	namespace Structs {
 
-		struct Matrix4X4
-		{
-			float matrix[4][4];
-		};
+
 		
 		class Vector3
 		{

@@ -1,4 +1,5 @@
 #pragma once
+#include "../../../Tools/3dMatrix.h"
 #include "../../BPStructs.h"
 #include "../Transform/Transform.h"
 
@@ -65,7 +66,7 @@ namespace BrokeProtocol
 
 			Structs::Vector3* get_position() const;
 			Structs::Vector3* get_eulerAngles() const;
-			Structs::Matrix4X4* get_worldToLocalMatrix() const;
+			Matrix4X4* get_worldToLocalMatrix() const;
 		};
 
 		class ClPlayer

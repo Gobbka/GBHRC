@@ -177,6 +177,7 @@
     <ClInclude Include="CheatApi\Hooks\d3d11\d3d11hook.h" />
     <ClInclude Include="CheatApi\Hooks\d3d11\D3D11_VMT.h" />
     <ClInclude Include="CheatApi\Hooks\wndproc\wndprochook.h" />
+    <ClInclude Include="CheatApi\Tools\3dMatrix.h" />
     <ClInclude Include="Forms\Menu\MenuMain.h" />
     <ClInclude Include="CheatApi\BrokeProtocol\classes\ICollection\ICollection.h" />
     <ClInclude Include="includes\d3d.h" />

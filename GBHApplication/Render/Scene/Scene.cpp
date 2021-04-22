@@ -2,7 +2,7 @@
 
 #include "../../Application.h"
 
-#define DRAW_ASSERT if(this->hidden==true) return;
+#define DRAW_ASSERT if(this->hidden==true) return
 
 void Application::Render::Scene::alloc_vbuffer(Render::Engine* pEngine)
 {
@@ -17,10 +17,16 @@ void Application::Render::Scene::alloc_vbuffer(Render::Engine* pEngine)
 	this->pVBuffer = pEngine->make_vertex_buffer(size);
 }
 
-void Application::Render::Scene::update(ID3D11DeviceContext* pContext) const
+void Application::Render::Scene::update(ID3D11DeviceContext* pContext)
 {
-	DRAW_ASSERT
+	DRAW_ASSERT;
 
+	if (this->render_callback != nullptr)
+		render_callback(this);
+
+	if (this->pVBuffer->size <= 0)
+		return;
+	
 	D3D11_MAPPED_SUBRESOURCE subdata;
 	pContext->Map(this->pVBuffer->buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &subdata);
 	memcpy(subdata.pData, this->pVBuffer->data, this->pVBuffer->size * sizeof(GVertex::Vertex));
@@ -29,8 +35,8 @@ void Application::Render::Scene::update(ID3D11DeviceContext* pContext) const
 
 void Application::Render::Scene::render(ID3D11DeviceContext* pContext)
 {
-	DRAW_ASSERT
-
+	DRAW_ASSERT;
+	
 	UINT stride = sizeof(GVertex::Vertex);
 	UINT offset = 0;
 

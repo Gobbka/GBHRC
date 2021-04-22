@@ -63,8 +63,6 @@ KeyedCollection<BrokeProtocol::Players::ShPlayer*>* BrokeProtocol::GetPlayersCol
             0x0400111C, // ENTITY_COLLECTION::HUMANS
             &players
         );
-        
-        Mono::mono_dump_class(Mono::mono_object_get_class((Mono::MonoObject*)players));
 	}
 	
     return players;

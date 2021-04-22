@@ -47,13 +47,13 @@ BrokeProtocol::Structs::Vector3* BrokeProtocol::Players::ShPlayer::get_eulerAngl
 	return (Structs::Vector3*)Mono::mono_runtime_invoke(pGetPosMethod, this->rotationT, nullptr, nullptr);
 }
 
-BrokeProtocol::Structs::Matrix4X4* BrokeProtocol::Players::ShPlayer::get_worldToLocalMatrix() const
+Matrix4X4* BrokeProtocol::Players::ShPlayer::get_worldToLocalMatrix() const
 {
 	static auto* pGetPosMethod = Mono::mono_property_get_get_method(Mono::mono_class_get_property_from_name(
 		Mono::mono_class_from_name(Mono::get_UE_CoreModule(), "UnityEngine", "Transform"),
 		"worldToLocalMatrix"
 	));
-
-	return (Structs::Matrix4X4*)
-		((size_t)Mono::mono_runtime_invoke(pGetPosMethod, this->rotationT, nullptr, nullptr)+0x10);
+	Mono::MonoObject* exc;
+	return (Matrix4X4*)
+		((size_t)Mono::mono_runtime_invoke(pGetPosMethod, this->rotationT, nullptr, &exc)+0x10);
 }
