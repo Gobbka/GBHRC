@@ -63,6 +63,8 @@ namespace BrokeProtocol
 			void fire();
 
 			UnityTypes::Vector3* get_position() const;
+			void set_position(UnityTypes::Vector3* vector) const;
+			UnityTypes::Vector3* get_local_position() const;
 			UnityTypes::Vector3* get_eulerAngles() const;
 			// Matrix4X4* get_worldToLocalMatrix() const;
 		};

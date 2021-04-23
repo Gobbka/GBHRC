@@ -29,8 +29,11 @@ namespace BrokeProtocol {
 		class MainCamera
 		{
 		public:
-			char pad_0000[48]; //0x0000
-			UnityEngine::Transform* worldCameraT; //0x0030
+			char pad_0000[24]; //0x0000
+			UnityEngine::Camera* firstPersonPrefab; //0x0018
+			UnityEngine::Transform* Transform; //0x0020
+			UnityEngine::Camera* AnotherCamera; //0x0028
+			UnityEngine::Transform* WorldCameraT; //0x0030
 			UnityEngine::Camera* worldCamera; //0x0038
 			char pad_0040[24]; //0x0040
 			Managers::ClManager* ClManager; //0x0058

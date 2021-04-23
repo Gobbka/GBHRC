@@ -153,8 +153,10 @@
     <ClCompile Include="CheatApi\BrokeProtocol\classes\Players\Players.cpp" />
     <ClCompile Include="CheatApi\BrokeProtocol\classes\Transform\Camera.cpp" />
     <ClCompile Include="CheatApi\BrokeProtocol\classes\Transform\Transform.cpp" />
+    <ClCompile Include="CheatApi\BrokeProtocol\Mono\dumper\MonoDumper.cpp" />
     <ClCompile Include="CheatApi\BrokeProtocol\Mono\Images\Script\ScriptImage.cpp" />
     <ClCompile Include="CheatApi\BrokeProtocol\Mono\Mono.cpp" />
+    <ClCompile Include="CheatApi\BrokeProtocol\UnityTypes.cpp" />
     <ClCompile Include="CheatApi\Hooks\d3d11\d3d11hook.cpp" />
     <ClCompile Include="CheatApi\Hooks\wndproc\wndprochook.cpp" />
     <ClCompile Include="CheatApi\Tools\3dMatrix.cpp" />
@@ -174,6 +176,7 @@
     <ClInclude Include="CheatApi\BrokeProtocol\classes\Transform\Transform.h" />
     <ClInclude Include="CheatApi\BrokeProtocol\Enum\PacketFlags.h" />
     <ClInclude Include="CheatApi\BrokeProtocol\Enum\SvPacket.h" />
+    <ClInclude Include="CheatApi\BrokeProtocol\Mono\dumper\MonoDumper.h" />
     <ClInclude Include="CheatApi\BrokeProtocol\Mono\Mono.h" />
     <ClInclude Include="CheatApi\BrokeProtocol\Mono\MonoDefs.h" />
     <ClInclude Include="CheatApi\BrokeProtocol\Mono\Images\Script\ScriptImage.h" />

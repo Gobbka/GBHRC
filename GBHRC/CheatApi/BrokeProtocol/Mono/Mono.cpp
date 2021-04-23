@@ -115,6 +115,13 @@ Mono::MonoMethod* Mono::mono_property_get_get_method(MonoProperty* prop)
 	return ((MonoMethod * (__stdcall*)(MonoProperty*))proc)(prop);
 }
 
+Mono::MonoMethod* Mono::mono_property_get_set_method(MonoProperty* prop)
+{
+	STATIC_PROCEDURE("mono_property_get_set_method")
+	
+	return ((MonoMethod * (__stdcall*)(MonoProperty*))proc)(prop);
+}
+
 Mono::MonoVTable* Mono::mono_class_vtable(MonoDomain* domain, MonoClass* klass)
 {
 	STATIC_PROCEDURE("mono_class_vtable")
@@ -247,12 +254,12 @@ const char* Mono::mono_class_get_name(MonoClass* klass)
 	return ((const char * (__stdcall*)(MonoClass *))proc)(klass);
 }
 
-Mono::MonoMethod* Mono::mono_get_method_from_image(MonoImage* image, const char* desc, bool include_namespace)
+Mono::MonoMethod* Mono::mono_get_method_from_image(MonoImage* image, const char* desc, bool include_namespace, int param_count)
 {
 	auto* method_desc = Mono::mono_method_desc_new(desc, include_namespace);
 
 	auto* pClass = Mono::mono_class_from_name(image, method_desc->namespace_name, method_desc->class_name);
-	auto* method = Mono::mono_class_get_method_from_name(pClass, method_desc->method_name, -1);
+	auto* method = Mono::mono_class_get_method_from_name(pClass, method_desc->method_name, param_count);
 
 	Mono::mono_method_desc_free(method_desc);
 
@@ -364,20 +371,3 @@ Mono::MonoImage* Mono::get_UE_CoreModule()
 	return image;
 }
 
-void Mono::mono_dump_class(MonoClass* klass)
-{
-	void* pointer = NULL;
-	Mono::MonoClassField* field = NULL;
-
-	DEBUG_LOG("====== " << Mono::mono_class_get_name(klass) << " ======");
-	while ((field = Mono::mono_class_get_fields(klass, &pointer)))
-	{
-		DEBUG_LOG("0x"<<std::hex<<mono_field_get_offset(field)<<" : "<<mono_field_get_name(field));
-	}
-	DEBUG_LOG("=========================");
-}
-
-void Mono::mono_dump_object(MonoObject* obj)
-{
-	mono_dump_class(Mono::mono_object_get_class(obj));
-}

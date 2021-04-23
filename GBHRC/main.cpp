@@ -23,7 +23,8 @@ void draw_esp(Application::Render::Scene* pScene)
     if(BrokeProtocol::get_manager()->host != nullptr)
 	{
         system("cls");
-    	
+
+        auto* local_player = BrokeProtocol::GetLocalPlayer();
         auto* local_matrix = BrokeProtocol::get_camera();
         if (local_matrix == nullptr)
             return;
@@ -32,19 +33,23 @@ void draw_esp(Application::Render::Scene* pScene)
         auto* ptr = players->items->pointer();
         const auto size = players->items->size();
 
-    	
    		for(int i = 0;i<size;i++)
    		{
             auto* player = ptr[i];
-            auto* pos = player->get_position();
-            
-            UnityTypes::Vector3* nigger = local_matrix->worldCamera->WorldToScreenPoint(pos);
-            DEBUG_LOG("X: " << nigger->x << " Y: " << nigger->y << " W: "<<nigger->z);
-            //auto* position = player->get_position();
-            /*auto nigger = WorldToScreen(
-                { position->x,position->y,position->z }, local_matrix
-            );
-            DEBUG_LOG("X: " << nigger.x << " Y: " << nigger.y);*/
+   			
+   			if(player == local_player)
+                continue;
+
+            {
+                auto* pos = UnityTypes::Vector3::make(0,17.f,0);
+                auto* w2s = local_matrix->worldCamera->WorldToScreenPoint(pos);
+                if (w2s->z > 0)
+                    continue;
+                pos = player->get_position();
+                DEBUG_LOG("X: " << w2s->x << " Y: " << w2s->y << " Z: " << w2s->z);
+                DEBUG_LOG("X: " << pos->x << " Y: " << pos->y << " Z: " << pos->z);
+            }
+
    		}
    	}
 }
@@ -152,10 +157,8 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
         }
 
     	if(wParam == VK_F2){
-            // CKMGNJHFDLL
-            
+            Mono::Dumper::dump_object((Mono::MonoObject*)BrokeProtocol::get_camera()->worldCamera->projectionMatrix());
     		
-            Mono::mono_dump_object((Mono::MonoObject*)BrokeProtocol::get_camera()->worldCamera);
     	}
 
         if (wParam == VK_F3)

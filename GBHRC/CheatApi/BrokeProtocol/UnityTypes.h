@@ -10,6 +10,8 @@ namespace UnityTypes
 		float x; //0x0010
 		float y; //0x0014
 		float z; //0x0018
+
+		static Vector3* make(float x, float y, float z);
 	};
 
 	class String
