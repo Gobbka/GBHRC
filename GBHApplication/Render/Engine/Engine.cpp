@@ -45,22 +45,6 @@ Engine* Engine::append_scene(Render::Scene* scene)
 	return this;
 }
 
-void Engine::wnd_proc(UINT msg, WPARAM wParam, LPARAM lParam)
-{
-	if (msg == WM_SIZE)
-	{
-		auto res = get_resolution(this->window);
-		for (auto* scene : this->pScenes)
-			scene->set_resolution(res);
-		return;
-	}
-
-	for (auto* scene : this->pScenes)
-	{
-		//scene->wnd_proc(msg, wParam, lParam);
-	}
-}
-
 bool Engine::initialize()
 {
 

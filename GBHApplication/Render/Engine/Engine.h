@@ -40,7 +40,7 @@ namespace Application
 			Engine(HWND hwnd, ID3D11Device* pDevice, IDXGISwapChain* pSwapChain);
 			Engine* append_scene(Application::Render::Scene* scene);
 
-			void wnd_proc(UINT msg, WPARAM wParam, LPARAM lParam);
+			//void wnd_proc(UINT msg, WPARAM wParam, LPARAM lParam);
 			void update_scene();
 			void present() const;
 

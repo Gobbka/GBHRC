@@ -13,9 +13,12 @@
 #include <string>
 #include <sstream>
 
+#include "UI/Panel/Panel.h"
+
 HINSTANCE DllInst;
 Application::InteractiveForm* menu;
-Application::Render::Scene* esp_scene;
+Application::InteractiveForm* esp_scene;
+Application::UI::Panel* esp_box;
 void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam);
 
 void draw_esp(Application::Render::Scene* pScene)
@@ -42,12 +45,9 @@ void draw_esp(Application::Render::Scene* pScene)
 
             {
                 auto* pos = UnityTypes::Vector3::make(0,17.f,0);
-                auto* w2s = local_matrix->worldCamera->WorldToScreenPoint(pos);
-                if (w2s->z > 0)
-                    continue;
-                pos = player->get_position();
-                DEBUG_LOG("X: " << w2s->x << " Y: " << w2s->y << " Z: " << w2s->z);
-                DEBUG_LOG("X: " << pos->x << " Y: " << pos->y << " Z: " << pos->z);
+                auto* w2s = local_matrix->worldCamera->WorldToViewportPoint(player->get_position());
+
+                esp_box->set_pos(w2s->x * 100, w2s->y * 100);
             }
 
    		}
@@ -58,7 +58,6 @@ void init_callback(Application::Render::Engine* instance)
 {
     Mono::mono_thread_attach(Mono::mono_get_root_domain());
 
-	
     menu = new Application::InteractiveForm();
 
     MainMenuMarkup(menu, instance);
@@ -67,10 +66,12 @@ void init_callback(Application::Render::Engine* instance)
 
     menu->hidden = true;
 
-    esp_scene = new Application::Render::Scene();
+    esp_scene = new Application::InteractiveForm();
     esp_scene->render_callback = draw_esp;
     esp_scene->hidden = false;
-    esp_scene->alloc_vbuffer(instance);
+    esp_box = new Application::UI::Panel{ {0,0},{30,30},{1,1,1} };
+    esp_scene->add_markup_elements(1, esp_box);
+    esp_scene->update_markup(instance);
 	
     instance
         ->append_scene(menu)
