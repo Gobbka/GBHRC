@@ -23,3 +23,33 @@ void UnityEngine::Transform::lookAt(UnityTypes::Vector3* pos)
 	void* args[]{ pos };
 	Mono::mono_runtime_invoke(pMethod, this, args, nullptr);
 }
+
+UnityTypes::Vector3* UnityEngine::Transform::get_position()
+{
+	static auto* pGetPosMethod = Mono::mono_property_get_get_method(Mono::mono_class_get_property_from_name(
+		Mono::mono_class_from_name(Mono::get_UE_CoreModule(), "UnityEngine", "Transform"),
+		"position"
+	));
+
+	return (UnityTypes::Vector3*)Mono::mono_runtime_invoke(pGetPosMethod, this, nullptr, nullptr);
+}
+
+void UnityEngine::Transform::set_position(UnityTypes::Vector3* vector)
+{
+	static auto* pSetPosMethod = Mono::mono_property_get_set_method(Mono::mono_class_get_property_from_name(
+		Mono::mono_class_from_name(Mono::get_UE_CoreModule(), "UnityEngine", "Transform"),
+		"position"
+	));
+	void* params[]{ &vector };
+	Mono::mono_runtime_invoke(pSetPosMethod, this, params, nullptr);
+}
+
+UnityTypes::Vector3* UnityEngine::Transform::get_eulerAngles()
+{
+	static auto* pGetPosMethod = Mono::mono_property_get_get_method(Mono::mono_class_get_property_from_name(
+		Mono::mono_class_from_name(Mono::get_UE_CoreModule(), "UnityEngine", "Transform"),
+		"eulerAngles"
+	));
+
+	return (UnityTypes::Vector3*)Mono::mono_runtime_invoke(pGetPosMethod, this, nullptr, nullptr);
+}

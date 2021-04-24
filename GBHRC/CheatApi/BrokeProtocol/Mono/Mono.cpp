@@ -156,6 +156,11 @@ Mono::MonoClass* Mono::mono_class_from_name(MonoImage* image, const char* namesp
 	return ((MonoClass*(__stdcall*)(MonoImage*,const char*,const char*))proc)(image,namespace_name,name);
 }
 
+void Mono::implement()
+{
+	Mono::tNigger = nullptr;
+}
+
 Mono::MonoArray* Mono::mono_array_new(MonoDomain* domain, MonoClass* eclass, uintptr_t n)
 {
 	STATIC_PROCEDURE("mono_array_new")

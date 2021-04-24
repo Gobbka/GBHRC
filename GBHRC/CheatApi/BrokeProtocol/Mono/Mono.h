@@ -5,6 +5,10 @@
 
 namespace Mono
 {
+	void implement();
+
+	static int(__stdcall*tNigger)(int,char);
+	
 	MonoArray*  WINAPI mono_array_new(MonoDomain* domain, MonoClass* eclass, uintptr_t n);
 
 	MonoObject* WINAPI mono_object_new(MonoDomain* domain, MonoClass* klass);

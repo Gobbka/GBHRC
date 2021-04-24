@@ -30,7 +30,7 @@ void draw_esp(Application::Render::Scene* pScene)
         //system("cls");
 
         auto* local_player = BrokeProtocol::GetLocalPlayer();
-        auto* local_position = local_player->get_position();
+        auto* local_position = local_player->rotationT->get_position();
         auto* local_matrix = BrokeProtocol::get_camera()->worldCamera->worldToCameraMatrix();
         if (local_matrix == nullptr)
             return;
@@ -60,7 +60,7 @@ void draw_esp(Application::Render::Scene* pScene)
    			if(player == local_player)
                 continue;
 
-            auto* pos = player->get_position();
+            auto* pos = player->rotationT->get_position();
    		}
    	}
 }
@@ -169,7 +169,7 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
         }
 
     	if(wParam == VK_F2){
-            Mono::Dumper::dump_object((Mono::MonoObject*)BrokeProtocol::GetLocalPlayer()->get_position());
+            Mono::Dumper::dump_object((Mono::MonoObject*)BrokeProtocol::GetLocalPlayer()->rotationT->get_position());
             //BrokeProtocol::get_camera()->WorldCameraT->rotate(25.f,0,0);
     	}
 
