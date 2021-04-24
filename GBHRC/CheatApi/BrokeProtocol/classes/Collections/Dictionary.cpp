@@ -75,7 +75,6 @@ void Dictionary::copy_to(Mono::MonoArray* array, int index)
 	if(exception!=nullptr)
 	{
 		DEBUG_LOG("NIGGER ERROR");
-		Mono::mono_print_unhandled_exception(exception);
 	}else
 	{
 		if (cont)

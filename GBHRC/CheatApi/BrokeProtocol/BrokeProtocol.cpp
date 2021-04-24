@@ -105,7 +105,6 @@ void BrokeProtocol::SendToServer(PacketFlags flags, BrokeProtocol::SvPacket pack
     if (exception != nullptr)
     {
         DEBUG_LOG("[BP] CANNOT SEND TO SERVER");
-        Mono::mono_print_unhandled_exception(exception);
     }
 }
 
@@ -123,7 +122,6 @@ void BrokeProtocol::show_local_message(char*text)
 	if(exception!=nullptr)
 	{
         DEBUG_LOG("NIGGER ERROR");
-        Mono::mono_print_unhandled_exception(exception);
 	}
 }
 

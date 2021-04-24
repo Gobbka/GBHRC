@@ -102,6 +102,8 @@ void MainThread()
     auto nigger = freopen("CONOUT$", "w", stdout);
     nigger = freopen("CONIN$", "r", stdin);
 #endif
+
+    Mono::implement();
 	
     Hooks::WndProc::init_hook(main__window);
     Hooks::WndProc::callback(wnd_key_hook);
