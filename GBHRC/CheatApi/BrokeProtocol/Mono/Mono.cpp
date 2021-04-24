@@ -254,6 +254,13 @@ const char* Mono::mono_class_get_name(MonoClass* klass)
 	return ((const char * (__stdcall*)(MonoClass *))proc)(klass);
 }
 
+UINT Mono::mono_method_get_token(MonoMethod* method)
+{
+	STATIC_PROCEDURE("mono_method_get_token")
+
+	return((UINT(__stdcall*)(MonoMethod*))proc)(method);
+}
+
 Mono::MonoMethod* Mono::mono_get_method_from_image(MonoImage* image, const char* desc, bool include_namespace, int param_count)
 {
 	auto* method_desc = Mono::mono_method_desc_new(desc, include_namespace);

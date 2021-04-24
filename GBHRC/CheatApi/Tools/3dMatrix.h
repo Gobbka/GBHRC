@@ -1,4 +1,5 @@
 #pragma once
+#include <Windows.h>
 
 struct Vector4
 {
@@ -31,4 +32,4 @@ struct Matrix4X4
 	float m33; //0x004C
 };
 
-Vector3 WorldToScreen(Vector3 pos, Matrix4X4* pmatrix);
+Vector3 WorldToScreen(Vector3 pos, Matrix4X4* pmatrix,RECT clientrect);

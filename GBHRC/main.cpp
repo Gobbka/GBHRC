@@ -20,21 +20,38 @@ Application::InteractiveForm* menu;
 Application::InteractiveForm* esp_scene;
 Application::UI::Panel* esp_box;
 void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam);
+HWND main__window;
+
 
 void draw_esp(Application::Render::Scene* pScene)
 {
     if(BrokeProtocol::get_manager()->host != nullptr)
 	{
-        system("cls");
+        //system("cls");
 
         auto* local_player = BrokeProtocol::GetLocalPlayer();
-        auto* local_matrix = BrokeProtocol::get_camera();
+        auto* local_position = local_player->get_position();
+        auto* local_matrix = BrokeProtocol::get_camera()->worldCamera->worldToCameraMatrix();
         if (local_matrix == nullptr)
             return;
     	
         auto* players = BrokeProtocol::GetPlayersCollection();
         auto* ptr = players->items->pointer();
         const auto size = players->items->size();
+        //DEBUG_LOG("PLAYERS NEAR YOU:");
+
+        {
+            //auto* pos = UnityTypes::Vector3::make(0, 17.f, 0);
+
+            //RECT rect;
+            //GetClientRect(main__window, &rect);
+            //auto w2s = WorldToScreen({ pos->x,pos->y,pos->z }, local_matrix,rect);
+            //int width = rect.right - rect.left;
+            //int height = rect.bottom - rect.top;
+            //esp_box->set_pos(w2s.x - width/2,w2s.y + height/2);
+            //DEBUG_LOG("X: " << w2s.x << " Y: " << w2s.y << " Z: "<<w2s.z);
+        
+        }
 
    		for(int i = 0;i<size;i++)
    		{
@@ -43,13 +60,7 @@ void draw_esp(Application::Render::Scene* pScene)
    			if(player == local_player)
                 continue;
 
-            {
-                auto* pos = UnityTypes::Vector3::make(0,17.f,0);
-                auto* w2s = local_matrix->worldCamera->WorldToViewportPoint(player->get_position());
-
-                esp_box->set_pos(w2s->x * 100, w2s->y * 100);
-            }
-
+            auto* pos = player->get_position();
    		}
    	}
 }
@@ -83,16 +94,16 @@ void esp_();
 
 void MainThread()
 {
-    HWND hwnd = Hooks::D3D11::FindMainWindow(GetCurrentProcessId());
+    main__window = Hooks::D3D11::FindMainWindow(GetCurrentProcessId());
 	
-    Application::set_main_hwnd(hwnd);
+    Application::set_main_hwnd(main__window);
 #ifdef _DEBUG
     AllocConsole();
     auto nigger = freopen("CONOUT$", "w", stdout);
     nigger = freopen("CONIN$", "r", stdin);
 #endif
 	
-    Hooks::WndProc::init_hook(hwnd);
+    Hooks::WndProc::init_hook(main__window);
     Hooks::WndProc::callback(wnd_key_hook);
 
     Hooks::D3D11::hook(Hooks::D3D11::GetPresentAddress(), init_callback);
@@ -158,8 +169,8 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
         }
 
     	if(wParam == VK_F2){
-            Mono::Dumper::dump_object((Mono::MonoObject*)BrokeProtocol::get_camera()->worldCamera->projectionMatrix());
-    		
+            Mono::Dumper::dump_object((Mono::MonoObject*)BrokeProtocol::GetLocalPlayer()->get_position());
+            //BrokeProtocol::get_camera()->WorldCameraT->rotate(25.f,0,0);
     	}
 
         if (wParam == VK_F3)

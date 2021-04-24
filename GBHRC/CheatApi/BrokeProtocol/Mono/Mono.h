@@ -19,6 +19,7 @@ namespace Mono
 	MonoMethod* WINAPI mono_object_get_virtual_method(MonoObject* object, MonoMethod* method);
 	MonoMethod* WINAPI mono_class_get_method_from_name(MonoClass* klass, const char* name, int param_count);
 	const char* WINAPI mono_class_get_name(MonoClass* klass);
+	UINT        WINAPI mono_method_get_token(MonoMethod* method);
 	MonoMethod* WINAPI mono_get_method_from_image(MonoImage* image, const char* desc, bool include_namespace=true,int param_count=-1);
 	
 	LPVOID      WINAPI mono_method_get_unmanaged_thunk(MonoMethod* method);
