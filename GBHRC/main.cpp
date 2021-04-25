@@ -21,10 +21,11 @@ Application::InteractiveForm* esp_scene;
 Application::UI::Panel* esp_box;
 void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam);
 HWND main__window;
-
+Mono::Context* mono_context;
 
 void draw_esp(Application::Render::Scene* pScene)
 {
+    DEBUG_LOG("ENTER ESP");
     if(BrokeProtocol::get_manager()->host != nullptr)
 	{
         //system("cls");
@@ -63,11 +64,13 @@ void draw_esp(Application::Render::Scene* pScene)
             auto* pos = player->rotationT->get_position();
    		}
    	}
+
+    DEBUG_LOG("END ESP");
 }
 
 void init_callback(Application::Render::Engine* instance)
 {
-    Mono::mono_thread_attach(Mono::mono_get_root_domain());
+    mono_context->mono_thread_attach(mono_context->mono_get_root_domain());
 
     menu = new Application::InteractiveForm();
 
@@ -102,15 +105,15 @@ void MainThread()
     auto nigger = freopen("CONOUT$", "w", stdout);
     nigger = freopen("CONIN$", "r", stdin);
 #endif
-
-    Mono::implement();
 	
     Hooks::WndProc::init_hook(main__window);
     Hooks::WndProc::callback(wnd_key_hook);
 
     Hooks::D3D11::hook(Hooks::D3D11::GetPresentAddress(), init_callback);
-	
-    Mono::mono_thread_attach(Mono::mono_get_root_domain());
+    mono_context = Mono::Context::get_context();
+    auto* domain = mono_context->mono_get_root_domain();
+    mono_context->mono_thread_attach(domain);
+    return;
     BrokeProtocol::show_local_message((char*)"<color=#39d668>[info]</color> GBHRC injected | press <color=#39d668>INSERT</color> to show menu!");
     BrokeProtocol::show_local_message((char*)"<color=#3966d6>[info]</color> join our discord: https://discord.gg/4jRzSHz3 ");
 

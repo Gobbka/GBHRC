@@ -13,9 +13,10 @@ BrokeProtocol::Structs::MainCamera* BrokeProtocol::get_camera()
     Structs::MainCamera* camera = nullptr;
 	if(camera==nullptr)
 	{
-        auto* pclass = Mono::mono_class_from_name(Mono::get_script_image(), "BrokeProtocol.Client.UI", "MainCamera");
-        auto* parent = Mono::mono_class_get_parent(pclass);
-        Mono::mono_get_static_field_value(
+        auto* mono_context = Mono::Context::get_context();
+        auto* pclass = mono_context->mono_class_from_name(mono_context->get_script_image(), "BrokeProtocol.Client.UI", "MainCamera");
+        auto* parent = mono_context->mono_class_get_parent(pclass);
+        mono_context->mono_get_static_field_value(
             parent,
             0x04000075, // MonoBehaviourSingleton::CKMGNJHFDLL
             &camera
@@ -32,6 +33,7 @@ BrokeProtocol::Structs::Evaluator* BrokeProtocol::get_evaluator()
     if (pointer == 0)
     {
         auto* const unity_player = GetModuleHandle(L"UnityPlayer.dll");
+    	
         size_t step = *(size_t*)((size_t)unity_player + 0X1982398);
         step = *(size_t*)(step + 0X0);
         step = *(size_t*)(step + 0X10);
@@ -66,13 +68,14 @@ KeyedCollection<BrokeProtocol::Players::ShPlayer*>* BrokeProtocol::GetPlayersCol
 
 	if(players==nullptr)
 	{
-        auto* image = Mono::get_script_image();
-        auto* method_desc = Mono::mono_method_desc_new("BrokeProtocol.Collections.EntityCollections:n()", true);
+        auto* mono_context = Mono::Context::get_context();
+        auto* image = mono_context->get_script_image();
+        auto* method_desc = mono_context->mono_method_desc_new("BrokeProtocol.Collections.EntityCollections:n()", true);
 
-        auto* pClass = Mono::mono_class_from_name(image, method_desc->namespace_name, method_desc->class_name);
-        Mono::mono_method_desc_free(method_desc);
+        auto* pClass = mono_context->mono_class_from_name(image, method_desc->namespace_name, method_desc->class_name);
+        mono_context->mono_method_desc_free(method_desc);
 
-        Mono::mono_get_static_field_value(
+        mono_context->mono_get_static_field_value(
             pClass, 
             0x0400111C, // ENTITY_COLLECTION::HUMANS
             &players
@@ -90,7 +93,7 @@ void BrokeProtocol::fire()
 
     void* args[1]{&player->current_weapon()->index};
 
-    Mono::mono_runtime_invoke(pMethod, player, args, nullptr);
+    Mono::Context::get_context()->mono_runtime_invoke(pMethod, player, args, nullptr);
 }
 
 void BrokeProtocol::SendToServer(PacketFlags flags, BrokeProtocol::SvPacket packet, Mono::MonoArray* array)
@@ -100,7 +103,7 @@ void BrokeProtocol::SendToServer(PacketFlags flags, BrokeProtocol::SvPacket pack
     Mono::MonoObject* exception = nullptr;
 
     void* args[3] {&flags,&packet,array};
-    Mono::mono_runtime_invoke(pMethod, BrokeProtocol::GetLocalPlayer()->clPlayer->clManager, args, &exception);
+    Mono::Context::get_context()->mono_runtime_invoke(pMethod, BrokeProtocol::GetLocalPlayer()->clPlayer->clManager, args, &exception);
 
     if (exception != nullptr)
     {
@@ -112,12 +115,14 @@ void BrokeProtocol::show_local_message(char*text)
 {
 	
     STATIC_METHOD("BrokeProtocol.Managers.ClManager:ShowGameMessage(string)", true);
+
+    auto* mono_context = Mono::Context::get_context();
 	
-    void* params[1] {Mono::create_csharp_string(text)};
+    void* params[1] { mono_context->create_csharp_string(text)};
 	
     Mono::MonoObject* exception = nullptr;
 	
-    Mono::mono_runtime_invoke(pMethod, BrokeProtocol::get_global_types()->clManager, params, &exception);
+    mono_context->mono_runtime_invoke(pMethod, BrokeProtocol::get_global_types()->clManager, params, &exception);
 
 	if(exception!=nullptr)
 	{
@@ -127,9 +132,10 @@ void BrokeProtocol::show_local_message(char*text)
 
 void BrokeProtocol::send_global_chat(char* text)
 {
-    auto* ptr = Mono::create_csharp_string(text);
+    auto* mono_context = Mono::Context::get_context();
+    auto* ptr = mono_context->create_csharp_string(text);
 
-    Mono::MonoArray* theArray = Mono::mono_array_new(Mono::mono_get_root_domain(), Mono::get_object_class(), 1);
+    Mono::MonoArray* theArray = mono_context->mono_array_new(mono_context->mono_get_root_domain(), mono_context->get_object_class(), 1);
     theArray->vector[0] = (__int64)ptr;
 
     BrokeProtocol::SendToServer(PacketFlags::Reliable, SvPacket::GlobalMessage, theArray);
@@ -139,17 +145,18 @@ void BrokeProtocol::ShowTextMenu(float xMin, float yMin, float xMax, float yMax,
 {
     STATIC_METHOD("BrokeProtocol.Managers.ClManager:ShowTextPanel()",true);
 
-    auto* title_str = Mono::create_csharp_string((char*)"<color=#FFFFFF>NIGGER</color>");
-    auto* text_str = Mono::create_csharp_string((char*)text);
+    auto* mono_context = Mono::Context::get_context();
+	
+    auto* text_str = mono_context->create_csharp_string((char*)text);
 
-    void* args[]{ title_str };
+    void* args[]{ text_str };
 
     DEBUG_LOG("METHOD:" << pMethod);
     DEBUG_LOG("PISKA: " << BrokeProtocol::GetLocalPlayer()->clPlayer->clManager);
 
     Mono::MonoObject* exc;
 	
-    Mono::mono_runtime_invoke(pMethod, BrokeProtocol::get_manager()->clManager,args,&exc);
+    mono_context->mono_runtime_invoke(pMethod, BrokeProtocol::get_manager()->clManager,args,&exc);
 
 	if(exc!=nullptr)
 	{
@@ -160,8 +167,8 @@ void BrokeProtocol::ShowTextMenu(float xMin, float yMin, float xMax, float yMax,
 void BrokeProtocol::ShowTextPanel(const char* text)
 {
     STATIC_METHOD("BrokeProtocol.Managers.ClManager:ShowTextPanel()", true);
+    auto* mono_context = Mono::Context::get_context();
+    void* args[]{ mono_context->create_csharp_string((char*)text) };
 
-    void* args[]{ Mono::create_csharp_string((char*)text) };
-
-    Mono::mono_runtime_invoke(pMethod, BrokeProtocol::get_global_types()->clManager, args, nullptr);
+    mono_context->mono_runtime_invoke(pMethod, BrokeProtocol::get_global_types()->clManager, args, nullptr);
 }

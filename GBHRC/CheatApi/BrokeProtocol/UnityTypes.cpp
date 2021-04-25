@@ -7,7 +7,8 @@
 
 UnityTypes::Vector3* UnityTypes::Vector3::make(float x, float y, float z)
 {
-	auto* vector = (Vector3*)Mono::mono_object_new(Mono::mono_get_root_domain(), Mono::mono_class_from_name(Mono::get_UE_CoreModule(), "UnityEngine", "Vector3"));
+	auto* mono_context = Mono::Context::get_context();
+	auto* vector = (Vector3*)mono_context->mono_object_new(mono_context->mono_get_root_domain(), mono_context->mono_class_from_name(mono_context->get_UE_CoreModule(), "UnityEngine", "Vector3"));
 	vector->x = x; vector->y = y; vector->z = z;
 	return vector;
 }

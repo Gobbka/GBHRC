@@ -156,6 +156,7 @@
     <ClCompile Include="CheatApi\BrokeProtocol\Mono\dumper\MonoDumper.cpp" />
     <ClCompile Include="CheatApi\BrokeProtocol\Mono\Images\Script\ScriptImage.cpp" />
     <ClCompile Include="CheatApi\BrokeProtocol\Mono\Mono.cpp" />
+    <ClCompile Include="CheatApi\BrokeProtocol\Mono\vTable\vTable.cpp" />
     <ClCompile Include="CheatApi\BrokeProtocol\UnityTypes.cpp" />
     <ClCompile Include="CheatApi\Hooks\d3d11\d3d11hook.cpp" />
     <ClCompile Include="CheatApi\Hooks\wndproc\wndprochook.cpp" />
@@ -180,6 +181,7 @@
     <ClInclude Include="CheatApi\BrokeProtocol\Mono\Mono.h" />
     <ClInclude Include="CheatApi\BrokeProtocol\Mono\MonoDefs.h" />
     <ClInclude Include="CheatApi\BrokeProtocol\Mono\Images\Script\ScriptImage.h" />
+    <ClInclude Include="CheatApi\BrokeProtocol\Mono\vTable\vTable.h" />
     <ClInclude Include="CheatApi\BrokeProtocol\UnityTypes.h" />
     <ClInclude Include="CheatApi\Hooks\d3d11\d3d11hook.h" />
     <ClInclude Include="CheatApi\Hooks\d3d11\D3D11_VMT.h" />

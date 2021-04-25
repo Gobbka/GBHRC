@@ -9,10 +9,11 @@ ICollection::ICollection(Mono::MonoObject* pCollection)
 
 int ICollection::Count() const
 {
-	auto* klass = Mono::mono_object_get_class(this->collection);
-	auto* pProperty = Mono::mono_class_get_property_from_name(klass, "Count");
-	DEBUG_LOG("PROPERTY: "<<pProperty);
-	auto* pMethod = Mono::mono_property_get_get_method(pProperty);
-	DEBUG_LOG("METHOD: " << pMethod);
-	return (int)Mono::mono_runtime_invoke(pMethod, this->collection, nullptr, nullptr);
+	auto* mono_context = Mono::Context::get_context();
+	auto* klass = mono_context->mono_object_get_class(this->collection);
+	auto* pProperty = mono_context->mono_class_get_property_from_name(klass, "Count");
+
+	auto* pMethod = mono_context->mono_property_get_get_method(pProperty);
+
+	return (int)mono_context->mono_runtime_invoke(pMethod, this->collection, nullptr, nullptr);
 }
