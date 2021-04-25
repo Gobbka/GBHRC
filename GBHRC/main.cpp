@@ -109,11 +109,11 @@ void MainThread()
     Hooks::WndProc::init_hook(main__window);
     Hooks::WndProc::callback(wnd_key_hook);
 
-    Hooks::D3D11::hook(Hooks::D3D11::GetPresentAddress(), init_callback);
+    //Hooks::D3D11::hook(Hooks::D3D11::GetPresentAddress(), init_callback);
     mono_context = Mono::Context::get_context();
     auto* domain = mono_context->mono_get_root_domain();
     mono_context->mono_thread_attach(domain);
-    return;
+
     BrokeProtocol::show_local_message((char*)"<color=#39d668>[info]</color> GBHRC injected | press <color=#39d668>INSERT</color> to show menu!");
     BrokeProtocol::show_local_message((char*)"<color=#3966d6>[info]</color> join our discord: https://discord.gg/4jRzSHz3 ");
 
@@ -174,7 +174,8 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
         }
 
     	if(wParam == VK_F2){
-            Mono::Dumper::dump_object((Mono::MonoObject*)BrokeProtocol::GetLocalPlayer()->rotationT->get_position());
+            DEBUG_LOG("EVALUATOR: " << (size_t)BrokeProtocol::get_camera()->ClManager + 0x340);
+
             //BrokeProtocol::get_camera()->WorldCameraT->rotate(25.f,0,0);
     	}
 

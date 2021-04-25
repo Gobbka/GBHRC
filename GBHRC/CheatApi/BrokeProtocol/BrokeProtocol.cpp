@@ -34,7 +34,7 @@ BrokeProtocol::Structs::Evaluator* BrokeProtocol::get_evaluator()
     {
         auto* const unity_player = GetModuleHandle(L"UnityPlayer.dll");
     	
-        size_t step = *(size_t*)((size_t)unity_player + 0X1982398);
+        size_t step = *(size_t*)((size_t)unity_player + 0X1983398);
         step = *(size_t*)(step + 0X0);
         step = *(size_t*)(step + 0X10);
         pointer = step;
@@ -43,6 +43,7 @@ BrokeProtocol::Structs::Evaluator* BrokeProtocol::get_evaluator()
     buffer = *(size_t*)(buffer + 0X198);
     buffer = *(size_t*)(buffer + 0x340);
 
+    
 	
     return (Structs::Evaluator*)buffer;
 }
