@@ -26,6 +26,7 @@ namespace Mono
 
 		static Mono::Context* get_context();
 	};
+
 }
 
 //namespace Mono

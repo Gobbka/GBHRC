@@ -45,7 +45,7 @@ void Context::mono_print_system_exception(void* exception)
 	auto* field = Context::mono_class_get_field_from_name(klass, "_message");
 	UnityTypes::String* value;
 	mono_field_get_value((MonoObject*)exception, field, &value);
-	DEBUG_LOG("<ERROR> "<<(char*)(value->pointer));
+	DEBUG_LOG("<ERROR> "<<(char*)(value->array));
 }
 
 Mono::MonoObject* Context::create_csharp_string(char* ptr)

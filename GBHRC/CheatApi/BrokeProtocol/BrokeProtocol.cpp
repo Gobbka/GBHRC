@@ -3,6 +3,7 @@
 #include "../../includes/logger.h"
 #include "Mono/Mono.h"
 #include "Mono/Images/Script/ScriptImage.h"
+#include "Enum/Tokens.h"
 
 using namespace Collections;
 
@@ -18,7 +19,7 @@ BrokeProtocol::Structs::MainCamera* BrokeProtocol::get_camera()
         auto* parent = mono_context->mono_class_get_parent(pclass);
         mono_context->mono_get_static_field_value(
             parent,
-            0x04000075, // MonoBehaviourSingleton::CKMGNJHFDLL
+            BPTokens::MonoBehaviourSingleton_CKMGNJHFDLL, // MonoBehaviourSingleton::CKMGNJHFDLL
             &camera
         );
 	}
@@ -78,7 +79,7 @@ KeyedCollection<BrokeProtocol::Players::ShPlayer*>* BrokeProtocol::GetPlayersCol
 
         mono_context->mono_get_static_field_value(
             pClass, 
-            0x0400111C, // ENTITY_COLLECTION::HUMANS
+            BPTokens::EntityCollection_HUMANS, // ENTITY_COLLECTION::HUMANS
             &players
         );
 	}

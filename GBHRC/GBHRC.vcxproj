@@ -177,6 +177,7 @@
     <ClInclude Include="CheatApi\BrokeProtocol\classes\Transform\Transform.h" />
     <ClInclude Include="CheatApi\BrokeProtocol\Enum\PacketFlags.h" />
     <ClInclude Include="CheatApi\BrokeProtocol\Enum\SvPacket.h" />
+    <ClInclude Include="CheatApi\BrokeProtocol\Enum\Tokens.h" />
     <ClInclude Include="CheatApi\BrokeProtocol\Mono\dumper\MonoDumper.h" />
     <ClInclude Include="CheatApi\BrokeProtocol\Mono\Mono.h" />
     <ClInclude Include="CheatApi\BrokeProtocol\Mono\MonoDefs.h" />

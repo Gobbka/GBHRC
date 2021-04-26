@@ -6,7 +6,12 @@
 
 void Mono::Dumper::dump_class(MonoClass* klass)
 {
+	
 	auto* mono_context = Mono::Context::get_context();
+
+	auto* nigger = mono_context->mono_class_get_parent(klass);
+	if (nigger != nullptr)
+		dump_class(nigger);
 	void* pointer = NULL;
 	Mono::MonoClassField* field = NULL;
 
