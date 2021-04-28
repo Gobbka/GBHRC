@@ -43,15 +43,32 @@ UnityTypes::Vector3* UnityEngine::Camera::WorldToViewportPoint(UnityTypes::Vecto
 
 bool UnityEngine::Camera::worldToScreen(Vector3 pos, POINT* screen, int windowWidth, int windowHeight)
 {
-	//Matrix-vector Product, multiplying world(eye) coordinates by projection matrix = clipCoords
+	//      auto& matrix = g_pEngine->WorldToScreenMatrix();
+	        
+	//      int ScrW, ScrH;
+	//      g_pEngine->GetScreenSize(ScrW, ScrH);
+	        
+	//      float w = matrix[3][0] * vOrigin[0] + matrix[3][1] * vOrigin[1] + matrix[3][2] * vOrigin[2] + matrix[3][3];
+	//      if (w > 0.01)
+	//      {
+	//      	float inverseWidth = 1 / w;
+	//      	vScreen.x = (ScrW / 2) + (0.5 * ((matrix[0][0] * vOrigin[0] + matrix[0][1] * vOrigin[1] + matrix[0][2] * vOrigin[2] + matrix[0][3]) * inverseWidth) * ScrW + 0.5);
+	//      	vScreen.y = (ScrH / 2) - (0.5 * ((matrix[1][0] * vOrigin[0] + matrix[1][1] * vOrigin[1] + matrix[1][2] * vOrigin[2] + matrix[1][3]) * inverseWidth) * ScrH + 0.5);
+	//      	vScreen.z = 0;
+	//      	return true;
+	//      }
+	//      return false;
 
 	Vector4 clipCoords;
 	{
 		auto* pmatrix = this->worldToCameraMatrix();
+		clipCoords.w = pos.x * pmatrix->m30 + pos.y * pmatrix->m31 + pos.z * pmatrix->m32 + pmatrix->m33;
+		if (clipCoords.w < 0.01f)
+			return false;
+		
 		clipCoords.x = pos.x * pmatrix->m00 + pos.y * pmatrix->m01 + pos.z * pmatrix->m02 + pmatrix->m03;
 		clipCoords.y = pos.x * pmatrix->m10 + pos.y * pmatrix->m11 + pos.z * pmatrix->m12 + pmatrix->m13;
-		clipCoords.z = pos.x * pmatrix->m20 + pos.y * pmatrix->m21 + pos.z * pmatrix->m22 + pmatrix->m23;
-		clipCoords.w = pos.x * pmatrix->m30 + pos.y * pmatrix->m31 + pos.z * pmatrix->m32 + pmatrix->m33;
+		//clipCoords.z = pos.x * pmatrix->m20 + pos.y * pmatrix->m21 + pos.z * pmatrix->m22 + pmatrix->m23;
 	}
 	{
 		auto* pProjectMatrix = this->projectionMatrix();
@@ -66,8 +83,8 @@ bool UnityEngine::Camera::worldToScreen(Vector3 pos, POINT* screen, int windowWi
 	
 	//screen->x = (windowWidth / 2 * NDC.x) + (NDC.x + windowWidth / 2);
 	//screen->y = (windowHeight / 2 * NDC.y) + (NDC.y + windowHeight / 2);
-	DEBUG_LOG("VIEW: " << this->get_orthographicSize());
-	screen->x = NDC.x;
+
+	screen->x = (windowWidth/2) + NDC.x;
 	screen->y = NDC.y;
 	return true;
 }

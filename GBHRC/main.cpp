@@ -44,6 +44,7 @@ void draw_esp(Application::Render::Scene* pScene)
 
         int width = rect.right - rect.left;
         int height = rect.bottom - rect.top;
+
     	
    		for(int i = 0;i<size;i++)
    		{
@@ -53,11 +54,13 @@ void draw_esp(Application::Render::Scene* pScene)
                 continue;
 
             auto* pos =player->rotationT->get_position();
-            // auto distance = local_position->distanceTo(pos);
-
+			
             POINT screenPoint{-1,-1};
             BrokeProtocol::get_camera()->worldCamera->worldToScreen({ pos->x,pos->y,pos->z }, &screenPoint, width, height);
-            
+            {
+
+            }
+
             DEBUG_LOG("X: " << std::dec << screenPoint.x << " Y: " << screenPoint.y);
 
             esp_box->set_pos(screenPoint.x,screenPoint.y);
