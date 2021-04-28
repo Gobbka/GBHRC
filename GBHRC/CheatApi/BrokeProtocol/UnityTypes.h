@@ -12,6 +12,7 @@ namespace UnityTypes
 		float z; //0x0018
 
 		static Vector3* make(float x, float y, float z);
+		float distanceTo(UnityTypes::Vector3* vector) const;
 	};
 
 	class String

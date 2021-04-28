@@ -41,6 +41,37 @@ UnityTypes::Vector3* UnityEngine::Camera::WorldToViewportPoint(UnityTypes::Vecto
 	return (UnityTypes::Vector3*)mono_context->mono_runtime_invoke(pMethod, this, args, nullptr);
 }
 
+bool UnityEngine::Camera::worldToScreen(Vector3 pos, POINT* screen, int windowWidth, int windowHeight)
+{
+	//Matrix-vector Product, multiplying world(eye) coordinates by projection matrix = clipCoords
+
+	Vector4 clipCoords;
+	{
+		auto* pmatrix = this->worldToCameraMatrix();
+		clipCoords.x = pos.x * pmatrix->m00 + pos.y * pmatrix->m01 + pos.z * pmatrix->m02 + pmatrix->m03;
+		clipCoords.y = pos.x * pmatrix->m10 + pos.y * pmatrix->m11 + pos.z * pmatrix->m12 + pmatrix->m13;
+		clipCoords.z = pos.x * pmatrix->m20 + pos.y * pmatrix->m21 + pos.z * pmatrix->m22 + pmatrix->m23;
+		clipCoords.w = pos.x * pmatrix->m30 + pos.y * pmatrix->m31 + pos.z * pmatrix->m32 + pmatrix->m33;
+	}
+	{
+		auto* pProjectMatrix = this->projectionMatrix();
+		clipCoords.x = clipCoords.x * pProjectMatrix->m00 + clipCoords.y * pProjectMatrix->m01;
+		clipCoords.y = clipCoords.x * pProjectMatrix->m10 + clipCoords.y * pProjectMatrix->m11;
+	}
+	//perspective division, dividing by clip.W = Normalized Device Coordinates
+	Vector3 NDC;
+	NDC.x = clipCoords.x / clipCoords.w;
+	NDC.y = clipCoords.y / clipCoords.w;
+	NDC.z = clipCoords.z / clipCoords.w;
+	
+	//screen->x = (windowWidth / 2 * NDC.x) + (NDC.x + windowWidth / 2);
+	//screen->y = (windowHeight / 2 * NDC.y) + (NDC.y + windowHeight / 2);
+	DEBUG_LOG("VIEW: " << this->get_orthographicSize());
+	screen->x = NDC.x;
+	screen->y = NDC.y;
+	return true;
+}
+
 void UnityEngine::Camera::WorldToViewportPoint_Injected(UnityTypes::Vector3* pos, UnityTypes::Vector3* out)
 {
 	STATIC_METHOD("UnityEngine.Camera:WorldToViewportPoint_Injected()", true, 3);
@@ -134,6 +165,18 @@ float UnityEngine::Camera::get_fieldOfView()
 	static auto* pSetPosMethod = mono_context->mono_property_get_get_method(mono_context->mono_class_get_property_from_name(
 		mono_context->mono_class_from_name(mono_context->get_UE_CoreModule(), "UnityEngine", "Camera"),
 		"fieldOfView"
+	));
+
+	return (float)(__int64)mono_context->mono_runtime_invoke(pSetPosMethod, this, nullptr, nullptr);
+}
+
+float UnityEngine::Camera::get_orthographicSize()
+{
+	auto* mono_context = Mono::Context::get_context();
+
+	static auto* pSetPosMethod = mono_context->mono_property_get_get_method(mono_context->mono_class_get_property_from_name(
+		mono_context->mono_class_from_name(mono_context->get_UE_CoreModule(), "UnityEngine", "Camera"),
+		"orthographicSize"
 	));
 
 	return (float)(__int64)mono_context->mono_runtime_invoke(pSetPosMethod, this, nullptr, nullptr);

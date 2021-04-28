@@ -1,6 +1,6 @@
 #pragma once
 #include <Windows.h>
-#include "../../includes/d3d.h"
+
 struct Vector4
 {
 	float x, y, z,w;
@@ -32,6 +32,13 @@ struct Matrix4X4
 		float m33; //0x004C
 };
 
+/// <summary>
+/// DEPRECATED
+/// </summary>
+/// <param name="pos"></param>
+/// <param name="pmatrix"></param>
+/// <param name="clientrect"></param>
+/// <returns></returns>
 Vector3 WorldToScreen(Vector3 pos, Matrix4X4* pmatrix,RECT clientrect);
-bool WorldToScreen(Vector3 pos, POINT* screen, Matrix4X4* matrix, int windowWidth, int windowHeight);
+
 

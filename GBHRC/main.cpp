@@ -38,30 +38,13 @@ void draw_esp(Application::Render::Scene* pScene)
         auto* players = BrokeProtocol::GetPlayersCollection();
         auto* ptr = players->items->pointer();
         const auto size = players->items->size();
-        //DEBUG_LOG("PLAYERS NEAR YOU:");
 
-        {
-        	
+        RECT rect;
+        GetClientRect(main__window, &rect);
 
-
-            //RECT rect;
-            //GetClientRect(main__window, &rect);
-        	
-            //int width = rect.right - rect.left;
-            //int height = rect.bottom - rect.top;
-
-            //auto w2s = WorldToScreen({ pos->x,pos->y,pos->z },&sPoint, &local_matrix->m00,width,height);
-
-
-            //auto* proj_matrix = local_matrix;
-            //DEBUG_LOG(
-            //    proj_matrix->m00 <<" " << proj_matrix->m01<<" " << proj_matrix->m02<<" " << proj_matrix->m03 << "\n" <<
-            //    proj_matrix->m10 <<" " << proj_matrix->m11<<" " << proj_matrix->m12<<" " << proj_matrix->m13 << "\n" <<
-            //    proj_matrix->m20 <<" " << proj_matrix->m21<<" " << proj_matrix->m22<<" " << proj_matrix->m23 << "\n"<<
-            //    proj_matrix->m30 <<" " << proj_matrix->m31<<" " << proj_matrix->m32<<" " << proj_matrix->m33
-            //);
-        }
-
+        int width = rect.right - rect.left;
+        int height = rect.bottom - rect.top;
+    	
    		for(int i = 0;i<size;i++)
    		{
             auto* player = ptr[i];
@@ -70,18 +53,15 @@ void draw_esp(Application::Render::Scene* pScene)
                 continue;
 
             auto* pos =player->rotationT->get_position();
+            // auto distance = local_position->distanceTo(pos);
 
-            RECT rect;
-            GetClientRect(main__window, &rect);
-
-            int width = rect.right - rect.left;
-            int height = rect.bottom - rect.top;
-
-            POINT screenPoint;
-            WorldToScreen({ pos->x,pos->y,pos->z }, &screenPoint, BrokeProtocol::get_camera()->worldCamera->worldToCameraMatrix(), width, height);
+            POINT screenPoint{-1,-1};
+            BrokeProtocol::get_camera()->worldCamera->worldToScreen({ pos->x,pos->y,pos->z }, &screenPoint, width, height);
+            
             DEBUG_LOG("X: " << std::dec << screenPoint.x << " Y: " << screenPoint.y);
 
-            esp_box->set_pos(screenPoint.x / 21, screenPoint.y / 17);
+            esp_box->set_pos(screenPoint.x,screenPoint.y);
+
    		}
    	}
 }
@@ -90,6 +70,9 @@ void init_callback(Application::Render::Engine* instance)
 {
     mono_context->mono_thread_attach(mono_context->mono_get_root_domain());
 
+    BrokeProtocol::show_local_message((char*)"<color=#39d668>[info]</color> GBHRC injected | press <color=#39d668>INSERT</color> to show menu!");
+	BrokeProtocol::show_local_message((char*)"<color=#3966d6>[info]</color> join our discord: https://discord.gg/4jRzSHz3 ");
+	
     menu = new Application::InteractiveForm();
 
     MainMenuMarkup(menu, instance);
@@ -130,14 +113,8 @@ void MainThread()
     mono_context = Mono::Context::get_context();
 	
     Hooks::D3D11::hook(Hooks::D3D11::GetPresentAddress(), init_callback);
-	
-    auto* domain = mono_context->mono_get_root_domain();
-    mono_context->mono_thread_attach(domain);
 
-    BrokeProtocol::show_local_message((char*)"<color=#39d668>[info]</color> GBHRC injected | press <color=#39d668>INSERT</color> to show menu!");
-    BrokeProtocol::show_local_message((char*)"<color=#3966d6>[info]</color> join our discord: https://discord.gg/4jRzSHz3 ");
-
-    esp_();
+    //esp_();
 }
 
 void esp_()
@@ -195,22 +172,23 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
 
     	if(wParam == VK_F2){
 
-    //        Mono::MonoObject* out = nullptr;
-    //        UnityTypes::Vector3* pos = UnityTypes::Vector3::make(0, 17.f, 0);
-    //        BrokeProtocol::get_camera()->worldCamera->WorldToViewportPoint_Injected(pos,(UnityTypes::Vector3*)&out);
-    //        DEBUG_LOG("OUT: " << out);
-    //		if(out!=nullptr)
-				//Mono::Dumper::dump_object(out);
-    //		if(out!=nullptr)
-				//DEBUG_LOG("X: "<<out->x << " Y: "<<out->y);
-
-            //BrokeProtocol::get_camera()->WorldCameraT->rotate(25.f,0,0);
     	}
 
         if (wParam == VK_F3)
         {
             BrokeProtocol::GetLocalPlayer()->fire();
         }
+
+    	if(wParam == VK_LEFT)
+    	{
+            BrokeProtocol::GetLocalPlayer()->speed -= 2.f;
+            DEBUG_LOG("SPEED: "<<BrokeProtocol::GetLocalPlayer()->speed);
+    	}
+    	if(wParam == VK_RIGHT)
+    	{
+            BrokeProtocol::GetLocalPlayer()->speed += 2.f;
+            DEBUG_LOG("SPEED: " << BrokeProtocol::GetLocalPlayer()->speed);
+    	}
     }
 
 }

@@ -12,3 +12,8 @@ UnityTypes::Vector3* UnityTypes::Vector3::make(float x, float y, float z)
 	vector->x = x; vector->y = y; vector->z = z;
 	return vector;
 }
+
+float UnityTypes::Vector3::distanceTo(UnityTypes::Vector3* vector) const
+{
+	return sqrt(pow(vector->x - this->x, 2) + pow(vector->y - this->y, 2) + pow(vector->z - this->z, 2));
+}

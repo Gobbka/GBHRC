@@ -96,7 +96,7 @@ void Hooks::D3D11::hook(fnPresent present_func, fnInitCallback init_callback)
 
 	DEBUG_LOG("[D3D] REPLACING BYTES");
 	place_catch_bytes((size_t)present_func);
-	DEBUG_LOG("[D3D] TRAMPED");
+	DEBUG_LOG("[D3D] PLACED");
 }
 
 void Hooks::D3D11::HookedPresentFunction(IDXGISwapChain* self, UINT SyncInterval, UINT Flags)
@@ -105,6 +105,7 @@ void Hooks::D3D11::HookedPresentFunction(IDXGISwapChain* self, UINT SyncInterval
 	// we make instance of own graphic engine
 	if (pRenderEngine == nullptr)
 	{
+		DEBUG_LOG("[d3d] CATCHED");
 		//
 		DXGI_SWAP_CHAIN_DESC sd;
 		self->GetDesc(&sd);

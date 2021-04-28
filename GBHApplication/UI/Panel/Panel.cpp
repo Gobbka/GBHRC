@@ -59,3 +59,21 @@ Application::UI::IElement* Application::UI::Panel::set_color(float r, float g, f
 
 	return this;
 }
+
+Application::UI::IElement* Application::UI::Panel::set_rect(float width, float height)
+{
+	auto x = this->position.x;
+	auto y = this->position.y;
+	
+	auto* ptr = this->get_ptr();
+	
+	ptr[0].pos = DirectX::XMFLOAT3(x, y, 1.f);
+	ptr[1].pos = DirectX::XMFLOAT3(x, y - height, 1.f);
+	ptr[2].pos = DirectX::XMFLOAT3(x + width, y - height, 1.f);
+	ptr[3].pos = DirectX::XMFLOAT3(x + width, y, 1.f);
+	ptr[4].pos = DirectX::XMFLOAT3(x, y, 1.f);
+
+	this->resolution = { (UINT)width,(UINT)height };
+
+	return this;
+}

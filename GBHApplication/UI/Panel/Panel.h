@@ -24,6 +24,7 @@ namespace Application
 			void init(Application::InteractiveForm* pForm) override;
 			IElement* set_pos(float x, float y) override;
 			IElement* set_color(float r, float g, float b) override;
+			UI::IElement* set_rect(float width, float height);
 		};
 	}
 

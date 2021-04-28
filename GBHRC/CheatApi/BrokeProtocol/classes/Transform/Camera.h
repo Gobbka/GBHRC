@@ -11,7 +11,8 @@ namespace UnityEngine
 		
 		UnityTypes::Vector3* WorldToScreenPoint(UnityTypes::Vector3* pos);
 		UnityTypes::Vector3* WorldToViewportPoint(UnityTypes::Vector3* pos);
-
+		bool worldToScreen(Vector3 pos,POINT* screen, int windowWidth, int windowHeight);
+		
 		void WorldToViewportPoint_Injected(UnityTypes::Vector3* pos, UnityTypes::Vector3* out);
 		
 		Matrix4X4* projectionMatrix();
@@ -23,6 +24,7 @@ namespace UnityEngine
 		bool is_orthographic();
 		void set_orthographicSize(float new_f);
 		float get_fieldOfView();
+		float get_orthographicSize();
 	};
 }
 
