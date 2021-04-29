@@ -3,9 +3,9 @@
 void Application::UI::Checkbox::__draw(ID3D11DeviceContext* pContext)
 {
 	pContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
-	pContext->Draw(5, this->index);
+	pContext->Draw(5, this->__index);
 	pContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-	pContext->Draw(5, this->index + 5);
+	pContext->Draw(5, this->__index + 5);
 }
 
 UINT Application::UI::Checkbox::size()
@@ -32,19 +32,17 @@ void Application::UI::Checkbox::init(Application::InteractiveForm* pForm)
 	Managers::Rectangle::set_color(ptr, 0.819f, 0.819f, 0.819f);
 }
 
-Application::UI::IElement* Application::UI::Checkbox::set_pos(float x, float y)
+void Application::UI::Checkbox::set_pos(float x, float y)
 {
 	auto* ptr = this->get_ptr();
 	
 	Managers::Rectangle::set_rect(ptr, x, y, resolution.width, resolution.height);
 	Managers::Rectangle::set_rect(ptr + 5, x + 4, y - 5, resolution.width - 9, resolution.height - 9);
-	return this;
 }
 
-Application::UI::IElement* Application::UI::Checkbox::set_color(float r, float g, float b)
+void Application::UI::Checkbox::set_color(float r, float g, float b)
 {
 	Managers::Rectangle::set_color(this->get_ptr()+5, r, g, b);
-	return this;
 }
 
 bool Application::UI::Checkbox::point_belongs(POINT point)

@@ -1,19 +1,9 @@
 #include "IElement.h"
-#include "../../Form/InteractiveForm.h"
+#include "../../InteractiveForm.h"
 
 Application::Render::Position Application::UI::IElement::get_position() const
 {
 	return this->position;
-}
-
-bool Application::UI::IElement::point_belongs(POINT point)
-{
-	return false;
-}
-
-void Application::UI::IElement::set_index(UINT index)
-{
-	this->index = index;
 }
 
 void Application::UI::IElement::move_by(float x, float y)
@@ -29,5 +19,5 @@ void Application::UI::IElement::move_by(float x, float y)
 
 GVertex::Vertex* Application::UI::IElement::get_ptr() const
 {
-	return this->pForm->get_ptr() + this->index;
+	return this->pForm->get_ptr() + this->__index;
 }

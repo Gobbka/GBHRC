@@ -145,27 +145,28 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Form\CanvasForm.cpp" />
-    <ClCompile Include="Form\InteractiveForm.cpp" />
+    <ClCompile Include="Form\Interactive\InteractiveForm.cpp" />
     <ClCompile Include="Render\d3d\Vertex.cpp" />
     <ClCompile Include="Render\Engine\Engine.cpp" />
     <ClCompile Include="Render\Scene\Scene.cpp" />
-    <ClCompile Include="UI\Checkbox\Checkbox.cpp" />
-    <ClCompile Include="UI\IElement\IElement.cpp" />
-    <ClCompile Include="UI\Panel\Panel.cpp" />
+    <ClCompile Include="Form\Interactive\elements\Checkbox\Checkbox.cpp" />
+    <ClCompile Include="Form\Interactive\elements\IElement\IElement.cpp" />
+    <ClCompile Include="Form\Interactive\elements\Panel\Panel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Form\CanvasForm.h" />
-    <ClInclude Include="Form\InteractiveForm.h" />
+    <ClInclude Include="Form\Interactive\InteractiveForm.h" />
     <ClInclude Include="Managers\RectangleManager.h" />
     <ClInclude Include="Render\d3d\ConstantBuffer.h" />
     <ClInclude Include="Render\d3d\szShadez.h" />
     <ClInclude Include="Render\d3d\Vertex.h" />
     <ClInclude Include="Render\Engine\Engine.h" />
+    <ClInclude Include="Render\Scene\IRenderObject.h" />
     <ClInclude Include="Render\Scene\Scene.h" />
-    <ClInclude Include="UI\Checkbox\Checkbox.h" />
-    <ClInclude Include="UI\IElement\IElement.h" />
-    <ClInclude Include="UI\Panel\Panel.h" />
+    <ClInclude Include="Form\Interactive\elements\Checkbox\Checkbox.h" />
+    <ClInclude Include="Form\Interactive\elements\IElement\IElement.h" />
+    <ClInclude Include="Form\Interactive\elements\Panel\Panel.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

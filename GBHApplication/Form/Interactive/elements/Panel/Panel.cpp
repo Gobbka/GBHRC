@@ -1,9 +1,9 @@
 #include "Panel.h"
-#include "../../Form/InteractiveForm.h"
+#include "../../InteractiveForm.h"
 
 void Application::UI::Panel::__draw(ID3D11DeviceContext* pContext)
 {
-	pContext->Draw(5, this->index);
+	pContext->Draw(5, this->__index);
 }
 
 Application::UI::Panel::Panel(Render::Position position, Render::Resolution resolution, Render::Color color)
@@ -34,7 +34,7 @@ void Application::UI::Panel::init(Application::InteractiveForm* pForm)
 	this->set_color(color.r, color.g, color.b);
 }
 
-Application::UI::IElement* Application::UI::Panel::set_pos(float x, float y)
+void Application::UI::Panel::set_pos(float x, float y)
 {
 	const auto height = resolution.height;
 	const auto width = resolution.width;
@@ -47,17 +47,13 @@ Application::UI::IElement* Application::UI::Panel::set_pos(float x, float y)
 	ptr[4].pos = DirectX::XMFLOAT3(x, y, 1.f);
 
 	this->position = { x,y };
-	
-	return this;
 }
 
-Application::UI::IElement* Application::UI::Panel::set_color(float r, float g, float b)
+void Application::UI::Panel::set_color(float r, float g, float b)
 {
 	auto* ptr = this->get_ptr();
 	for (int i = 0; i < 5; i++)
 		ptr[i].color = DirectX::XMFLOAT4(r, g, b, 1.f);
-
-	return this;
 }
 
 Application::UI::IElement* Application::UI::Panel::set_rect(float width, float height)

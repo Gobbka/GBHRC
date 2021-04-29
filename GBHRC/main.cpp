@@ -3,7 +3,7 @@
 #include "includes/win.h"
 #include "CheatApi/Hooks/d3d11/d3d11hook.h"
 #include "CheatApi/Hooks/wndproc/wndprochook.h"
-#include "Form/InteractiveForm.h"
+#include "Form/Interactive/InteractiveForm.h"
 
 #include "Forms/Menu/MenuMain.h"
 
@@ -13,7 +13,7 @@
 #include <string>
 #include <sstream>
 
-#include "UI/Panel/Panel.h"
+#include "Form/Interactive/elements/Panel/Panel.h"
 
 HINSTANCE DllInst;
 Application::InteractiveForm* menu;

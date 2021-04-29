@@ -1,6 +1,6 @@
 #include "Application.h"
 
-#include "Form/InteractiveForm.h"
+#include "Form/Interactive/InteractiveForm.h"
 #include <vector>
 
 std::vector<Application::InteractiveForm*> _registered_forms;

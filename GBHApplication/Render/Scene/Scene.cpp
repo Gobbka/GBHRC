@@ -54,14 +54,14 @@ void Application::Render::Scene::set_resolution(Resolution resolution)
 	this->resolution = resolution;
 }
 
-void Application::Render::Scene::add_markup_elements(UINT count, Application::UI::IElement* elements, ...)
+void Application::Render::Scene::add_markup_elements(UINT count, Render::IRenderObject* elements, ...)
 {
 	va_list v1;
 	va_start(v1, count);
 
 	for (UINT i = 0; i < count; i++)
 	{
-		this->pElements.push_back(va_arg(v1, Application::UI::IElement*));
+		this->pElements.push_back(va_arg(v1, IRenderObject*));
 	}
 }
 

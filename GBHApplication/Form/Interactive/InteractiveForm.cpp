@@ -1,5 +1,5 @@
 #include "InteractiveForm.h"
-
+#include "elements/IElement/IElement.h"
 #include <windowsx.h>
 
 void Application::InteractiveForm::window_proc(UINT msg, WPARAM wParam, LPARAM lParam)
@@ -21,7 +21,7 @@ void Application::InteractiveForm::window_proc(UINT msg, WPARAM wParam, LPARAM l
 		
 		for (int i = length; i >= 0; i--)
 		{
-			auto* element = this->pElements[i];
+			auto* element = (UI::IElement*)this->pElements[i];
 			if (
 				e_handled == false &&
 				element->point_belongs(cursor)
@@ -47,9 +47,12 @@ void Application::InteractiveForm::window_proc(UINT msg, WPARAM wParam, LPARAM l
 
 	if (msg == WM_LBUTTONUP)
 	{
-		for (auto* element : this->pElements)
-			if (element->hovered == true)
-				element->onMouseUp(element);
+		this->foreach([](UI::IElement* element)
+			{
+				if (element->hovered == true)
+					element->onMouseUp(element);
+			});
+
 		this->free_drag_move();
 
 		return;
@@ -57,9 +60,11 @@ void Application::InteractiveForm::window_proc(UINT msg, WPARAM wParam, LPARAM l
 
 	if (msg == WM_LBUTTONDOWN)
 	{
-		for (auto* element : this->pElements)
-			if (element->hovered == true)
-				element->onMouseDown(element);
+		this->foreach([](UI::IElement*element)
+			{
+				if (element->hovered == true)
+					element->onMouseDown(element);
+			});
 		return;
 	}
 }
@@ -83,9 +88,19 @@ void Application::InteractiveForm::update_markup(Render::Engine* pEngine)
 	UINT size = 0;
 	for (auto* element : this->pElements)
 	{
-		element->set_index(size);
-		element->init(this);
+		auto* iUIObject = (UI::IElement*)element;
+		iUIObject->set_index(size);
+		iUIObject->init(this);
 
 		size += element->size();
+	}
+}
+
+void Application::InteractiveForm::foreach(void(* callback)(UI::IElement*))
+{
+	for(auto*iRenderElement:this->pElements)
+	{
+		auto* ui_element = (UI::IElement*)iRenderElement;
+		callback(ui_element);
 	}
 }

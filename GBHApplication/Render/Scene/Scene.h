@@ -2,8 +2,8 @@
 
 #include "../d3d/Vertex.h"
 #include <vector>
-
-#include "../../UI/IElement/IElement.h"
+#include "IRenderObject.h"
+#include "../../Application.h"
 
 namespace Application
 {
@@ -14,7 +14,7 @@ namespace Application
 		private:
 			GVertex::VertexBuffer* pVBuffer;
 		protected:
-			std::vector<Application::UI::IElement*> pElements;
+			std::vector<Render::IRenderObject*> pElements;
 			Render::Resolution resolution;
 		public:
 			// public variables
@@ -31,7 +31,7 @@ namespace Application
 			// public setters
 			
 			void set_resolution(Resolution resolution);
-			void add_markup_elements(UINT count, Application::UI::IElement* elements...);
+			void add_markup_elements(UINT count, Render::IRenderObject* elements...);
 		public:
 			// public getters
 			

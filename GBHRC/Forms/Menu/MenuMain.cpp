@@ -1,6 +1,6 @@
 #include "MenuMain.h"
-#include "UI/Panel/Panel.h"
-#include "UI/Checkbox/Checkbox.h"
+#include "Form/Interactive/elements/Panel/Panel.h"
+#include "Form/Interactive/elements/Checkbox/Checkbox.h"
 
 Application::UI::Panel* background_panel = new Application::UI::Panel({ 0,0 }, { 200, 200 }, { FLOAT_COLORS_BLACK });
 Application::UI::Checkbox* checkbox = new Application::UI::Checkbox({ 5,-5 }, { 20,20 }, { FLOAT_COLORS_GRAY });

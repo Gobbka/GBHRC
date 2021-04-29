@@ -1,5 +1,5 @@
 #pragma once
-#include "../../Application.h"
+#include "../IElement/IElement.h"
 
 namespace Application
 {
@@ -22,8 +22,8 @@ namespace Application
 			
 			bool point_belongs(POINT point) override;
 			void init(Application::InteractiveForm* pForm) override;
-			IElement* set_pos(float x, float y) override;
-			IElement* set_color(float r, float g, float b) override;
+			void set_pos(float x, float y) override;
+			void set_color(float r, float g, float b) override;
 			UI::IElement* set_rect(float width, float height);
 		};
 	}

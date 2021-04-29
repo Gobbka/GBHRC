@@ -55,6 +55,4 @@ namespace Application
 #include "Render/Engine/Engine.h"
 #include "Render/Scene/Scene.h"
 
-#include "UI/IElement/IElement.h"
-
 #include "Managers/RectangleManager.h"

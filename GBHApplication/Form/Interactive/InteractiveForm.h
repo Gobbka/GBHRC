@@ -1,5 +1,5 @@
 #pragma once
-#include "../Application.h"
+#include "../../Application.h"
 
 namespace Application
 {
@@ -19,5 +19,7 @@ namespace Application
 		void free_drag_move();
 
 		void update_markup(Render::Engine* pEngine);
+
+		void foreach(void(__stdcall*callback)(UI::IElement*));
 	};
 }

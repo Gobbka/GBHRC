@@ -1,10 +1,11 @@
 #pragma once
-#include "../../Application.h"
+#include "../IElement/IElement.h"
+
 namespace Application
 {
 	namespace UI
 	{
-		class Checkbox : Application::UI::IElement
+		class Checkbox : IElement
 		{
 		private:
 			void __draw(ID3D11DeviceContext* pContext) override;
@@ -19,8 +20,8 @@ namespace Application
 			Checkbox(Render::Position position,Render::Resolution resolution, Render::Color color);
 			void init(Application::InteractiveForm* pForm) override;
 
-			UI::IElement* set_pos(float x, float y) override;
-			UI::IElement* set_color(float r, float g, float b) override;
+			void set_pos(float x, float y) override;
+			void set_color(float r, float g, float b) override;
 
 			bool point_belongs(POINT point) override;
 		};
