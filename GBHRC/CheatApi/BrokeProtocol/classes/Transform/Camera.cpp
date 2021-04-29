@@ -4,6 +4,7 @@
 #include "../../Mono/Mono.h"
 
 #define STATIC_METHOD(name,inc_namespace,param_count) auto*mono_context = Mono::Context::get_context();static Mono::MonoMethod* pMethod = mono_context->mono_get_method_from_image(mono_context->get_UE_CoreModule(),name, inc_namespace,param_count)
+#define RAD_TO_DEG (3.1415 * 2) / 360
 
 UnityEngine::Camera* UnityEngine::Camera::main()
 {
@@ -41,52 +42,76 @@ UnityTypes::Vector3* UnityEngine::Camera::WorldToViewportPoint(UnityTypes::Vecto
 	return (UnityTypes::Vector3*)mono_context->mono_runtime_invoke(pMethod, this, args, nullptr);
 }
 
-bool UnityEngine::Camera::worldToScreen(Vector3 pos, POINT* screen, int windowWidth, int windowHeight)
+bool UnityEngine::Camera::worldToScreen(Vector3 pos, Vector3* screen, int windowWidth, int windowHeight)
 {
-	//      auto& matrix = g_pEngine->WorldToScreenMatrix();
-	        
-	//      int ScrW, ScrH;
-	//      g_pEngine->GetScreenSize(ScrW, ScrH);
-	        
-	//      float w = matrix[3][0] * vOrigin[0] + matrix[3][1] * vOrigin[1] + matrix[3][2] * vOrigin[2] + matrix[3][3];
-	//      if (w > 0.01)
-	//      {
-	//      	float inverseWidth = 1 / w;
-	//      	vScreen.x = (ScrW / 2) + (0.5 * ((matrix[0][0] * vOrigin[0] + matrix[0][1] * vOrigin[1] + matrix[0][2] * vOrigin[2] + matrix[0][3]) * inverseWidth) * ScrW + 0.5);
-	//      	vScreen.y = (ScrH / 2) - (0.5 * ((matrix[1][0] * vOrigin[0] + matrix[1][1] * vOrigin[1] + matrix[1][2] * vOrigin[2] + matrix[1][3]) * inverseWidth) * ScrH + 0.5);
-	//      	vScreen.z = 0;
-	//      	return true;
-	//      }
-	//      return false;
-
-	Vector4 clipCoords;
+	Vector4 clipCoords{};
 	{
+		// view matrix
 		auto* pmatrix = this->worldToCameraMatrix();
 		clipCoords.w = pos.x * pmatrix->m30 + pos.y * pmatrix->m31 + pos.z * pmatrix->m32 + pmatrix->m33;
 		if (clipCoords.w < 0.01f)
 			return false;
-		
+
 		clipCoords.x = pos.x * pmatrix->m00 + pos.y * pmatrix->m01 + pos.z * pmatrix->m02 + pmatrix->m03;
 		clipCoords.y = pos.x * pmatrix->m10 + pos.y * pmatrix->m11 + pos.z * pmatrix->m12 + pmatrix->m13;
-		//clipCoords.z = pos.x * pmatrix->m20 + pos.y * pmatrix->m21 + pos.z * pmatrix->m22 + pmatrix->m23;
+		clipCoords.z = pos.x * pmatrix->m20 + pos.y * pmatrix->m21 + pos.z * pmatrix->m22 + pmatrix->m23;
 	}
 	{
+		// mul by projection matrix
 		auto* pProjectMatrix = this->projectionMatrix();
 		clipCoords.x = clipCoords.x * pProjectMatrix->m00 + clipCoords.y * pProjectMatrix->m01;
 		clipCoords.y = clipCoords.x * pProjectMatrix->m10 + clipCoords.y * pProjectMatrix->m11;
 	}
-	//perspective division, dividing by clip.W = Normalized Device Coordinates
+
 	Vector3 NDC;
 	NDC.x = clipCoords.x / clipCoords.w;
 	NDC.y = clipCoords.y / clipCoords.w;
 	NDC.z = clipCoords.z / clipCoords.w;
-	
+
+	// эта херь выдаёт нереально агромные результаты
 	//screen->x = (windowWidth / 2 * NDC.x) + (NDC.x + windowWidth / 2);
 	//screen->y = (windowHeight / 2 * NDC.y) + (NDC.y + windowHeight / 2);
 
-	screen->x = (windowWidth/2) + NDC.x;
-	screen->y = NDC.y;
+	screen->x = windowWidth/2 + NDC.x/tan(get_horizontal_fov()/2)*(float)windowWidth/2;
+	screen->y = windowHeight/2 - NDC.y/tan(get_horizontal_fov()/2)*(float)windowWidth/2;
+
+	//screen->x = NDC.x / tan(get_horizontal_fov() / 2) * (float)windowWidth / 2;
+	//screen->y = NDC.y / tan(this->get_horizontal_fov() / 2) * (float)windowWidth / 2;
+	
+	screen->z = NDC.z;
 	return true;
+}
+
+bool UnityEngine::Camera::worldToScreen_beta(Vector3 pos, Vector3* screen, int windowWidth, int windowHeight)
+{
+	auto* proj_matrix = this->projectionMatrix();
+	auto* view_matrix = this->worldToCameraMatrix();
+
+	Matrix4X4 viewProjMatrix = *view_matrix;
+
+	auto clipCoords = viewProjMatrix.multiply(pos);
+	clipCoords = proj_matrix->multiply(clipCoords);
+
+	screen->x = clipCoords.x;
+	screen->y = clipCoords.y;
+	//screen->x = round(
+	//	((nigger_point.x + 1) / 2.0) * windowWidth
+	//);
+	//screen->y = round(
+	//	((1 - nigger_point.y) / 2.0) * windowHeight
+	//);
+
+	return true;
+
+	//   Matrix4X4 viewProjectionMatrix = projectionMatrix * viewMatrix;
+	//   //transform world to clipping coordinates
+	//   point3D = viewProjectionMatrix.multiply(point3D);
+	//   int winX = (int)Math.round(((point3D.getX() + 1) / 2.0) *
+	//   	width);
+	//   //we calculate -point3D.getY() because the screen Y axis is
+	//   //oriented top->down 
+	//   int winY = (int)Math.round(((1 - point3D.getY()) / 2.0) *
+	//   	height);
 }
 
 void UnityEngine::Camera::WorldToViewportPoint_Injected(UnityTypes::Vector3* pos, UnityTypes::Vector3* out)
@@ -197,4 +222,23 @@ float UnityEngine::Camera::get_orthographicSize()
 	));
 
 	return (float)(__int64)mono_context->mono_runtime_invoke(pSetPosMethod, this, nullptr, nullptr);
+}
+
+float UnityEngine::Camera::get_aspect()
+{
+	auto* mono_context = Mono::Context::get_context();
+
+	static auto* pSetPosMethod = mono_context->mono_property_get_get_method(mono_context->mono_class_get_property_from_name(
+		mono_context->mono_class_from_name(mono_context->get_UE_CoreModule(), "UnityEngine", "Camera"),
+		"aspect"
+	));
+
+	return (float)(__int64)mono_context->mono_runtime_invoke(pSetPosMethod, this, nullptr, nullptr);
+}
+
+float UnityEngine::Camera::get_horizontal_fov()
+{
+	float vFOVInRads = this->get_fieldOfView() * RAD_TO_DEG;
+	return 2 * atan(tan(vFOVInRads / 2) * this->get_aspect());
+	
 }

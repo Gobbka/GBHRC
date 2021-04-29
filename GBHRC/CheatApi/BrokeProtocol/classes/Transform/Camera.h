@@ -11,7 +11,8 @@ namespace UnityEngine
 		
 		UnityTypes::Vector3* WorldToScreenPoint(UnityTypes::Vector3* pos);
 		UnityTypes::Vector3* WorldToViewportPoint(UnityTypes::Vector3* pos);
-		bool worldToScreen(Vector3 pos,POINT* screen, int windowWidth, int windowHeight);
+		bool worldToScreen(Vector3 pos,Vector3* screen, int windowWidth, int windowHeight);
+		bool worldToScreen_beta(Vector3 pos,Vector3* screen, int windowWidth, int windowHeight);
 		
 		void WorldToViewportPoint_Injected(UnityTypes::Vector3* pos, UnityTypes::Vector3* out);
 		
@@ -25,6 +26,9 @@ namespace UnityEngine
 		void set_orthographicSize(float new_f);
 		float get_fieldOfView();
 		float get_orthographicSize();
+		float get_aspect();
+
+		float get_horizontal_fov();
 	};
 }
 

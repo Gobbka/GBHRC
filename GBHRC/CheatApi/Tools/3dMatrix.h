@@ -30,6 +30,9 @@ struct Matrix4X4
 		float m13; //0x0044
 		float m23; //0x0048
 		float m33; //0x004C
+
+		void mul(Matrix4X4* matrix);
+		Vector3 multiply(Vector3 vector);
 };
 
 /// <summary>

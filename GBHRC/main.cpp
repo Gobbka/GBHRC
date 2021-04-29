@@ -45,26 +45,30 @@ void draw_esp(Application::Render::Scene* pScene)
         int width = rect.right - rect.left;
         int height = rect.bottom - rect.top;
 
+
+
+        auto* pos = UnityTypes::Vector3::make(0, 17, 0);
+        Vector3 screenPoint{ -1,-1,-1 };
+        BrokeProtocol::get_camera()->worldCamera->worldToScreen_beta({ pos->x,pos->y,pos->z }, &screenPoint, width, height);
+        {
+            float xz_distance = sqrt(pow(pos->x - local_position->x, 2) + pow(pos->z - local_position->z, 2));
+            screenPoint.x *= (xz_distance / (width / 2)) * 44.f;
+        }
+
+        DEBUG_LOG("X: " << std::dec << screenPoint.x << " Y: " << screenPoint.y);
+
+        esp_box->set_pos(screenPoint.x - 15.f, screenPoint.y + 15.f);
+
     	
    		for(int i = 0;i<size;i++)
    		{
+   			
             auto* player = ptr[i];
    			
    			if(player == local_player)
                 continue;
 
-            auto* pos =player->rotationT->get_position();
-			
-            POINT screenPoint{-1,-1};
-            BrokeProtocol::get_camera()->worldCamera->worldToScreen({ pos->x,pos->y,pos->z }, &screenPoint, width, height);
-            {
-
-            }
-
-            DEBUG_LOG("X: " << std::dec << screenPoint.x << " Y: " << screenPoint.y);
-
-            esp_box->set_pos(screenPoint.x,screenPoint.y);
-
+            auto* pos = player->rotationT->get_position();
    		}
    	}
 }
