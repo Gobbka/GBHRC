@@ -1,12 +1,12 @@
-#include "IElement.h"
+#include "InteractiveElement.h"
 #include "../../InteractiveForm.h"
 
-Application::Render::Position Application::UI::IElement::get_position() const
+Application::Render::Position Application::UI::InteractiveElement::get_position() const
 {
 	return this->position;
 }
 
-void Application::UI::IElement::move_by(float x, float y)
+void Application::UI::InteractiveElement::move_by(float x, float y)
 {
 	const auto size = this->size();
 	GVertex::Vertex* ptr = this->get_ptr();
@@ -17,7 +17,7 @@ void Application::UI::IElement::move_by(float x, float y)
 	}
 }
 
-GVertex::Vertex* Application::UI::IElement::get_ptr() const
+GVertex::Vertex* Application::UI::InteractiveElement::get_ptr() const
 {
 	return this->pForm->get_ptr() + this->__index;
 }

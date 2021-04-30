@@ -1,14 +1,16 @@
 #pragma once
-#include "../../CanvasForm.h"
+#include "../../../../Render/Render.h"
+#include "../../../../Render/Scene/IRenderObject.h"
 
 namespace Application
 {
 	namespace Canvas {
-		
-		class IElement : public Render::IRenderObject
+		class CanvasForm;
+
+		class CanvasElement : public Render::IRenderObject
 		{
 		public:
-			virtual ~IElement() = default;
+			virtual ~CanvasElement() = default;
 		protected:
 			Application::Canvas::CanvasForm* pcanvas = nullptr;
 			Render::Position position{ 0,0 };

@@ -1,11 +1,11 @@
 #pragma once
 #include "../../CanvasForm.h"
-#include "../IElement/IElement.h"
+#include "../IElement/CanvasElement.h"
 namespace Application
 {
 	namespace Canvas
 	{
-		class Rectangle : public Canvas::IElement
+		class Rectangle : public Canvas::CanvasElement
 		{
 		private:
 			Render::Resolution resolution;

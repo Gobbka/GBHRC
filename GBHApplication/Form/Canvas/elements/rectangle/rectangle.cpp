@@ -12,7 +12,7 @@ Application::Canvas::Rectangle::Rectangle(Position pos, Resolution res, Color co
 
 void Application::Canvas::Rectangle::move_by(float x, float y)
 {
-	IElement::move_by(x, y);
+	CanvasElement::move_by(x, y);
 }
 
 void Application::Canvas::Rectangle::__draw(ID3D11DeviceContext* p_context, ID3D11Device* pDevice)

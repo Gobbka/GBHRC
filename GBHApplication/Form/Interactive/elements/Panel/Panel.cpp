@@ -1,5 +1,6 @@
 #include "Panel.h"
 #include "../../InteractiveForm.h"
+#include "../../../../Managers/RectangleManager.h"
 
 void Application::UI::Panel::__draw(ID3D11DeviceContext* pContext, ID3D11Device* pDevice)
 {
@@ -51,10 +52,10 @@ void Application::UI::Panel::set_color(float r, float g, float b)
 
 void Application::UI::Panel::move_by(float x, float y)
 {
-	IElement::move_by(x, y);
+	InteractiveElement::move_by(x, y);
 }
 
-Application::UI::IElement* Application::UI::Panel::set_rect(float width, float height)
+Application::UI::InteractiveElement* Application::UI::Panel::set_rect(float width, float height)
 {
 	auto x = this->position.x;
 	auto y = this->position.y;

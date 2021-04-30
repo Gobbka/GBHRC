@@ -1,11 +1,11 @@
 #pragma once
-#include "../IElement/IElement.h"
+#include "../IElement/InteractiveElement.h"
 
 namespace Application
 {
 	namespace UI
 	{
-		class Checkbox : IElement
+		class Checkbox : InteractiveElement
 		{
 		private:
 			void __draw(ID3D11DeviceContext* pContext, ID3D11Device* pDevice) override;

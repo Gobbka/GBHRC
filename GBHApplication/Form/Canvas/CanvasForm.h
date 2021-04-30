@@ -10,13 +10,13 @@ namespace Application {
 	}
 	
 	namespace Canvas {
-		class IElement;
+		class CanvasElement;
 
 		class CanvasForm : public Application::Render::Scene
 		{
 		public:
 			void update_markup(Application::Render::Engine* pEngine);
-			void add_elements(UINT count,Canvas::IElement* element...);
+			void add_elements(UINT count,Canvas::CanvasElement* element...);
 		};
 	}
 }

@@ -1,16 +1,24 @@
 #pragma once
-#include "../../../Forms.h"
-#include "../../../../Application.h"
 
+#include "../../../../Render/Render.h"
+#include "../../../../Render/Scene/IRenderObject.h"
+
+
+namespace Application {
+	class InteractiveForm;
+}
 
 namespace Application
 {
 	namespace UI {
+
+		class InteractiveElement;
+		typedef InteractiveElement* UIElementEventArgs;
 		
-		class IElement : public Render::IRenderObject
+		class InteractiveElement : public Render::IRenderObject
 		{
 		public:
-			virtual ~IElement() = default;
+			virtual ~InteractiveElement() = default;
 			typedef void(*EventCallback)(UIElementEventArgs args);
 		protected:
 			Application::InteractiveForm* pForm = nullptr;

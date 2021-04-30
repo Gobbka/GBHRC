@@ -1,4 +1,5 @@
 #include "Checkbox.h"
+#include "../../../../Managers/RectangleManager.h"
 
 void Application::UI::Checkbox::__draw(ID3D11DeviceContext* pContext, ID3D11Device* pDevice)
 {
@@ -54,5 +55,5 @@ bool Application::UI::Checkbox::point_belongs(POINT point)
 
 void Application::UI::Checkbox::move_by(float x, float y)
 {
-	IElement::move_by(x, y);
+	InteractiveElement::move_by(x, y);
 }

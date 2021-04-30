@@ -3,7 +3,6 @@
 #include "../../GBHRC/includes/logger.h"
 #include "../../GBHRC/includes/win.h"
 
-
 namespace Application
 {
 	namespace UI
@@ -18,6 +17,3 @@ namespace Application
 		class IElement;
 	}
 }
-
-#include "Canvas/CanvasForm.h"
-#include "Interactive/InteractiveForm.h"

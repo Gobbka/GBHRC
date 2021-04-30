@@ -1,5 +1,5 @@
 #include "InteractiveForm.h"
-#include "elements/IElement/IElement.h"
+#include "elements/IElement/InteractiveElement.h"
 #include <windowsx.h>
 
 void Application::InteractiveForm::window_proc(UINT msg, WPARAM wParam, LPARAM lParam)
@@ -21,7 +21,7 @@ void Application::InteractiveForm::window_proc(UINT msg, WPARAM wParam, LPARAM l
 		
 		for (int i = length; i >= 0; i--)
 		{
-			auto* element = (UI::IElement*)this->element_at(i);
+			auto* element = (UI::InteractiveElement*)this->element_at(i);
 			if (
 				e_handled == false &&
 				element->point_belongs(cursor)
@@ -49,7 +49,7 @@ void Application::InteractiveForm::window_proc(UINT msg, WPARAM wParam, LPARAM l
 	{
 		this->foreach([](Render::IRenderObject* obj)
 			{
-				auto* element = (UI::IElement*)obj;
+				auto* element = (UI::InteractiveElement*)obj;
 				if (element->hovered == true)
 					element->onMouseUp(element);
 			});
@@ -63,7 +63,7 @@ void Application::InteractiveForm::window_proc(UINT msg, WPARAM wParam, LPARAM l
 	{
 		this->foreach([](Render::IRenderObject*obj)
 			{
-				auto* element = (UI::IElement*)obj;
+				auto* element = (UI::InteractiveElement*)obj;
 				if (element->hovered == true)
 					element->onMouseDown(element);
 			});
@@ -71,7 +71,7 @@ void Application::InteractiveForm::window_proc(UINT msg, WPARAM wParam, LPARAM l
 	}
 }
 
-void Application::InteractiveForm::drag_move(UI::IElement* element)
+void Application::InteractiveForm::drag_move(UI::InteractiveElement* element)
 {
 	this->dragged = new DragStruct{ 0,0 ,element};
 }
@@ -90,7 +90,7 @@ void Application::InteractiveForm::update_markup(Render::Engine* pEngine)
 	UINT size = 0;
 	Scene::foreach([this, &size](Render::IRenderObject* obj)
 		{
-			auto* iUIObject = (UI::IElement*)obj;
+			auto* iUIObject = (UI::InteractiveElement*)obj;
 			iUIObject->set_index(size);
 			iUIObject->init(this);
 
@@ -98,14 +98,14 @@ void Application::InteractiveForm::update_markup(Render::Engine* pEngine)
 		});
 }
 
-void Application::InteractiveForm::add_elements(UINT count, UI::IElement* element, ...)
+void Application::InteractiveForm::add_elements(UINT count, UI::InteractiveElement* element, ...)
 {
 	va_list v1;
 	va_start(v1, count);
 
 	for (UINT i = 0; i < count; i++)
 	{
-		this->add_render_object(va_arg(v1, UI::IElement*));
+		this->add_render_object(va_arg(v1, UI::InteractiveElement*));
 	}
 }
 

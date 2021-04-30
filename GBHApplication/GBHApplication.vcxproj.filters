@@ -33,9 +33,6 @@
     <ClCompile Include="Form\Interactive\elements\Checkbox\Checkbox.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Form\Interactive\elements\IElement\IElement.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="Form\Interactive\elements\Panel\Panel.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
@@ -45,7 +42,10 @@
     <ClCompile Include="Form\Canvas\elements\rectangle\rectangle.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Form\Canvas\elements\IElement\IElement.cpp">
+    <ClCompile Include="Form\Interactive\elements\IElement\InteractiveElement.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Form\Canvas\elements\IElement\CanvasElement.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -77,9 +77,6 @@
     <ClInclude Include="Form\Interactive\elements\Checkbox\Checkbox.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Form\Interactive\elements\IElement\IElement.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="Form\Interactive\elements\Panel\Panel.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
@@ -92,13 +89,16 @@
     <ClInclude Include="Form\Canvas\elements\rectangle\rectangle.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Form\Canvas\elements\IElement\IElement.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="Render\Render.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Form\Forms.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Form\Interactive\elements\IElement\InteractiveElement.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Form\Canvas\elements\IElement\CanvasElement.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

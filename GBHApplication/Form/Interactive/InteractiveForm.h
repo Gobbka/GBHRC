@@ -4,7 +4,7 @@
 namespace Application
 {
 	namespace UI {
-		class IElement;
+		class InteractiveElement;
 	}
 
 	class InteractiveForm : public Render::Scene
@@ -13,17 +13,17 @@ namespace Application
 		struct DragStruct
 		{
 			POINT dragged_offset;
-			UI::IElement* element;
+			UI::InteractiveElement* element;
 		};
 	private:
 		DragStruct* dragged = nullptr;
 	public:
 		void window_proc(UINT msg, WPARAM wParam, LPARAM lParam);
-		void drag_move(UI::IElement* element);
+		void drag_move(UI::InteractiveElement* element);
 		void free_drag_move();
 
 		void update_markup(Render::Engine* pEngine);
 
-		void add_elements(UINT count, UI::IElement* element...);
+		void add_elements(UINT count, UI::InteractiveElement* element...);
 	};
 }

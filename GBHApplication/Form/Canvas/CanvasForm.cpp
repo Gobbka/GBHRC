@@ -1,6 +1,6 @@
 #include "CanvasForm.h"
 
-#include "elements/IElement/IElement.h"
+#include "elements/IElement/CanvasElement.h"
 
 void Application::Canvas::CanvasForm::update_markup(Application::Render::Engine* pEngine)
 {
@@ -9,19 +9,19 @@ void Application::Canvas::CanvasForm::update_markup(Application::Render::Engine*
 	
 	Scene::foreach([&size,this](Render::IRenderObject* obj)
 		{
-			((Canvas::IElement*)obj)->set_index(size);
-			((Canvas::IElement*)obj)->init(this);
+			((Canvas::CanvasElement*)obj)->set_index(size);
+			((Canvas::CanvasElement*)obj)->init(this);
 			size += obj->size();
 		});
 }
 
-void Application::Canvas::CanvasForm::add_elements(UINT count,Canvas::IElement* element...)
+void Application::Canvas::CanvasForm::add_elements(UINT count,Canvas::CanvasElement* element...)
 {
 	va_list v1;
 	va_start(v1, count);
 
 	for (UINT i = 0; i < count; i++)
 	{
-		this->add_render_object(va_arg(v1, Canvas::IElement*));
+		this->add_render_object(va_arg(v1, Canvas::CanvasElement*));
 	}
 }

@@ -1,12 +1,12 @@
 #pragma once
-#include "../IElement/IElement.h"
+#include "../IElement/InteractiveElement.h"
 
 namespace Application
 {
 	namespace UI
 	{
 		
-		class Panel final : public UI::IElement
+		class Panel final : public UI::InteractiveElement
 		{
 		private:
 			Render::Color color;
@@ -25,7 +25,7 @@ namespace Application
 			void set_pos(float x, float y) override;
 			void set_color(float r, float g, float b) override;
 			void move_by(float x, float y) override;
-			UI::IElement* set_rect(float width, float height);
+			UI::InteractiveElement* set_rect(float width, float height);
 		};
 	}
 

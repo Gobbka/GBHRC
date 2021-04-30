@@ -1,12 +1,12 @@
-#include "IElement.h"
+#include "CanvasElement.h"
 #include "../../CanvasForm.h"
 
-Application::Render::Position Application::Canvas::IElement::get_position() const
+Application::Render::Position Application::Canvas::CanvasElement::get_position() const
 {
 	return this->position;
 }
 
-void Application::Canvas::IElement::move_by(float x, float y)
+void Application::Canvas::CanvasElement::move_by(float x, float y)
 {
 	const auto size = this->size();
 	GVertex::Vertex* ptr = this->get_ptr();
@@ -17,7 +17,7 @@ void Application::Canvas::IElement::move_by(float x, float y)
 	}
 }
 
-GVertex::Vertex* Application::Canvas::IElement::get_ptr() const
+GVertex::Vertex* Application::Canvas::CanvasElement::get_ptr() const
 {
 	return this->pcanvas->get_ptr() + this->__index;
 }
