@@ -1,6 +1,6 @@
 #include "Checkbox.h"
 
-void Application::UI::Checkbox::__draw(ID3D11DeviceContext* pContext)
+void Application::UI::Checkbox::__draw(ID3D11DeviceContext* pContext, ID3D11Device* pDevice)
 {
 	pContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
 	pContext->Draw(5, this->__index);
@@ -50,4 +50,9 @@ bool Application::UI::Checkbox::point_belongs(POINT point)
 	return
 		(point.x >= position.x && point.x <= position.x + resolution.width) &&
 		(point.y <= position.y && point.y >= (position.y - resolution.height));
+}
+
+void Application::UI::Checkbox::move_by(float x, float y)
+{
+	IElement::move_by(x, y);
 }

@@ -16,12 +16,12 @@ void Application::InteractiveForm::window_proc(UINT msg, WPARAM wParam, LPARAM l
 			return;
 		}
 		
-		const auto length = this->pElements.size() - 1;
+		const auto length = this->total_size() - 1;
 		bool e_handled = false;
 		
 		for (int i = length; i >= 0; i--)
 		{
-			auto* element = (UI::IElement*)this->pElements[i];
+			auto* element = (UI::IElement*)this->element_at(i);
 			if (
 				e_handled == false &&
 				element->point_belongs(cursor)
@@ -47,8 +47,9 @@ void Application::InteractiveForm::window_proc(UINT msg, WPARAM wParam, LPARAM l
 
 	if (msg == WM_LBUTTONUP)
 	{
-		this->foreach([](UI::IElement* element)
+		this->foreach([](Render::IRenderObject* obj)
 			{
+				auto* element = (UI::IElement*)obj;
 				if (element->hovered == true)
 					element->onMouseUp(element);
 			});
@@ -60,8 +61,9 @@ void Application::InteractiveForm::window_proc(UINT msg, WPARAM wParam, LPARAM l
 
 	if (msg == WM_LBUTTONDOWN)
 	{
-		this->foreach([](UI::IElement*element)
+		this->foreach([](Render::IRenderObject*obj)
 			{
+				auto* element = (UI::IElement*)obj;
 				if (element->hovered == true)
 					element->onMouseDown(element);
 			});
@@ -86,21 +88,24 @@ void Application::InteractiveForm::update_markup(Render::Engine* pEngine)
 {
 	this->alloc_vbuffer(pEngine);
 	UINT size = 0;
-	for (auto* element : this->pElements)
-	{
-		auto* iUIObject = (UI::IElement*)element;
-		iUIObject->set_index(size);
-		iUIObject->init(this);
+	Scene::foreach([this, &size](Render::IRenderObject* obj)
+		{
+			auto* iUIObject = (UI::IElement*)obj;
+			iUIObject->set_index(size);
+			iUIObject->init(this);
 
-		size += element->size();
-	}
+			size += obj->size();
+		});
 }
 
-void Application::InteractiveForm::foreach(void(* callback)(UI::IElement*))
+void Application::InteractiveForm::add_elements(UINT count, UI::IElement* element, ...)
 {
-	for(auto*iRenderElement:this->pElements)
+	va_list v1;
+	va_start(v1, count);
+
+	for (UINT i = 0; i < count; i++)
 	{
-		auto* ui_element = (UI::IElement*)iRenderElement;
-		callback(ui_element);
+		this->add_render_object(va_arg(v1, UI::IElement*));
 	}
 }
+

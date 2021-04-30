@@ -12,7 +12,7 @@ namespace Application
 			Render::Color color;
 			Render::Resolution resolution;
 		private:
-			void __draw(ID3D11DeviceContext* pContext) override;
+			void __draw(ID3D11DeviceContext* pContext, ID3D11Device* pDevice) override;
 		public:
 			UINT size() override
 			{
@@ -24,6 +24,7 @@ namespace Application
 			void init(Application::InteractiveForm* pForm) override;
 			void set_pos(float x, float y) override;
 			void set_color(float r, float g, float b) override;
+			void move_by(float x, float y) override;
 			UI::IElement* set_rect(float width, float height);
 		};
 	}

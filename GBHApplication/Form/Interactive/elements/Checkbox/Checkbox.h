@@ -8,7 +8,7 @@ namespace Application
 		class Checkbox : IElement
 		{
 		private:
-			void __draw(ID3D11DeviceContext* pContext) override;
+			void __draw(ID3D11DeviceContext* pContext, ID3D11Device* pDevice) override;
 			Render::Resolution resolution;
 			Render::Color color;
 		public:
@@ -24,6 +24,8 @@ namespace Application
 			void set_color(float r, float g, float b) override;
 
 			bool point_belongs(POINT point) override;
+
+			void move_by(float x, float y) override;
 		};
 	}
 }

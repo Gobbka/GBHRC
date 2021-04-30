@@ -144,7 +144,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
-    <ClCompile Include="Form\CanvasForm.cpp" />
+    <ClCompile Include="Form\Canvas\CanvasForm.cpp" />
+    <ClCompile Include="Form\Canvas\elements\IElement\IElement.cpp" />
+    <ClCompile Include="Form\Canvas\elements\rectangle\rectangle.cpp" />
     <ClCompile Include="Form\Interactive\InteractiveForm.cpp" />
     <ClCompile Include="Render\d3d\Vertex.cpp" />
     <ClCompile Include="Render\Engine\Engine.cpp" />
@@ -155,7 +157,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
-    <ClInclude Include="Form\CanvasForm.h" />
+    <ClInclude Include="Form\Canvas\CanvasForm.h" />
+    <ClInclude Include="Form\Canvas\elements\IElement\IElement.h" />
+    <ClInclude Include="Form\Canvas\elements\rectangle\rectangle.h" />
     <ClInclude Include="Form\Interactive\InteractiveForm.h" />
     <ClInclude Include="Managers\RectangleManager.h" />
     <ClInclude Include="Render\d3d\ConstantBuffer.h" />

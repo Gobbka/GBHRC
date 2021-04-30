@@ -3,7 +3,10 @@
 #include "includes/win.h"
 #include "CheatApi/Hooks/d3d11/d3d11hook.h"
 #include "CheatApi/Hooks/wndproc/wndprochook.h"
+
 #include "Form/Interactive/InteractiveForm.h"
+#include "Form/Canvas/CanvasForm.h"
+#include "Form/Canvas/elements/rectangle/rectangle.h"
 
 #include "Forms/Menu/MenuMain.h"
 
@@ -13,12 +16,10 @@
 #include <string>
 #include <sstream>
 
-#include "Form/Interactive/elements/Panel/Panel.h"
-
 HINSTANCE DllInst;
 Application::InteractiveForm* menu;
-Application::InteractiveForm* esp_scene;
-Application::UI::Panel* esp_box;
+Application::Canvas::CanvasForm* esp_scene;
+Application::Canvas::Rectangle* esp_box;
 void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam);
 HWND main__window;
 Mono::Context* mono_context;
@@ -88,11 +89,11 @@ void init_callback(Application::Render::Engine* instance)
 
     menu->hidden = true;
 
-    esp_scene = new Application::InteractiveForm();
+    esp_scene = new Application::Canvas::CanvasForm();
     esp_scene->render_callback = draw_esp;
     esp_scene->hidden = false;
-    esp_box = new Application::UI::Panel{ {0,0},{30,30},{1,1,1} };
-    esp_scene->add_markup_elements(1, esp_box);
+    esp_box = new Application::Canvas::Rectangle{ {0,0},{30,30},{1,1,1} };
+    esp_scene->add_elements(1, esp_box);
     esp_scene->update_markup(instance);
 	
     instance
@@ -107,7 +108,7 @@ void MainThread()
 {
     main__window = Hooks::D3D11::FindMainWindow(GetCurrentProcessId());
 	
-    Application::set_main_hwnd(main__window);
+    Application::implement(main__window);
 #ifdef _DEBUG
     AllocConsole();
     auto nigger = freopen("CONOUT$", "w", stdout);

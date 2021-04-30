@@ -34,14 +34,20 @@ namespace Application
 		typedef IElement* UIElementEventArgs;
 	}
 
+	namespace Canvas
+	{
+		class CanvasForm;
+		class IElement;
+	}
+	
 	namespace Managers
 	{
 		class Rectangle;
 	}
 
 	class InteractiveForm;
-	
-	void set_main_hwnd(HWND hwnd);
+
+	void implement(HWND hwnd);
 
 	void register_form(InteractiveForm* form);
 	void wnd_proc(UINT msg, WPARAM wParam, LPARAM lParam);
@@ -56,3 +62,4 @@ namespace Application
 #include "Render/Scene/Scene.h"
 
 #include "Managers/RectangleManager.h"
+

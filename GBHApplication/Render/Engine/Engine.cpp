@@ -199,7 +199,7 @@ void Engine::present() const
 	//pDevContext->RSSetState();
 
 	for (auto* scene : this->pScenes)
-		scene->render(this->pDevContext);
+		scene->render(this->pDevContext,this->pDevice);
 
 	pDevContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }

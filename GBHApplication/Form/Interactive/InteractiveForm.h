@@ -20,6 +20,6 @@ namespace Application
 
 		void update_markup(Render::Engine* pEngine);
 
-		void foreach(void(__stdcall*callback)(UI::IElement*));
+		void add_elements(UINT count, UI::IElement* element...);
 	};
 }

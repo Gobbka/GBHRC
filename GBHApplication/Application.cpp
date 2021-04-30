@@ -7,7 +7,7 @@ std::vector<Application::InteractiveForm*> _registered_forms;
 
 HWND main_window;
 
-void Application::set_main_hwnd(HWND hwnd)
+void Application::implement(HWND hwnd)
 {
 	main_window = hwnd;
 }

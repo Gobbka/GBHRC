@@ -27,11 +27,17 @@ namespace Application
 			EventCallback onMouseUp = default_event_callback;
 			EventCallback onMouseDown = default_event_callback;
 
-			void move_by(float x, float y) override;
+			void move_by(float x, float y) override = 0;
 
 			virtual void init(Application::InteractiveForm* pForm) = 0;
 
 			GVertex::Vertex* get_ptr() const;
+			
+			void __draw(ID3D11DeviceContext* p_context, ID3D11Device* pDevice) override = 0;
+			void set_pos(float x, float y) override = 0;
+			void set_color(float r, float g, float b) override = 0;
+			bool point_belongs(POINT point) override = 0;
+			UINT size() override = 0;
 		};
 	}
 }

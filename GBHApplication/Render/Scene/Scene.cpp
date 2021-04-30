@@ -7,12 +7,7 @@
 void Application::Render::Scene::alloc_vbuffer(Render::Engine* pEngine)
 {
 	delete this->pVBuffer;
-	UINT size = 0;
-
-	for (auto* element : this->pElements)
-	{
-		size += element->size();
-	}
+	const UINT size = this->total_size();
 
 	this->pVBuffer = pEngine->make_vertex_buffer(size);
 }
@@ -33,7 +28,7 @@ void Application::Render::Scene::update(ID3D11DeviceContext* pContext)
 	pContext->Unmap(this->pVBuffer->buffer, 0);
 }
 
-void Application::Render::Scene::render(ID3D11DeviceContext* pContext)
+void Application::Render::Scene::render(ID3D11DeviceContext* pContext, ID3D11Device* pDevice)
 {
 	DRAW_ASSERT;
 	
@@ -44,9 +39,33 @@ void Application::Render::Scene::render(ID3D11DeviceContext* pContext)
 
 	for (auto* element : this->pElements)
 	{
-		element->__draw(pContext);
+		element->__draw(pContext,pDevice);
 	}
 
+}
+
+void Application::Render::Scene::foreach(std::function<void(IRenderObject*)> const& nigger)
+{
+	for (auto* element : this->pElements)
+		nigger(element);
+}
+
+UINT Application::Render::Scene::total_size()
+{
+	UINT size = 0;
+	for (auto* element : this->pElements)
+		size += element->size();
+	return size;
+}
+
+void Application::Render::Scene::add_render_object(IRenderObject* object)
+{
+	this->pElements.push_back(object);
+}
+
+Application::Render::IRenderObject* Application::Render::Scene::element_at(UINT index)
+{
+	return this->pElements[index];
 }
 
 void Application::Render::Scene::set_resolution(Resolution resolution)
@@ -54,16 +73,6 @@ void Application::Render::Scene::set_resolution(Resolution resolution)
 	this->resolution = resolution;
 }
 
-void Application::Render::Scene::add_markup_elements(UINT count, Render::IRenderObject* elements, ...)
-{
-	va_list v1;
-	va_start(v1, count);
-
-	for (UINT i = 0; i < count; i++)
-	{
-		this->pElements.push_back(va_arg(v1, IRenderObject*));
-	}
-}
 
 GVertex::Vertex* Application::Render::Scene::get_ptr() const
 {

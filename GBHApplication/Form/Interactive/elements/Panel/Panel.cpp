@@ -1,7 +1,7 @@
 #include "Panel.h"
 #include "../../InteractiveForm.h"
 
-void Application::UI::Panel::__draw(ID3D11DeviceContext* pContext)
+void Application::UI::Panel::__draw(ID3D11DeviceContext* pContext, ID3D11Device* pDevice)
 {
 	pContext->Draw(5, this->__index);
 }
@@ -38,36 +38,28 @@ void Application::UI::Panel::set_pos(float x, float y)
 {
 	const auto height = resolution.height;
 	const auto width = resolution.width;
-	auto* ptr = this->get_ptr();
 
-	ptr[0].pos = DirectX::XMFLOAT3(x, y, 1.f);
-	ptr[1].pos = DirectX::XMFLOAT3(x, y - height, 1.f);
-	ptr[2].pos = DirectX::XMFLOAT3(x + width, y - height, 1.f);
-	ptr[3].pos = DirectX::XMFLOAT3(x + width, y, 1.f);
-	ptr[4].pos = DirectX::XMFLOAT3(x, y, 1.f);
+	Managers::Rectangle::set_rect(this->get_ptr(), x, y, width, height);
 
 	this->position = { x,y };
 }
 
 void Application::UI::Panel::set_color(float r, float g, float b)
 {
-	auto* ptr = this->get_ptr();
-	for (int i = 0; i < 5; i++)
-		ptr[i].color = DirectX::XMFLOAT4(r, g, b, 1.f);
+	Managers::Rectangle::set_color(this->get_ptr(), r, g, b);
+}
+
+void Application::UI::Panel::move_by(float x, float y)
+{
+	IElement::move_by(x, y);
 }
 
 Application::UI::IElement* Application::UI::Panel::set_rect(float width, float height)
 {
 	auto x = this->position.x;
 	auto y = this->position.y;
-	
-	auto* ptr = this->get_ptr();
-	
-	ptr[0].pos = DirectX::XMFLOAT3(x, y, 1.f);
-	ptr[1].pos = DirectX::XMFLOAT3(x, y - height, 1.f);
-	ptr[2].pos = DirectX::XMFLOAT3(x + width, y - height, 1.f);
-	ptr[3].pos = DirectX::XMFLOAT3(x + width, y, 1.f);
-	ptr[4].pos = DirectX::XMFLOAT3(x, y, 1.f);
+
+	Managers::Rectangle::set_rect(this -> get_ptr(), x, y, width, height);
 
 	this->resolution = { (UINT)width,(UINT)height };
 

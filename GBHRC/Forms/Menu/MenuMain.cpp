@@ -17,7 +17,7 @@ void panel_leave(Application::UI::UIElementEventArgs args)
 
 void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engine*pEngine)
 {
-	form->add_markup_elements(
+	form->add_elements(
 		2,
 		background_panel,
 		checkbox
