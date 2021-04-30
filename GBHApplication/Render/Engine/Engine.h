@@ -3,6 +3,8 @@
 #include "../../Application.h"
 #include <vector>
 
+#include "../Render.h"
+
 namespace Application
 {
 	namespace Render

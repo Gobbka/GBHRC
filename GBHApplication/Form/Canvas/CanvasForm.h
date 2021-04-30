@@ -1,6 +1,6 @@
 #pragma once
-#include "../../Application.h"
-
+#include "../Forms.h"
+#include "../../Render/Render.h"
 namespace Application {
 	
 	namespace Canvas {
@@ -14,5 +14,3 @@ namespace Application {
 		};
 	}
 }
-
-#include "elements/IElement/IElement.h"

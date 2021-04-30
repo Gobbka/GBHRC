@@ -1,8 +1,12 @@
 #pragma once
-#include "../../Application.h"
+#include "../../Render/Scene/Scene.h"
 
 namespace Application
 {
+	namespace UI {
+		class IElement;
+	}
+
 	class InteractiveForm : public Render::Scene
 	{		
 	public:

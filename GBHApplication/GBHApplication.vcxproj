@@ -160,12 +160,14 @@
     <ClInclude Include="Form\Canvas\CanvasForm.h" />
     <ClInclude Include="Form\Canvas\elements\IElement\IElement.h" />
     <ClInclude Include="Form\Canvas\elements\rectangle\rectangle.h" />
+    <ClInclude Include="Form\Forms.h" />
     <ClInclude Include="Form\Interactive\InteractiveForm.h" />
     <ClInclude Include="Managers\RectangleManager.h" />
     <ClInclude Include="Render\d3d\ConstantBuffer.h" />
     <ClInclude Include="Render\d3d\szShadez.h" />
     <ClInclude Include="Render\d3d\Vertex.h" />
     <ClInclude Include="Render\Engine\Engine.h" />
+    <ClInclude Include="Render\Render.h" />
     <ClInclude Include="Render\Scene\IRenderObject.h" />
     <ClInclude Include="Render\Scene\Scene.h" />
     <ClInclude Include="Form\Interactive\elements\Checkbox\Checkbox.h" />

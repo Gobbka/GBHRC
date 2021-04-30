@@ -1,10 +1,10 @@
 #pragma once
-
-#include "../d3d/Vertex.h"
 #include <vector>
 #include <functional>
+
 #include "IRenderObject.h"
-#include "../../Application.h"
+#include "../d3d/Vertex.h"
+#include "../Render.h"
 
 namespace Application
 {
