@@ -1,5 +1,9 @@
 #include "Engine.h"
 #include "../Render.h"
+#include "../Scene/Scene.h"
+#include "../d3d/szShadez.h"
+#include "../d3d/ConstantBuffer.h"
+
 using namespace Application::Render;
 
 ID3D11RenderTargetView* Engine::get_render_target(IDXGISwapChain* pSwap) const

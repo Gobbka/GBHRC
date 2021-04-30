@@ -9,6 +9,8 @@ namespace Application
 {
 	namespace Render
 	{
+		class Scene;
+		
 		class Engine
 		{
 		private:

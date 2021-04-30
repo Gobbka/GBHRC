@@ -1,6 +1,7 @@
 #include "d3d11hook.h"
 #include "../../../includes/logger.h"
 #include "D3D11_VMT.h"
+#include "Render/Engine/Engine.h"
 
 struct HandleData
 {

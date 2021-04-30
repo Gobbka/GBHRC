@@ -22,15 +22,5 @@ namespace Application
 		{
 			float x; float y;
 		};
-
-		class Engine;
-		class Scene;
 	}
 }
-
-
-#include "d3d/Vertex.h"
-#include "d3d/ConstantBuffer.h"
-#include "d3d/szShadez.h"
-#include "Engine/Engine.h"
-#include "Scene/Scene.h"

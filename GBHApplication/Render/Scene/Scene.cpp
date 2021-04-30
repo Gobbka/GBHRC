@@ -1,5 +1,5 @@
 #include "Scene.h"
-
+#include "../../Render/Engine/Engine.h"
 #include "../../Application.h"
 
 #define DRAW_ASSERT if(this->hidden==true) return

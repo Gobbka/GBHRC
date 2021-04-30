@@ -1,7 +1,13 @@
 #pragma once
-#include "../Forms.h"
-#include "../../Render/Render.h"
+#include <Windows.h>
+#include "../../Render/Scene/Scene.h"
+
 namespace Application {
+
+	namespace Render
+	{
+		class Engine;
+	}
 	
 	namespace Canvas {
 		class IElement;

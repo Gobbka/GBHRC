@@ -1,6 +1,7 @@
 #pragma once
 #include "../../../includes/d3d.h"
 #include "Application.h"
+#include "Render/Engine/Engine.h"
 
 namespace Hooks
 {
