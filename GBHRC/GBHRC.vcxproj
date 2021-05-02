@@ -182,6 +182,7 @@
     <ClInclude Include="CheatApi\BrokeProtocol\Mono\Mono.h" />
     <ClInclude Include="CheatApi\BrokeProtocol\Mono\MonoDefs.h" />
     <ClInclude Include="CheatApi\BrokeProtocol\Mono\Images\Script\ScriptImage.h" />
+    <ClInclude Include="CheatApi\BrokeProtocol\Mono\MonoTypes.h" />
     <ClInclude Include="CheatApi\BrokeProtocol\Mono\vTable\vTable.h" />
     <ClInclude Include="CheatApi\BrokeProtocol\UnityTypes.h" />
     <ClInclude Include="CheatApi\Hooks\d3d11\d3d11hook.h" />

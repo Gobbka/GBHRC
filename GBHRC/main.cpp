@@ -24,7 +24,7 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam);
 HWND main__window;
 Mono::Context* mono_context;
 
-void draw_esp(Application::Render::Scene* pScene)
+void __stdcall draw_esp(Application::Render::Scene* pScene)
 {
     if(BrokeProtocol::get_manager()->host != nullptr)
 	{
@@ -33,8 +33,8 @@ void draw_esp(Application::Render::Scene* pScene)
         auto* local_player = BrokeProtocol::GetLocalPlayer();
         auto* local_position = local_player->rotationT->get_position();
     	
-        auto* local_matrix = BrokeProtocol::get_camera()->worldCamera->worldToCameraMatrix();
-        if (local_matrix == nullptr)
+        auto* local_camera = BrokeProtocol::get_camera();
+        if (local_camera == nullptr)
             return;
         auto* players = BrokeProtocol::GetPlayersCollection();
         auto* ptr = players->items->pointer();
@@ -45,21 +45,6 @@ void draw_esp(Application::Render::Scene* pScene)
 
         int width = rect.right - rect.left;
         int height = rect.bottom - rect.top;
-
-
-
-        auto* pos = UnityTypes::Vector3::make(0, 17, 0);
-        Vector3 screenPoint{ -1,-1,-1 };
-        BrokeProtocol::get_camera()->worldCamera->worldToScreen_beta({ pos->x,pos->y,pos->z }, &screenPoint, width, height);
-        {
-            float xz_distance = sqrt(pow(pos->x - local_position->x, 2) + pow(pos->z - local_position->z, 2));
-            screenPoint.x *= (xz_distance / (width / 2)) * 44.f;
-        }
-
-        DEBUG_LOG("X: " << std::dec << screenPoint.x << " Y: " << screenPoint.y);
-
-        esp_box->set_pos(screenPoint.x - 15.f, screenPoint.y + 15.f);
-
     	
    		for(int i = 0;i<size;i++)
    		{
@@ -69,7 +54,19 @@ void draw_esp(Application::Render::Scene* pScene)
    			if(player == local_player)
                 continue;
 
+            //local_player->rotationT->lookAt(player->rotationT);
             auto* pos = player->rotationT->get_position();
+
+            Vector3 screenPoint;
+            //local_camera->worldCamera->worldToScreen_alpha({ pos->x,pos->y,pos->z },player->rotationT->localToWorldMatrix(), &screenPoint, width, height);
+            local_camera->worldCamera->worldToScreen_beta({ pos->x,pos->y,pos->z }, &screenPoint, width, height);
+
+            DEBUG_LOG("X: " << std::dec << screenPoint.x << " Y: " << screenPoint.y);
+            {
+                esp_box->set_pos(screenPoint.x - 15, screenPoint.y + 15);
+            }
+
+
    		}
    	}
 }
@@ -81,23 +78,23 @@ void init_callback(Application::Render::Engine* instance)
     BrokeProtocol::show_local_message((char*)"<color=#39d668>[info]</color> GBHRC injected | press <color=#39d668>INSERT</color> to show menu!");
 	BrokeProtocol::show_local_message((char*)"<color=#3966d6>[info]</color> join our discord: https://discord.gg/4jRzSHz3 ");
 	
-    menu = new Application::InteractiveForm();
+    // menu = new Application::InteractiveForm();
 
-    MainMenuMarkup(menu, instance);
+    // MainMenuMarkup(menu, instance);
 
-    Application::register_form(menu);
+    // Application::register_form(menu);
 
-    menu->hidden = true;
+    // menu->hidden = true;
 
     esp_scene = new Application::Canvas::CanvasForm();
     esp_scene->render_callback = draw_esp;
     esp_scene->hidden = false;
-    esp_box = new Application::Canvas::Rectangle{ {0,0},{30,30},{1,1,1} };
+    esp_box = new Application::Canvas::Rectangle{ {0,0},{30,30},{0,0.8,0} };
     esp_scene->add_elements(1, esp_box);
     esp_scene->update_markup(instance);
 	
     instance
-        ->append_scene(menu)
+        //->append_scene(menu);
 		->append_scene(esp_scene);
 	
 }

@@ -2,6 +2,7 @@
 #include "vTable/vTable.h"
 #include "../../../includes/win.h"
 #include "dumper/MonoDumper.h"
+#include "MonoTypes.h"
 
 namespace Mono
 {

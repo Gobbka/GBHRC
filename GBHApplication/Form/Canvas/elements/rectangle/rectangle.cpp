@@ -22,6 +22,8 @@ void Application::Canvas::Rectangle::__draw(ID3D11DeviceContext* p_context, ID3D
 	{
 		D3D11_RASTERIZER_DESC rDesc{};
 		rDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_WIREFRAME;
+		rDesc.CullMode = D3D11_CULL_NONE;
+		rDesc.DepthClipEnable = true;
 		pDevice->CreateRasterizerState(&rDesc, &state);
 	}
 	ID3D11RasterizerState* old_state;
@@ -34,11 +36,19 @@ void Application::Canvas::Rectangle::__draw(ID3D11DeviceContext* p_context, ID3D
 void Application::Canvas::Rectangle::set_pos(float x, float y)
 {
 	Managers::Rectangle::set_rect(this->get_ptr(), x, y, resolution.width, resolution.height);
+	this->position = { x,y };
 }
 
 void Application::Canvas::Rectangle::set_color(float r, float g, float b)
 {
 	Managers::Rectangle::set_color(this->get_ptr(), r, g, b );
+	this->color = { r,g,b };
+}
+
+void Application::Canvas::Rectangle::set_resolution(UINT width, UINT height)
+{
+	Managers::Rectangle::set_rect(this->get_ptr(), this->position.x, this->position.y, width, height);
+	this->resolution = { width,height };
 }
 
 bool Application::Canvas::Rectangle::point_belongs(POINT point)
@@ -59,4 +69,9 @@ void Application::Canvas::Rectangle::init(Canvas::CanvasForm* pForm)
 
 	this->set_pos(position.x, position.y);
 	this->set_color(color.r, color.g, color.b);
+}
+
+Resolution Application::Canvas::Rectangle::get_resolution() const
+{
+	return this->resolution;
 }

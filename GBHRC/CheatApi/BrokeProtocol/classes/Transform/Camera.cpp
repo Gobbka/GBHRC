@@ -4,7 +4,7 @@
 #include "../../Mono/Mono.h"
 
 #define STATIC_METHOD(name,inc_namespace,param_count) auto*mono_context = Mono::Context::get_context();static Mono::MonoMethod* pMethod = mono_context->mono_get_method_from_image(mono_context->get_UE_CoreModule(),name, inc_namespace,param_count)
-#define RAD_TO_DEG (3.1415 * 2) / 360
+#define DEG_TO_RAD (3.1415 * 2) / 360
 
 UnityEngine::Camera* UnityEngine::Camera::main()
 {
@@ -32,7 +32,8 @@ UnityTypes::Vector3* UnityEngine::Camera::WorldToScreenPoint(UnityTypes::Vector3
 {
 	STATIC_METHOD("UnityEngine.Camera:WorldToScreenPoint()", true, 1);
 	void* args[]{ pos };
-	return (UnityTypes::Vector3*)mono_context->mono_runtime_invoke(pMethod, this, args, nullptr);
+	auto* nigger = (UnityTypes::Vector3*)mono_context->mono_runtime_invoke(pMethod, this, args, nullptr);
+	return nigger;
 }
 
 UnityTypes::Vector3* UnityEngine::Camera::WorldToViewportPoint(UnityTypes::Vector3* pos)
@@ -72,12 +73,12 @@ bool UnityEngine::Camera::worldToScreen(Vector3 pos, Vector3* screen, int window
 	//screen->x = (windowWidth / 2 * NDC.x) + (NDC.x + windowWidth / 2);
 	//screen->y = (windowHeight / 2 * NDC.y) + (NDC.y + windowHeight / 2);
 
-	screen->x = windowWidth/2 + NDC.x/tan(get_horizontal_fov()/2)*(float)windowWidth/2;
-	screen->y = windowHeight/2 - NDC.y/tan(get_horizontal_fov()/2)*(float)windowWidth/2;
+	screen->x = windowWidth / 2 + NDC.x / tan(get_horizontal_fov() / 2) * (float)windowWidth / 2;
+	screen->y = windowHeight / 2 - NDC.y / tan(get_horizontal_fov() / 2) * (float)windowWidth / 2;
 
 	//screen->x = NDC.x / tan(get_horizontal_fov() / 2) * (float)windowWidth / 2;
 	//screen->y = NDC.y / tan(this->get_horizontal_fov() / 2) * (float)windowWidth / 2;
-	
+
 	screen->z = NDC.z;
 	return true;
 }
@@ -87,31 +88,71 @@ bool UnityEngine::Camera::worldToScreen_beta(Vector3 pos, Vector3* screen, int w
 	auto* proj_matrix = this->projectionMatrix();
 	auto* view_matrix = this->worldToCameraMatrix();
 
-	Matrix4X4 viewProjMatrix = *view_matrix;
 
-	auto clipCoords = viewProjMatrix.multiply(pos);
+	auto clipCoords = view_matrix->multiply(Vector4{pos.x,pos.y,pos.z,1.0});
 	clipCoords = proj_matrix->multiply(clipCoords);
 
-	screen->x = clipCoords.x;
-	screen->y = clipCoords.y;
-	//screen->x = round(
-	//	((nigger_point.x + 1) / 2.0) * windowWidth
-	//);
-	//screen->y = round(
-	//	((1 - nigger_point.y) / 2.0) * windowHeight
-	//);
+	Vector3 NDC;
+	NDC.x = clipCoords.x / clipCoords.w;
+	NDC.y = clipCoords.y / clipCoords.w;
+	
+	
+	screen->x = ((float)windowWidth / 2 * NDC.x);
+	screen->y = ((float)windowHeight / 2 * NDC.y);
+	screen->z = clipCoords.w;
+	
+	DEBUG_LOG("Z: " << clipCoords.z << " W " << clipCoords.w);
+
+	DEBUG_LOG(
+		"DEPTH: " << get_depth() <<
+		" WIDT: " << this->get_pixelWidth() << " ASPECT: " << this->get_aspect()
+	);
 
 	return true;
+}
 
-	//   Matrix4X4 viewProjectionMatrix = projectionMatrix * viewMatrix;
-	//   //transform world to clipping coordinates
-	//   point3D = viewProjectionMatrix.multiply(point3D);
-	//   int winX = (int)Math.round(((point3D.getX() + 1) / 2.0) *
-	//   	width);
-	//   //we calculate -point3D.getY() because the screen Y axis is
-	//   //oriented top->down 
-	//   int winY = (int)Math.round(((1 - point3D.getY()) / 2.0) *
-	//   	height);
+bool UnityEngine::Camera::worldToScreen_alpha(Vector3 pos, Matrix4X4* trans, Vector3* screen, int windowWidth, int windowHeight)
+{
+	auto* v_matrix = this->worldToCameraMatrix();
+	auto* p_matrix = this->projectionMatrix();
+
+	auto clip = v_matrix->multiply(pos);
+	clip = p_matrix->multiply(clip);
+
+	screen->x = clip.x * (float)windowWidth / 2 - (float)windowWidth / 2;
+	screen->y = clip.y * (float)windowHeight / 2 - (float)windowHeight / 2;
+
+	DEBUG_LOG(
+		"DEPTH: " << get_depth() <<
+		" WIDT: " << this->get_pixelWidth() << " ASPECT: " << this->get_aspect() << " ORTHO: " << this->is_orthographic() << " ORTHO_SIZE: "
+		<< this->get_orthographicSize() << " FOV: " << this->get_fieldOfView()
+	);
+
+	return true;
+}
+
+int UnityEngine::Camera::get_scaledPixelWidth()
+{
+	auto* mono_context = Mono::Context::get_context();
+
+	static auto* pSetPosMethod = mono_context->mono_property_get_get_method(mono_context->mono_class_get_property_from_name(
+		mono_context->mono_class_from_name(mono_context->get_UE_CoreModule(), "UnityEngine", "Camera"),
+		"scaledPixelWidth"
+	));
+
+	return ((MonoInt*)mono_context->mono_runtime_invoke(pSetPosMethod, this, nullptr, nullptr))->value;
+}
+
+int UnityEngine::Camera::get_pixelWidth()
+{
+	auto* mono_context = Mono::Context::get_context();
+
+	static auto* pSetPosMethod = mono_context->mono_property_get_get_method(mono_context->mono_class_get_property_from_name(
+		mono_context->mono_class_from_name(mono_context->get_UE_CoreModule(), "UnityEngine", "Camera"),
+		"pixelWidth"
+	));
+
+	return ((MonoInt*)mono_context->mono_runtime_invoke(pSetPosMethod, this, nullptr, nullptr))->value;
 }
 
 void UnityEngine::Camera::WorldToViewportPoint_Injected(UnityTypes::Vector3* pos, UnityTypes::Vector3* out)
@@ -186,7 +227,7 @@ bool UnityEngine::Camera::is_orthographic()
 		"orthographic"
 	));
 
-	return (bool)(__int64)mono_context->mono_runtime_invoke(pSetPosMethod, this, nullptr, nullptr);
+	return ((MonoBool*)mono_context->mono_runtime_invoke(pSetPosMethod, this, nullptr, nullptr))->value;
 }
 
 void UnityEngine::Camera::set_orthographicSize(float new_f)
@@ -209,7 +250,7 @@ float UnityEngine::Camera::get_fieldOfView()
 		"fieldOfView"
 	));
 
-	return (float)(__int64)mono_context->mono_runtime_invoke(pSetPosMethod, this, nullptr, nullptr);
+	return ((MonoFloat*)mono_context->mono_runtime_invoke(pSetPosMethod, this, nullptr, nullptr))->value;
 }
 
 float UnityEngine::Camera::get_orthographicSize()
@@ -221,7 +262,7 @@ float UnityEngine::Camera::get_orthographicSize()
 		"orthographicSize"
 	));
 
-	return (float)(__int64)mono_context->mono_runtime_invoke(pSetPosMethod, this, nullptr, nullptr);
+	return ((MonoFloat*)mono_context->mono_runtime_invoke(pSetPosMethod, this, nullptr, nullptr))->value;
 }
 
 float UnityEngine::Camera::get_aspect()
@@ -233,12 +274,24 @@ float UnityEngine::Camera::get_aspect()
 		"aspect"
 	));
 
-	return (float)(__int64)mono_context->mono_runtime_invoke(pSetPosMethod, this, nullptr, nullptr);
+	return ((MonoFloat*)mono_context->mono_runtime_invoke(pSetPosMethod, this, nullptr, nullptr))->value;
+}
+
+float UnityEngine::Camera::get_depth()
+{
+	auto* mono_context = Mono::Context::get_context();
+
+	static auto* pSetPosMethod = mono_context->mono_property_get_get_method(mono_context->mono_class_get_property_from_name(
+		mono_context->mono_class_from_name(mono_context->get_UE_CoreModule(), "UnityEngine", "Camera"),
+		"depth"
+	));
+
+	return ((MonoFloat*)mono_context->mono_runtime_invoke(pSetPosMethod, this, nullptr, nullptr))->value;
 }
 
 float UnityEngine::Camera::get_horizontal_fov()
 {
-	float vFOVInRads = this->get_fieldOfView() * RAD_TO_DEG;
+	float vFOVInRads = this->get_fieldOfView() * DEG_TO_RAD;
 	return 2 * atan(tan(vFOVInRads / 2) * this->get_aspect());
-	
+
 }
