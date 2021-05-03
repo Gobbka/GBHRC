@@ -23,8 +23,7 @@ void GBHRC::Context::draw_esp(Application::Render::Scene* pScene)
         auto* local_camera = BrokeProtocol::get_camera();
         auto* view_matrix = local_camera->worldCamera->worldToCameraMatrix();
         auto* projection_m = local_camera->worldCamera->projectionMatrix();
-        if (local_camera == nullptr)
-            return;
+
         auto* players = BrokeProtocol::GetPlayersCollection();
         auto* ptr = players->items->pointer();
         const auto players_size = players->items->size();
@@ -36,7 +35,9 @@ void GBHRC::Context::draw_esp(Application::Render::Scene* pScene)
         UINT element_index = 0;
 
         float min_target_distance = 99999.f;
-
+        Application::Canvas::Rectangle* min_target_box=nullptr;
+    	
+    	
         for (int i = 0; i < players_size && element_index < elements_size; i++)
         {
             auto* player = ptr[i];
@@ -63,12 +64,10 @@ void GBHRC::Context::draw_esp(Application::Render::Scene* pScene)
                 {
                     aim_target = player->rotationT;
                     min_target_distance = distance;
-                    esp_box->set_color(0.5f, 0, 0);
+                    min_target_box = esp_box;
                 }
-                else
-                {
-                    esp_box->set_color(0, 0.8f, 0);
-                }
+
+                esp_box->set_color(0, 0.8f, 0);
             }
         }
 
@@ -78,9 +77,12 @@ void GBHRC::Context::draw_esp(Application::Render::Scene* pScene)
             esp_box->render = false;
         }
 
-        if (min_target_distance == 99999.f)
+        if (min_target_box == nullptr)
         {
             aim_target = nullptr;
+        }else
+        {
+            min_target_box->set_color(0.5f, 0, 0);
         }
     }
 }
@@ -95,4 +97,23 @@ void GBHRC::Context::static_draw_callback(Application::Render::Scene* pScene)
 {
     auto* context = GBHRC::Context::instance();
     context->draw_esp(pScene);
+}
+
+void GBHRC::Context::life_cycle()
+{
+	while(true)
+	{
+       if (aim_active==true && aim_target != nullptr)
+       {
+           auto* local_player = BrokeProtocol::GetLocalPlayer();
+
+           local_player->rotationT->lookAt(aim_target);
+           
+           Sleep(5);
+       }else
+       {
+           Sleep(50);
+       }
+
+	}
 }

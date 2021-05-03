@@ -81,43 +81,7 @@ void MainThread()
 	
     Hooks::D3D11::hook(present_address, init_callback);
 
-    esp_();
-}
-
-bool aim_active = false;
-
-void esp_()
-{
-	//while(1)
-	//{
- //       if (aim_active==true && aim_target != nullptr)
- //       {
- //           auto* local_player = BrokeProtocol::GetLocalPlayer();
-
- //           auto* local_camera = BrokeProtocol::get_camera();
- //           if (local_camera == nullptr)
- //               return;
- //           auto* players = BrokeProtocol::GetPlayersCollection();
- //           auto* ptr = players->items->pointer();
- //           const auto players_size = players->items->size();
-
- //           for (UINT i = 0; i < players_size; i++)
- //           {
- //               auto* player = ptr[i];
-
- //               if (player == local_player || player->health == 0.f)
- //                   continue;
- //           	
- //               local_player->rotationT->lookAt(player->rotationT);
- //               BrokeProtocol::GetLocalPlayer()->fire();
- //           }
- //           Sleep(5);
- //       }else
- //       {
- //           Sleep(50);
- //       }
-
-	//}
+    GBHRC::Context::instance()->life_cycle();
 }
 
 
@@ -168,11 +132,11 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
 
 	if(msg == WM_LBUTTONDOWN)
 	{
-        aim_active = true;
+        GBHRC::Context::instance()->aim_active = true;
 	}
 	if(msg == WM_LBUTTONUP)
 	{
-        aim_active = false;
+        GBHRC::Context::instance()->aim_active = false;
 	}
 
 }

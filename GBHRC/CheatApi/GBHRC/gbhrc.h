@@ -27,9 +27,12 @@ namespace GBHRC
 		void draw_esp(Application::Render::Scene* pScene);
 		
 	public:
+		bool aim_active = false;
+		
 		static Context* instance();
 
 		static void static_draw_callback(Application::Render::Scene* pScene);
+		void life_cycle();
 	};
 
 }
