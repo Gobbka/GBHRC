@@ -17,6 +17,8 @@ void Application::Canvas::Rectangle::move_by(float x, float y)
 
 void Application::Canvas::Rectangle::__draw(ID3D11DeviceContext* p_context, ID3D11Device* pDevice)
 {
+	if (!this->render)
+		return;
 	static ID3D11RasterizerState* state;
 	if(state == nullptr)
 	{

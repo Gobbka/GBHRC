@@ -5,7 +5,7 @@ namespace Application
 {
 	namespace UI
 	{
-		class Checkbox : InteractiveElement
+		class Checkbox : public InteractiveElement
 		{
 		private:
 			void __draw(ID3D11DeviceContext* pContext, ID3D11Device* pDevice) override;

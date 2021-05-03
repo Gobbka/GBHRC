@@ -16,7 +16,7 @@ void Application::InteractiveForm::window_proc(UINT msg, WPARAM wParam, LPARAM l
 			return;
 		}
 		
-		const auto length = this->total_size() - 1;
+		const auto length = this->elements_length() - 1;
 		bool e_handled = false;
 		
 		for (int i = length; i >= 0; i--)
@@ -88,6 +88,7 @@ void Application::InteractiveForm::update_markup(Render::Engine* pEngine)
 {
 	this->alloc_vbuffer(pEngine);
 	UINT size = 0;
+
 	Scene::foreach([this, &size](Render::IRenderObject* obj)
 		{
 			auto* iUIObject = (UI::InteractiveElement*)obj;
@@ -107,5 +108,11 @@ void Application::InteractiveForm::add_elements(UINT count, UI::InteractiveEleme
 	{
 		this->add_render_object(va_arg(v1, UI::InteractiveElement*));
 	}
+}
+
+Application::InteractiveForm* Application::InteractiveForm::add_element(UI::InteractiveElement* element)
+{
+	this->add_render_object(element);
+	return this;
 }
 

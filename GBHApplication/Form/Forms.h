@@ -14,6 +14,5 @@ namespace Application
 	namespace Canvas
 	{
 		class CanvasForm;
-		class IElement;
 	}
 }

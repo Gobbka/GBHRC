@@ -73,6 +73,11 @@ void Application::Render::Scene::set_resolution(Resolution resolution)
 	this->resolution = resolution;
 }
 
+UINT Application::Render::Scene::elements_length() const
+{
+	return this->pElements.size();
+}
+
 
 GVertex::Vertex* Application::Render::Scene::get_ptr() const
 {

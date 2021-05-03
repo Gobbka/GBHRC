@@ -35,15 +35,17 @@ namespace Application
 			void alloc_vbuffer(Render::Engine* pEngine);
 			void add_render_object(IRenderObject* object);
 
-			IRenderObject* element_at(UINT index);
 		public:
 			// public setters
 			
 			void set_resolution(Resolution resolution);
 		public:
 			// public getters
-			
+
+			UINT elements_length() const;
 			GVertex::Vertex* get_ptr() const;
+			IRenderObject* element_at(UINT index);
+
 		public:
 			~Scene();
 		};

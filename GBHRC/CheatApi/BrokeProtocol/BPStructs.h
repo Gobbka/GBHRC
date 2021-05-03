@@ -64,24 +64,23 @@ namespace BrokeProtocol {
 		class Equipable
 		{
 		public:
-			char pad_0000[32]; //0x0000
-			void* clEntity; //0x0020
-			void* svEntity; //0x0028
-			char pad_0030[60]; //0x0030
+			char pad_0000[40]; //0x0000
+			void* clEntity; //0x0028
+			void* svEntity; //0x0030
+			char pad_0038[52]; //0x0038
 			uint32_t itemId; //0x006C
 			char pad_0070[16]; //0x0070
 			bool isHuman; //0x0080
 			bool isWorldEntity; //0x0081
 			bool hasInventory; //0x0082
 			bool shop; //0x0083
-			uint32_t ID; //0x0084
-			uint32_t index; //0x0088
-			int32_t Value; //0x008C
-			char pad_0090[144]; //0x0090
+			char pad_0084[8]; //0x0084
+			int32_t ID; //0x008C
+			uint32_t index; //0x0090
+			int32_t value; //0x0094
+			char pad_0098[136]; //0x0098
 			uint32_t cannot_shoot; //0x0120
-			char pad_0124[156]; //0x0124
-			uint32_t damage; //0x01C0
-			char pad_01C4[8]; //0x01C4
+
 		}; //Size: 0x01CC
 
 		class GlobalTypes
@@ -102,5 +101,18 @@ namespace BrokeProtocol {
 			char pad_0018[24]; //0x0018
 			GlobalTypes* GlobalTypes; //0x0030
 		};
+
+		class StanceType
+		{
+		public:
+			char pad_0000[16]; //0x0000
+			uint32_t index; //0x0010
+			float capsuleHeight; //0x0014
+			float offset; //0x0018
+			float input; //0x001C
+			bool setable; //0x0020
+			bool ragdoll; //0x0021
+			bool fixedForward; //0x0022
+		}; //Size: 0x0023
 	}
 }

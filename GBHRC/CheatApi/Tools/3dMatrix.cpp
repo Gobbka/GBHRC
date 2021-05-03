@@ -78,6 +78,25 @@ void Matrix4X4::dump()
 	);
 }
 
+Vector3 Matrix4X4::worldToScreen(Matrix4X4* view_matrix, Matrix4X4* projection_matrix, Vector3 pos,POINT windowSize)
+{
+
+	auto clipCoords = view_matrix->multiply(Vector4{ pos.x,pos.y,pos.z,1.0 });
+	clipCoords = projection_matrix->multiply(clipCoords);
+
+	Vector3 NDC;
+	NDC.x = clipCoords.x / clipCoords.w;
+	NDC.y = clipCoords.y / clipCoords.w;
+
+	Vector3 screen;
+
+	screen.x = ((float)windowSize.x / 2 * NDC.x);
+	screen.y = ((float)windowSize.y / 2 * NDC.y);
+	screen.z = clipCoords.w;
+
+	return screen;
+}
+
 Vector3 WorldToScreen(Vector3 pos, Matrix4X4* pmatrix, RECT clientrect)
 {
 	//float _x = pmatrix->m00 * pos.x + pmatrix->m01 * pos.y + pmatrix->m02 * pos.z + pmatrix->m03;

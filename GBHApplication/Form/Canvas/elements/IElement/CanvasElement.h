@@ -15,7 +15,7 @@ namespace Application
 			Application::Canvas::CanvasForm* pcanvas = nullptr;
 			Render::Position position{ 0,0 };
 		public:
-			bool hovered = false;
+			bool render = true;
 
 			Render::Position get_position() const;
 

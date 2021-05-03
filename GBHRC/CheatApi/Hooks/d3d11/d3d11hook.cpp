@@ -37,7 +37,7 @@ Hooks::D3D11::fnPresent Hooks::D3D11::GetPresentAddress()
 	sd.BufferDesc.Height = 800;
 	sd.BufferDesc.Width = 600;
 	sd.BufferDesc.RefreshRate = { 60,1 };
-	sd.OutputWindow = GetForegroundWindow();
+	sd.OutputWindow = GetDesktopWindow();
 	sd.Windowed = TRUE;
 	sd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 	sd.SampleDesc = { 1,0 };
@@ -61,7 +61,10 @@ Hooks::D3D11::fnPresent Hooks::D3D11::GetPresentAddress()
 	);
 
 	if (FAILED(hr))
-		return 0;
+	{
+		// static address maybe works
+		return (Hooks::D3D11::fnPresent) 0x7FFA52774300;
+	}
 
 	void** pVMT = *(void***)pSwapChain;
 	const auto present = (fnPresent)pVMT[(UINT)IDXGISwapChainVMT::Present];
@@ -78,7 +81,6 @@ void Hooks::D3D11::hook(fnPresent present_func, fnInitCallback init_callback)
 {
 	DEBUG_LOG("[D3D] PRESENT ADDRESS: " << std::hex << std::uppercase << (size_t)present_func);
 	DEBUG_LOG("[D3D] HOOK ADDRESS: " << Hooks::D3D11::HookedPresentFunction);
-	DEBUG_LOG("[D3D] ORIGINAL BYTES: " << &original_present_func_bytes);
 
 	DWORD oldProt;
 
@@ -116,7 +118,7 @@ void Hooks::D3D11::HookedPresentFunction(IDXGISwapChain* self, UINT SyncInterval
 		HRESULT hr = self->GetDevice(__uuidof(ID3D11Device), (void**)&pDevice);
 
 		if (FAILED(hr))
-			DEBUG_LOG("[d3d][-] CANNOT GET DEVICE");
+			DEBUG_LOG("[D3D][-] CANNOT GET DEVICE");
 
 
 		pRenderEngine = new Application::Render::Engine(window, pDevice, self);

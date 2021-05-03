@@ -37,6 +37,8 @@ struct Matrix4X4
 	Vector3 multiply(Vector3 vector);
 	Matrix4X4* inverse();
 	void dump();
+
+	static Vector3 worldToScreen(Matrix4X4*view_matrix,Matrix4X4*projection_matrix,Vector3 pos,POINT window_size);
 };
 
 /// <summary>

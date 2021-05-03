@@ -43,51 +43,10 @@ UnityTypes::Vector3* UnityEngine::Camera::WorldToViewportPoint(UnityTypes::Vecto
 	return (UnityTypes::Vector3*)mono_context->mono_runtime_invoke(pMethod, this, args, nullptr);
 }
 
-bool UnityEngine::Camera::worldToScreen(Vector3 pos, Vector3* screen, int windowWidth, int windowHeight)
-{
-	Vector4 clipCoords{};
-	{
-		// view matrix
-		auto* pmatrix = this->worldToCameraMatrix();
-		clipCoords.w = pos.x * pmatrix->m30 + pos.y * pmatrix->m31 + pos.z * pmatrix->m32 + pmatrix->m33;
-		if (clipCoords.w < 0.01f)
-			return false;
-
-		clipCoords.x = pos.x * pmatrix->m00 + pos.y * pmatrix->m01 + pos.z * pmatrix->m02 + pmatrix->m03;
-		clipCoords.y = pos.x * pmatrix->m10 + pos.y * pmatrix->m11 + pos.z * pmatrix->m12 + pmatrix->m13;
-		clipCoords.z = pos.x * pmatrix->m20 + pos.y * pmatrix->m21 + pos.z * pmatrix->m22 + pmatrix->m23;
-	}
-	{
-		// mul by projection matrix
-		auto* pProjectMatrix = this->projectionMatrix();
-		clipCoords.x = clipCoords.x * pProjectMatrix->m00 + clipCoords.y * pProjectMatrix->m01;
-		clipCoords.y = clipCoords.x * pProjectMatrix->m10 + clipCoords.y * pProjectMatrix->m11;
-	}
-
-	Vector3 NDC;
-	NDC.x = clipCoords.x / clipCoords.w;
-	NDC.y = clipCoords.y / clipCoords.w;
-	NDC.z = clipCoords.z / clipCoords.w;
-
-	// эта херь выдаёт нереально агромные результаты
-	//screen->x = (windowWidth / 2 * NDC.x) + (NDC.x + windowWidth / 2);
-	//screen->y = (windowHeight / 2 * NDC.y) + (NDC.y + windowHeight / 2);
-
-	screen->x = windowWidth / 2 + NDC.x / tan(get_horizontal_fov() / 2) * (float)windowWidth / 2;
-	screen->y = windowHeight / 2 - NDC.y / tan(get_horizontal_fov() / 2) * (float)windowWidth / 2;
-
-	//screen->x = NDC.x / tan(get_horizontal_fov() / 2) * (float)windowWidth / 2;
-	//screen->y = NDC.y / tan(this->get_horizontal_fov() / 2) * (float)windowWidth / 2;
-
-	screen->z = NDC.z;
-	return true;
-}
-
 bool UnityEngine::Camera::worldToScreen_beta(Vector3 pos, Vector3* screen, int windowWidth, int windowHeight)
 {
 	auto* proj_matrix = this->projectionMatrix();
 	auto* view_matrix = this->worldToCameraMatrix();
-
 
 	auto clipCoords = view_matrix->multiply(Vector4{pos.x,pos.y,pos.z,1.0});
 	clipCoords = proj_matrix->multiply(clipCoords);
@@ -100,33 +59,6 @@ bool UnityEngine::Camera::worldToScreen_beta(Vector3 pos, Vector3* screen, int w
 	screen->x = ((float)windowWidth / 2 * NDC.x);
 	screen->y = ((float)windowHeight / 2 * NDC.y);
 	screen->z = clipCoords.w;
-	
-	DEBUG_LOG("Z: " << clipCoords.z << " W " << clipCoords.w);
-
-	DEBUG_LOG(
-		"DEPTH: " << get_depth() <<
-		" WIDT: " << this->get_pixelWidth() << " ASPECT: " << this->get_aspect()
-	);
-
-	return true;
-}
-
-bool UnityEngine::Camera::worldToScreen_alpha(Vector3 pos, Matrix4X4* trans, Vector3* screen, int windowWidth, int windowHeight)
-{
-	auto* v_matrix = this->worldToCameraMatrix();
-	auto* p_matrix = this->projectionMatrix();
-
-	auto clip = v_matrix->multiply(pos);
-	clip = p_matrix->multiply(clip);
-
-	screen->x = clip.x * (float)windowWidth / 2 - (float)windowWidth / 2;
-	screen->y = clip.y * (float)windowHeight / 2 - (float)windowHeight / 2;
-
-	DEBUG_LOG(
-		"DEPTH: " << get_depth() <<
-		" WIDT: " << this->get_pixelWidth() << " ASPECT: " << this->get_aspect() << " ORTHO: " << this->is_orthographic() << " ORTHO_SIZE: "
-		<< this->get_orthographicSize() << " FOV: " << this->get_fieldOfView()
-	);
 
 	return true;
 }
