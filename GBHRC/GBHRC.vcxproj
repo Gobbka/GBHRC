@@ -158,6 +158,8 @@
     <ClCompile Include="CheatApi\BrokeProtocol\Mono\Mono.cpp" />
     <ClCompile Include="CheatApi\BrokeProtocol\Mono\vTable\vTable.cpp" />
     <ClCompile Include="CheatApi\BrokeProtocol\UnityTypes.cpp" />
+    <ClCompile Include="CheatApi\GBHRC\config\Config.cpp" />
+    <ClCompile Include="CheatApi\GBHRC\gbhrc.cpp" />
     <ClCompile Include="CheatApi\Hooks\d3d11\d3d11hook.cpp" />
     <ClCompile Include="CheatApi\Hooks\wndproc\wndprochook.cpp" />
     <ClCompile Include="CheatApi\Tools\3dMatrix.cpp" />
@@ -185,6 +187,8 @@
     <ClInclude Include="CheatApi\BrokeProtocol\Mono\MonoTypes.h" />
     <ClInclude Include="CheatApi\BrokeProtocol\Mono\vTable\vTable.h" />
     <ClInclude Include="CheatApi\BrokeProtocol\UnityTypes.h" />
+    <ClInclude Include="CheatApi\GBHRC\config\Config.h" />
+    <ClInclude Include="CheatApi\GBHRC\gbhrc.h" />
     <ClInclude Include="CheatApi\Hooks\d3d11\d3d11hook.h" />
     <ClInclude Include="CheatApi\Hooks\d3d11\D3D11_VMT.h" />
     <ClInclude Include="CheatApi\Hooks\wndproc\wndprochook.h" />

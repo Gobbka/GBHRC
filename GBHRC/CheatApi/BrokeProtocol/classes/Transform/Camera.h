@@ -19,6 +19,7 @@ namespace UnityEngine
 
 		int get_scaledPixelWidth();
 		int get_pixelWidth();
+		int get_pixelHeight();
 		
 		void WorldToViewportPoint_Injected(UnityTypes::Vector3* pos, UnityTypes::Vector3* out);
 		

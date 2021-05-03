@@ -13,6 +13,8 @@
 #include "CheatApi/BrokeProtocol/Mono/Mono.h"
 #include "CheatApi/BrokeProtocol/BrokeProtocol.h"
 
+#include "CheatApi/GBHRC/gbhrc.h"
+
 #include <string>
 #include <sstream>
 
@@ -23,85 +25,10 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam);
 HWND main__window;
 Mono::Context* mono_context;
 
-UnityEngine::Transform* aim_target = nullptr;
-
-void __stdcall draw_esp(Application::Render::Scene* pScene)
-{
-    if(BrokeProtocol::get_manager()->host != nullptr)
-	{
-
-        auto* local_player = BrokeProtocol::GetLocalPlayer();
-    	
-        auto* local_camera = BrokeProtocol::get_camera();
-        auto* view_matrix = local_camera->worldCamera->worldToCameraMatrix();
-        auto* projection_m = local_camera->worldCamera->projectionMatrix();
-        if (local_camera == nullptr)
-            return;
-        auto* players = BrokeProtocol::GetPlayersCollection();
-        auto* ptr = players->items->pointer();
-        const auto players_size = players->items->size();
-        const auto elements_size = esp_scene->elements_length();
-
-        RECT rect;
-        GetClientRect(main__window, &rect);
-
-        int width = rect.right - rect.left;
-        int height = rect.bottom - rect.top;
-
-        UINT element_index = 0;
-
-        float min_target_distance = 99999.f;
-    	
-   		for(int i = 0;i<players_size && element_index<elements_size;i++)
-   		{
-            auto* player = ptr[i];
-   			
-   			if(player == local_player || player->health == 0.f)
-                continue;
-
-            auto* pos = player->rotationT->get_position();
-
-            const auto point_top = Matrix4X4::worldToScreen(view_matrix, projection_m, { pos->x,pos->y+1.5f,pos->z }, { width,height });
-   			
-            if(point_top.z > 0)
-            {
-                const auto point_bottom = Matrix4X4::worldToScreen(view_matrix, projection_m, { pos->x,pos->y - player->stance->capsuleHeight,pos->z }, { width,height });
-            	
-                auto* esp_box = (Application::Canvas::Rectangle*)esp_scene->element_at(element_index);
-                esp_box->set_pos(point_top.x, point_top.y);
-                esp_box->set_resolution((float)abs(point_top.x - point_bottom.x), (float)abs(point_top.y - point_bottom.y));
-                esp_box->render = true;
-                element_index++;
-
-                auto distance = sqrt(pow(point_top.x, 2) + pow(point_top.y, 2));
-            	if(distance<=300 && distance < min_target_distance)
-            	{
-                    aim_target = player->rotationT;
-                    min_target_distance = distance;
-                    esp_box->set_color(0.5f, 0, 0);
-            	}else
-            	{
-                    esp_box->set_color(0, 0.8f, 0);
-            	}
-            }
-   		}
-
-    	for(;element_index<elements_size;element_index++)
-    	{
-            auto* esp_box = (Application::Canvas::Rectangle*)esp_scene->element_at(element_index);
-            esp_box->render = false;
-    	}
-
-    	if(min_target_distance == 99999.f)
-    	{
-            aim_target = nullptr;
-    	}
-   	}
-}
-
 void init_callback(Application::Render::Engine* instance)
 {
     mono_context->mono_thread_attach(mono_context->mono_get_root_domain());
+	
 
     BrokeProtocol::show_local_message((char*)"<color=#39d668>[info]</color> GBHRC injected | press <color=#39d668>INSERT</color> to show menu!");
 	BrokeProtocol::show_local_message((char*)"<color=#3966d6>[info]</color> join our discord: https://discord.gg/4jRzSHz3 ");
@@ -115,7 +42,7 @@ void init_callback(Application::Render::Engine* instance)
     menu->hidden = true;
 
     esp_scene = new Application::Canvas::CanvasForm();
-    esp_scene->render_callback = draw_esp;
+    esp_scene->render_callback = GBHRC::Context::static_draw_callback;
     esp_scene->hidden = false;
 	
 	for(int i = 0;i<100;i++)
@@ -161,36 +88,36 @@ bool aim_active = false;
 
 void esp_()
 {
-	while(1)
-	{
-        if (aim_active==true && aim_target != nullptr)
-        {
-            auto* local_player = BrokeProtocol::GetLocalPlayer();
+	//while(1)
+	//{
+ //       if (aim_active==true && aim_target != nullptr)
+ //       {
+ //           auto* local_player = BrokeProtocol::GetLocalPlayer();
 
-            auto* local_camera = BrokeProtocol::get_camera();
-            if (local_camera == nullptr)
-                return;
-            auto* players = BrokeProtocol::GetPlayersCollection();
-            auto* ptr = players->items->pointer();
-            const auto players_size = players->items->size();
+ //           auto* local_camera = BrokeProtocol::get_camera();
+ //           if (local_camera == nullptr)
+ //               return;
+ //           auto* players = BrokeProtocol::GetPlayersCollection();
+ //           auto* ptr = players->items->pointer();
+ //           const auto players_size = players->items->size();
 
-            for (UINT i = 0; i < players_size; i++)
-            {
-                auto* player = ptr[i];
+ //           for (UINT i = 0; i < players_size; i++)
+ //           {
+ //               auto* player = ptr[i];
 
-                if (player == local_player || player->health == 0.f)
-                    continue;
-            	
-                local_player->rotationT->lookAt(player->rotationT);
-                BrokeProtocol::GetLocalPlayer()->fire();
-            }
-            Sleep(5);
-        }else
-        {
-            Sleep(50);
-        }
+ //               if (player == local_player || player->health == 0.f)
+ //                   continue;
+ //           	
+ //               local_player->rotationT->lookAt(player->rotationT);
+ //               BrokeProtocol::GetLocalPlayer()->fire();
+ //           }
+ //           Sleep(5);
+ //       }else
+ //       {
+ //           Sleep(50);
+ //       }
 
-	}
+	//}
 }
 
 

@@ -87,6 +87,18 @@ int UnityEngine::Camera::get_pixelWidth()
 	return ((MonoInt*)mono_context->mono_runtime_invoke(pSetPosMethod, this, nullptr, nullptr))->value;
 }
 
+int UnityEngine::Camera::get_pixelHeight()
+{
+	auto* mono_context = Mono::Context::get_context();
+
+	static auto* pSetPosMethod = mono_context->mono_property_get_get_method(mono_context->mono_class_get_property_from_name(
+		mono_context->mono_class_from_name(mono_context->get_UE_CoreModule(), "UnityEngine", "Camera"),
+		"pixelHeight"
+	));
+
+	return ((MonoInt*)mono_context->mono_runtime_invoke(pSetPosMethod, this, nullptr, nullptr))->value;
+}
+
 void UnityEngine::Camera::WorldToViewportPoint_Injected(UnityTypes::Vector3* pos, UnityTypes::Vector3* out)
 {
 	STATIC_METHOD("UnityEngine.Camera:WorldToViewportPoint_Injected()", true, 3);
