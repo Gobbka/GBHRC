@@ -1,5 +1,12 @@
 #include "Parentable.h"
 
+#include "../../../../Render/Scene/Scene.h"
+
+void Application::UI::Parent::set_index_offset(UINT offset)
+{
+	this->index_offset = offset;
+}
+
 void Application::UI::Parent::__draw(ID3D11DeviceContext* p_context, ID3D11Device* pDevice)
 {
 	for (auto* element : this->elements)
@@ -37,4 +44,23 @@ void Application::UI::Parent::move_by(float x, float y)
 {
 	for (auto* element : this->elements)
 		element->move_by(x,y);
+}
+
+void Application::UI::Parent::init(Application::InteractiveForm* pForm)
+{
+	UINT size = this->index_offset;
+
+	for(auto*element:this->elements)
+	{
+		element->init(this->pForm);
+		element->set_index(size);
+		element->set_parent(this);
+		
+		size += element->size();
+	}
+}
+
+void Application::UI::Parent::add_element(InteractiveElement* element)
+{
+	this->elements.push_back(element);
 }

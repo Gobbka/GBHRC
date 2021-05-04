@@ -13,6 +13,9 @@ namespace Application
 		{
 		private:
 			std::vector<InteractiveElement*> elements;
+			UINT index_offset=0;
+		protected:
+			void set_index_offset(UINT offset);
 		public:
 			void __draw(ID3D11DeviceContext* p_context, ID3D11Device* pDevice) override;
 			void set_pos(float x, float y) override;
@@ -20,6 +23,10 @@ namespace Application
 			bool point_belongs(POINT point) override;
 			UINT size() override;
 			void move_by(float x, float y) override;
+			
+			void init(Application::InteractiveForm* pForm) override;
+			
+			void add_element(InteractiveElement* element);
 		};
 	}
 }
