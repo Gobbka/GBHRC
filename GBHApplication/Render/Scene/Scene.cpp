@@ -6,6 +6,7 @@
 
 void Application::Render::Scene::alloc_vbuffer(Render::Engine* pEngine)
 {
+
 	delete this->pVBuffer;
 	const UINT size = this->total_size();
 
@@ -54,7 +55,10 @@ UINT Application::Render::Scene::total_size()
 {
 	UINT size = 0;
 	for (auto* element : this->pElements)
+	{
 		size += element->size();
+	}
+	
 	return size;
 }
 

@@ -12,12 +12,6 @@ Application::UI::Panel::Panel(Render::Position position, Render::Resolution reso
 	this->color = color;
 	this->position = position;
 	this->resolution = resolution;
-
-	this->onMouseDown = [](UI::UIElementEventArgs args)
-	{
-		Panel* panel = (Panel * )args;
-		panel->pForm->drag_move(panel);
-	};
 }
 
 bool Application::UI::Panel::point_belongs(POINT point)
@@ -33,26 +27,28 @@ void Application::UI::Panel::init(Application::InteractiveForm* pForm)
 
 	this->set_pos(position.x, position.y);
 	this->set_color(color.r, color.g, color.b);
+
+	Parent::init(pForm);
 }
 
 void Application::UI::Panel::set_pos(float x, float y)
 {
-	const auto height = resolution.height;
-	const auto width = resolution.width;
-
-	Managers::Rectangle::set_rect(this->get_ptr(), x, y, width, height);
+	Parent::set_pos(x, y);
 
 	this->position = { x,y };
 }
 
 void Application::UI::Panel::set_color(float r, float g, float b)
 {
-	Managers::Rectangle::set_color(this->get_ptr(), r, g, b);
+	Parent::set_color(r, g, b);
+	this->color = { r,g,b };
 }
 
 void Application::UI::Panel::move_by(float x, float y)
 {
-	InteractiveElement::move_by(x, y);
+	Parent::move_by(x, y);
+	this->position.x += x;
+	this->position.y += y;
 }
 
 Application::UI::InteractiveElement* Application::UI::Panel::set_rect(float width, float height)

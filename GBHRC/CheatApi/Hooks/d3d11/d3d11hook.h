@@ -10,7 +10,7 @@ namespace Hooks
 		typedef HRESULT(__stdcall* fnPresent)(IDXGISwapChain* self, UINT SyncInterval, UINT Flags);
 		typedef void(*fnInitCallback)(Application::Render::Engine* instance);
 
-		fnPresent GetPresentAddress();
+		HRESULT GetPresentAddress(fnPresent*outPresent);
 		void hook(fnPresent present_func, fnInitCallback init_callback);
 		void HookedPresentFunction(IDXGISwapChain* self, UINT SyncInterval, UINT Flags);
 

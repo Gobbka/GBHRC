@@ -22,11 +22,11 @@ void place_catch_bytes(size_t address)
 	*(unsigned int*)(address + (DWORD)1) = (size_t)Hooks::D3D11::HookedPresentFunction - (size_t)address - 5;
 }
 
-Hooks::D3D11::fnPresent Hooks::D3D11::GetPresentAddress()
+HRESULT Hooks::D3D11::GetPresentAddress(fnPresent*outPresent)
 {
 	if (Original_Present_Func != nullptr)
 	{
-		return Original_Present_Func;
+		*outPresent = Original_Present_Func;
 	}
 	// make dummy device
 	D3D_FEATURE_LEVEL ft_level;
@@ -62,8 +62,7 @@ Hooks::D3D11::fnPresent Hooks::D3D11::GetPresentAddress()
 
 	if (FAILED(hr))
 	{
-		// static address maybe works
-		return (Hooks::D3D11::fnPresent) 0x7FFA52774300;
+		return hr;
 	}
 
 	void** pVMT = *(void***)pSwapChain;
@@ -73,8 +72,8 @@ Hooks::D3D11::fnPresent Hooks::D3D11::GetPresentAddress()
 	safe_release(pDevice);
 
 	Original_Present_Func = present;
-
-	return present;
+	*outPresent = present;
+	return 0;
 }
 
 void Hooks::D3D11::hook(fnPresent present_func, fnInitCallback init_callback)
@@ -129,7 +128,7 @@ void Hooks::D3D11::HookedPresentFunction(IDXGISwapChain* self, UINT SyncInterval
 	pRenderEngine->present();
 
 	// then we need to back original bytes
-	auto present_func = GetPresentAddress();
+	Hooks::D3D11::fnPresent present_func; GetPresentAddress(&present_func);
 	memcpy(present_func, original_present_func_bytes, 5);
 	present_func(self, SyncInterval, Flags);
 

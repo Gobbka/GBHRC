@@ -16,7 +16,7 @@ namespace Application {
 		{
 		public:
 			void update_markup(Application::Render::Engine* pEngine);
-			void add_elements(UINT count,Canvas::CanvasElement* element...);
+			void add_element(CanvasElement* element);
 		};
 	}
 }

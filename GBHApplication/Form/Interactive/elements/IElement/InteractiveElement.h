@@ -1,5 +1,4 @@
 #pragma once
-
 #include "../../../../Render/Render.h"
 #include "../../../../Render/Scene/IRenderObject.h"
 
@@ -12,6 +11,7 @@ namespace Application
 {
 	namespace UI {
 
+		class Parent;
 		class InteractiveElement;
 		typedef InteractiveElement* UIElementEventArgs;
 		
@@ -23,6 +23,7 @@ namespace Application
 		protected:
 			Application::InteractiveForm* pForm = nullptr;
 			Render::Position position{ 0,0 };
+			Parent* _parent = nullptr;
 			static void default_event_callback(UIElementEventArgs args) {};
 		public:
 			bool hovered = false;
@@ -41,6 +42,8 @@ namespace Application
 			virtual void init(Application::InteractiveForm* pForm) = 0;
 
 			GVertex::Vertex* get_ptr() const;
+			Parent* parent() const;
+			void set_parent(Parent*parent);
 			
 			void __draw(ID3D11DeviceContext* p_context, ID3D11Device* pDevice) override = 0;
 			void set_pos(float x, float y) override = 0;

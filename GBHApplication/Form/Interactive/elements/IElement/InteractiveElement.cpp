@@ -21,3 +21,13 @@ GVertex::Vertex* Application::UI::InteractiveElement::get_ptr() const
 {
 	return this->pForm->get_ptr() + this->__index;
 }
+
+Application::UI::Parent* Application::UI::InteractiveElement::parent() const
+{
+	return this->_parent;
+}
+
+void Application::UI::InteractiveElement::set_parent(Parent* parent)
+{
+	this->_parent = parent;
+}

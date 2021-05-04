@@ -1,12 +1,12 @@
 #pragma once
-#include "../IElement/InteractiveElement.h"
+#include "../IElement/Parentable.h"
 
 namespace Application
 {
 	namespace UI
 	{
 		
-		class Panel final : public UI::InteractiveElement
+		class Panel final : public UI::Parent
 		{
 		private:
 			Render::Color color;
@@ -16,7 +16,7 @@ namespace Application
 		public:
 			UINT size() override
 			{
-				return 5;
+				return 5 + Parent::size();
 			}
 			Panel(Render::Position position,Render::Resolution resolution, Render::Color color);
 			
