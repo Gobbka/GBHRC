@@ -47,7 +47,7 @@ HRESULT Hooks::D3D11::GetPresentAddress(fnPresent*outPresent)
 
 	HRESULT hr = D3D11CreateDeviceAndSwapChain(
 		nullptr,
-		D3D_DRIVER_TYPE_REFERENCE,
+		D3D_DRIVER_TYPE_HARDWARE,
 		nullptr,
 		0,
 		nullptr,
@@ -128,7 +128,7 @@ void Hooks::D3D11::HookedPresentFunction(IDXGISwapChain* self, UINT SyncInterval
 	pRenderEngine->present();
 
 	// then we need to back original bytes
-	Hooks::D3D11::fnPresent present_func; GetPresentAddress(&present_func);
+	Hooks::D3D11::fnPresent present_func = Original_Present_Func;
 	memcpy(present_func, original_present_func_bytes, 5);
 	present_func(self, SyncInterval, Flags);
 

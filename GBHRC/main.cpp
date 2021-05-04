@@ -70,6 +70,8 @@ void MainThread()
     auto nigger = freopen("CONOUT$", "w", stdout);
     nigger = freopen("CONIN$", "r", stdin);
 
+    DEBUG_LOG("DXGI: "<<std::hex << DXGI_ERROR_UNSUPPORTED);
+
 	if(FAILED(hr))
 	{
         DEBUG_LOG("CANNOT GET PRESENT ADDRESS: "<<std::hex<<hr);
