@@ -43,6 +43,7 @@ namespace Application
 
 			GVertex::Vertex* get_ptr() const;
 			Parent* parent() const;
+			InteractiveForm* get_form() const;
 			void set_parent(Parent*parent);
 			
 			void __draw(ID3D11DeviceContext* p_context, ID3D11Device* pDevice) override = 0;

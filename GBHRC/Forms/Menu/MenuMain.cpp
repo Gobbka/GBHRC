@@ -15,14 +15,20 @@ void panel_leave(Application::UI::UIElementEventArgs args)
 	args->set_color(FLOAT_COLORS_BLACK);
 }
 
+
+
 void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engine*pEngine)
 {
 	form
-		->add_element(background_panel)
-		->add_element(checkbox);
+		->add_element(background_panel);
+	background_panel->add_element(checkbox);
 
 	form->update_markup(pEngine);
 
 	background_panel->onMouseEnter = panel_hover;
 	background_panel->onMouseLeave = panel_leave;
+	background_panel->onMouseDown = [](Application::UI::UIElementEventArgs args)
+	{
+		args->get_form()->drag_move(args);
+	};
 }

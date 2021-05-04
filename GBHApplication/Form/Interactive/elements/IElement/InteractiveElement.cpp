@@ -27,6 +27,11 @@ Application::UI::Parent* Application::UI::InteractiveElement::parent() const
 	return this->_parent;
 }
 
+Application::InteractiveForm* Application::UI::InteractiveElement::get_form() const
+{
+	return this->pForm;
+}
+
 void Application::UI::InteractiveElement::set_parent(Parent* parent)
 {
 	this->_parent = parent;

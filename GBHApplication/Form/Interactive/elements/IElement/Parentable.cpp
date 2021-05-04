@@ -9,6 +9,7 @@ void Application::UI::Parent::set_index_offset(UINT offset)
 
 void Application::UI::Parent::__draw(ID3D11DeviceContext* p_context, ID3D11Device* pDevice)
 {
+	return;
 	for (auto* element : this->elements)
 		element->__draw(p_context,pDevice);
 }
@@ -50,6 +51,8 @@ void Application::UI::Parent::init(Application::InteractiveForm* pForm)
 {
 	UINT size = this->index_offset;
 
+
+	
 	for(auto*element:this->elements)
 	{
 		element->init(this->pForm);

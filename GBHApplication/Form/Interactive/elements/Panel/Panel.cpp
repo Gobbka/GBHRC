@@ -5,7 +5,7 @@
 void Application::UI::Panel::__draw(ID3D11DeviceContext* pContext, ID3D11Device* pDevice)
 {
 	pContext->Draw(5, this->__index);
-	Parent::__draw(pContext, pDevice);
+	// Parent::__draw(pContext, pDevice);
 }
 
 Application::UI::Panel::Panel(Render::Position position, Render::Resolution resolution, Render::Color color)
@@ -26,11 +26,11 @@ void Application::UI::Panel::init(Application::InteractiveForm* pForm)
 {
 	this->pForm = pForm;
 
-	this->set_pos(position.x, position.y);
-	this->set_color(color.r, color.g, color.b);
-
 	Parent::set_index_offset(5);
 	Parent::init(pForm);
+
+	this->set_pos(position.x, position.y);
+	this->set_color(color.r, color.g, color.b);
 }
 
 void Application::UI::Panel::set_pos(float x, float y)
@@ -42,7 +42,6 @@ void Application::UI::Panel::set_pos(float x, float y)
 
 void Application::UI::Panel::set_color(float r, float g, float b)
 {
-	Parent::set_color(r, g, b);
 	Managers::Rectangle::set_color(this->get_ptr(), r, g, b);
 	this->color = { r,g,b };
 }

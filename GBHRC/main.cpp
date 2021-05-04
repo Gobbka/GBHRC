@@ -31,7 +31,7 @@ void init_callback(Application::Render::Engine* instance)
 
     BrokeProtocol::show_local_message((char*)"<color=#39d668>[info]</color> GBHRC injected | press <color=#39d668>INSERT</color> to show menu!");
 	BrokeProtocol::show_local_message((char*)"<color=#3966d6>[info]</color> join our discord: https://discord.gg/4jRzSHz3 ");
-
+	
     menu = new Application::InteractiveForm();
 
     MainMenuMarkup(menu, instance);
@@ -53,12 +53,10 @@ void init_callback(Application::Render::Engine* instance)
 
     esp_scene->update_markup(instance);
 	
-	instance
-		->append_scene(menu)
-		->append_scene(esp_scene);
+    instance
+        ->append_scene(menu);
+		//->append_scene(esp_scene);
 }
-
-void esp_();
 
 void MainThread()
 {
