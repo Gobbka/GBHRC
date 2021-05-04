@@ -1,5 +1,6 @@
 #include "InteractiveForm.h"
 #include "elements/IElement/InteractiveElement.h"
+#include "../../Application.h"
 #include <windowsx.h>
 
 void Application::InteractiveForm::window_proc(UINT msg, WPARAM wParam, LPARAM lParam)
@@ -12,7 +13,7 @@ void Application::InteractiveForm::window_proc(UINT msg, WPARAM wParam, LPARAM l
 
 		if (this->dragged)
 		{
-			this->dragged->element->set_pos(cursor.x - 5, cursor.y + 5);
+			this->dragged->element->set_pos(cursor.x - this->dragged->dragged_offset.x, cursor.y + this->dragged->dragged_offset.y);
 			return;
 		}
 		
@@ -73,7 +74,10 @@ void Application::InteractiveForm::window_proc(UINT msg, WPARAM wParam, LPARAM l
 
 void Application::InteractiveForm::drag_move(UI::InteractiveElement* element)
 {
-	this->dragged = new DragStruct{ 0,0 ,element};
+	auto pos = element->get_position();
+	auto cursor = Application::point_to_center( Application::get_client_cursor_point());
+	DEBUG_LOG("CX:"<<std::dec << cursor.x << " CY: " << cursor.y);
+	this->dragged = new DragStruct{ cursor.x - (LONG)pos.x,cursor.y - (LONG)pos.y ,element};
 }
 
 void Application::InteractiveForm::free_drag_move()

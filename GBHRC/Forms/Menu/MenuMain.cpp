@@ -21,7 +21,7 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 {
 	form
 		->add_element(background_panel);
-	background_panel->add_element(checkbox);
+	// background_panel->add_element(checkbox);
 
 	form->update_markup(pEngine);
 

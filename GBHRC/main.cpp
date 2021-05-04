@@ -133,6 +133,7 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
     	}
     }
 
+
 	if(msg == WM_LBUTTONDOWN)
 	{
         GBHRC::Context::instance()->aim_active = true;
