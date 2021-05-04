@@ -161,6 +161,7 @@
     <ClCompile Include="CheatApi\GBHRC\config\Config.cpp" />
     <ClCompile Include="CheatApi\GBHRC\gbhrc.cpp" />
     <ClCompile Include="CheatApi\Hooks\d3d11\d3d11hook.cpp" />
+    <ClCompile Include="CheatApi\Hooks\Detour\Detour.cpp" />
     <ClCompile Include="CheatApi\Hooks\wndproc\wndprochook.cpp" />
     <ClCompile Include="CheatApi\Tools\3dMatrix.cpp" />
     <ClCompile Include="Forms\Menu\MenuMain.cpp" />
@@ -191,6 +192,7 @@
     <ClInclude Include="CheatApi\GBHRC\gbhrc.h" />
     <ClInclude Include="CheatApi\Hooks\d3d11\d3d11hook.h" />
     <ClInclude Include="CheatApi\Hooks\d3d11\D3D11_VMT.h" />
+    <ClInclude Include="CheatApi\Hooks\Detour\Detour.h" />
     <ClInclude Include="CheatApi\Hooks\wndproc\wndprochook.h" />
     <ClInclude Include="CheatApi\Tools\3dMatrix.h" />
     <ClInclude Include="Forms\Menu\MenuMain.h" />

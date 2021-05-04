@@ -72,6 +72,9 @@
     <ClCompile Include="CheatApi\GBHRC\config\Config.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="CheatApi\Hooks\Detour\Detour.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CheatApi\Hooks\d3d11\d3d11hook.h">
@@ -162,6 +165,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="CheatApi\GBHRC\config\Config.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="CheatApi\Hooks\Detour\Detour.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
