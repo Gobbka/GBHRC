@@ -4,7 +4,7 @@
 
 namespace BrokeProtocol
 {
-	class ShBallistic : public BrokeProtocol::ShEquipable
+	struct ShBallistic : public ShEquipable
 	{
 	public:
 		void* useSound; //0x0190

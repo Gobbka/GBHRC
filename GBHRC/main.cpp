@@ -20,6 +20,8 @@
 
 #include "CheatApi/BrokeProtocol/classes/Guns/ShBallistic.h"
 
+static_assert(offsetof(BrokeProtocol::ShBallistic, recoil) == 0X01E4,"WRONG OFFSET");
+
 HINSTANCE DllInst;
 Application::InteractiveForm* menu;
 Application::Canvas::CanvasForm* esp_scene;
@@ -34,6 +36,8 @@ void init_callback(Application::Render::Engine* instance)
 
     BrokeProtocol::show_local_message((char*)"<color=#39d668>[info]</color> GBHRC injected | press <color=#39d668>INSERT</color> to show menu!");
 	BrokeProtocol::show_local_message((char*)"<color=#3966d6>[info]</color> join our discord: https://discord.gg/4jRzSHz3 ");
+
+    DEBUG_LOG("USER WELCOMED");
 	
     menu = new Application::InteractiveForm();
 
@@ -69,6 +73,7 @@ void init_callback(Application::Render::Engine* instance)
 
 void MainThread()
 {
+	
     main__window = Hooks::D3D11::FindMainWindow(GetCurrentProcessId());
     Hooks::D3D11::fnPresent present_addres;
 	auto hr = Hooks::D3D11::GetPresentAddress(&present_addres);
@@ -130,11 +135,12 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
         }
 
     	if(wParam == VK_F2){
-    		
+            
             auto* weapon = BrokeProtocol::GetLocalPlayer()->current_weapon();
-
-    		if(weapon->ammoItem == nullptr)
+            
+    		if(weapon->ammoItem != nullptr)
     		{
+                DEBUG_LOG("NIGGER: "<<weapon);
     			// weapon can fire
                 auto fire_weapon = (BrokeProtocol::ShBallistic*)weapon;
                 fire_weapon->accuracy = 0;

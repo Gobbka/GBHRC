@@ -78,19 +78,32 @@ void GBHRC::Context::draw_esp(Application::Render::Scene* pScene,Application::Re
                 esp_box->render = true;
                 element_index++;
 
-                auto rect = esp_font->MeasureDrawBounds((wchar_t*)player->username->array, DirectX::XMFLOAT2(point_top.x + width / 2, height / 2 - point_top.y));
+                auto rect = esp_font->MeasureDrawBounds((wchar_t*)player->username->array, DirectX::XMFLOAT2(0,0));
             	
                 esp_font->DrawString(
                     engine->get_batch(),
                     (wchar_t*)&player->username->array,
                     DirectX::XMFLOAT2(
-                        point_top.x + width/2 - (rect.right - rect.left)/2, 
-                        height/2 - point_top.y - (rect.bottom - rect.top)
+                        point_top.x + width/2 - (rect.right) / 2 * 0.5f, 
+                        height/2 - point_top.y - (rect.bottom) * 0.5
                     ),
-                    DirectX::Colors::Green, 
+                    DirectX::Colors::White, 
                     0.0f,
                     DirectX::XMFLOAT2(0.0f, 0.0f),
-                    DirectX::XMFLOAT2(1.0f, 1.0f)
+                    DirectX::XMFLOAT2(0.5f, 0.5f)
+                );
+
+                esp_font->DrawString(
+                    engine->get_batch(),
+                    (wchar_t*)&player->curEquipable->itemName->array,
+                    DirectX::XMFLOAT2(
+                        point_bottom.x + width / 2 - (rect.right) / 2 * 0.5f,
+                        height / 2 - point_bottom.y + (rect.bottom) * 0.5f
+                    ),
+                    DirectX::Colors::White,
+                    0.0f,
+                    DirectX::XMFLOAT2(0.0f, 0.0f),
+                    DirectX::XMFLOAT2(0.5, 0.5)
                 );
 
                 auto distance = sqrt(pow(point_top.x, 2) + pow(point_top.y, 2));

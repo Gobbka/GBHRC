@@ -37,7 +37,7 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 	
 	form
 		->add_element(background_panel)
-		->add_element(new Application::UI::Label{{5.f,5.f},"GBHRC::DLL",esp_font, {1.f,1.f,1.f} });
+		->add_element(new Application::UI::Label{{5.f,5.f},"GBHRC::DLL",esp_font, {FLOAT_COLORS_GREEN} });
 	// background_panel->add_element(checkbox);
 
 	form->update_markup(pEngine);

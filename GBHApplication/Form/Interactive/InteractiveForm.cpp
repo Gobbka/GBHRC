@@ -5,6 +5,9 @@
 
 void Application::InteractiveForm::window_proc(UINT msg, WPARAM wParam, LPARAM lParam)
 {
+	if (this->hidden == true)
+		return;
+	
 	if (msg == WM_MOUSEMOVE)
 	{
 		POINT center{ (LONG)(this->resolution.width / 2),(LONG)(this->resolution.height / 2) };

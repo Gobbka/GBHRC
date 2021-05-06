@@ -23,8 +23,8 @@ namespace BrokeProtocol
 		int32_t value; //0x0094
 		char pad_0098[136]; //0x0098
 		uint32_t clipSize; //0x0120
-		uint64_t currentClip; //0x0124
-		char pad_012C[12]; //0x012C
+		uint32_t currentClip; //0x0124
+		char pad_0128[16]; //0x0128
 		UnityTypes::String* itemName; //0x0138
 		char pad_0140[8]; //0x0140
 		void* ammoItem; //0x0148
@@ -41,4 +41,5 @@ namespace BrokeProtocol
 		float recoveryFactor; //0x0188
 		char pad_018C[4]; //0x018C
 	}; //Size: 0x0190
+
 }

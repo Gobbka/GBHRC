@@ -79,7 +79,6 @@ HRESULT Hooks::D3D11::GetPresentAddress(fnPresent*outPresent)
 void Hooks::D3D11::hook(fnPresent present_func, fnInitCallback init_callback)
 {
 	DEBUG_LOG("[D3D] PRESENT ADDRESS: " << std::hex << std::uppercase << (size_t)present_func);
-	DEBUG_LOG("[D3D] HOOK ADDRESS: " << Hooks::D3D11::HookedPresentFunction);
 
 	DWORD oldProt;
 
@@ -107,7 +106,7 @@ void Hooks::D3D11::HookedPresentFunction(IDXGISwapChain* self, UINT SyncInterval
 	// we make instance of own graphic engine
 	if (pRenderEngine == nullptr)
 	{
-		DEBUG_LOG("[d3d] CATCHED");
+		DEBUG_LOG("[D3D] PRESENT FUNC CATCHED");
 		//
 		DXGI_SWAP_CHAIN_DESC sd;
 		self->GetDesc(&sd);
