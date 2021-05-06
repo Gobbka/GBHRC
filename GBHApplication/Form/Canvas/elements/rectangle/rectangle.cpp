@@ -1,5 +1,6 @@
 #include "rectangle.h"
 #include "../../../../Managers/RectangleManager.h"
+#include "../../../../Render/Engine/Engine.h"
 
 using namespace Application::Render;
 
@@ -15,8 +16,9 @@ void Application::Canvas::Rectangle::move_by(float x, float y)
 	CanvasElement::move_by(x, y);
 }
 
-void Application::Canvas::Rectangle::__draw(ID3D11DeviceContext* p_context, ID3D11Device* pDevice)
+void Application::Canvas::Rectangle::__draw(Render::Engine*engine)
 {
+	auto* p_context = engine->pDevContext;
 	if (!this->render)
 		return;
 	static ID3D11RasterizerState* state;
@@ -26,7 +28,7 @@ void Application::Canvas::Rectangle::__draw(ID3D11DeviceContext* p_context, ID3D
 		rDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_WIREFRAME;
 		rDesc.CullMode = D3D11_CULL_NONE;
 		rDesc.DepthClipEnable = true;
-		pDevice->CreateRasterizerState(&rDesc, &state);
+		engine->pDevice->CreateRasterizerState(&rDesc, &state);
 	}
 	ID3D11RasterizerState* old_state;
 	p_context->RSGetState(&old_state);

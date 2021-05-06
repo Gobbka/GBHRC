@@ -170,5 +170,22 @@
     <ClInclude Include="CheatApi\Hooks\Detour\Detour.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GBHRC.rc">
+      <Filter>Файлы ресурсов</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\resource\comic_sans.spritefont" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="spritefo.bin">
+      <Filter>Файлы ресурсов</Filter>
+    </None>
+    <None Include="..\resource\visby.spritefont" />
   </ItemGroup>
 </Project>

@@ -1,10 +1,11 @@
 #include "Panel.h"
+#include "../../../../Render/Engine/Engine.h"
 #include "../../InteractiveForm.h"
 #include "../../../../Managers/RectangleManager.h"
 
-void Application::UI::Panel::__draw(ID3D11DeviceContext* pContext, ID3D11Device* pDevice)
+void Application::UI::Panel::__draw(Render::Engine* engine)
 {
-	pContext->Draw(5, this->__index);
+	engine->pDevContext->Draw(5, this->__index);
 	// Parent::__draw(pContext, pDevice);
 }
 

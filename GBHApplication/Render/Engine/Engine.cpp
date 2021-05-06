@@ -29,8 +29,9 @@ Resolution Engine::get_resolution(const HWND hwnd)
 }
 
 Engine::Engine(const HWND hwnd, ID3D11Device* pDevice,
-	IDXGISwapChain* pSwapChain)
+               IDXGISwapChain* pSwapChain)
 {
+	
 	this->window = hwnd;
 	this->pDevice = pDevice;
 	pDevice->GetImmediateContext(&this->pDevContext);
@@ -40,6 +41,8 @@ Engine::Engine(const HWND hwnd, ID3D11Device* pDevice,
 	this->initialize();
 	this->mOrtho = get_ortho_matrix();
 	this->initialize_scene();
+
+	this->spriteBatch = new DirectX::SpriteBatch(pDevContext);
 }
 
 Engine* Engine::append_scene(Render::Scene* scene)
@@ -47,6 +50,11 @@ Engine* Engine::append_scene(Render::Scene* scene)
 	scene->set_resolution(get_resolution(this->window));
 	this->pScenes.push_back(scene);
 	return this;
+}
+
+DirectX::SpriteBatch* Engine::get_batch()
+{
+	return this->spriteBatch;
 }
 
 bool Engine::initialize()
@@ -177,10 +185,10 @@ DirectX::XMMATRIX Engine::get_ortho_matrix()
 void Engine::update_scene()
 {
 	for (auto* scene : pScenes)
-		scene->update(this->pDevContext);
+		scene->update(this);
 }
 
-void Engine::present() const
+void Engine::present()
 {
 	this->pDevContext->OMSetRenderTargets(1, &pRenderTargetView, nullptr);
 
@@ -203,7 +211,7 @@ void Engine::present() const
 	//pDevContext->RSSetState();
 
 	for (auto* scene : this->pScenes)
-		scene->render(this->pDevContext,this->pDevice);
+		scene->render(this);
 
 	pDevContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }

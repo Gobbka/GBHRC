@@ -1,9 +1,10 @@
 #include "Checkbox.h"
 #include "../../../../Managers/RectangleManager.h"
+#include "../../../../Render/Engine/Engine.h"
 
-void Application::UI::Checkbox::__draw(ID3D11DeviceContext* pContext, ID3D11Device* pDevice)
+void Application::UI::Checkbox::__draw(Render::Engine*engine)
 {
-	
+	auto* pContext = engine->pDevContext;
 	pContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
 	pContext->Draw(5, this->__index);
 	pContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);

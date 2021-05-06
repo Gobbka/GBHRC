@@ -8,7 +8,7 @@ namespace Application
 		class Checkbox : public InteractiveElement
 		{
 		private:
-			void __draw(ID3D11DeviceContext* pContext, ID3D11Device* pDevice) override;
+			void __draw(Render::Engine*engine) override;
 			Render::Resolution resolution;
 			Render::Color color;
 		public:

@@ -46,7 +46,7 @@ namespace Application
 			InteractiveForm* get_form() const;
 			void set_parent(Parent*parent);
 			
-			void __draw(ID3D11DeviceContext* p_context, ID3D11Device* pDevice) override = 0;
+			void __draw(Render::Engine*engine) override = 0;
 			void set_pos(float x, float y) override = 0;
 			void set_color(float r, float g, float b) override = 0;
 			bool point_belongs(POINT point) override = 0;

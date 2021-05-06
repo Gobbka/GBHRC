@@ -21,13 +21,13 @@ namespace Application
 			Render::Resolution resolution;
 		public:
 			// public variables
-			void(__stdcall* render_callback)(Scene* self) = nullptr;
+			void(__stdcall* render_callback)(Scene* self,Render::Engine*engine) = nullptr;
 			bool hidden = false;
 		public:
 			// public void's
 
-			void update(ID3D11DeviceContext*pContext);
-			void render(ID3D11DeviceContext* pContext,ID3D11Device* pDevice);
+			void update(Render::Engine* pEngine);
+			void render(Render::Engine*pEngine);
 
 			void foreach(std::function<void(IRenderObject*)> const& nigger);
 			UINT total_size();

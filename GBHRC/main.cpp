@@ -18,6 +18,8 @@
 #include <string>
 #include <sstream>
 
+#include "resource.h"
+
 HINSTANCE DllInst;
 Application::InteractiveForm* menu;
 Application::Canvas::CanvasForm* esp_scene;
@@ -27,6 +29,7 @@ Mono::Context* mono_context;
 
 void init_callback(Application::Render::Engine* instance)
 {
+
     mono_context->mono_thread_attach(mono_context->mono_get_root_domain());
 
     BrokeProtocol::show_local_message((char*)"<color=#39d668>[info]</color> GBHRC injected | press <color=#39d668>INSERT</color> to show menu!");
@@ -54,8 +57,8 @@ void init_callback(Application::Render::Engine* instance)
     esp_scene->update_markup(instance);
 	
     instance
-        ->append_scene(menu);
-		//->append_scene(esp_scene);
+        ->append_scene(menu)
+		->append_scene(esp_scene);
 }
 
 void MainThread()
@@ -70,8 +73,6 @@ void MainThread()
     auto nigger = freopen("CONOUT$", "w", stdout);
     nigger = freopen("CONIN$", "r", stdin);
 
-    DEBUG_LOG("DXGI: "<<std::hex << DXGI_ERROR_UNSUPPORTED);
-
 	if(FAILED(hr))
 	{
         DEBUG_LOG("CANNOT GET PRESENT ADDRESS: "<<std::hex<<hr);
@@ -85,8 +86,11 @@ void MainThread()
     mono_context->mono_thread_attach(mono_context->mono_get_root_domain());
 	
     Hooks::D3D11::hook(present_addres, init_callback);
-
-    GBHRC::Context::instance()->life_cycle();
+    {
+        auto context = GBHRC::Context::instance();
+        context->implement(DllInst);
+        context->life_cycle();
+    }
 }
 
 
@@ -120,7 +124,14 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
         }
 
     	if(wParam == VK_F2){
-            Mono::Dumper::dump_object((Mono::MonoObject*)BrokeProtocol::GetLocalPlayer()->stance);
+            auto* players = BrokeProtocol::GetPlayersCollection();
+            auto* ptr = players->items->pointer();
+            const auto players_size = players->items->size();
+
+    		for(int i=0;i<players_size;i++)
+    		{
+                DEBUG_LOG(ptr[i]);
+    		}
     	}
 
     	if(wParam == VK_LEFT)

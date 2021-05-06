@@ -12,7 +12,7 @@ namespace Application
 			Render::Color color;
 			Render::Resolution resolution;
 		private:
-			void __draw(ID3D11DeviceContext* pContext, ID3D11Device* pDevice) override;
+			void __draw(Render::Engine*engine) override;
 		public:
 			UINT size() override
 			{

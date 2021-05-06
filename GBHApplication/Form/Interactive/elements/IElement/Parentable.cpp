@@ -7,11 +7,11 @@ void Application::UI::Parent::set_index_offset(UINT offset)
 	this->index_offset = offset;
 }
 
-void Application::UI::Parent::__draw(ID3D11DeviceContext* p_context, ID3D11Device* pDevice)
+void Application::UI::Parent::__draw(Render::Engine*engine)
 {
 	return;
 	for (auto* element : this->elements)
-		element->__draw(p_context,pDevice);
+		element->__draw(engine);
 }
 
 void Application::UI::Parent::set_pos(float x, float y)

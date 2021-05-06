@@ -17,7 +17,7 @@ namespace Application
 		protected:
 			void set_index_offset(UINT offset);
 		public:
-			void __draw(ID3D11DeviceContext* p_context, ID3D11Device* pDevice) override;
+			void __draw(Render::Engine*pEngine) override;
 			void set_pos(float x, float y) override;
 			void set_color(float r, float g, float b) override;
 			bool point_belongs(POINT point) override;

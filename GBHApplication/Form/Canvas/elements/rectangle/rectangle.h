@@ -14,7 +14,7 @@ namespace Application
 			Rectangle(Render::Position pos, Render::Resolution res, Render::Color col);
 
 			void move_by(float x, float y) override;
-			void __draw(ID3D11DeviceContext* p_context, ID3D11Device* pDevice) override;
+			void __draw(Render::Engine*engine) override;
 			void set_pos(float x, float y) override;
 			void set_color(float r, float g, float b) override;
 			void set_resolution(UINT width, UINT height);

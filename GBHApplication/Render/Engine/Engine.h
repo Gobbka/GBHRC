@@ -1,5 +1,6 @@
 #pragma once
-
+#include "SpriteBatch.h"
+#include "SpriteFont.h"
 #include "../../Application.h"
 #include <vector>
 
@@ -18,6 +19,7 @@ namespace Application
 		public:
 			ID3D11Device* pDevice;
 			ID3D11DeviceContext* pDevContext;
+			DirectX::SpriteBatch* get_batch();
 		private:
 			ID3D11RenderTargetView* pRenderTargetView;
 			//
@@ -28,6 +30,9 @@ namespace Application
 			ID3D11Buffer* pConstantBuffer = nullptr;
 			//
 			DirectX::XMMATRIX mOrtho;
+			
+			DirectX::SpriteBatch* spriteBatch;
+			
 			D3D11_VIEWPORT pViewports[D3D11_VIEWPORT_AND_SCISSORRECT_OBJECT_COUNT_PER_PIPELINE]{ 0 };
 		private:
 			bool initialize();
@@ -41,12 +46,14 @@ namespace Application
 			//
 			std::vector<Application::Render::Scene*> pScenes;
 		public:
+
+			
 			Engine(HWND hwnd, ID3D11Device* pDevice, IDXGISwapChain* pSwapChain);
 			Engine* append_scene(Application::Render::Scene* scene);
 
 			//void wnd_proc(UINT msg, WPARAM wParam, LPARAM lParam);
 			void update_scene();
-			void present() const;
+			void present();
 
 			GVertex::VertexBuffer* make_vertex_buffer(UINT size) const;
 
