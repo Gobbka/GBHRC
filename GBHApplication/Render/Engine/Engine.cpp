@@ -210,8 +210,12 @@ void Engine::present()
 
 	//pDevContext->RSSetState();
 
+	//	this->spriteBatch->Begin();
+
 	for (auto* scene : this->pScenes)
 		scene->render(this);
+
+	//this->spriteBatch->End();
 
 	pDevContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }

@@ -75,6 +75,12 @@
     <ClCompile Include="CheatApi\Hooks\Detour\Detour.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="CheatApi\BrokeProtocol\classes\Guns\ShBallistic.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="CheatApi\BrokeProtocol\classes\Guns\ShEquipable.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CheatApi\Hooks\d3d11\d3d11hook.h">
@@ -171,6 +177,12 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="CheatApi\BrokeProtocol\classes\Guns\ShBallistic.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="CheatApi\BrokeProtocol\classes\Guns\ShEquipable.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

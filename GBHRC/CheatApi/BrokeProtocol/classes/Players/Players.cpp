@@ -2,10 +2,11 @@
 
 #include "../../../../includes/logger.h"
 #include "../../Mono/Images/Script/ScriptImage.h"
+#include "../Guns/ShEquipable.h"
 
 #define STATIC_METHOD(name,inc_namespace) auto*mono_context=Mono::Context::get_context();static Mono::MonoMethod* pMethod =Mono::ScriptImage::mono_get_method_from_name(name, inc_namespace)
 
-BrokeProtocol::Structs::Equipable* BrokeProtocol::Players::ShPlayer::current_weapon() const
+BrokeProtocol::ShEquipable* BrokeProtocol::Players::ShPlayer::current_weapon() const
 {	
 	return this->curEquipable;
 }

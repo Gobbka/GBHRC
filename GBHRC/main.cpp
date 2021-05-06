@@ -18,7 +18,7 @@
 #include <string>
 #include <sstream>
 
-#include "resource.h"
+#include "CheatApi/BrokeProtocol/classes/Guns/ShBallistic.h"
 
 HINSTANCE DllInst;
 Application::InteractiveForm* menu;
@@ -29,7 +29,7 @@ Mono::Context* mono_context;
 
 void init_callback(Application::Render::Engine* instance)
 {
-
+    DEBUG_LOG("INIT CALLBACK");
     mono_context->mono_thread_attach(mono_context->mono_get_root_domain());
 
     BrokeProtocol::show_local_message((char*)"<color=#39d668>[info]</color> GBHRC injected | press <color=#39d668>INSERT</color> to show menu!");
@@ -43,6 +43,8 @@ void init_callback(Application::Render::Engine* instance)
     
     menu->hidden = true;
 
+    DEBUG_LOG("MENU FORM REGISTERED");
+	
     esp_scene = new Application::Canvas::CanvasForm();
     esp_scene->render_callback = GBHRC::Context::static_draw_callback;
     esp_scene->hidden = false;
@@ -55,10 +57,14 @@ void init_callback(Application::Render::Engine* instance)
 	}
 
     esp_scene->update_markup(instance);
+
+    DEBUG_LOG("ESP REGISTERED");
 	
     instance
         ->append_scene(menu)
 		->append_scene(esp_scene);
+
+    DEBUG_LOG("SCENE'S APPENDED");
 }
 
 void MainThread()
@@ -124,13 +130,16 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
         }
 
     	if(wParam == VK_F2){
-            auto* players = BrokeProtocol::GetPlayersCollection();
-            auto* ptr = players->items->pointer();
-            const auto players_size = players->items->size();
+    		
+            auto* weapon = BrokeProtocol::GetLocalPlayer()->current_weapon();
 
-    		for(int i=0;i<players_size;i++)
+    		if(weapon->ammoItem == nullptr)
     		{
-                DEBUG_LOG(ptr[i]);
+    			// weapon can fire
+                auto fire_weapon = (BrokeProtocol::ShBallistic*)weapon;
+                fire_weapon->accuracy = 0;
+                fire_weapon->recoil = 0;
+                fire_weapon->range = 6000;
     		}
     	}
 

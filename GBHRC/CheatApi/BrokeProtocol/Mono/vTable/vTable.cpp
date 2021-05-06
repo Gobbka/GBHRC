@@ -41,4 +41,8 @@ void Mono::vTable::implement()
 	this->mono_class_get_methods = (MonoMethod * (WINAPI*)(MonoClass*, void*))GetProcAddress(module, "mono_class_get_methods");
 	this->mono_thread_attach = (void(WINAPI*)(MonoDomain*))GetProcAddress(module, "mono_thread_attach");
 	this->mono_runtime_invoke = (void* (WINAPI*)(MonoMethod*, void*, void**, MonoObject**))GetProcAddress(module, "mono_runtime_invoke");
+	this->mono_image_get_filename = (const char*(WINAPI*)(MonoImage*))GetProcAddress(module, "mono_image_get_filename");
+	this->mono_image_get_name = (const char*(WINAPI*)(MonoImage*))GetProcAddress(module, "mono_image_get_name");
+	this->mono_object_get_size = (UINT(WINAPI*)(MonoObject*))GetProcAddress(module, "mono_object_get_size");
+	this->mono_class_instance_size = (UINT(WINAPI*)(MonoClass*))GetProcAddress(module, "mono_class_instance_size");
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include "../../BPStructs.h"
+#include "../Guns/ShEquipable.h"
 
 namespace BrokeProtocol
 {
@@ -25,7 +26,7 @@ namespace BrokeProtocol
 			void* wearableOptions; //0x01C0
 			void* capsule; //0x01C8
 			char pad_01D0[16]; //0x01D0
-			Structs::Equipable* curEquipable; //0x01E0
+			ShEquipable* curEquipable; //0x01E0
 			char pad_01E8[24]; //0x01E8
 			class Mountable* curMount; //0x0200
 			char pad_0208[8]; //0x0208
@@ -58,7 +59,7 @@ namespace BrokeProtocol
 
 		public:
 
-			Structs::Equipable* current_weapon() const;
+			ShEquipable* current_weapon() const;
 
 			void jump();
 			void clear_injuries();

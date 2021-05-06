@@ -7,7 +7,11 @@ namespace Mono
 	public:
 		MonoArray* (WINAPI* mono_array_new)(MonoDomain* domain, MonoClass* eclass, uintptr_t n);
 		MonoObject* (WINAPI* mono_object_new)(MonoDomain* domain, MonoClass* klass);
+		UINT(WINAPI* mono_object_get_size)(MonoObject* o);
 		MonoImage* (WINAPI* mono_image_loaded)(const char* name);
+		const char* (WINAPI* mono_image_get_filename)(MonoImage* image);
+		const char* (WINAPI* mono_image_get_name)(MonoImage* image);
+		
 		MonoDomain* (WINAPI* mono_get_root_domain)();
 		MonoMethodDesc* (WINAPI* mono_method_desc_new)(const char* name, bool include_namespace);
 		void	           (WINAPI* mono_method_desc_free)(MonoMethodDesc* pDesc);
@@ -30,6 +34,7 @@ namespace Mono
 		MonoClass* (WINAPI* mono_class_from_name)(MonoImage* image, const char* namespace_name, const char* name);
 		MonoClass* (WINAPI* mono_object_get_class)(MonoObject* obj);
 		MonoClass* (WINAPI* mono_class_get_parent)(MonoClass* klass);
+		UINT (WINAPI* mono_class_instance_size)(MonoClass* klass);
 
 		MonoClassField* (WINAPI* mono_class_get_field)(MonoClass* klass, UINT field_token);
 		MonoClassField* (WINAPI* mono_field_from_token)(UINT token);

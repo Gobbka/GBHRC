@@ -61,28 +61,6 @@ namespace BrokeProtocol {
 			char pad_0184[132]; //0x0184
 		}; //Size: 0x0208
 
-		class Equipable
-		{
-		public:
-			char pad_0000[40]; //0x0000
-			void* clEntity; //0x0028
-			void* svEntity; //0x0030
-			char pad_0038[52]; //0x0038
-			uint32_t itemId; //0x006C
-			char pad_0070[16]; //0x0070
-			bool isHuman; //0x0080
-			bool isWorldEntity; //0x0081
-			bool hasInventory; //0x0082
-			bool shop; //0x0083
-			char pad_0084[8]; //0x0084
-			int32_t ID; //0x008C
-			uint32_t index; //0x0090
-			int32_t value; //0x0094
-			char pad_0098[136]; //0x0098
-			uint32_t cannot_shoot; //0x0120
-
-		}; //Size: 0x01CC
-
 		class GlobalTypes
 		{
 		public:

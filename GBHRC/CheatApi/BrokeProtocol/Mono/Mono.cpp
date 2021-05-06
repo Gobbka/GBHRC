@@ -77,21 +77,20 @@ Mono::MonoClass* Context::get_object_class()
 
 Mono::MonoImage* Context::get_script_image()
 {
-	static MonoImage* image = Context::mono_image_loaded("D:\\Steam\\steamapps\\common\\BROKE PROTOCOL\\BrokeProtocol_Data\\Managed\\Scripts.dll");
-	
+	static MonoImage* image = Context::mono_image_loaded("Scripts");
 	return image;
 }
 
 Mono::MonoImage* Context::get_mscorlib()
 {
-	static MonoImage* image = image = Context::mono_image_loaded("D:\\Steam\\steamapps\\common\\BROKE PROTOCOL\\BrokeProtocol_Data\\Managed\\mscorlib.dll");
+	static MonoImage* image = image = Context::mono_image_loaded("mscorlib");
 
 	return image;
 }
 
 Mono::MonoImage* Context::get_UE_CoreModule()
 {
-	static MonoImage* image = Context::mono_image_loaded("D:\\Steam\\steamapps\\common\\BROKE PROTOCOL\\BrokeProtocol_Data\\Managed\\UnityEngine.CoreModule.dll");
+	static MonoImage* image = Context::mono_image_loaded("UnityEngine.CoreModule");
 
 	return image;
 }

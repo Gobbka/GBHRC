@@ -75,9 +75,9 @@ void Application::InteractiveForm::window_proc(UINT msg, WPARAM wParam, LPARAM l
 void Application::InteractiveForm::drag_move(UI::InteractiveElement* element)
 {
 	auto pos = element->get_position();
-	auto cursor = Application::point_to_center( Application::get_client_cursor_point());
-	DEBUG_LOG("CX:"<<std::dec << cursor.x << " CY: " << cursor.y);
-	this->dragged = new DragStruct{ cursor.x - (LONG)pos.x,cursor.y - (LONG)pos.y ,element};
+	auto cursor = ( Application::get_client_cursor_point()); // Application::point_to_center
+	DEBUG_LOG(std::dec<< cursor.x << " " << cursor.x << " " << pos.x << " "<<pos.y);
+	//this->dragged = new DragStruct{ cursor.x - (LONG)pos.x ,cursor.y - (LONG)pos.y ,element};
 }
 
 void Application::InteractiveForm::free_drag_move()

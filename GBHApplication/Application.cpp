@@ -30,7 +30,8 @@ POINT Application::get_client_cursor_point()
 
 	GetWindowRect(main_window,&rect);
 	GetCursorPos(&point);
-	
+	DEBUG_LOG("MOUSE: "<<point.x << " " << point.y);
+	DEBUG_LOG("RECT: "<<rect.left << " " << rect.top);
 	return { point.x - rect.left,point.y - rect.top };
 }
 

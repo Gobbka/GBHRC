@@ -152,6 +152,7 @@
     <ClCompile Include="Form\Canvas\elements\IElement\CanvasElement.cpp" />
     <ClCompile Include="Form\Canvas\elements\rectangle\rectangle.cpp" />
     <ClCompile Include="Form\Interactive\elements\IElement\Parentable.cpp" />
+    <ClCompile Include="Form\Interactive\elements\Label\Label.cpp" />
     <ClCompile Include="Form\Interactive\InteractiveForm.cpp" />
     <ClCompile Include="Render\d3d\Vertex.cpp" />
     <ClCompile Include="Render\Engine\Engine.cpp" />
@@ -167,6 +168,7 @@
     <ClInclude Include="Form\Canvas\elements\rectangle\rectangle.h" />
     <ClInclude Include="Form\Forms.h" />
     <ClInclude Include="Form\Interactive\elements\IElement\Parentable.h" />
+    <ClInclude Include="Form\Interactive\elements\Label\Label.h" />
     <ClInclude Include="Form\Interactive\InteractiveForm.h" />
     <ClInclude Include="Managers\RectangleManager.h" />
     <ClInclude Include="Render\d3d\ConstantBuffer.h" />

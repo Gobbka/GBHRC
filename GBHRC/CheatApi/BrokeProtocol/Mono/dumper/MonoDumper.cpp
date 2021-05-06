@@ -20,6 +20,7 @@ void Mono::Dumper::dump_class(MonoClass* klass)
 	{
 		DEBUG_LOG("0x" << std::hex << mono_context->mono_field_get_offset(field) << " : " << mono_context->mono_field_get_name(field));
 	}
+	DEBUG_LOG("==> SIZE : 0x" << std::hex << mono_context->mono_class_instance_size(klass));
 	DEBUG_LOG("=========================");
 }
 

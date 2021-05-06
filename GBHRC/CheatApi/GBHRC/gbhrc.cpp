@@ -32,12 +32,8 @@ void GBHRC::Context::draw_esp(Application::Render::Scene* pScene,Application::Re
 
         esp_font->SetDefaultCharacter('?');
 	}
-    
-    engine->get_batch()->Begin();
-
-    engine->get_batch()->End();
 	
-    if (BrokeProtocol::get_manager()->host != nullptr)
+    if (BrokeProtocol::get_manager() != nullptr && BrokeProtocol::get_manager()->host != nullptr)
     {
         auto* local_player = BrokeProtocol::GetLocalPlayer();
 
@@ -91,7 +87,8 @@ void GBHRC::Context::draw_esp(Application::Render::Scene* pScene,Application::Re
                         point_top.x + width/2 - (rect.right - rect.left)/2, 
                         height/2 - point_top.y - (rect.bottom - rect.top)
                     ),
-                    DirectX::Colors::Green, 0.0f,
+                    DirectX::Colors::Green, 
+                    0.0f,
                     DirectX::XMFLOAT2(0.0f, 0.0f),
                     DirectX::XMFLOAT2(1.0f, 1.0f)
                 );

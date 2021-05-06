@@ -43,8 +43,6 @@ BrokeProtocol::Structs::Evaluator* BrokeProtocol::get_evaluator()
     auto buffer = pointer;
     buffer = *(size_t*)(buffer + 0X198);
     buffer = *(size_t*)(buffer + 0x340);
-
-    
 	
     return (Structs::Evaluator*)buffer;
 }
@@ -115,11 +113,8 @@ void BrokeProtocol::SendToServer(PacketFlags flags, BrokeProtocol::SvPacket pack
 
 void BrokeProtocol::show_local_message(char*text)
 {
-	
     STATIC_METHOD("BrokeProtocol.Managers.ClManager:ShowGameMessage(string)", true);
-
     auto* mono_context = Mono::Context::get_context();
-	
     void* params[1] { mono_context->create_csharp_string(text)};
 	
     Mono::MonoObject* exception = nullptr;
