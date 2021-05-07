@@ -9,7 +9,7 @@
 
 Application::UI::Panel* background_panel = new Application::UI::Panel({ 0,0 }, { 400, 600 }, { FLOAT_COLORS_BLACK });
 Application::UI::Panel* topbar_panel = new Application::UI::Panel({ 0,0 }, { 400, 30 }, { FLOAT_COLORS_GREEN });
-Application::UI::Checkbox* checkbox = new Application::UI::Checkbox({ 50,-50 }, { 20,20 }, { FLOAT_COLORS_RED });
+Application::UI::Checkbox* checkbox = new Application::UI::Checkbox({ 50,-50 }, { 20,20 }, { FLOAT_COLORS_GRAY });
 
 void panel_hover(Application::UI::UIElementEventArgs args)
 {
@@ -38,9 +38,10 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 	form
 		->add_element(background_panel);
 
-	background_panel->add_element(checkbox);
-
-	DEBUG_LOG("BACKPANEL SIZE: " << background_panel->size());
+	background_panel
+		->add_element(checkbox)
+		->add_element(topbar_panel)
+		->add_element(new Application::UI::Label{{50.f,0},"ESP",esp_font,{FLOAT_COLORS_WHITE}});
 
 	form->update_markup(pEngine);
 	

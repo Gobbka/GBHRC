@@ -64,7 +64,8 @@ void Application::UI::Parent::init(Application::InteractiveForm* pForm)
 	}
 }
 
-void Application::UI::Parent::add_element(InteractiveElement* element)
+Application::UI::Parent* Application::UI::Parent::add_element(InteractiveElement* element)
 {
 	this->elements.push_back(element);
+	return this;
 }

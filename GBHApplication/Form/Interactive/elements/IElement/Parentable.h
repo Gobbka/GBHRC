@@ -26,7 +26,7 @@ namespace Application
 			
 			void init(Application::InteractiveForm* pForm) override;
 			
-			void add_element(InteractiveElement* element);
+			Parent* add_element(InteractiveElement* element);
 		};
 	}
 }
