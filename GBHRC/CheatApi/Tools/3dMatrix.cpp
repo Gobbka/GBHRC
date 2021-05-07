@@ -4,6 +4,7 @@
 
 #include "../../includes/logger.h"
 #include "../BrokeProtocol/Mono/Mono.h"
+#include "Render/Render.h"
 
 void Matrix4X4::mul(Matrix4X4* matrix)
 {
@@ -78,7 +79,7 @@ void Matrix4X4::dump()
 	);
 }
 
-Vector3 Matrix4X4::worldToScreen(Matrix4X4* view_matrix, Matrix4X4* projection_matrix, Vector3 pos,POINT windowSize)
+Vector3 Matrix4X4::worldToScreen(Matrix4X4* view_matrix, Matrix4X4* projection_matrix, Vector3 pos,Application::Render::Resolution windowSize)
 {
 
 	auto clipCoords = view_matrix->multiply(Vector4{ pos.x,pos.y,pos.z,1.0 });
@@ -90,8 +91,8 @@ Vector3 Matrix4X4::worldToScreen(Matrix4X4* view_matrix, Matrix4X4* projection_m
 
 	Vector3 screen;
 
-	screen.x = ((float)windowSize.x / 2 * NDC.x);
-	screen.y = ((float)windowSize.y / 2 * NDC.y);
+	screen.x = ((float)windowSize.width / 2 * NDC.x);
+	screen.y = ((float)windowSize.height / 2 * NDC.y);
 	screen.z = clipCoords.w;
 
 	return screen;

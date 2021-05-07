@@ -54,11 +54,11 @@ void GBHRC::Context::draw_esp(Application::Render::Scene* pScene,Application::Re
 
             auto* pos = player->rotationT->get_position();
 
-            const auto point_top = Matrix4X4::worldToScreen(view_matrix, projection_m, { pos->x,pos->y + 1.5f,pos->z }, { camera_resolution.width,camera_resolution.height });
+            const auto point_top = Matrix4X4::worldToScreen(view_matrix, projection_m, { pos->x,pos->y + 1.5f,pos->z }, camera_resolution);
 
             if (point_top.z > 0)
             {
-                const auto point_bottom = Matrix4X4::worldToScreen(view_matrix, projection_m, { pos->x,pos->y - player->stance->capsuleHeight,pos->z }, { camera_resolution.width,camera_resolution.height });
+                const auto point_bottom = Matrix4X4::worldToScreen(view_matrix, projection_m, { pos->x,pos->y - player->stance->capsuleHeight,pos->z }, camera_resolution);
 
                 const auto player_height = round(abs(point_top.y - point_bottom.y));
             	

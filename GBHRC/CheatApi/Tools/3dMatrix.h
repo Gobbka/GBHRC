@@ -1,6 +1,12 @@
 #pragma once
 #include <Windows.h>
 
+namespace Application {
+	namespace Render {
+		struct Resolution;
+	}
+}
+
 struct Vector4
 {
 	float x, y, z,w;
@@ -38,7 +44,7 @@ struct Matrix4X4
 	Matrix4X4* inverse();
 	void dump();
 
-	static Vector3 worldToScreen(Matrix4X4*view_matrix,Matrix4X4*projection_matrix,Vector3 pos,POINT window_size);
+	static Vector3 worldToScreen(Matrix4X4*view_matrix,Matrix4X4*projection_matrix,Vector3 pos, Application::Render::Resolution window_size);
 };
 
 /// <summary>

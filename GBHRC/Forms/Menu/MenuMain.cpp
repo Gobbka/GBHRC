@@ -26,22 +26,19 @@ extern HMODULE DllInst;
 void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engine*pEngine)
 {
 
-	auto* nigger = LoadResource(DllInst, FindResourceW(DllInst, MAKEINTRESOURCEW(IDR_VISBY_ROUND), L"SPRITEFONT"));
-	if (nigger == nullptr)
-	{
-		DEBUG_LOG("CANNOT CREATE FONT");
-		return;
-	}
-	DirectX::SpriteFont* esp_font = new DirectX::SpriteFont(pEngine->pDevice, (uint8_t*)nigger, 0x6608);
-	esp_font->SetDefaultCharacter('?');
+	auto* esp_font = pEngine->create_font(
+		(void*)LoadResource(DllInst, FindResourceW(DllInst, MAKEINTRESOURCEW(IDR_VISBY_ROUND), L"SPRITEFONT")),
+		0x6608
+	);
 
 	form
 		->add_element(background_panel);
 
 	background_panel
 		->add_element(checkbox)
-		->add_element(topbar_panel)
-		->add_element(new Application::UI::Label{{50.f,0},"ESP",esp_font,{FLOAT_COLORS_WHITE}});
+		->add_element(
+			topbar_panel->add_element(new Application::UI::Label{ {0,0},"ESP",esp_font,{FLOAT_COLORS_WHITE} })
+		);
 
 	form->update_markup(pEngine);
 	
