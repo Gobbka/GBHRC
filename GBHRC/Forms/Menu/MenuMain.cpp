@@ -7,7 +7,7 @@
 #include "Form/Interactive/elements/Label/Label.h"
 
 
-Application::UI::Panel* background_panel = new Application::UI::Panel({ 0,0 }, { 200, 200 }, { FLOAT_COLORS_BLACK });
+Application::UI::Panel* background_panel = new Application::UI::Panel({ 0,0 }, { 400, 600 }, { FLOAT_COLORS_BLACK });
 Application::UI::Checkbox* checkbox = new Application::UI::Checkbox({ 5,-5 }, { 20,20 }, { FLOAT_COLORS_GRAY });
 
 void panel_hover(Application::UI::UIElementEventArgs args)
@@ -42,8 +42,10 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 	form->update_markup(pEngine);
 
 	{
+		
 		auto resolut = background_panel->get_resolution();
-		//background_panel->move_by(resolut.width / 2, resolut.height / 2);
+		DEBUG_LOG("PANEL:"<<std::dec<<resolut.width << " "<<resolut.height);
+		background_panel->move_by( -200, resolut.height / 2);
 	}
 
 	background_panel->onMouseEnter = panel_hover;

@@ -63,6 +63,6 @@ void Application::UI::Label::move_by(float x, float y)
 {
 	this->position = {
 		x + position.x,
-		y + position.y
+		position.y - y
 	};
 }
