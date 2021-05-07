@@ -19,8 +19,16 @@ void Application::Canvas::Rectangle::move_by(float x, float y)
 void Application::Canvas::Rectangle::__draw(Render::Engine*engine)
 {
 	auto* p_context = engine->pDevContext;
+	
 	if (!this->render)
 		return;
+
+	if (this->wireframed == false)
+	{
+		p_context->Draw(5, this->__index);
+		return;
+	}
+	
 	static ID3D11RasterizerState* state;
 	if(state == nullptr)
 	{
@@ -34,7 +42,7 @@ void Application::Canvas::Rectangle::__draw(Render::Engine*engine)
 	p_context->RSGetState(&old_state);
 	p_context->RSSetState(state);
 	p_context->Draw(5, this->__index);
-	p_context->RSSetState(state);
+	p_context->RSSetState(old_state);
 }
 
 void Application::Canvas::Rectangle::set_pos(float x, float y)

@@ -52,13 +52,8 @@ void init_callback(Application::Render::Engine* instance)
     esp_scene = new Application::Canvas::CanvasForm();
     esp_scene->render_callback = GBHRC::Context::static_draw_callback;
     esp_scene->hidden = false;
-	
-	for(int i = 0;i<100;i++)
-	{
-        auto* element = new Application::Canvas::Rectangle{ {0,0},{30,30},{0,0.8,0} };
-        element->render = false;
-        esp_scene->add_element(element);
-	}
+    GBHRC::Context::instance()->set_esp_scene(esp_scene);
+    GBHRC::Context::instance()->make_esp_boxes();
 
     DEBUG_LOG("ESP REGISTERED");
 	
@@ -136,18 +131,20 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
         }
 
     	if(wParam == VK_F2){
-            
-            auto* weapon = BrokeProtocol::GetLocalPlayer()->current_weapon();
-            
-    		if(weapon->ammoItem != nullptr)
-    		{
-                DEBUG_LOG("NIGGER: "<<weapon);
-    			// weapon can fire
-                auto fire_weapon = (BrokeProtocol::ShBallistic*)weapon;
-                fire_weapon->accuracy = 0;
-                fire_weapon->recoil = 0;
-                fire_weapon->range = 6000;
-    		}
+
+            Mono::Dumper::dump_object((Mono::MonoObject*)BrokeProtocol::GetLocalPlayer()->curMount);
+            DEBUG_LOG("POINTER: " << BrokeProtocol::GetLocalPlayer()->curMount);
+      //      auto* weapon = BrokeProtocol::GetLocalPlayer()->current_weapon();
+      //      
+    		//if(weapon->ammoItem != nullptr)
+    		//{
+      //          DEBUG_LOG("NIGGER: "<<weapon);
+    		//	// weapon can fire
+      //          auto fire_weapon = (BrokeProtocol::ShBallistic*)weapon;
+      //          fire_weapon->accuracy = 0;
+      //          fire_weapon->recoil = 0;
+      //          fire_weapon->range = 6000;
+    		//}
     	}
 
     	if(wParam == VK_LEFT)

@@ -11,6 +11,8 @@ namespace Application
 			Render::Resolution resolution;
 			Render::Color color;
 		public:
+			bool wireframed = false;
+			
 			Rectangle(Render::Position pos, Render::Resolution res, Render::Color col);
 
 			void move_by(float x, float y) override;

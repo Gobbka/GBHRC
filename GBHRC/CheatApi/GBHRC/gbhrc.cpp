@@ -33,7 +33,7 @@ void GBHRC::Context::draw_esp(Application::Render::Scene* pScene,Application::Re
         esp_font->SetDefaultCharacter('?');
 	}
 	
-    if (BrokeProtocol::get_manager() != nullptr && BrokeProtocol::get_manager()->host != nullptr)
+    if (this->config->esp_active && BrokeProtocol::get_manager() != nullptr && BrokeProtocol::get_manager()->host != nullptr)
     {
         auto* local_player = BrokeProtocol::GetLocalPlayer();
 
@@ -44,7 +44,7 @@ void GBHRC::Context::draw_esp(Application::Render::Scene* pScene,Application::Re
         auto* players = BrokeProtocol::GetPlayersCollection();
         auto* ptr = players->items->pointer();
         const auto players_size = players->items->size();
-        const auto elements_size = esp_scene->elements_length();
+        const auto elements_size = esp_boxes.size();
 
         const auto width = local_camera->worldCamera->get_pixelWidth();
         const auto height = local_camera->worldCamera->get_pixelHeight();
@@ -52,7 +52,7 @@ void GBHRC::Context::draw_esp(Application::Render::Scene* pScene,Application::Re
         UINT element_index = 0;
 
         float min_target_distance = 99999.f;
-        Application::Canvas::Rectangle* min_target_box=nullptr;
+        EspBox* min_target_box=nullptr;
 
         engine->get_batch()->Begin();
 
@@ -72,49 +72,75 @@ void GBHRC::Context::draw_esp(Application::Render::Scene* pScene,Application::Re
             {
                 const auto point_bottom = Matrix4X4::worldToScreen(view_matrix, projection_m, { pos->x,pos->y - player->stance->capsuleHeight,pos->z }, { width,height });
 
-                auto* esp_box = (Application::Canvas::Rectangle*)esp_scene->element_at(element_index);
-                esp_box->set_pos(point_top.x, point_top.y);
-                esp_box->set_resolution((float)abs(point_top.x - point_bottom.x), (float)abs(point_top.y - point_bottom.y));
-                esp_box->render = true;
+                const auto player_height = round(abs(point_top.y - point_bottom.y));
+            	
+                auto* esp_box = this->esp_boxes[element_index];
+                {
+                    //auto* box = esp_box->box;
+                    //box->set_pos(point_top.x, point_top.y);
+                    //box->set_resolution((float)abs(point_top.x - point_bottom.x), (float)abs(point_top.y - point_bottom.y));
+                    //box->render = true;
+                }
+            	if(this->config->esp_health_active)
+                {
+                    auto* max_h_box = esp_box->max_health_box;
+                    max_h_box->set_pos(point_top.x, point_top.y);
+                    max_h_box->set_resolution(10, player_height-1);
+                    max_h_box->render = true;
+
+                    auto* h_box = esp_box->health_box;
+
+                    const auto nigger = player_height * (player->health / player->healthLimit);
+                	
+                    h_box->set_pos(point_top.x, point_top.y - (player_height - nigger));
+                	
+                    h_box->set_resolution(10, nigger);
+                    h_box->render = true;
+                }
                 element_index++;
 
                 auto rect = esp_font->MeasureDrawBounds((wchar_t*)player->username->array, DirectX::XMFLOAT2(0,0));
+
+            	if(this->config->esp_draw_name)
+	                esp_font->DrawString(
+	                    engine->get_batch(),
+	                    (wchar_t*)&player->username->array,
+	                    DirectX::XMFLOAT2(
+	                        point_top.x + width/2 - (rect.right) / 2 * 0.5f, 
+	                        height/2 - point_top.y - (rect.bottom) * 0.5
+	                    ),
+	                    DirectX::Colors::White, 
+	                    0.0f,
+	                    DirectX::XMFLOAT2(0.0f, 0.0f),
+	                    DirectX::XMFLOAT2(0.5f, 0.5f)
+	                );
             	
-                esp_font->DrawString(
-                    engine->get_batch(),
-                    (wchar_t*)&player->username->array,
-                    DirectX::XMFLOAT2(
-                        point_top.x + width/2 - (rect.right) / 2 * 0.5f, 
-                        height/2 - point_top.y - (rect.bottom) * 0.5
-                    ),
-                    DirectX::Colors::White, 
-                    0.0f,
-                    DirectX::XMFLOAT2(0.0f, 0.0f),
-                    DirectX::XMFLOAT2(0.5f, 0.5f)
-                );
-
-                esp_font->DrawString(
-                    engine->get_batch(),
-                    (wchar_t*)&player->curEquipable->itemName->array,
-                    DirectX::XMFLOAT2(
-                        point_bottom.x + width / 2 - (rect.right) / 2 * 0.5f,
-                        height / 2 - point_bottom.y + (rect.bottom) * 0.5f
-                    ),
-                    DirectX::Colors::White,
-                    0.0f,
-                    DirectX::XMFLOAT2(0.0f, 0.0f),
-                    DirectX::XMFLOAT2(0.5, 0.5)
-                );
-
-                auto distance = sqrt(pow(point_top.x, 2) + pow(point_top.y, 2));
-                if (distance <= 300 && distance < min_target_distance)
-                {
-                    aim_target = player->rotationT;
-                    min_target_distance = distance;
-                    min_target_box = esp_box;
+                if(this->config->esp_draw_gun_name)
+	                esp_font->DrawString(
+	                    engine->get_batch(),
+	                    (wchar_t*)&player->curEquipable->itemName->array,
+	                    DirectX::XMFLOAT2(
+	                        point_bottom.x + width / 2 - (rect.right) / 2 * 0.5f,
+	                        height / 2 - point_bottom.y + (rect.bottom) * 0.5f
+	                    ),
+	                    DirectX::Colors::White,
+	                    0.0f,
+	                    DirectX::XMFLOAT2(0.0f, 0.0f),
+	                    DirectX::XMFLOAT2(0.5, 0.5)
+	                );
+            	
+                if (this->config->aim_assist) {
+                	
+                    auto distance = sqrt(pow(point_top.x, 2) + pow(point_top.y, 2));
+                    if (distance <= this->config->fov_size && distance < min_target_distance)
+                    {
+                        aim_target = player->rotationT;
+                        min_target_distance = distance;
+                        min_target_box = esp_box;
+                    }
                 }
-
-                esp_box->set_color(0, 0.8f, 0);
+            	
+                esp_box->box->set_color(0, 0.8f, 0);
             }
         }
 
@@ -122,8 +148,12 @@ void GBHRC::Context::draw_esp(Application::Render::Scene* pScene,Application::Re
 
         for (; element_index < elements_size; element_index++)
         {
-            auto* esp_box = (Application::Canvas::Rectangle*)esp_scene->element_at(element_index);
-            esp_box->render = false;
+            //auto* esp_box = (Application::Canvas::Rectangle*)esp_scene->element_at(element_index);
+            auto* esp_box = this->esp_boxes[element_index];
+            esp_box->box->render = false;
+            esp_box->max_health_box->render = false;
+            esp_box->health_box->render = false;
+        	
         }
 
         if (min_target_box == nullptr)
@@ -131,7 +161,7 @@ void GBHRC::Context::draw_esp(Application::Render::Scene* pScene,Application::Re
             aim_target = nullptr;
         }else
         {
-            min_target_box->set_color(0.5f, 0, 0);
+            min_target_box->box->set_color(0.5f, 0, 0);
         }
     }
 }
@@ -147,6 +177,40 @@ GBHRC::Context* GBHRC::Context::instance()
 	return gbhrc_context;
 }
 
+void GBHRC::Context::make_esp_boxes()
+{
+    for (int i = 0; i < 100; i++)
+    {
+        auto* element = new Application::Canvas::Rectangle{ {0,0},{30,30},{0,0.8,0} };
+        element->render = false;
+        element->wireframed = true;
+        esp_scene->add_element(element);
+
+        auto* max_health = new Application::Canvas::Rectangle{ {0,0},{30,10},{1.f,0,0} };
+        max_health->render = false;
+        max_health->wireframed = false;
+        esp_scene->add_element(max_health);
+
+        auto* health = new Application::Canvas::Rectangle{ {0,0},{30,10},{0,0.8,0} };
+        health->render = false;
+        health->wireframed = false;
+        esp_scene->add_element(health);
+
+        this->esp_boxes.push_back(
+            new EspBox{
+                element,
+                max_health,
+            	health
+            }
+        );
+    }
+}
+
+void GBHRC::Context::set_esp_scene(Application::Canvas::CanvasForm* form)
+{
+    this->esp_scene = form;
+}
+
 void GBHRC::Context::static_draw_callback(Application::Render::Scene* pScene,Application::Render::Engine*engine)
 {
     auto* context = GBHRC::Context::instance();
@@ -157,6 +221,7 @@ void GBHRC::Context::life_cycle()
 {
 	while(true)
 	{
+		
        if (aim_active==true && aim_target != nullptr)
        {
            auto* local_player = BrokeProtocol::GetLocalPlayer();
