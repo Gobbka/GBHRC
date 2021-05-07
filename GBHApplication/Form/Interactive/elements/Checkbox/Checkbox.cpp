@@ -9,7 +9,7 @@ void Application::UI::Checkbox::__draw(Render::Engine*engine)
 	pContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
 	pContext->Draw(5, this->__index);
 	pContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-	pContext->Draw(5, this->__index + 5);
+	pContext->Draw(5, this->__index+5);
 }
 
 UINT Application::UI::Checkbox::size()

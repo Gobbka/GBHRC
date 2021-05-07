@@ -49,18 +49,18 @@ void Application::UI::Parent::move_by(float x, float y)
 
 void Application::UI::Parent::init(Application::InteractiveForm* pForm)
 {	
-	UINT size = this->index_offset;
-	DEBUG_LOG("INDEX OFFSET: " << size);
+	UINT index = this->index_offset;
 	
 	for(auto*element:this->elements)
 	{
+		element->set_index(index);
+
 		element->init(this->pForm);
 		element->set_parent(this);
 
-		element->set_index(size);
 		element->move_by(this->position.x, this->position.y);
 		
-		size += element->size();
+		index += element->size();
 	}
 }
 

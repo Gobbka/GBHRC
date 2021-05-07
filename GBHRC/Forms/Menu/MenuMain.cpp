@@ -9,7 +9,7 @@
 
 Application::UI::Panel* background_panel = new Application::UI::Panel({ 0,0 }, { 400, 600 }, { FLOAT_COLORS_BLACK });
 Application::UI::Panel* topbar_panel = new Application::UI::Panel({ 0,0 }, { 400, 30 }, { FLOAT_COLORS_GREEN });
-Application::UI::Checkbox* checkbox = new Application::UI::Checkbox({ 5,-5 }, { 20,20 }, { FLOAT_COLORS_GRAY });
+Application::UI::Checkbox* checkbox = new Application::UI::Checkbox({ 50,-50 }, { 20,20 }, { FLOAT_COLORS_RED });
 
 void panel_hover(Application::UI::UIElementEventArgs args)
 {
@@ -38,13 +38,12 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 	form
 		->add_element(background_panel);
 
-	background_panel->add_element(topbar_panel);
+	background_panel->add_element(checkbox);
 
 	DEBUG_LOG("BACKPANEL SIZE: " << background_panel->size());
-	background_panel->add_element(new Application::UI::Label{ {0,0},"GBHRC::DLL",esp_font, {FLOAT_COLORS_GREEN} });
 
 	form->update_markup(pEngine);
-
+	
 	{
 		
 		auto resolut = background_panel->get_resolution();
