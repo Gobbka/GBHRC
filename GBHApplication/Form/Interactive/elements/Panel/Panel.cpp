@@ -6,7 +6,7 @@
 void Application::UI::Panel::__draw(Render::Engine* engine)
 {
 	engine->pDevContext->Draw(5, this->__index);
-	// Parent::__draw(pContext, pDevice);
+	Parent::__draw(engine);
 }
 
 Application::UI::Panel::Panel(Render::Position position, Render::Resolution resolution, Render::Color color)

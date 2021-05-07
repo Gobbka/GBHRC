@@ -41,9 +41,9 @@ void init_callback(Application::Render::Engine* instance)
 	
     menu = new Application::InteractiveForm();
 
-    MainMenuMarkup(menu, instance);
-	
     Application::register_form(menu);
+
+    MainMenuMarkup(menu, instance);
     
     menu->hidden = true;
 
@@ -60,8 +60,6 @@ void init_callback(Application::Render::Engine* instance)
         esp_scene->add_element(element);
 	}
 
-    esp_scene->update_markup(instance);
-
     DEBUG_LOG("ESP REGISTERED");
 	
     instance
@@ -69,6 +67,9 @@ void init_callback(Application::Render::Engine* instance)
 		->append_scene(esp_scene);
 
     DEBUG_LOG("SCENE'S APPENDED");
+
+    esp_scene->update_markup(instance);
+
 }
 
 void MainThread()

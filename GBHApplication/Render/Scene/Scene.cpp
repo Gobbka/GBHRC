@@ -69,9 +69,14 @@ Application::Render::IRenderObject* Application::Render::Scene::element_at(UINT 
 	return this->pElements[index];
 }
 
+Application::Render::Resolution Application::Render::Scene::get_screen_resolution() const
+{
+	return this->screen_resolution;
+}
+
 void Application::Render::Scene::set_resolution(Resolution resolution)
 {
-	this->resolution = resolution;
+	this->screen_resolution = resolution;
 }
 
 UINT Application::Render::Scene::elements_length() const

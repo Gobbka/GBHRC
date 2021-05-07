@@ -45,6 +45,11 @@ namespace Application
 			Parent* parent() const;
 			InteractiveForm* get_form() const;
 			void set_parent(Parent*parent);
+
+			void set_form(InteractiveForm*form)
+			{
+				this->pForm = form;
+			};
 			
 			void __draw(Render::Engine*engine) override = 0;
 			void set_pos(float x, float y) override = 0;

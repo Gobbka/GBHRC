@@ -14,6 +14,10 @@ void Application::implement(HWND hwnd)
 
 void Application::register_form(InteractiveForm* form)
 {
+	RECT wndRect;
+	GetClientRect(main_window, &wndRect);
+	
+	form->set_resolution({ (UINT)wndRect.right,(UINT)wndRect.bottom });
 	_registered_forms.push_back(form);
 }
 

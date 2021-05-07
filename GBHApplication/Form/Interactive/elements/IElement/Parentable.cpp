@@ -9,7 +9,6 @@ void Application::UI::Parent::set_index_offset(UINT offset)
 
 void Application::UI::Parent::__draw(Render::Engine*engine)
 {
-	return;
 	for (auto* element : this->elements)
 		element->__draw(engine);
 }
@@ -49,15 +48,18 @@ void Application::UI::Parent::move_by(float x, float y)
 
 void Application::UI::Parent::init(Application::InteractiveForm* pForm)
 {
+	DEBUG_LOG("INITING");
+	
 	UINT size = this->index_offset;
-
-
 	
 	for(auto*element:this->elements)
 	{
+		DEBUG_LOG("ELEMENT:" << element << " "<<this->pForm);
 		element->init(this->pForm);
-		element->set_index(size);
 		element->set_parent(this);
+
+		element->set_index(size);
+		element->move_by(this->position.x, this->position.y);
 		
 		size += element->size();
 	}

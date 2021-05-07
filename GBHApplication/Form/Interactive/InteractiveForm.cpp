@@ -10,7 +10,7 @@ void Application::InteractiveForm::window_proc(UINT msg, WPARAM wParam, LPARAM l
 	
 	if (msg == WM_MOUSEMOVE)
 	{
-		POINT center{ (LONG)(this->resolution.width / 2),(LONG)(this->resolution.height / 2) };
+		POINT center{ (LONG)(this->screen_resolution.width / 2),(LONG)(this->screen_resolution.height / 2) };
 
 		const POINT cursor{ GET_X_LPARAM(lParam) - center.x , center.y - GET_Y_LPARAM(lParam) };
 
@@ -99,6 +99,7 @@ void Application::InteractiveForm::update_markup(Render::Engine* pEngine)
 	Scene::foreach([this, &size](Render::IRenderObject* obj)
 		{
 			auto* iUIObject = (UI::InteractiveElement*)obj;
+			iUIObject->set_form(this);
 			iUIObject->set_index(size);
 			iUIObject->init(this);
 

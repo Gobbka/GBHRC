@@ -32,13 +32,13 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 		return;
 	}
 	DirectX::SpriteFont* esp_font = new DirectX::SpriteFont(pEngine->pDevice, (uint8_t*)nigger, 0x6608);
-
 	esp_font->SetDefaultCharacter('?');
+
 	
 	form
-		->add_element(background_panel)
-		->add_element(new Application::UI::Label{{5.f,5.f},"GBHRC::DLL",esp_font, {FLOAT_COLORS_GREEN} });
-	// background_panel->add_element(checkbox);
+		->add_element(background_panel);
+	
+	background_panel->add_element(new Application::UI::Label{ {5.f,5.f},"GBHRC::DLL",esp_font, {FLOAT_COLORS_GREEN} });
 
 	form->update_markup(pEngine);
 

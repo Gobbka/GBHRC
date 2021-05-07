@@ -1,5 +1,6 @@
 #include "Label.h"
 #include "../../../../Render/Engine/Engine.h"
+#include "../../InteractiveForm.h"
 
 void Application::UI::Label::__draw(Render::Engine* engine)
 {
@@ -42,12 +43,15 @@ bool Application::UI::Label::point_belongs(POINT point)
 
 void Application::UI::Label::init(Application::InteractiveForm* pForm)
 {
-	
+	this->pForm = pForm;
+	this->set_pos(position.x, position.y);
 }
 
 void Application::UI::Label::set_pos(float x, float y)
 {
-	this->position = { x,y };
+	auto res = pForm->get_screen_resolution();
+
+	this->position = { x + res.width / 2,y + res.height / 2 };
 }
 
 void Application::UI::Label::set_color(float r, float g, float b)

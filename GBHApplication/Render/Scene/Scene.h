@@ -18,7 +18,7 @@ namespace Application
 			GVertex::VertexBuffer* pVBuffer;
 			std::vector<Render::IRenderObject*> pElements;
 		protected:
-			Render::Resolution resolution;
+			Render::Resolution screen_resolution;
 		public:
 			// public variables
 			void(__stdcall* render_callback)(Scene* self,Render::Engine*engine) = nullptr;
@@ -45,6 +45,8 @@ namespace Application
 			UINT elements_length() const;
 			GVertex::Vertex* get_ptr() const;
 			IRenderObject* element_at(UINT index);
+
+			Resolution get_screen_resolution() const;
 
 		public:
 			~Scene();
