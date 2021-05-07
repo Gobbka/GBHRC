@@ -4,20 +4,22 @@
 #include <vector>
 
 std::vector<Application::InteractiveForm*> _registered_forms;
-
+Application::Render::Resolution AppResolution;
 HWND main_window;
 
 void Application::implement(HWND hwnd)
 {
+	RECT wndRect;
+	GetClientRect(hwnd, &wndRect);
+
+	AppResolution = { (UINT)wndRect.right,(UINT)wndRect.bottom };
+	
 	main_window = hwnd;
 }
 
 void Application::register_form(InteractiveForm* form)
 {
-	RECT wndRect;
-	GetClientRect(main_window, &wndRect);
-	
-	form->set_resolution({ (UINT)wndRect.right,(UINT)wndRect.bottom });
+	form->set_resolution(AppResolution);
 	_registered_forms.push_back(form);
 }
 
@@ -25,6 +27,11 @@ void Application::wnd_proc(UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	for (auto* form : _registered_forms)
 		form->window_proc(msg, wParam, lParam);
+}
+
+Application::Render::Resolution Application::get_window_resolution()
+{
+	return AppResolution;
 }
 
 POINT Application::get_client_cursor_point()

@@ -34,13 +34,17 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 	DirectX::SpriteFont* esp_font = new DirectX::SpriteFont(pEngine->pDevice, (uint8_t*)nigger, 0x6608);
 	esp_font->SetDefaultCharacter('?');
 
-	
 	form
 		->add_element(background_panel);
 	
 	background_panel->add_element(new Application::UI::Label{ {5.f,5.f},"GBHRC::DLL",esp_font, {FLOAT_COLORS_GREEN} });
 
 	form->update_markup(pEngine);
+
+	{
+		auto resolut = background_panel->get_resolution();
+		//background_panel->move_by(resolut.width / 2, resolut.height / 2);
+	}
 
 	background_panel->onMouseEnter = panel_hover;
 	background_panel->onMouseLeave = panel_leave;

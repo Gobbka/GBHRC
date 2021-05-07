@@ -26,6 +26,8 @@ namespace Application
 			void set_color(float r, float g, float b) override;
 			void move_by(float x, float y) override;
 			UI::InteractiveElement* set_rect(float width, float height);
+
+			Render::Resolution get_resolution();
 		};
 	}
 

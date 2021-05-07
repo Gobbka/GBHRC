@@ -78,3 +78,8 @@ Application::UI::InteractiveElement* Application::UI::Panel::set_rect(float widt
 
 	return this;
 }
+
+Application::Render::Resolution Application::UI::Panel::get_resolution()
+{
+	return this->resolution;
+}

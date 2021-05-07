@@ -49,9 +49,9 @@ void Application::UI::Label::init(Application::InteractiveForm* pForm)
 
 void Application::UI::Label::set_pos(float x, float y)
 {
-	auto res = pForm->get_screen_resolution();
+		auto res = Application::get_window_resolution();
 
-	this->position = { x + res.width / 2,y + res.height / 2 };
+		this->position = { x + res.width/2,y + res.height / 2 };
 }
 
 void Application::UI::Label::set_color(float r, float g, float b)
