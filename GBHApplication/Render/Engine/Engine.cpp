@@ -45,6 +45,14 @@ Engine::Engine(const HWND hwnd, ID3D11Device* pDevice,
 	this->spriteBatch = new DirectX::SpriteBatch(pDevContext);
 }
 
+DirectX::SpriteFont* Engine::create_font(void* font_source, UINT source_size)
+{
+	auto*font = new DirectX::SpriteFont(this->pDevice, (uint8_t*)font_source, source_size);
+
+	font->SetDefaultCharacter('?');
+	return font;
+}
+
 Engine* Engine::append_scene(Render::Scene* scene)
 {
 	scene->set_resolution(get_resolution(this->window));

@@ -47,6 +47,7 @@ namespace Application
 			std::vector<Application::Render::Scene*> pScenes;
 		public:
 
+			DirectX::SpriteFont* create_font(void* font_source,UINT source_size);
 			
 			Engine(HWND hwnd, ID3D11Device* pDevice, IDXGISwapChain* pSwapChain);
 			Engine* append_scene(Application::Render::Scene* scene);

@@ -8,6 +8,7 @@
 #include "../BrokeProtocol/BrokeProtocol.h"
 #include "../Tools/3dMatrix.h"
 #include "Form/Canvas/elements/rectangle/rectangle.h"
+#include "Application.h"
 
 GBHRC::Context::Context()
 {
@@ -16,22 +17,11 @@ GBHRC::Context::Context()
 
 void GBHRC::Context::draw_esp(Application::Render::Scene* pScene,Application::Render::Engine*engine)
 {
-    auto* esp_scene = (Application::Canvas::CanvasForm*)pScene;
 
-    static DirectX::SpriteFont* esp_font;
-	
-	if(esp_font == nullptr)
-	{
-        auto* nigger = LoadResource(DllInst, FindResourceW(DllInst, MAKEINTRESOURCEW(IDR_VISBY_ROUND), L"SPRITEFONT"));
-		if(nigger == nullptr)
-		{
-            DEBUG_LOG("CANNOT CREATE FONT");
-            return;
-		}
-        esp_font = new DirectX::SpriteFont(engine->pDevice, (uint8_t*)nigger, 0x6608);
-
-        esp_font->SetDefaultCharacter('?');
-	}
+    static DirectX::SpriteFont* esp_font = engine->create_font(
+        (void*)LoadResource(DllInst, FindResourceW(DllInst, MAKEINTRESOURCEW(IDR_VISBY_ROUND), L"SPRITEFONT")),
+        0x6608
+    );
 	
     if (this->config->esp_active && BrokeProtocol::get_manager() != nullptr && BrokeProtocol::get_manager()->host != nullptr)
     {
@@ -46,8 +36,7 @@ void GBHRC::Context::draw_esp(Application::Render::Scene* pScene,Application::Re
         const auto players_size = players->items->size();
         const auto elements_size = esp_boxes.size();
 
-        const auto width = local_camera->worldCamera->get_pixelWidth();
-        const auto height = local_camera->worldCamera->get_pixelHeight();
+        Application::Render::Resolution camera_resolution = { local_camera->worldCamera->get_pixelWidth() ,local_camera->worldCamera->get_pixelHeight() };
 
         UINT element_index = 0;
 
@@ -55,7 +44,6 @@ void GBHRC::Context::draw_esp(Application::Render::Scene* pScene,Application::Re
         EspBox* min_target_box=nullptr;
 
         engine->get_batch()->Begin();
-
 
         for (int i = 0; i < players_size && element_index < elements_size; i++)
         {
@@ -66,11 +54,11 @@ void GBHRC::Context::draw_esp(Application::Render::Scene* pScene,Application::Re
 
             auto* pos = player->rotationT->get_position();
 
-            const auto point_top = Matrix4X4::worldToScreen(view_matrix, projection_m, { pos->x,pos->y + 1.5f,pos->z }, { width,height });
+            const auto point_top = Matrix4X4::worldToScreen(view_matrix, projection_m, { pos->x,pos->y + 1.5f,pos->z }, { camera_resolution.width,camera_resolution.height });
 
             if (point_top.z > 0)
             {
-                const auto point_bottom = Matrix4X4::worldToScreen(view_matrix, projection_m, { pos->x,pos->y - player->stance->capsuleHeight,pos->z }, { width,height });
+                const auto point_bottom = Matrix4X4::worldToScreen(view_matrix, projection_m, { pos->x,pos->y - player->stance->capsuleHeight,pos->z }, { camera_resolution.width,camera_resolution.height });
 
                 const auto player_height = round(abs(point_top.y - point_bottom.y));
             	
@@ -106,8 +94,8 @@ void GBHRC::Context::draw_esp(Application::Render::Scene* pScene,Application::Re
 	                    engine->get_batch(),
 	                    (wchar_t*)&player->username->array,
 	                    DirectX::XMFLOAT2(
-	                        point_top.x + width/2 - (rect.right) / 2 * 0.5f, 
-	                        height/2 - point_top.y - (rect.bottom) * 0.5
+	                        point_top.x + camera_resolution.width/2 - (rect.right) / 2 * 0.5f,
+                            camera_resolution.height/2 - point_top.y - (rect.bottom) * 0.5
 	                    ),
 	                    DirectX::Colors::White, 
 	                    0.0f,
@@ -120,8 +108,8 @@ void GBHRC::Context::draw_esp(Application::Render::Scene* pScene,Application::Re
 	                    engine->get_batch(),
 	                    (wchar_t*)&player->curEquipable->itemName->array,
 	                    DirectX::XMFLOAT2(
-	                        point_bottom.x + width / 2 - (rect.right) / 2 * 0.5f,
-	                        height / 2 - point_bottom.y + (rect.bottom) * 0.5f
+	                        point_bottom.x + camera_resolution.width / 2 - (rect.right) / 2 * 0.5f,
+	                        camera_resolution.height / 2 - point_bottom.y + (rect.bottom) * 0.5f
 	                    ),
 	                    DirectX::Colors::White,
 	                    0.0f,

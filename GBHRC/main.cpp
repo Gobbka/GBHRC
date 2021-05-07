@@ -77,22 +77,26 @@ void MainThread()
     Application::implement(main__window);
 
     AllocConsole();
-    auto nigger = freopen("CONOUT$", "w", stdout);
-    nigger = freopen("CONIN$", "r", stdin);
+    freopen("CONOUT$", "w", stdout);
+    freopen("CONIN$", "r", stdin);
 
 	if(FAILED(hr))
 	{
         DEBUG_LOG("CANNOT GET PRESENT ADDRESS: "<<std::hex<<hr);
         return;
 	}
-	
-    Hooks::WndProc::init_hook(main__window);
-    Hooks::WndProc::callback(wnd_key_hook);
-
-    mono_context = Mono::Context::get_context();
-    mono_context->mono_thread_attach(mono_context->mono_get_root_domain());
+    
+    {
+        Hooks::WndProc::init_hook(main__window);
+        Hooks::WndProc::callback(wnd_key_hook);
+    }
+    {
+        mono_context = Mono::Context::get_context();
+        mono_context->mono_thread_attach(mono_context->mono_get_root_domain());
+    }
 	
     Hooks::D3D11::hook(present_addres, init_callback);
+	
     {
         auto context = GBHRC::Context::instance();
         context->implement(DllInst);
@@ -159,7 +163,6 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
     	}
     }
 
-
 	if(msg == WM_LBUTTONDOWN)
 	{
         GBHRC::Context::instance()->aim_active = true;
@@ -168,7 +171,6 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
 	{
         GBHRC::Context::instance()->aim_active = false;
 	}
-
 }
 
 BOOL WINAPI DllMain(
