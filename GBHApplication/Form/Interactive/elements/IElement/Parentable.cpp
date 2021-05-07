@@ -37,7 +37,8 @@ UINT Application::UI::Parent::size()
 	UINT size = 0;
 	for (auto* element : this->elements)
 		size += element->size();
-	return 0;
+
+	return size;
 }
 
 void Application::UI::Parent::move_by(float x, float y)
@@ -47,14 +48,12 @@ void Application::UI::Parent::move_by(float x, float y)
 }
 
 void Application::UI::Parent::init(Application::InteractiveForm* pForm)
-{
-	DEBUG_LOG("INITING");
-	
+{	
 	UINT size = this->index_offset;
+	DEBUG_LOG("INDEX OFFSET: " << size);
 	
 	for(auto*element:this->elements)
 	{
-		DEBUG_LOG("ELEMENT:" << element << " "<<this->pForm);
 		element->init(this->pForm);
 		element->set_parent(this);
 

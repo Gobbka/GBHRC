@@ -5,6 +5,7 @@
 void Application::UI::Checkbox::__draw(Render::Engine*engine)
 {
 	auto* pContext = engine->pDevContext;
+	
 	pContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
 	pContext->Draw(5, this->__index);
 	pContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);

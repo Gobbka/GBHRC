@@ -8,6 +8,7 @@
 
 
 Application::UI::Panel* background_panel = new Application::UI::Panel({ 0,0 }, { 400, 600 }, { FLOAT_COLORS_BLACK });
+Application::UI::Panel* topbar_panel = new Application::UI::Panel({ 0,0 }, { 400, 30 }, { FLOAT_COLORS_GREEN });
 Application::UI::Checkbox* checkbox = new Application::UI::Checkbox({ 5,-5 }, { 20,20 }, { FLOAT_COLORS_GRAY });
 
 void panel_hover(Application::UI::UIElementEventArgs args)
@@ -36,8 +37,11 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 
 	form
 		->add_element(background_panel);
-	
-	background_panel->add_element(new Application::UI::Label{ {5.f,5.f},"GBHRC::DLL",esp_font, {FLOAT_COLORS_GREEN} });
+
+	background_panel->add_element(topbar_panel);
+
+	DEBUG_LOG("BACKPANEL SIZE: " << background_panel->size());
+	background_panel->add_element(new Application::UI::Label{ {0,0},"GBHRC::DLL",esp_font, {FLOAT_COLORS_GREEN} });
 
 	form->update_markup(pEngine);
 
@@ -48,8 +52,6 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 		background_panel->move_by( -200, resolut.height / 2);
 	}
 
-	background_panel->onMouseEnter = panel_hover;
-	background_panel->onMouseLeave = panel_leave;
 	background_panel->onMouseDown = [](Application::UI::UIElementEventArgs args)
 	{
 		args->get_form()->drag_move(args);
