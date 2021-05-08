@@ -37,7 +37,7 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 	background_panel
 		->add_element(checkbox)
 		->add_element(
-			topbar_panel->add_element(new Application::UI::Label{ {0,0},"ESP",esp_font,{FLOAT_COLORS_WHITE} })
+			topbar_panel->add_element(new Application::UI::Label{ {0,0},"NIGGER ESP",esp_font,{FLOAT_COLORS_WHITE} })
 		);
 
 	form->update_markup(pEngine);
@@ -45,7 +45,6 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 	{
 		
 		auto resolut = background_panel->get_resolution();
-		DEBUG_LOG("PANEL:"<<std::dec<<resolut.width << " "<<resolut.height);
 		background_panel->move_by( -200, resolut.height / 2);
 	}
 

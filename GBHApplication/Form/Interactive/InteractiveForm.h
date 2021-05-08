@@ -3,6 +3,7 @@
 
 namespace Application
 {
+
 	namespace UI {
 		class InteractiveElement;
 	}

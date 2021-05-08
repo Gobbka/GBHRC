@@ -46,11 +46,17 @@ POINT Application::get_client_cursor_point()
 	return { point.x - rect.left,point.y - rect.top };
 }
 
+Application::Render::Position Application::point_to_center(Render::Position p)
+{
+	auto res = Application::get_window_resolution();
+
+	return { p.x + res.width / 2,p.y + res.height / 2 };
+}
+
 POINT Application::point_to_center(POINT p)
 {
-	RECT rect;
-	GetClientRect(main_window, &rect);
-
-	return { p.x - (rect.right)/2,(rect.bottom)/2 - p.y  };
+	auto rect = Application::get_window_resolution();
+	
+	return { (LONG)p.x - (LONG)(rect.width)/2,(LONG)(rect.height)/2 - (LONG)p.y  };
 }
 

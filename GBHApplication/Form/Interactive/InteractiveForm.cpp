@@ -1,5 +1,6 @@
 #include "InteractiveForm.h"
 #include "elements/IElement/InteractiveElement.h"
+#include "../../Render/Text/Text.h"
 #include "../../Application.h"
 #include <windowsx.h>
 

@@ -9,6 +9,7 @@
 #include "../Tools/3dMatrix.h"
 #include "Form/Canvas/elements/rectangle/rectangle.h"
 #include "Application.h"
+#include "Render/Text/Text.h"
 
 GBHRC::Context::Context()
 {
@@ -22,6 +23,18 @@ void GBHRC::Context::draw_esp(Application::Render::Scene* pScene,Application::Re
         (void*)LoadResource(DllInst, FindResourceW(DllInst, MAKEINTRESOURCEW(IDR_VISBY_ROUND), L"SPRITEFONT")),
         0x6608
     );
+
+    {
+        static auto* text = new Application::Render::Text{
+            engine->create_font(
+				(void*)LoadResource(DllInst, FindResourceW(DllInst, MAKEINTRESOURCEW(IDR_VISBY_ROUND), L"SPRITEFONT")),0x6608
+            ),
+        	Application::Render::TextAlign::Center,{0,0}
+        };
+        text->set_text( "nigger");
+    	
+        text->DrawInRect(engine,{500,40});
+    }
 	
     if (this->config->esp_active && BrokeProtocol::get_manager() != nullptr && BrokeProtocol::get_manager()->host != nullptr)
     {

@@ -4,6 +4,12 @@
 #include "InteractiveElement.h"
 #include "../../../../Render/Scene/IRenderObject.h"
 
+namespace Application {
+	namespace Render {
+		class Text;
+	}
+}
+
 namespace Application
 {
 	namespace UI

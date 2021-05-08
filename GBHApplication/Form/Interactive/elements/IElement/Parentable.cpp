@@ -69,3 +69,4 @@ Application::UI::Parent* Application::UI::Parent::add_element(InteractiveElement
 	this->elements.push_back(element);
 	return this;
 }
+

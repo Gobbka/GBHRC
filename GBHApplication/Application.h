@@ -15,5 +15,7 @@ namespace Application
 	Render::Resolution get_window_resolution();
 
 	POINT get_client_cursor_point();
+
+	Render::Position point_to_center(Render::Position pos);
 	POINT point_to_center(POINT p);
 }

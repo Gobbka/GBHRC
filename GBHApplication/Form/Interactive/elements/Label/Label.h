@@ -1,5 +1,6 @@
 #pragma once
 #include "SpriteFont.h"
+#include "../../../../Render/Text/Text.h"
 #include "../IElement/InteractiveElement.h"
 
 namespace Application
@@ -7,13 +8,8 @@ namespace Application
 	namespace UI
 	{
 
-		class Label final : public InteractiveElement
+		class Label final : public InteractiveElement, public Render::Text
 		{
-		private:
-			Render::Color color;
-			Render::Resolution resolution;
-			char* _text;
-			DirectX::SpriteFont* font;
 		private:
 			void __draw(Render::Engine* engine) override;
 		public:
@@ -23,7 +19,6 @@ namespace Application
 			}
 			Label(Render::Position position, const char* text,DirectX::SpriteFont*font, Render::Color color);
 
-			void set_text(char* text);
 			bool point_belongs(POINT point) override;
 			void init(Application::InteractiveForm* pForm) override;
 			void set_pos(float x, float y) override;

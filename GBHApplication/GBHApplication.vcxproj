@@ -160,6 +160,7 @@
     <ClCompile Include="Form\Interactive\elements\Checkbox\Checkbox.cpp" />
     <ClCompile Include="Form\Interactive\elements\IElement\InteractiveElement.cpp" />
     <ClCompile Include="Form\Interactive\elements\Panel\Panel.cpp" />
+    <ClCompile Include="Render\Text\Text.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -181,6 +182,7 @@
     <ClInclude Include="Form\Interactive\elements\Checkbox\Checkbox.h" />
     <ClInclude Include="Form\Interactive\elements\IElement\InteractiveElement.h" />
     <ClInclude Include="Form\Interactive\elements\Panel\Panel.h" />
+    <ClInclude Include="Render\Text\Text.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="D:\DirectxTK\DirectXTK_Desktop_2019_Win10.vcxproj">
