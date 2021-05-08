@@ -35,7 +35,7 @@ void init_callback(Application::Render::Engine* instance)
     mono_context->mono_thread_attach(mono_context->mono_get_root_domain());
 
     BrokeProtocol::show_local_message((char*)"<color=#39d668>[info]</color> GBHRC injected | press <color=#39d668>INSERT</color> to show menu!");
-	BrokeProtocol::show_local_message((char*)"<color=#3966d6>[info]</color> join our discord: https://discord.gg/4jRzSHz3 ");
+	BrokeProtocol::show_local_message((char*)"<color=#3966d6>[info]</color> join our discord: https://discord.gg/QNT6mwXVWg ");
 
     DEBUG_LOG("USER WELCOMED");
 	
@@ -75,10 +75,12 @@ void MainThread()
 	auto hr = Hooks::D3D11::GetPresentAddress(&present_addres);
 	
     Application::implement(main__window);
-
+	
+#ifdef DEBUG
     AllocConsole();
     freopen("CONOUT$", "w", stdout);
     freopen("CONIN$", "r", stdin);
+#endif
 
 	if(FAILED(hr))
 	{

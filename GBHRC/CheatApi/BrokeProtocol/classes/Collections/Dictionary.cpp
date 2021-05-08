@@ -45,7 +45,7 @@ int Dictionary::FindEntry(int key)
 	);
 
 	void* args[1]{ &key };
-	return (int)mono_context->mono_runtime_invoke(method, this, args, nullptr);
+	return ((MonoInt*)mono_context->mono_runtime_invoke(method, this, args, nullptr))->value;
 }
 
 void Dictionary::copy_to(Mono::MonoArray* array, int index)
@@ -95,7 +95,7 @@ bool Dictionary::contains(void* item)
 		mono_context->mono_object_get_class((Mono::MonoObject*)this),
 		"ContainsValue",-1
 	);
-	return (bool)mono_context->mono_runtime_invoke(method, this, args, nullptr);
+	return ((MonoBool*)mono_context->mono_runtime_invoke(method, this, args, nullptr))->value;
 }
 
 void Dictionary::clear()

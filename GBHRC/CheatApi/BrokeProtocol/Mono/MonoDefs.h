@@ -31,7 +31,7 @@ namespace Mono
 	typedef struct {
 		MonoObject* object;
 		int length;
-		unsigned char chars[0];
+		unsigned char chars[1];
 	} MonoString;
 
 	typedef struct _MonoClass MonoClass;
@@ -55,6 +55,6 @@ namespace Mono
 		/* total number of elements of the array */
 		UINT max_length;
 		/* we use double to ensure proper alignment on platforms that need it */
-		__int64 vector[0];
+		__int64 vector[1];
 	} MonoArray;
 }

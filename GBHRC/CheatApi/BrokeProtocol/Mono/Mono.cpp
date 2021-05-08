@@ -56,7 +56,7 @@ Mono::MonoObject* Context::create_csharp_string(char* ptr)
 
 	void* params[2];
 	params[0] = &ptr;
-	params[1] = new int(strlen(ptr));
+	params[1] = new size_t(strlen(ptr));
 
 	MonoObject* excepion = nullptr;
 

@@ -36,7 +36,7 @@ void GBHRC::Context::draw_esp(Application::Render::Scene* pScene,Application::Re
         const auto players_size = players->items->size();
         const auto elements_size = esp_boxes.size();
 
-        Application::Render::Resolution camera_resolution = { local_camera->worldCamera->get_pixelWidth() ,local_camera->worldCamera->get_pixelHeight() };
+        const Application::Render::Resolution camera_resolution = { local_camera->worldCamera->get_pixelWidth() ,local_camera->worldCamera->get_pixelHeight() };
 
         UINT element_index = 0;
 
