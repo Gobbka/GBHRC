@@ -37,7 +37,7 @@ void Application::Render::Text::DrawInRect(Render::Engine* engine, Render::Posit
 		if (this->text_align == TextAlign::Center)
 		{
 			center_pos.x += limitRect.width / 2 - font_rect.width / 2;
-			center_pos.y -= limitRect.height / 2;
+			//center_pos.y += limitRect.height / 2;
 		}
 	}
 

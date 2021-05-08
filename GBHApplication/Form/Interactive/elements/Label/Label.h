@@ -18,6 +18,7 @@ namespace Application
 				return 0;
 			}
 			Label(Render::Position position, const char* text,DirectX::SpriteFont*font, Render::Color color);
+			Label(Render::Position position, const char* text,DirectX::SpriteFont*font, Render::Color color, Render::Resolution limitResolution);
 
 			bool point_belongs(POINT point) override;
 			void init(Application::InteractiveForm* pForm) override;

@@ -1,0 +1,85 @@
+#include "Button.h"
+#include "../../../../Render/Engine/Engine.h"
+#include "../Label/Label.h"
+
+
+void Application::UI::Button::__draw(Render::Engine* engine)
+{
+	engine->pDevContext->Draw(5, this->__index);
+}
+
+Application::UI::Button::Button(Render::Position position, Render::Resolution resolution, Render::Color color, DirectX::SpriteFont* font,
+	const char* text)
+		: text(position,text,font,{1,1,1})
+{
+	this->position = position;
+	this->color = color;
+	this->resolution = resolution;
+
+	this->text.limitRect = resolution;	
+	this->text.set_text(text);
+}
+
+bool Application::UI::Button::point_belongs(POINT point)
+{
+	return
+		(point.x >= position.x && point.x <= position.x + resolution.width) &&
+		(point.y <= position.y && point.y >= (position.y - resolution.height));
+}
+
+void Application::UI::Button::init(Application::InteractiveForm* pForm)
+{
+	
+}
+
+void Application::UI::Button::set_pos(float x, float y)
+{
+	Managers::Rectangle::set_rect(this->get_ptr(), x, y, this->resolution.width, this->resolution.height);
+	this->position = { x,y };
+	this->text.set_pos(x, y);
+}
+
+void Application::UI::Button::set_color(float r, float g, float b)
+{
+	
+}
+
+void Application::UI::Button::move_by(float x, float y)
+{
+	Managers::Rectangle::set_rect(this->get_ptr(),
+		position.x + x,
+		position.y + y,
+		resolution.width,
+		resolution.height
+	);
+
+	this->position.x += x;
+	this->position.y += y;
+
+	this->text.move_by(x, y);
+}
+
+Application::UI::InteractiveElement* Application::UI::Button::set_rect(float width, float height)
+{
+	auto x = this->position.x;
+	auto y = this->position.y;
+
+	Managers::Rectangle::set_rect(this->get_ptr(), x, y, width, height);
+	Managers::Rectangle::set_rect(this->get_ptr(),
+		position.x,
+		position.y,
+		width,
+		height
+	);
+	this->text.limitRect = { (UINT)width,(UINT)height };
+	this->resolution = { (UINT)width,(UINT)height };
+
+	return this;
+}
+
+Application::Render::Resolution Application::UI::Button::get_resolution()
+{
+	return this->resolution;
+}
+
+

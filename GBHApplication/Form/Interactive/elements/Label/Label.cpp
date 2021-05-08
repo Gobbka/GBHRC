@@ -13,6 +13,14 @@ Application::UI::Label::Label(Render::Position position, const char* text, Direc
 	Text::set_text(text);
 }
 
+Application::UI::Label::Label(Render::Position position, const char* text, DirectX::SpriteFont* font,
+	Render::Color color, Render::Resolution limitResolution)
+	: Text(font, Render::TextAlign::Center, position)
+{
+	Text::set_text(text);
+	Text::limitRect = limitResolution;
+}
+
 bool Application::UI::Label::point_belongs(POINT point)
 {
 	// TODO: make

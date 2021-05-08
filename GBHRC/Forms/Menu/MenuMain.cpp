@@ -11,23 +11,13 @@ Application::UI::Panel* background_panel = new Application::UI::Panel({ 0,0 }, {
 Application::UI::Panel* topbar_panel = new Application::UI::Panel({ 0,0 }, { 400, 30 }, { FLOAT_COLORS_GREEN });
 Application::UI::Checkbox* checkbox = new Application::UI::Checkbox({ 50,-50 }, { 20,20 }, { FLOAT_COLORS_GRAY });
 
-void panel_hover(Application::UI::UIElementEventArgs args)
-{
-	args->set_color(FLOAT_COLORS_GREEN);
-}
-
-void panel_leave(Application::UI::UIElementEventArgs args)
-{
-	args->set_color(FLOAT_COLORS_BLACK);
-}
-
 extern HMODULE DllInst;
 
 void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engine*pEngine)
 {
 
 	auto* esp_font = pEngine->create_font(
-		(void*)LoadResource(DllInst, FindResourceW(DllInst, MAKEINTRESOURCEW(IDR_VISBY_ROUND), L"SPRITEFONT")),
+		(void*)LoadResource(DllInst, FindResourceW(DllInst, MAKEINTRESOURCE(IDR_VISBY_ROUND), L"SPRITEFONT")),
 		0x6608
 	);
 
@@ -37,7 +27,7 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 	background_panel
 		->add_element(checkbox)
 		->add_element(
-			topbar_panel->add_element(new Application::UI::Label{ {0,0},"NIGGER ESP",esp_font,{FLOAT_COLORS_WHITE} })
+			topbar_panel->add_element(new Application::UI::Label{ {0,0},"GBHRC",esp_font,{FLOAT_COLORS_WHITE},{400,30} })
 		);
 
 	form->update_markup(pEngine);
@@ -48,8 +38,9 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 		background_panel->move_by( -200, resolut.height / 2);
 	}
 
-	background_panel->onMouseDown = [](Application::UI::UIElementEventArgs args)
+	topbar_panel->onMouseDown = [](Application::UI::UIElementEventArgs args)
 	{
-		args->get_form()->drag_move(args);
+		DEBUG_LOG("NIGGER");
+		args->get_form()->drag_move(args->parent());
 	};
 }
