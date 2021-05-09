@@ -1,7 +1,7 @@
 #include "Text.h"
 #include "../Engine/Engine.h"
 
-Application::Render::Text::Text(DirectX::SpriteFont* font, TextAlign text_align, Position pos)
+Application::Render::Text::Text(DirectX::SpriteFont* font, TextAlign text_align)
 {
 	this->font = font;
 	this->text_align = text_align;
@@ -22,6 +22,7 @@ void Application::Render::Text::set_text(const char* text)
 
 void Application::Render::Text::DrawInRect(Render::Engine* engine, Render::Position position)
 {
+
 	auto* batch = engine->get_batch();
 	batch->Begin();
 	auto center_pos = Application::point_to_center(position);
@@ -37,7 +38,7 @@ void Application::Render::Text::DrawInRect(Render::Engine* engine, Render::Posit
 		if (this->text_align == TextAlign::Center)
 		{
 			center_pos.x += limitRect.width / 2 - font_rect.width / 2;
-			//center_pos.y += limitRect.height / 2;
+			center_pos.y += limitRect.height / 2 - font_rect.height / 2 - 3;
 		}
 	}
 
@@ -53,31 +54,3 @@ void Application::Render::Text::DrawInRect(Render::Engine* engine, Render::Posit
 
 	batch->End();
 }
-
-// auto* batch = engine->get_batch();
-// batch->Begin();
-// auto font_rect = this->font->MeasureDrawBounds(this->text, DirectX::XMFLOAT2{ 0,0 });
-// float width_scale = limitRect.width / font_rect.right;
-// float height_scale = limitRect.height / font_rect.bottom;
-// const auto final_scale = min(width_scale, height_scale);
-   
-// auto center_pos = Application::point_to_center(position);
-// center_pos = { center_pos.x + position.x,center_pos.y + position.y };
-// 
-// if(this->text_align == TextAlign::Center)
-// {
-// 	center_pos.x += limitRect.width / 2 - font_rect.right/2;
-// 	center_pos.y -= limitRect.height / 2;
-// }
-// 
-// this->font->DrawString(
-// 	batch,
-// 	this->text,
-// 	DirectX::XMFLOAT2{center_pos.x, center_pos.y},
-// 	{ color.r,color.g,color.b },
-// 	0,
-// 	DirectX::XMFLOAT2{ 0,0 },
-// 	final_scale
-// );
-// 
-// batch->End();

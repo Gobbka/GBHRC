@@ -5,11 +5,15 @@
 #include "Form/Interactive/elements/Panel/Panel.h"
 #include "Form/Interactive/elements/Checkbox/Checkbox.h"
 #include "Form/Interactive/elements/Label/Label.h"
+#include "../../CheatApi/GBHRC/gbhrc.h"
 
 
-Application::UI::Panel* background_panel = new Application::UI::Panel({ 0,0 }, { 400, 600 }, { FLOAT_COLORS_BLACK });
+Application::UI::Panel* background_panel = new Application::UI::Panel({ 0,0 }, { 400, 500 }, { FLOAT_COLORS_BLACK });
 Application::UI::Panel* topbar_panel = new Application::UI::Panel({ 0,0 }, { 400, 30 }, { FLOAT_COLORS_GREEN });
-Application::UI::Checkbox* checkbox = new Application::UI::Checkbox({ 50,-50 }, { 20,20 }, { FLOAT_COLORS_GRAY });
+Application::UI::Checkbox* aim_checkbox = new Application::UI::Checkbox({ 20,-50 }, { 20,20 }, { FLOAT_COLORS_GRAY });
+Application::UI::Checkbox* esp_checkbox = new Application::UI::Checkbox({ 20,-90 }, { 20,20 }, { FLOAT_COLORS_GRAY });
+Application::UI::Checkbox* jump_checkbox = new Application::UI::Checkbox({ 20,-130 }, { 20,20 }, { FLOAT_COLORS_GRAY });
+Application::UI::Checkbox* car_sh_checkbox = new Application::UI::Checkbox({ 20,-170 }, { 20,20 }, { FLOAT_COLORS_GRAY });
 
 extern HMODULE DllInst;
 
@@ -22,25 +26,50 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 	);
 
 	form
-		->add_element(background_panel);
-
+		->add_element(background_panel)
+	;
+	
 	background_panel
-		->add_element(checkbox)
+		->add_element(aim_checkbox)
+		->add_element(esp_checkbox)
+		->add_element(jump_checkbox)
+		->add_element(car_sh_checkbox)
 		->add_element(
 			topbar_panel->add_element(new Application::UI::Label{ {0,0},"GBHRC",esp_font,{FLOAT_COLORS_WHITE},{400,30} })
-		);
+		)
+		->add_element(new Application::UI::Label{ {60,-45},"AIM ACTIVE",esp_font,{FLOAT_COLORS_WHITE} })
+		->add_element(new Application::UI::Label{ {60,-45},"AIM ACTIVE",esp_font,{FLOAT_COLORS_WHITE} })
+		->add_element(new Application::UI::Label{ {60,-85},"ESP ACTIVE",esp_font,{FLOAT_COLORS_WHITE} })
+		->add_element(new Application::UI::Label{ {60,-125},"FLY",esp_font,{FLOAT_COLORS_WHITE} })
+		->add_element(new Application::UI::Label{ {60,-165},"CAR SPEED",esp_font,{FLOAT_COLORS_WHITE} })
+	;
 
-	form->update_markup(pEngine);
 
+	form->initialize_components(pEngine);
+	// ; paste ur initialize code below
 	
 	{
 		auto resolut = background_panel->get_resolution();
-		background_panel->move_by( -200, resolut.height / 2);
+		background_panel->move_by( -200, resolut.height/2);
 	}
 
-	topbar_panel->onMouseDown = [](Application::UI::UIElementEventArgs args)
+	aim_checkbox->onChange = [](Application::UI::UIElementEventArgs args)
 	{
-		DEBUG_LOG("NIGGER");
-		//args->get_form()->drag_move(args->get_parent());
+		GBHRC::Context::instance()->config->aim_assist = ((Application::UI::Checkbox*)args)->is_checked();
+	};
+
+	esp_checkbox->onChange = [](Application::UI::UIElementEventArgs args)
+	{
+		GBHRC::Context::instance()->set_esp( ((Application::UI::Checkbox*)args)->is_checked());
+	};
+
+	jump_checkbox->onChange = [](Application::UI::UIElementEventArgs args)
+	{
+		GBHRC::Context::instance()->config->fly_active = (((Application::UI::Checkbox*)args)->is_checked());
+	};
+
+	car_sh_checkbox->onChange = [](Application::UI::UIElementEventArgs args)
+	{
+		GBHRC::Context::instance()->config->car_speed = (((Application::UI::Checkbox*)args)->is_checked());
 	};
 }

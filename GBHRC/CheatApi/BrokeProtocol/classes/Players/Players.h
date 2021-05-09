@@ -28,7 +28,7 @@ namespace BrokeProtocol
 			char pad_01D0[16]; //0x01D0
 			ShEquipable* curEquipable; //0x01E0
 			char pad_01E8[24]; //0x01E8
-			class Mountable* curMount; //0x0200
+			Structs::Mountable* curMount; //0x0200
 			char pad_0208[8]; //0x0208
 			Structs::StanceType* stance; //0x0210
 			char pad_0218[40]; //0x0218

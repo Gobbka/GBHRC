@@ -8,17 +8,19 @@ void Application::UI::Label::__draw(Render::Engine* engine)
 }
 
 Application::UI::Label::Label(Render::Position position, const char* text, DirectX::SpriteFont* font, Render::Color color)
-	: Text(font,Render::TextAlign::Center,position)
+	: Text(font,Render::TextAlign::Center)
 {	
 	Text::set_text(text);
+	this->position = position;
 }
 
 Application::UI::Label::Label(Render::Position position, const char* text, DirectX::SpriteFont* font,
 	Render::Color color, Render::Resolution limitResolution)
-	: Text(font, Render::TextAlign::Center, position)
+	: Text(font, Render::TextAlign::Center)
 {
 	Text::set_text(text);
 	Text::limitRect = limitResolution;
+	this->position = position;
 }
 
 bool Application::UI::Label::point_belongs(POINT point)
@@ -30,7 +32,6 @@ bool Application::UI::Label::point_belongs(POINT point)
 void Application::UI::Label::init(Application::InteractiveForm* pForm)
 {
 	this->pForm = pForm;
-	this->set_pos(position.x, position.y);
 }
 
 void Application::UI::Label::set_pos(float x, float y)
@@ -47,7 +48,7 @@ void Application::UI::Label::move_by(float x, float y)
 {
 	this->position = {
 		x + position.x,
-		position.y - y
+		position.y + y
 	};
 }
 

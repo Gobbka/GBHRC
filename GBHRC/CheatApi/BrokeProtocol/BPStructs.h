@@ -53,12 +53,10 @@ namespace BrokeProtocol {
 		class Mountable
 		{
 		public:
-			char pad_0000[304]; //0x0000
-			float health; //0x0130
-			float maxHealth; //0x0134
-			char pad_0138[72]; //0x0138
-			float maxSpeed; //0x0180
-			char pad_0184[132]; //0x0184
+			char pad_0000[392]; //0x0000
+			float maxSpeed; //0x0188
+			float speedLimit; //0x018C
+			char pad_0190[4]; //0x0190
 		}; //Size: 0x0208
 
 		class GlobalTypes

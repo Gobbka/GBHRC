@@ -17,6 +17,8 @@ namespace Application
 			Render::Color active_color { 0.27f,0.73f,0.39f };
 			Render::Color non_active_color{ 0.305f,0.305f,0.305f };
 		public:
+
+			bool is_checked();
 			
 			UINT size() override;
 			

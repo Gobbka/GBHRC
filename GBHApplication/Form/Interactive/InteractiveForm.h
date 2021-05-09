@@ -23,7 +23,7 @@ namespace Application
 		void drag_move(UI::InteractiveElement* element);
 		void free_drag_move();
 
-		void update_markup(Render::Engine* pEngine);
+		void initialize_components(Render::Engine* pEngine);
 
 		InteractiveForm* add_element(UI::InteractiveElement* element);
 	};

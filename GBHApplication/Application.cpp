@@ -50,7 +50,7 @@ Application::Render::Position Application::point_to_center(Render::Position p)
 {
 	auto res = Application::get_window_resolution();
 
-	return { p.x + res.width / 2,p.y + res.height / 2 };
+	return { p.x + res.width / 2,res.height / 2 - p.y };
 }
 
 POINT Application::point_to_center(POINT p)

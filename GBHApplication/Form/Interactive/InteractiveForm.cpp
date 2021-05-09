@@ -90,7 +90,7 @@ void Application::InteractiveForm::free_drag_move()
 	this->dragged = nullptr;
 }
 
-void Application::InteractiveForm::update_markup(Render::Engine* pEngine)
+void Application::InteractiveForm::initialize_components(Render::Engine* pEngine)
 {
 	this->alloc_vbuffer(pEngine);
 	UINT size = 0;

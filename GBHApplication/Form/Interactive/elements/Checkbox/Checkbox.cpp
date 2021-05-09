@@ -12,6 +12,11 @@ void Application::UI::Checkbox::__draw(Render::Engine*engine)
 	pContext->Draw(5, this->__index+5);
 }
 
+bool Application::UI::Checkbox::is_checked()
+{
+	return this->checked;
+}
+
 UINT Application::UI::Checkbox::size()
 {
 	return 10;
@@ -41,7 +46,7 @@ void Application::UI::Checkbox::set_pos(float x, float y)
 	auto* ptr = this->get_ptr();
 	
 	Managers::Rectangle::set_rect(ptr, x, y, resolution.width, resolution.height);
-	Managers::Rectangle::set_rect(ptr + 5, x + 4, y - 5, resolution.width - 9, resolution.height - 9);
+	Managers::Rectangle::set_rect(ptr + 5, x + 4, y - 4, resolution.width - 8, resolution.height - 8);
 }
 
 void Application::UI::Checkbox::set_color(float r, float g, float b)
@@ -63,13 +68,13 @@ void Application::UI::Checkbox::move_by(float x, float y)
 
 void Application::UI::Checkbox::handle_mouse_up()
 {
-
+	this->checked = !this->checked;
+	
 	if (this->checked == true)
 		this->set_color(active_color.r, active_color.g, active_color.b);
 	else
 		this->set_color(non_active_color.r, non_active_color.g, non_active_color.b);
 
-	this->checked = !this->checked;
 
 	onChange(this);
 	InteractiveElement::handle_mouse_up();

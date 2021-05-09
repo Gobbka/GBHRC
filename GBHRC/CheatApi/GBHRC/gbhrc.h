@@ -39,6 +39,8 @@ namespace GBHRC
 		std::vector<EspBox*> esp_boxes;
 		Application::Canvas::CanvasForm* esp_scene;
 	public:
+		void set_esp(bool status);
+		
 		Config* config;
 
 		

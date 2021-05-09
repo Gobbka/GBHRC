@@ -155,6 +155,25 @@ void GBHRC::Context::draw_esp(Application::Render::Scene* pScene,Application::Re
     }
 }
 
+void GBHRC::Context::set_esp(bool status)
+{
+    this->config->esp_active = status;
+    this->config->esp_health_active = status;
+    this->config->esp_draw_gun_name = status;
+    this->config->esp_draw_name = status;
+
+	if(status == false)
+	{
+		for(auto*element:this->esp_boxes)
+		{
+            element->box->render = false;
+            element->health_box->render = false;
+            element->max_health_box->render = false;
+		}
+            
+	}
+}
+
 void GBHRC::Context::implement(HMODULE DllInst)
 {
     this->DllInst = DllInst;
@@ -210,18 +229,30 @@ void GBHRC::Context::life_cycle()
 {
 	while(true)
 	{
-		
-       if (aim_active==true && aim_target != nullptr)
-       {
-           auto* local_player = BrokeProtocol::GetLocalPlayer();
+        if (BrokeProtocol::get_manager() != nullptr && BrokeProtocol::get_manager()->host != nullptr)
+        {
+            auto* local_player = BrokeProtocol::GetLocalPlayer();
 
-           local_player->rotationT->lookAt(aim_target);
-           
-           Sleep(5);
-       }else
-       {
-           Sleep(50);
-       }
+            if (config->fly_active && GetAsyncKeyState(VK_SPACE))
+            {
+                local_player->jump();
+            }
 
-	}
+            if (config->car_speed && local_player->curMount != nullptr)
+            {
+                local_player->curMount->maxSpeed = 500.f;
+                local_player->curMount->speedLimit = 500.f;
+            }
+
+            if (config->aim_assist == true && aim_active && aim_target != nullptr)
+            {
+                local_player->rotationT->lookAt(aim_target);
+
+                Sleep(5);
+                continue;
+            }
+        }
+
+        Sleep(50);
+    }
 }

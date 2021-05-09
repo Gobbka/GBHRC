@@ -27,7 +27,7 @@ namespace Application
 			Render::Resolution limitRect;
 			
 		public:
-			Text(DirectX::SpriteFont* font, TextAlign text_align, Position pos);
+			Text(DirectX::SpriteFont* font, TextAlign text_align);
 			~Text();
 
 			void set_text(const char*text);
