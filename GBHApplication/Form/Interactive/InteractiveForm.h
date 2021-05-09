@@ -25,7 +25,6 @@ namespace Application
 
 		void update_markup(Render::Engine* pEngine);
 
-		void add_elements(UINT count, UI::InteractiveElement* element...);
 		InteractiveForm* add_element(UI::InteractiveElement* element);
 	};
 }

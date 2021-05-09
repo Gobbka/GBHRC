@@ -60,3 +60,17 @@ void Application::UI::Checkbox::move_by(float x, float y)
 {
 	InteractiveElement::move_by(x, y);
 }
+
+void Application::UI::Checkbox::handle_mouse_up()
+{
+
+	if (this->checked == true)
+		this->set_color(active_color.r, active_color.g, active_color.b);
+	else
+		this->set_color(non_active_color.r, non_active_color.g, non_active_color.b);
+
+	this->checked = !this->checked;
+
+	onChange(this);
+	InteractiveElement::handle_mouse_up();
+}

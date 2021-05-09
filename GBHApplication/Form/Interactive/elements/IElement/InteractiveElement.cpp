@@ -22,7 +22,7 @@ GVertex::Vertex* Application::UI::InteractiveElement::get_ptr() const
 	return this->pForm->get_ptr() + this->__index;
 }
 
-Application::UI::Parent* Application::UI::InteractiveElement::parent() const
+Application::UI::Parent* Application::UI::InteractiveElement::get_parent() const
 {
 	return this->_parent;
 }
@@ -32,7 +32,35 @@ Application::InteractiveForm* Application::UI::InteractiveElement::get_form() co
 	return this->pForm;
 }
 
-void Application::UI::InteractiveElement::set_parent(Parent* parent)
+//============================\\
+//  EVENT'S HANDLER'S
+//
+//
+
+void Application::UI::InteractiveElement::handle_mouse_move( float mX, float mY)
 {
-	this->_parent = parent;
+	this->onMouseMove(this, mX, mY);
 }
+
+void Application::UI::InteractiveElement::handle_mouse_leave()
+{
+	this->hovered = false;
+	this->onMouseLeave(this);
+}
+
+void Application::UI::InteractiveElement::handle_mouse_enter()
+{
+	this->hovered = true;
+	this->onMouseEnter(this);
+}
+
+void Application::UI::InteractiveElement::handle_mouse_up()
+{
+	this->onMouseUp(this);
+}
+
+void Application::UI::InteractiveElement::handle_mouse_down()
+{
+	this->onMouseDown(this);
+}
+

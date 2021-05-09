@@ -31,16 +31,16 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 		);
 
 	form->update_markup(pEngine);
+
 	
 	{
-		
 		auto resolut = background_panel->get_resolution();
 		background_panel->move_by( -200, resolut.height / 2);
 	}
 
-	topbar_panel->onMouseDown = [](Application::UI::UIElementEventArgs args)
+	topbar_panel->onMouseMove = [](Application::UI::UIElementEventArgs args,float mx,float my)
 	{
 		DEBUG_LOG("NIGGER");
-		args->get_form()->drag_move(args->parent());
+		//args->get_form()->drag_move(args->get_parent());
 	};
 }

@@ -34,16 +34,14 @@ void Application::InteractiveForm::window_proc(UINT msg, WPARAM wParam, LPARAM l
 			{
 				if (element->hovered == false)
 				{
-					element->hovered = true;
-					element->onMouseEnter(element);
+					element->handle_mouse_enter();
 				}
-				element->onMouseMove(element,cursor.x,cursor.y);
+				element->handle_mouse_move(cursor.x, cursor.y);
 				e_handled = true;
 			}
 			else if (element->hovered == true)
 			{
-				element->onMouseLeave(element);
-				element->hovered = false;
+				element->handle_mouse_leave();
 			}
 		}
 
@@ -56,7 +54,7 @@ void Application::InteractiveForm::window_proc(UINT msg, WPARAM wParam, LPARAM l
 			{
 				auto* element = (UI::InteractiveElement*)obj;
 				if (element->hovered == true)
-					element->onMouseUp(element);
+					element->handle_mouse_up();
 			});
 
 		this->free_drag_move();
@@ -70,7 +68,7 @@ void Application::InteractiveForm::window_proc(UINT msg, WPARAM wParam, LPARAM l
 			{
 				auto* element = (UI::InteractiveElement*)obj;
 				if (element->hovered == true)
-					element->onMouseDown(element);
+					element->handle_mouse_down();
 			});
 		return;
 	}
@@ -100,23 +98,12 @@ void Application::InteractiveForm::update_markup(Render::Engine* pEngine)
 	Scene::foreach([this, &size](Render::IRenderObject* obj)
 		{
 			auto* iUIObject = (UI::InteractiveElement*)obj;
-			iUIObject->set_form(this);
+			iUIObject->set_pForm(this);
 			iUIObject->set_index(size);
 			iUIObject->init(this);
 
 			size += obj->size();
 		});
-}
-
-void Application::InteractiveForm::add_elements(UINT count, UI::InteractiveElement* element, ...)
-{
-	va_list v1;
-	va_start(v1, count);
-
-	for (UINT i = 0; i < count; i++)
-	{
-		this->add_render_object(va_arg(v1, UI::InteractiveElement*));
-	}
 }
 
 Application::InteractiveForm* Application::InteractiveForm::add_element(UI::InteractiveElement* element)

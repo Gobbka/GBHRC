@@ -3,6 +3,8 @@
 #include "Managers/RectangleManager.h"
 #include "Render/Render.h"
 
+#define FIELD_SETTER(field_type,field_name) void set_##field_name(field_type field_name){this->##field_name = field_name;}
+
 namespace Application
 {
 	class InteractiveForm;

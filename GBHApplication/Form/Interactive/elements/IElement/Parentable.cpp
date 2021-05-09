@@ -2,6 +2,70 @@
 
 #include "../../../../Render/Scene/Scene.h"
 
+void Application::UI::Parent::handle_mouse_up()
+{
+	for (auto* element : this->elements)
+	{
+		if (element->hovered)
+			element->handle_mouse_up();
+	}
+	this->onMouseUp(this);
+}
+
+void Application::UI::Parent::handle_mouse_down()
+{
+	for(auto*element:this->elements)
+	{
+		if (element->hovered)
+			element->handle_mouse_down();
+	}
+	this->onMouseDown(this);
+}
+
+void Application::UI::Parent::handle_mouse_enter()
+{
+	for (auto* element : this->elements)
+		element->handle_mouse_enter();
+	this->onMouseEnter(this);
+}
+
+void Application::UI::Parent::handle_mouse_leave()
+{
+	for (auto* element : this->elements)
+		element->handle_mouse_leave();
+	this->onMouseLeave(this);
+}
+
+void Application::UI::Parent::handle_mouse_move(float mX, float mY)
+{
+	const auto length = this->elements.size() - 1;
+	bool e_handled = false;
+
+	for (int i = length; i >= 0 && e_handled == false; i--)
+	{
+		auto* element = (UI::InteractiveElement*)this->elements[i];
+
+		if (
+			e_handled == false &&
+			element->point_belongs({(LONG)(mX),(LONG)(mY)})
+			)
+		{
+			if (element->hovered == false)
+			{
+				element->handle_mouse_enter();
+			}
+			element->handle_mouse_move(mX,mY);
+			e_handled = true;
+		}
+		else if (element->hovered == true)
+		{
+			element->handle_mouse_leave();
+		}
+	}
+
+	this->onMouseMove(this,mX, mY);
+}
+
 void Application::UI::Parent::set_index_offset(UINT offset)
 {
 	this->index_offset = offset;
@@ -56,7 +120,7 @@ void Application::UI::Parent::init(Application::InteractiveForm* pForm)
 		element->set_index(index);
 
 		element->init(this->pForm);
-		element->set_parent(this);
+		element->set__parent(this);
 
 		element->move_by(this->position.x, this->position.y);
 		

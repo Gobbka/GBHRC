@@ -20,6 +20,12 @@ namespace Application
 		private:
 			std::vector<InteractiveElement*> elements;
 			UINT index_offset=0;
+
+			void handle_mouse_up() override;
+			void handle_mouse_down() override;
+			void handle_mouse_enter() override;
+			void handle_mouse_leave() override;
+			void handle_mouse_move(float mX, float mY) override;
 		protected:
 			void set_index_offset(UINT offset);
 		public:
