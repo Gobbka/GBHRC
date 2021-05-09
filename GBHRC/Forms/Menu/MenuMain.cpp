@@ -38,7 +38,7 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 		background_panel->move_by( -200, resolut.height / 2);
 	}
 
-	topbar_panel->onMouseMove = [](Application::UI::UIElementEventArgs args,float mx,float my)
+	topbar_panel->onMouseDown = [](Application::UI::UIElementEventArgs args)
 	{
 		DEBUG_LOG("NIGGER");
 		//args->get_form()->drag_move(args->get_parent());

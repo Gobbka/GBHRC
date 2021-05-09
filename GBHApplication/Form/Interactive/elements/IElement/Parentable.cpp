@@ -9,7 +9,7 @@ void Application::UI::Parent::handle_mouse_up()
 		if (element->hovered)
 			element->handle_mouse_up();
 	}
-	this->onMouseUp(this);
+	InteractiveElement::handle_mouse_up();
 }
 
 void Application::UI::Parent::handle_mouse_down()
@@ -19,21 +19,22 @@ void Application::UI::Parent::handle_mouse_down()
 		if (element->hovered)
 			element->handle_mouse_down();
 	}
-	this->onMouseDown(this);
+	InteractiveElement::handle_mouse_down();
 }
 
 void Application::UI::Parent::handle_mouse_enter()
 {
 	for (auto* element : this->elements)
 		element->handle_mouse_enter();
-	this->onMouseEnter(this);
+	
+	InteractiveElement::handle_mouse_enter();
 }
 
 void Application::UI::Parent::handle_mouse_leave()
 {
 	for (auto* element : this->elements)
 		element->handle_mouse_leave();
-	this->onMouseLeave(this);
+	InteractiveElement::handle_mouse_leave();
 }
 
 void Application::UI::Parent::handle_mouse_move(float mX, float mY)
@@ -63,7 +64,7 @@ void Application::UI::Parent::handle_mouse_move(float mX, float mY)
 		}
 	}
 
-	this->onMouseMove(this,mX, mY);
+	InteractiveElement::handle_mouse_move(mX, mY);
 }
 
 void Application::UI::Parent::set_index_offset(UINT offset)
