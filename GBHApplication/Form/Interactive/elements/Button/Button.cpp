@@ -29,7 +29,11 @@ bool Application::UI::Button::point_belongs(POINT point)
 
 void Application::UI::Button::init(Application::InteractiveForm* pForm)
 {
+	this->set_pForm(pForm);
+	this->text.init(pForm);
 	
+	this->set_pos(position.x, position.y);
+	this->set_color(color.r, color.g, color.b);
 }
 
 void Application::UI::Button::set_pos(float x, float y)
@@ -41,7 +45,7 @@ void Application::UI::Button::set_pos(float x, float y)
 
 void Application::UI::Button::set_color(float r, float g, float b)
 {
-	
+	Managers::Rectangle::set_color(this->get_ptr(), r, g, b);
 }
 
 void Application::UI::Button::move_by(float x, float y)

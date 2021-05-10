@@ -30,6 +30,7 @@ namespace Application
 			Text(DirectX::SpriteFont* font, TextAlign text_align);
 			~Text();
 
+			void set_font(DirectX::SpriteFont* font);
 			void set_text(const char*text);
 			void DrawInRect(Render::Engine* engine,Render::Position pos);
 		};

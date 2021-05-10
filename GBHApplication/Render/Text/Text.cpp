@@ -13,6 +13,11 @@ Application::Render::Text::~Text()
 	delete this->font;
 }
 
+void Application::Render::Text::set_font(DirectX::SpriteFont* font)
+{
+	this->font = font;
+}
+
 void Application::Render::Text::set_text(const char* text)
 {
 	this->text = text;

@@ -11,6 +11,7 @@ Application::UI::Label::Label(Render::Position position, const char* text, Direc
 	: Text(font,Render::TextAlign::Center)
 {	
 	Text::set_text(text);
+	Text::color = color;
 	this->position = position;
 }
 
@@ -20,6 +21,7 @@ Application::UI::Label::Label(Render::Position position, const char* text, Direc
 {
 	Text::set_text(text);
 	Text::limitRect = limitResolution;
+	Text::color = color;
 	this->position = position;
 }
 
