@@ -114,7 +114,7 @@ void Application::UI::Parent::move_by(float x, float y)
 
 void Application::UI::Parent::init(Application::InteractiveForm* pForm)
 {	
-	UINT index = this->index_offset;
+	UINT index = this->index_offset+this->__index;
 	
 	for(auto*element:this->elements)
 	{

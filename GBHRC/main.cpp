@@ -58,8 +58,9 @@ void init_callback(Application::Render::Engine* instance)
     DEBUG_LOG("ESP REGISTERED");
 	
     instance
+		->append_scene(esp_scene)
         ->append_scene(menu)
-		->append_scene(esp_scene);
+	;
 
     DEBUG_LOG("SCENE'S APPENDED");
 

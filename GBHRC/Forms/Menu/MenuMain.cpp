@@ -12,7 +12,7 @@
 Application::UI::Panel* background_panel = new Application::UI::Panel({ 0,0 }, { 400, 500 }, { FLOAT_COLORS_BLACK });
 Application::UI::Panel* topbar_panel = new Application::UI::Panel({ 0,0 }, { 400, 30 }, { FLOAT_COLORS_GREEN });
 Application::UI::Checkbox* aim_checkbox = new Application::UI::Checkbox({ 20,-50 }, { 20,20 }, { FLOAT_COLORS_GRAY });
-Application::UI::Checkbox* esp_checkbox = new Application::UI::Checkbox({ 20,-90 }, { 20,20 }, { FLOAT_COLORS_GRAY });
+Application::UI::Checkbox* esp_checkbox = new Application::UI::Checkbox({ 20,0 }, { 20,20 }, { FLOAT_COLORS_GRAY });
 Application::UI::Checkbox* jump_checkbox = new Application::UI::Checkbox({ 20,-130 }, { 20,20 }, { FLOAT_COLORS_GRAY });
 Application::UI::Checkbox* car_sh_checkbox = new Application::UI::Checkbox({ 20,-170 }, { 20,20 }, { FLOAT_COLORS_GRAY });
 
@@ -47,11 +47,12 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 		->add_element(aim_button)
 		->add_element(misc_button)
 		// inners
+
+		->add_element(aim_inner)
+		->add_element(misc_inner)
 		->add_element(
 			esp_inner->add_element(esp_checkbox)//->add_element(new Application::UI::Label{ {60,-85},"ESP ACTIVE",esp_font,{FLOAT_COLORS_WHITE} })
 		)
-		->add_element(aim_inner)
-		->add_element(misc_inner)
 		->add_element(
 			topbar_panel->add_element(new Application::UI::Label{ {0,0},"GBHRC",esp_font,{FLOAT_COLORS_WHITE},{400,30} })
 		)
