@@ -13,6 +13,7 @@ Application::UI::Button::Button(Render::Position position, Render::Resolution re
 		: text(position,text,font,{1,1,1})
 {
 	this->position = position;
+	this->non_active_color = color;
 	this->color = color;
 	this->resolution = resolution;
 
@@ -84,6 +85,18 @@ Application::UI::InteractiveElement* Application::UI::Button::set_rect(float wid
 Application::Render::Resolution Application::UI::Button::get_resolution()
 {
 	return this->resolution;
+}
+
+void Application::UI::Button::handle_mouse_enter()
+{
+	this->set_color(this->non_active_color.r+10, non_active_color.g+10, non_active_color.b+10);
+	InteractiveElement::handle_mouse_enter();
+}
+
+void Application::UI::Button::handle_mouse_leave()
+{
+	this->set_color(this->non_active_color.r, non_active_color.g, non_active_color.b);
+	InteractiveElement::handle_mouse_leave();
 }
 
 

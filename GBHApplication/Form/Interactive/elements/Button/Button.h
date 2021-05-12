@@ -30,6 +30,8 @@ namespace Application
 		private:
 			void __draw(Render::Engine* engine) override;
 		public:
+			Render::Color non_active_color;
+			
 			UI::Label text;
 			
 			UINT size() override
@@ -46,6 +48,9 @@ namespace Application
 			UI::InteractiveElement* set_rect(float width, float height);
 
 			Render::Resolution get_resolution();
+
+			void handle_mouse_enter() override;
+			void handle_mouse_leave() override;
 		};
 	}
 

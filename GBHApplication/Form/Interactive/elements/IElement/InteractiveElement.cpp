@@ -35,6 +35,13 @@ Application::InteractiveForm* Application::UI::InteractiveElement::get_form() co
 	return this->pForm;
 }
 
+void Application::UI::InteractiveElement::draw(Render::Engine* engine)
+{
+	if (this->hidden == false)
+		this->__draw(engine);
+}
+
+
 //============================\\
 //  EVENT'S HANDLER'S
 //

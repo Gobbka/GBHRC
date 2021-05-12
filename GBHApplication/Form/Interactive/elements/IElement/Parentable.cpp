@@ -24,9 +24,6 @@ void Application::UI::Parent::handle_mouse_down()
 
 void Application::UI::Parent::handle_mouse_enter()
 {
-	for (auto* element : this->elements)
-		element->handle_mouse_enter();
-	
 	InteractiveElement::handle_mouse_enter();
 }
 
@@ -42,10 +39,10 @@ void Application::UI::Parent::handle_mouse_move(float mX, float mY)
 	const auto length = this->elements.size() - 1;
 	bool e_handled = false;
 
-	for (int i = length; i >= 0 && e_handled == false; i--)
+	for (int i = length; i >= 0; i--)
 	{
 		auto* element = (UI::InteractiveElement*)this->elements[i];
-
+		
 		if (
 			e_handled == false &&
 			element->point_belongs({(LONG)(mX),(LONG)(mY)})
@@ -75,7 +72,7 @@ void Application::UI::Parent::set_index_offset(UINT offset)
 void Application::UI::Parent::__draw(Render::Engine*engine)
 {
 	for (auto* element : this->elements)
-		element->__draw(engine);
+		element->draw(engine);
 }
 
 void Application::UI::Parent::set_pos(float x, float y)

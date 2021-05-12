@@ -63,7 +63,6 @@ bool Application::UI::Checkbox::point_belongs(POINT point)
 
 void Application::UI::Checkbox::move_by(float x, float y)
 {
-	DEBUG_LOG("CHECKBOX MOVE: " << x << " " << y << this->__index);
 	InteractiveElement::move_by(x, y);
 }
 

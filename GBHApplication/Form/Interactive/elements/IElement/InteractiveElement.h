@@ -33,6 +33,7 @@ namespace Application
 			// public variables
 			
 			bool hovered = false;
+			bool hidden = false;
 
 		public:
 			// public getters
@@ -59,6 +60,9 @@ namespace Application
 
 			void move_by(float x, float y) override = 0;
 			virtual void init(Application::InteractiveForm* pForm) = 0;
+			
+			void draw(Render::Engine* engine);
+		protected:
 			void __draw(Render::Engine* engine) override = 0;
 			
 		public:
