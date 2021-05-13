@@ -7,6 +7,8 @@
 
 bool ClientVersionAsserts::check_bp_version()
 {
+
+	
     if (wcscmp(BrokeProtocol::get_manager()->get_version()->array, CLIENT_LAST_VERSION_STR) != 0)
     {
         auto code = MessageBox(0,

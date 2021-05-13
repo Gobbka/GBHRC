@@ -6,7 +6,7 @@
 
 UnityTypes::String* BrokeProtocol::Managers::ShManager::get_version()
 {
-	DEBUG_LOG("GETTING VERSION");
+
 	auto* mono_context = Mono::Context::get_context();
 
 	static auto* getVerMethod = mono_context->mono_property_get_get_method(mono_context->mono_class_get_property_from_name(

@@ -50,8 +50,6 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 
 		// inners
 
-		->add_element(aim_inner)
-		->add_element(misc_inner)
 		// ESP INNER
 		->add_element(
 			esp_inner

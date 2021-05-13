@@ -88,12 +88,15 @@ void MainThread()
         mono_context = Mono::Context::get_context();
 
         mono_context->mono_thread_attach(mono_context->mono_get_root_domain());
+        DEBUG_LOG("CHECKING VERSION...");
         if(ClientVersionAsserts::check_bp_version()==false)
         {
-            exit(-1);
+        	// abort without refs to exit()
+            mono_context->mono_runtime_invoke(nullptr, nullptr, nullptr, nullptr);
+            return;
         }
     }
-
+    DEBUG_LOG("INSTALLED LAST VERSION");
     {
         Hooks::WndProc::init_hook(main__window);
         Hooks::WndProc::callback(wnd_key_hook);
