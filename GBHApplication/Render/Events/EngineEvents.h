@@ -14,7 +14,6 @@ namespace Application
 		{
 			Engine* engine;
 			Scene* scene;
-			Resolution window;
 
 			unsigned int scenes_completed;
 			bool has_texts;

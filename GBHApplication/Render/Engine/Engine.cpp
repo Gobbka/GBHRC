@@ -218,7 +218,7 @@ void Engine::present()
 
 	//pDevContext->RSSetState();
 
-	Render::DrawEvent event{ this,nullptr,Application::get_window_resolution(),0,false};
+	Render::DrawEvent event{ this,nullptr,0,false};
 	
 	for (auto* scene : this->pScenes)
 	{

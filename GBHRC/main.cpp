@@ -19,6 +19,10 @@
 #include <sstream>
 
 #include "CheatApi/BrokeProtocol/classes/Guns/ShBallistic.h"
+#include "includes/clientdefs.h"
+
+#include "Asserts/VersionAssert/ClientVersionAssers.h"
+
 
 static_assert(offsetof(BrokeProtocol::ShBallistic, recoil) == 0X01E4,"WRONG OFFSET");
 
@@ -35,7 +39,7 @@ void init_callback(Application::Render::Engine* instance)
     mono_context->mono_thread_attach(mono_context->mono_get_root_domain());
 
     BrokeProtocol::show_local_message((char*)"<color=#39d668>[info]</color> GBHRC injected | press <color=#39d668>INSERT</color> to show menu!");
-	BrokeProtocol::show_local_message((char*)"<color=#3966d6>[info]</color> join our discord: https://discord.gg/QNT6mwXVWg ");
+	BrokeProtocol::show_local_message((char*)"<color=#3966d6>[info]</color> join our discord: " DISCORD_CHANNEL);
 
     DEBUG_LOG("USER WELCOMED");
 	
@@ -68,14 +72,11 @@ void init_callback(Application::Render::Engine* instance)
 
 }
 
+
 void MainThread()
 {
 	
     main__window = Hooks::D3D11::FindMainWindow(GetCurrentProcessId());
-    Hooks::D3D11::fnPresent present_addres;
-	auto hr = Hooks::D3D11::GetPresentAddress(&present_addres);
-	
-    Application::implement(main__window);
 	
 #ifdef DEBUG
     AllocConsole();
@@ -83,19 +84,30 @@ void MainThread()
     freopen("CONIN$", "r", stdin);
 #endif
 
-	if(FAILED(hr))
-	{
-        DEBUG_LOG("CANNOT GET PRESENT ADDRESS: "<<std::hex<<hr);
-        return;
-	}
-    
+    {
+        mono_context = Mono::Context::get_context();
+
+        mono_context->mono_thread_attach(mono_context->mono_get_root_domain());
+        if(ClientVersionAsserts::check_bp_version()==false)
+        {
+            exit(-1);
+        }
+    }
+
     {
         Hooks::WndProc::init_hook(main__window);
         Hooks::WndProc::callback(wnd_key_hook);
     }
+	
+    Hooks::D3D11::fnPresent present_addres;
+    auto hr = Hooks::D3D11::GetPresentAddress(&present_addres);
+
+    Application::implement(main__window);
+
+    if (FAILED(hr))
     {
-        mono_context = Mono::Context::get_context();
-        mono_context->mono_thread_attach(mono_context->mono_get_root_domain());
+        DEBUG_LOG("CANNOT GET PRESENT ADDRESS: " << std::hex << hr);
+        return;
     }
 	
     Hooks::D3D11::hook(present_addres, init_callback);

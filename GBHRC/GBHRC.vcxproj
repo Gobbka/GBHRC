@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Asserts\VersionAssert\ClientVersionAssert.cpp" />
     <ClCompile Include="CheatApi\BrokeProtocol\BrokeProtocol.cpp" />
     <ClCompile Include="CheatApi\BrokeProtocol\classes\Collections\Dictionary.cpp" />
     <ClCompile Include="CheatApi\BrokeProtocol\classes\Guns\ShBallistic.cpp" />
@@ -175,6 +176,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Asserts\VersionAssert\ClientVersionAssers.h" />
     <ClInclude Include="CheatApi\BrokeProtocol\BrokeProtocol.h" />
     <ClInclude Include="CheatApi\BrokeProtocol\BPStructs.h" />
     <ClInclude Include="CheatApi\BrokeProtocol\classes\Collections\KeyedCollection.h" />
@@ -205,6 +207,7 @@
     <ClInclude Include="CheatApi\Tools\3dMatrix.h" />
     <ClInclude Include="Forms\Menu\MenuMain.h" />
     <ClInclude Include="CheatApi\BrokeProtocol\classes\ICollection\ICollection.h" />
+    <ClInclude Include="includes\clientdefs.h" />
     <ClInclude Include="includes\d3d.h" />
     <ClInclude Include="includes\logger.h" />
     <ClInclude Include="includes\win.h" />

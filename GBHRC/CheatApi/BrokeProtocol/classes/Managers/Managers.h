@@ -13,6 +13,8 @@ namespace BrokeProtocol {
 		void *svManager; //0x0028
 		char pad_0030[16]; //0x0030
 		void *host; //0x0040
+
+		UnityTypes::String* get_version();
 		}; //Size: 0x0110
 
 		class ClManager

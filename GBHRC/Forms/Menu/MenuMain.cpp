@@ -1,3 +1,4 @@
+#pragma region includes
 #include "MenuMain.h"
 
 #include "../../resource.h"
@@ -8,7 +9,9 @@
 #include "Form/Interactive/elements/Button/Button.h"
 #include "../../CheatApi/GBHRC/gbhrc.h"
 
+#pragma endregion
 
+#pragma region elements
 Application::UI::Panel* background_panel = new Application::UI::Panel({ 0,0 }, { 400, 500 }, { FLOAT_COLORS_BLACK });
 Application::UI::Panel* topbar_panel = new Application::UI::Panel({ 0,0 }, { 400, 30 }, { FLOAT_COLORS_GREEN });
 Application::UI::Checkbox* aim_checkbox = new Application::UI::Checkbox({ 20,-50 }, { 20,20 }, { FLOAT_COLORS_GRAY });
@@ -16,7 +19,7 @@ Application::UI::Checkbox* esp_checkbox = new Application::UI::Checkbox({ 20,0 }
 Application::UI::Checkbox* name_checkbox = new Application::UI::Checkbox({ 20,-40 }, { 20,20 }, { FLOAT_COLORS_GRAY });
 Application::UI::Checkbox* jump_checkbox = new Application::UI::Checkbox({ 20,-130 }, { 20,20 }, { FLOAT_COLORS_GRAY });
 Application::UI::Checkbox* car_sh_checkbox = new Application::UI::Checkbox({ 20,-170 }, { 20,20 }, { FLOAT_COLORS_GRAY });
-
+#pragma endregion 
 
 extern HMODULE DllInst;
 
