@@ -5,6 +5,7 @@
 void Application::UI::Button::draw(Render::DrawEvent* event)
 {
 	event->get_context()->Draw(5, this->__index);
+	this->text.draw(event);
 }
 
 
@@ -95,7 +96,7 @@ void Application::UI::Button::handle_mouse_up()
 
 void Application::UI::Button::handle_mouse_enter()
 {
-	this->set_color(this->non_active_color.r+10, non_active_color.g+10, non_active_color.b+10);
+	this->set_color(this->non_active_color.r+.1f, non_active_color.g+0.1f, non_active_color.b+0.1f);
 	InteractiveElement::handle_mouse_enter();
 }
 

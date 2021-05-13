@@ -4,7 +4,7 @@
 
 void Application::UI::Label::draw(Render::DrawEvent* event)
 {
-	Text::DrawInRect(event->engine, this->position);
+	Text::DrawInRect(event, this->position,this->scalable);
 }
 
 Application::UI::Label::Label(Render::Position position, const char* text, DirectX::SpriteFont* font, Render::Color color)

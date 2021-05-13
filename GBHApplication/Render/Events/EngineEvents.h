@@ -14,11 +14,13 @@ namespace Application
 		{
 			Engine* engine;
 			Scene* scene;
+			const ID3D11RasterizerState* old_state;
 
 			unsigned int scenes_completed;
 			bool has_texts;
 
 			ID3D11DeviceContext* get_context() const;
+			void reset_render_state();
 		};
 
 	}

@@ -45,7 +45,10 @@ namespace Application
 			static Application::Render::Resolution get_resolution(HWND hwnd);
 			//
 			std::vector<Application::Render::Scene*> pScenes;
+
 		public:
+			void set_vbuffer(GVertex::VertexBuffer* buffer);
+			void render_prepare() const;
 
 			DirectX::SpriteFont* create_font(void* font_source,UINT source_size);
 			

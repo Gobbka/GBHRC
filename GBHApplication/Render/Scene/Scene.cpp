@@ -31,11 +31,13 @@ void Application::Render::Scene::render(Render::DrawEvent* draw_event)
 {
 	DRAW_ASSERT;
 
-	UINT stride = sizeof(GVertex::Vertex);
-	UINT offset = 0;
+	//UINT stride = sizeof(GVertex::Vertex);
+	//UINT offset = 0;
 
-	draw_event->engine->pDevContext->IASetVertexBuffers(0, 1, &this->pVBuffer->buffer, &stride, &offset);
+	//draw_event->engine->pDevContext->IASetVertexBuffers(0, 1, &this->pVBuffer->buffer, &stride, &offset);
 
+	draw_event->engine->set_vbuffer(this->get_vbuffer());
+	
 	for (auto* element : this->pElements)
 		this->draw_element(element, draw_event);
 		//element->__draw(draw_event);
@@ -89,6 +91,11 @@ UINT Application::Render::Scene::elements_length() const
 GVertex::Vertex* Application::Render::Scene::get_ptr() const
 {
 	return this->pVBuffer->data;
+}
+
+GVertex::VertexBuffer* Application::Render::Scene::get_vbuffer()
+{
+	return  this->pVBuffer;
 }
 
 Application::Render::Scene::~Scene()

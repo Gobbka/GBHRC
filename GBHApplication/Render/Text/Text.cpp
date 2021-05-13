@@ -25,10 +25,10 @@ void Application::Render::Text::set_text(const char* text)
 	this->text_resolution = { (UINT)rect.right,(UINT)rect.bottom };
 }
 
-void Application::Render::Text::DrawInRect(Render::Engine* engine, Render::Position position)
+void Application::Render::Text::DrawInRect(Render::DrawEvent* event, Render::Position position,bool scalable)
 {
 
-	auto* batch = engine->get_batch();
+	auto* batch = event->engine->get_batch();
 	batch->Begin();
 	auto center_pos = Application::point_to_center(position);
 	auto scale = 1.f;
@@ -36,9 +36,19 @@ void Application::Render::Text::DrawInRect(Render::Engine* engine, Render::Posit
 	if (this->limitRect.width != 0 || this->limitRect.height != 0)
 	{
 		auto font_rect = this->text_resolution;
+
 		float width_scale = limitRect.width / font_rect.width;
 		float height_scale = limitRect.height / font_rect.height;
-		scale = min(width_scale, height_scale);
+		
+		if(scalable)
+		{
+			scale = min(width_scale, height_scale);
+		}else
+		{
+			scale = min(scale, width_scale);
+			scale = min(scale, height_scale);
+		}
+		
 
 		if (this->text_align == TextAlign::Center)
 		{
@@ -58,4 +68,6 @@ void Application::Render::Text::DrawInRect(Render::Engine* engine, Render::Posit
 	);
 
 	batch->End();
+	
+	event->reset_render_state();
 }

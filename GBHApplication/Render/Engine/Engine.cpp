@@ -45,6 +45,33 @@ Engine::Engine(const HWND hwnd, ID3D11Device* pDevice,
 	this->spriteBatch = new DirectX::SpriteBatch(pDevContext);
 }
 
+void Engine::set_vbuffer(GVertex::VertexBuffer* buffer)
+{
+	UINT stride = sizeof(GVertex::Vertex);
+	UINT offset = 0;
+
+	this->pDevContext->IASetVertexBuffers(0, 1, &buffer->buffer, &stride, &offset);
+}
+
+void Engine::render_prepare() const
+{
+	this->pDevContext->OMSetRenderTargets(1, &pRenderTargetView, nullptr);
+
+	ConstantBuffer cb;
+	cb.mProjection = DirectX::XMMatrixTranspose(mOrtho);
+	cb.xOffset = 0.f;
+	cb.yOffset = 0.f;
+
+	this->pDevContext->UpdateSubresource(this->pConstantBuffer, 0, nullptr, &cb, 0, 0);
+	this->pDevContext->VSSetConstantBuffers(0, 1, &this->pConstantBuffer);
+	
+	this->pDevContext->IASetInputLayout(pVertexLayout);
+	this->pDevContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+
+	this->pDevContext->VSSetShader(pVertexShader, nullptr, 0);
+	this->pDevContext->PSSetShader(pPixelShader, nullptr, 0);
+}
+
 DirectX::SpriteFont* Engine::create_font(void* font_source, UINT source_size)
 {
 	auto*font = new DirectX::SpriteFont(this->pDevice, (uint8_t*)font_source, source_size);
@@ -196,29 +223,20 @@ void Engine::update_scene()
 		scene->update(this);
 }
 
+
+
 void Engine::present()
 {
-	this->pDevContext->OMSetRenderTargets(1, &pRenderTargetView, nullptr);
 
-	ConstantBuffer cb;
-	cb.mProjection = DirectX::XMMatrixTranspose(mOrtho);
-	cb.xOffset = 0.f;
-	cb.yOffset = 0.f;
 
-	this->pDevContext->UpdateSubresource(this->pConstantBuffer, 0, nullptr, &cb, 0, 0);
-	this->pDevContext->VSSetConstantBuffers(0, 1, &this->pConstantBuffer);
+	this->render_prepare();
 
-	this->pDevContext->IASetInputLayout(pVertexLayout);
-	this->pDevContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-
-	pDevContext->VSSetShader(pVertexShader, nullptr, 0);
-	pDevContext->PSSetShader(pPixelShader, nullptr, 0);
-
-	pDevContext->RSSetViewports(1, pViewports);
+	this->pDevContext->RSSetViewports(1, pViewports);
 
 	//pDevContext->RSSetState();
-
-	Render::DrawEvent event{ this,nullptr,0,false};
+	ID3D11RasterizerState* r_state;
+	this->pDevContext->RSGetState(&r_state);
+	Render::DrawEvent event{ this,nullptr,r_state,0,false};
 	
 	for (auto* scene : this->pScenes)
 	{
