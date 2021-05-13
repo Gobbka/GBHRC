@@ -27,21 +27,22 @@ void Application::Render::Scene::update(Render::Engine* pEngine)
 	pContext->Unmap(this->pVBuffer->buffer, 0);
 }
 
-void Application::Render::Scene::render(Render::Engine* pEngine)
+void Application::Render::Scene::render(Render::DrawEvent* draw_event)
 {
 	DRAW_ASSERT;
 
 	UINT stride = sizeof(GVertex::Vertex);
 	UINT offset = 0;
 
-	pEngine->pDevContext->IASetVertexBuffers(0, 1, &this->pVBuffer->buffer, &stride, &offset);
+	draw_event->engine->pDevContext->IASetVertexBuffers(0, 1, &this->pVBuffer->buffer, &stride, &offset);
 
 	for (auto* element : this->pElements)
-		element->__draw(pEngine);
+		this->draw_element(element, draw_event);
+		//element->__draw(draw_event);
 
 
 	if (this->render_callback != nullptr)
-		render_callback(this, pEngine);
+		render_callback(draw_event);
 }
 
 void Application::Render::Scene::foreach(std::function<void(IRenderObject*)> const& nigger)

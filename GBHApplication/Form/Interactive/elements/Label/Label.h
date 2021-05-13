@@ -11,7 +11,7 @@ namespace Application
 		class Label final : public InteractiveElement, public Render::Text
 		{
 		private:
-			void __draw(Render::Engine* engine) override;
+			void draw(Render::DrawEvent*event) override;
 		public:
 			UINT size() override
 			{

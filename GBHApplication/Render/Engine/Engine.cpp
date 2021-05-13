@@ -218,12 +218,14 @@ void Engine::present()
 
 	//pDevContext->RSSetState();
 
-	//	this->spriteBatch->Begin();
-
+	Render::DrawEvent event{ this,nullptr,Application::get_window_resolution(),0,false};
+	
 	for (auto* scene : this->pScenes)
-		scene->render(this);
-
-	//this->spriteBatch->End();
+	{
+		event.scene = scene;
+		scene->render(&event);
+		event.scenes_completed++;
+	}
 
 	pDevContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }

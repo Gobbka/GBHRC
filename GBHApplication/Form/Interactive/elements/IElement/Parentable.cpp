@@ -45,6 +45,7 @@ void Application::UI::Parent::handle_mouse_move(float mX, float mY)
 		
 		if (
 			e_handled == false &&
+			element->hidden == false &&
 			element->point_belongs({(LONG)(mX),(LONG)(mY)})
 			)
 		{
@@ -69,10 +70,11 @@ void Application::UI::Parent::set_index_offset(UINT offset)
 	this->index_offset = offset;
 }
 
-void Application::UI::Parent::__draw(Render::Engine*engine)
+void Application::UI::Parent::draw(Render::DrawEvent* event)
 {
 	for (auto* element : this->elements)
-		element->draw(engine);
+		if(element->hidden == false)
+			element->draw(event);
 }
 
 void Application::UI::Parent::set_pos(float x, float y)
@@ -130,5 +132,11 @@ Application::UI::Parent* Application::UI::Parent::add_element(InteractiveElement
 {
 	this->elements.push_back(element);
 	return this;
+}
+
+Application::UI::Parent* Application::UI::Parent::add_element(InteractiveElement* element, bool visible)
+{
+	element->hidden = !visible;
+	return this->add_element(element);
 }
 

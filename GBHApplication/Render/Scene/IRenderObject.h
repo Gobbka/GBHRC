@@ -1,5 +1,6 @@
 #pragma once
 #include "../d3d/Vertex.h"
+#include "../Events/EngineEvents.h"
 
 namespace Application
 {
@@ -14,7 +15,7 @@ namespace Application
 			
 		public:
 			virtual ~IRenderObject() = default;
-			virtual void __draw(Render::Engine*engine)=0;
+			virtual void draw(Render::DrawEvent*event)=0;
 			virtual void set_pos(float x, float y) = 0;
 			virtual void set_color(float r, float g, float b) = 0;
 			virtual bool point_belongs(POINT point) = 0;

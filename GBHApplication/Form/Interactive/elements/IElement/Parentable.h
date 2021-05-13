@@ -29,7 +29,7 @@ namespace Application
 		protected:
 			void set_index_offset(UINT offset);
 		public:
-			void __draw(Render::Engine*pEngine) override;
+			void draw(Render::DrawEvent*event) override;
 			void set_pos(float x, float y) override;
 			void set_color(float r, float g, float b) override;
 			bool point_belongs(POINT point) override;
@@ -39,6 +39,7 @@ namespace Application
 			void init(Application::InteractiveForm* pForm) override;
 			
 			Parent* add_element(InteractiveElement* element);
+			Parent* add_element(InteractiveElement* element,bool visible);
 		};
 	}
 }

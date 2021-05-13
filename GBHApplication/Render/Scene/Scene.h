@@ -19,15 +19,17 @@ namespace Application
 			std::vector<Render::IRenderObject*> pElements;
 		protected:
 			Render::Resolution screen_resolution;
+
+			virtual void draw_element(Render::IRenderObject* obj,Render::DrawEvent*event)=0;
 		public:
 			// public variables
-			void(__stdcall* render_callback)(Scene* self,Render::Engine*engine) = nullptr;
+			void(__stdcall* render_callback)(Render::DrawEvent*event) = nullptr;
 			bool hidden = false;
 		public:
 			// public void's
 
 			void update(Render::Engine* pEngine);
-			void render(Render::Engine*pEngine);
+			void render(Render::DrawEvent*event);
 
 			void foreach(std::function<void(IRenderObject*)> const& nigger);
 			UINT total_size();
@@ -48,7 +50,7 @@ namespace Application
 
 			Resolution get_screen_resolution() const;
 
-		public:
+		protected:
 			~Scene();
 		};
 	}

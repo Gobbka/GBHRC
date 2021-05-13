@@ -2,6 +2,12 @@
 
 #include "elements/IElement/CanvasElement.h"
 
+void Application::Canvas::CanvasForm::draw_element(Render::IRenderObject* obj, Render::DrawEvent* event)
+{
+	if (((Canvas::CanvasElement*)obj)->render == true)
+		obj->draw(event);
+}
+
 void Application::Canvas::CanvasForm::update_markup(Application::Render::Engine* pEngine)
 {
 

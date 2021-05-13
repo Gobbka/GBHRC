@@ -52,7 +52,7 @@ namespace GBHRC
 		void make_esp_boxes();
 		void set_esp_scene(Application::Canvas::CanvasForm*form);
 
-		static void static_draw_callback(Application::Render::Scene* pScene,Application::Render::Engine*engine);
+		static void static_draw_callback(Application::Render::DrawEvent*event);
 		void life_cycle();
 	};
 

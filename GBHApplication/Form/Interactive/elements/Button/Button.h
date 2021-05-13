@@ -28,7 +28,7 @@ namespace Application
 			Render::Color color;
 			Render::Resolution resolution;
 		private:
-			void __draw(Render::Engine* engine) override;
+			void draw(Render::DrawEvent* event) override;
 		public:
 			Render::Color non_active_color;
 			
@@ -49,6 +49,9 @@ namespace Application
 
 			Render::Resolution get_resolution();
 
+			EventCallback onClick = default_event_callback;
+
+			void handle_mouse_up() override;
 			void handle_mouse_enter() override;
 			void handle_mouse_leave() override;
 		};

@@ -8,7 +8,7 @@ namespace Application
 		class Checkbox : public InteractiveElement
 		{
 		private:
-			void __draw(Render::Engine*engine) override;
+			void draw(Render::DrawEvent*event) override;
 			Render::Resolution resolution;
 			Render::Color color;
 

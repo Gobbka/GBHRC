@@ -4,6 +4,12 @@
 #include "../../Application.h"
 #include <windowsx.h>
 
+void Application::InteractiveForm::draw_element(Render::IRenderObject* obj, Render::DrawEvent* event)
+{
+	if (((UI::InteractiveElement*)obj)->hidden == false)
+		obj->draw(event);
+}
+
 void Application::InteractiveForm::window_proc(UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	if (this->hidden == true)
@@ -28,6 +34,7 @@ void Application::InteractiveForm::window_proc(UINT msg, WPARAM wParam, LPARAM l
 		{
 			auto* element = (UI::InteractiveElement*)this->element_at(i);
 			if (
+				element->hidden == false &&
 				e_handled == false &&
 				element->point_belongs(cursor)
 			)

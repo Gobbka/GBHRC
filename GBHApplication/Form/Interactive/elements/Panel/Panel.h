@@ -12,7 +12,7 @@ namespace Application
 			Render::Color color;
 			Render::Resolution resolution;
 		private:
-			void __draw(Render::Engine*engine) override;
+			void draw(Render::DrawEvent*event) override;
 		public:
 			UINT size() override
 			{

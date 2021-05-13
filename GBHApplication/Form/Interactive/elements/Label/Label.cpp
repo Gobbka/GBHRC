@@ -2,9 +2,9 @@
 #include "../../../../Render/Engine/Engine.h"
 #include "../../InteractiveForm.h"
 
-void Application::UI::Label::__draw(Render::Engine* engine)
+void Application::UI::Label::draw(Render::DrawEvent* event)
 {
-	Text::DrawInRect(engine, this->position);
+	Text::DrawInRect(event->engine, this->position);
 }
 
 Application::UI::Label::Label(Render::Position position, const char* text, DirectX::SpriteFont* font, Render::Color color)

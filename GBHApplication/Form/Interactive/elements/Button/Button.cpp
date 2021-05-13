@@ -2,14 +2,14 @@
 #include "../../../../Render/Engine/Engine.h"
 #include "../Label/Label.h"
 
-
-void Application::UI::Button::__draw(Render::Engine* engine)
+void Application::UI::Button::draw(Render::DrawEvent* event)
 {
-	engine->pDevContext->Draw(5, this->__index);
+	event->get_context()->Draw(5, this->__index);
 }
 
+
 Application::UI::Button::Button(Render::Position position, Render::Resolution resolution, Render::Color color, DirectX::SpriteFont* font,
-	const char* text)
+                                const char* text)
 		: text(position,text,font,{1,1,1})
 {
 	this->position = position;
@@ -85,6 +85,12 @@ Application::UI::InteractiveElement* Application::UI::Button::set_rect(float wid
 Application::Render::Resolution Application::UI::Button::get_resolution()
 {
 	return this->resolution;
+}
+
+void Application::UI::Button::handle_mouse_up()
+{
+	this->onClick(this);
+	InteractiveElement::handle_mouse_up();
 }
 
 void Application::UI::Button::handle_mouse_enter()

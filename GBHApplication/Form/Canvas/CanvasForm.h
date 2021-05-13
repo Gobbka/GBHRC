@@ -15,6 +15,8 @@ namespace Application {
 		class CanvasForm : public Application::Render::Scene
 		{
 		public:
+			void draw_element(Render::IRenderObject* obj, Render::DrawEvent* event) override;
+			
 			void update_markup(Application::Render::Engine* pEngine);
 			void add_element(CanvasElement* element);
 		};

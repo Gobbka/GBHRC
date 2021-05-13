@@ -219,10 +219,10 @@ void GBHRC::Context::set_esp_scene(Application::Canvas::CanvasForm* form)
     this->esp_scene = form;
 }
 
-void GBHRC::Context::static_draw_callback(Application::Render::Scene* pScene,Application::Render::Engine*engine)
+void GBHRC::Context::static_draw_callback(Application::Render::DrawEvent* event)
 {
     auto* context = GBHRC::Context::instance();
-    context->draw_esp(pScene,engine);
+    context->draw_esp(event->scene,event->engine);
 }
 
 void GBHRC::Context::life_cycle()

@@ -13,7 +13,7 @@ Application::UI::Panel* background_panel = new Application::UI::Panel({ 0,0 }, {
 Application::UI::Panel* topbar_panel = new Application::UI::Panel({ 0,0 }, { 400, 30 }, { FLOAT_COLORS_GREEN });
 Application::UI::Checkbox* aim_checkbox = new Application::UI::Checkbox({ 20,-50 }, { 20,20 }, { FLOAT_COLORS_GRAY });
 Application::UI::Checkbox* esp_checkbox = new Application::UI::Checkbox({ 20,0 }, { 20,20 }, { FLOAT_COLORS_GRAY });
-Application::UI::Checkbox* name_checkbox = new Application::UI::Checkbox({ 20,40 }, { 20,20 }, { FLOAT_COLORS_GRAY });
+Application::UI::Checkbox* name_checkbox = new Application::UI::Checkbox({ 20,-40 }, { 20,20 }, { FLOAT_COLORS_GRAY });
 Application::UI::Checkbox* jump_checkbox = new Application::UI::Checkbox({ 20,-130 }, { 20,20 }, { FLOAT_COLORS_GRAY });
 Application::UI::Checkbox* car_sh_checkbox = new Application::UI::Checkbox({ 20,-170 }, { 20,20 }, { FLOAT_COLORS_GRAY });
 
@@ -49,30 +49,37 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 
 		->add_element(aim_inner)
 		->add_element(misc_inner)
+		// ESP INNER
 		->add_element(
 			esp_inner
 			->add_element(esp_checkbox)
 			->add_element(name_checkbox)
 			->add_element(new Application::UI::Label{ {60,0},"ESP ACTIVE",esp_font,{FLOAT_COLORS_WHITE} })
-			->add_element(new Application::UI::Label{ {60,0},"NAME ESP",esp_font,{FLOAT_COLORS_WHITE} })
+			->add_element(new Application::UI::Label{ {60,-40},"NAME ESP",esp_font,{FLOAT_COLORS_WHITE} })
+		)
+		// END ESP INNER
+		// AIM INNER
+		->add_element(
+			aim_inner
+			->add_element(aim_checkbox)
+			->add_element(new Application::UI::Label{ {60,-45},"AIM ACTIVE",esp_font,{FLOAT_COLORS_WHITE} }),
+			false
+		)
+		// END AIM INNER
+		->add_element(
+			misc_inner
+			->add_element(jump_checkbox)
+			->add_element(car_sh_checkbox)
+			->add_element(new Application::UI::Label{ {60,-125},"FLY",esp_font,{FLOAT_COLORS_WHITE} })
+			->add_element(new Application::UI::Label{ {60,-165},"CAR SPEED",esp_font,{FLOAT_COLORS_WHITE} }),
+			false
 		)
 
 		->add_element(
 			topbar_panel
 			//->add_element(new Application::UI::Label{ {0,0},"GBHRC",esp_font,{FLOAT_COLORS_WHITE},{400,30} })
 		)
-		//->add_element(
-		//	aim_inner
-		//	->add_element(aim_checkbox)
-		//	->add_element(new Application::UI::Label{ {60,-45},"AIM ACTIVE",esp_font,{FLOAT_COLORS_WHITE} })
-		//)
-		//->add_element(
-		//	misc_inner
-		//	->add_element(jump_checkbox)
-		//	->add_element(car_sh_checkbox)
-		//	->add_element(new Application::UI::Label{ {60,-125},"FLY",esp_font,{FLOAT_COLORS_WHITE} })
-		//	->add_element(new Application::UI::Label{ {60,-165},"CAR SPEED",esp_font,{FLOAT_COLORS_WHITE} })
-		//)
+
 	;
 
 	form->initialize_components(pEngine);
@@ -101,6 +108,30 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 
 	car_sh_checkbox->onChange = [](Application::UI::UIElementEventArgs args)
 	{
+		GBHRC::Context::instance()->config->car_speed = (((Application::UI::Checkbox*)args)->is_checked());
+	};
+
+	esp_button->onClick = [esp_inner,aim_inner,misc_inner](Application::UI::UIElementEventArgs args)
+	{
+		esp_inner->hidden = false;
+		aim_inner->hidden = true;
+		misc_inner->hidden = true;
+		GBHRC::Context::instance()->config->car_speed = (((Application::UI::Checkbox*)args)->is_checked());
+	};
+
+	aim_button->onClick = [esp_inner, aim_inner, misc_inner](Application::UI::UIElementEventArgs args)
+	{
+		esp_inner->hidden = true;
+		aim_inner->hidden = false;
+		misc_inner->hidden = true;
+		GBHRC::Context::instance()->config->car_speed = (((Application::UI::Checkbox*)args)->is_checked());
+	};
+
+	misc_button->onClick = [esp_inner, aim_inner, misc_inner](Application::UI::UIElementEventArgs args)
+	{
+		esp_inner->hidden = true;
+		aim_inner->hidden = true;
+		misc_inner->hidden = false;
 		GBHRC::Context::instance()->config->car_speed = (((Application::UI::Checkbox*)args)->is_checked());
 	};
 }

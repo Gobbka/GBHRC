@@ -2,14 +2,14 @@
 #include "../../../../Managers/RectangleManager.h"
 #include "../../../../Render/Engine/Engine.h"
 
-void Application::UI::Checkbox::__draw(Render::Engine*engine)
+void Application::UI::Checkbox::draw(Render::DrawEvent* event)
 {
-	auto* pContext = engine->pDevContext;
-	
+	auto* pContext = event->get_context();
+
 	pContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
 	pContext->Draw(5, this->__index);
 	pContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-	pContext->Draw(5, this->__index+5);
+	pContext->Draw(5, this->__index + 5);
 }
 
 bool Application::UI::Checkbox::is_checked()

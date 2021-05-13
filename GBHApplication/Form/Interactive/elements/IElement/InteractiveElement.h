@@ -2,7 +2,7 @@
 #include "../../../../Render/Render.h"
 #include "../../../../Render/Scene/IRenderObject.h"
 #include "../../../../Application.h"
-
+#include "functional"
 
 namespace Application {
 	class InteractiveForm;
@@ -20,7 +20,7 @@ namespace Application
 		{
 		public:
 			virtual ~InteractiveElement() = default;
-			typedef void(__thiscall*EventCallback)(UIElementEventArgs args);
+			typedef std::function<void(UIElementEventArgs)> EventCallback;
 		protected:
 			// protected variables
 
@@ -28,7 +28,7 @@ namespace Application
 			Render::Position position{ 0,0 };
 			Parent* _parent = nullptr;
 		protected:
-			static void default_event_callback(UIElementEventArgs args) {};
+			static void default_event_callback (UIElementEventArgs args) {};
 		public:
 			// public variables
 			
@@ -60,10 +60,7 @@ namespace Application
 
 			void move_by(float x, float y) override = 0;
 			virtual void init(Application::InteractiveForm* pForm) = 0;
-			
-			void draw(Render::Engine* engine);
 		protected:
-			void __draw(Render::Engine* engine) override = 0;
 			
 		public:
 			// public callbacks

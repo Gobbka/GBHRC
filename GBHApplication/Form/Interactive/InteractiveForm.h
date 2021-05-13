@@ -8,8 +8,10 @@ namespace Application
 		class InteractiveElement;
 	}
 
-	class InteractiveForm : public Render::Scene
-	{		
+	class InteractiveForm final : public Render::Scene
+	{
+	private:
+		void draw_element(Render::IRenderObject* obj, Render::DrawEvent* event) override;
 	public:
 		struct DragStruct
 		{
@@ -19,6 +21,7 @@ namespace Application
 	private:
 		DragStruct* dragged = nullptr;
 	public:
+
 		void window_proc(UINT msg, WPARAM wParam, LPARAM lParam);
 		void drag_move(UI::InteractiveElement* element);
 		void free_drag_move();

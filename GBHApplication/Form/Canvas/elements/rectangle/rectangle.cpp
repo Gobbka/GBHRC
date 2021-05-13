@@ -16,10 +16,10 @@ void Application::Canvas::Rectangle::move_by(float x, float y)
 	CanvasElement::move_by(x, y);
 }
 
-void Application::Canvas::Rectangle::__draw(Render::Engine*engine)
+void Application::Canvas::Rectangle::draw(Render::DrawEvent* event)
 {
-	auto* p_context = engine->pDevContext;
-	
+	auto* p_context = event->get_context();
+
 	if (!this->render)
 		return;
 
@@ -28,15 +28,15 @@ void Application::Canvas::Rectangle::__draw(Render::Engine*engine)
 		p_context->Draw(5, this->__index);
 		return;
 	}
-	
+
 	static ID3D11RasterizerState* state;
-	if(state == nullptr)
+	if (state == nullptr)
 	{
 		D3D11_RASTERIZER_DESC rDesc{};
 		rDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_WIREFRAME;
 		rDesc.CullMode = D3D11_CULL_NONE;
 		rDesc.DepthClipEnable = true;
-		engine->pDevice->CreateRasterizerState(&rDesc, &state);
+		event->engine->pDevice->CreateRasterizerState(&rDesc, &state);
 	}
 	ID3D11RasterizerState* old_state;
 	p_context->RSGetState(&old_state);
