@@ -32,6 +32,7 @@ auto* misc_inner = new Application::UI::Panel{ {0,-80},{400,420},{FLOAT_COLORS_B
 // ELEMENTS
 auto* jump_checkbox = new Application::UI::Checkbox({ 20,-10 }, { 20,20 }, { FLOAT_COLORS_GRAY });
 auto* car_sh_checkbox = new Application::UI::Checkbox({ 20,-50 }, { 20,20 }, { FLOAT_COLORS_GRAY });
+auto* no_recoil_checkbox = new Application::UI::Checkbox({ 20,-90 }, { 20,20 }, { FLOAT_COLORS_GRAY });
 
 
 #pragma endregion 
@@ -49,8 +50,6 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 	auto* esp_button = new Application::UI::Button({ 0,-30 }, { 400/3,50 }, { COLOR_FROM_RGB(32,32,32) },esp_font, "ESP");
 	auto* aim_button = new Application::UI::Button({ 400/3,-30 }, { 400/3,50 }, { COLOR_FROM_RGB(32,32,32) },esp_font, "AIM");
 	auto* misc_button = new Application::UI::Button({ 2*400/3,-30 }, { 400/3+1,50 }, { COLOR_FROM_RGB(32,32,32) },esp_font, "MISC");
-
-
 	
 	form
 		->add_element(background_panel)
@@ -85,9 +84,11 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 			misc_inner
 			->add_element(jump_checkbox)
 			->add_element(car_sh_checkbox)
+			->add_element(no_recoil_checkbox)
 			->add_element(new Application::UI::Label{ {60,-10},"FLY",esp_font,{FLOAT_COLORS_WHITE} })
-			->add_element(new Application::UI::Label{ {60,-50},"CAR SPEED",esp_font,{FLOAT_COLORS_WHITE} }),
-			false
+			->add_element(new Application::UI::Label{ {60,-50},"CAR SPEED",esp_font,{FLOAT_COLORS_WHITE} })
+			->add_element(new Application::UI::Label{ {60,-90},"NO RECOIL",esp_font,{FLOAT_COLORS_WHITE} })
+			,false
 		)
 
 		->add_element(
@@ -124,6 +125,11 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 	car_sh_checkbox->onChange = [](Application::UI::UIElementEventArgs args)
 	{
 		GBHRC::Context::instance()->config->car_speed = (((Application::UI::Checkbox*)args)->is_checked());
+	};
+
+	no_recoil_checkbox->onChange = [](Application::UI::UIElementEventArgs args)
+	{
+		GBHRC::Context::instance()->config->no_recoil = (((Application::UI::Checkbox*)args)->is_checked());
 	};
 
 	esp_button->onClick = [](Application::UI::UIElementEventArgs args)

@@ -24,19 +24,19 @@
 #include "Asserts/VersionAssert/ClientVersionAssers.h"
 
 
-static_assert(offsetof(BrokeProtocol::ShBallistic, recoil) == 0X01E4,"WRONG OFFSET");
+// static_assert(offsetof(BrokeProtocol::ShBallistic, recoil) == 0X01E4,"WRONG OFFSET");
 
 HINSTANCE DllInst;
 Application::InteractiveForm* menu;
 Application::Canvas::CanvasForm* esp_scene;
 void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam);
 HWND main__window;
-Mono::Context* mono_context;
+extern Mono::Context* MonoContext;
 
 void init_callback(Application::Render::Engine* instance)
 {
     DEBUG_LOG("INIT CALLBACK");
-    mono_context->mono_thread_attach(mono_context->mono_get_root_domain());
+    MonoContext->mono_thread_attach(MonoContext->mono_get_root_domain());
 
     BrokeProtocol::show_local_message((char*)"<color=#39d668>[info]</color> GBHRC injected | press <color=#39d668>INSERT</color> to show menu!");
 	BrokeProtocol::show_local_message((char*)"<color=#3966d6>[info]</color> join our discord: " DISCORD_CHANNEL);
@@ -62,14 +62,13 @@ void init_callback(Application::Render::Engine* instance)
     DEBUG_LOG("ESP REGISTERED");
 	
     instance
-		->append_scene(esp_scene)
         ->append_scene(menu)
+		->append_scene(esp_scene)
 	;
 
     DEBUG_LOG("SCENE'S APPENDED");
 
     esp_scene->update_markup(instance);
-
 }
 
 
@@ -85,14 +84,14 @@ void MainThread()
 #endif
 
     {
-        mono_context = Mono::Context::get_context();
+        MonoContext = Mono::Context::get_context();
 
-        mono_context->mono_thread_attach(mono_context->mono_get_root_domain());
+        MonoContext->mono_thread_attach(MonoContext->mono_get_root_domain());
         DEBUG_LOG("CHECKING VERSION...");
         if(ClientVersionAsserts::check_bp_version()==false)
         {
         	// abort without refs to exit()
-            mono_context->mono_runtime_invoke(nullptr, nullptr, nullptr, nullptr);
+            MonoContext->mono_runtime_invoke(nullptr, nullptr, nullptr, nullptr);
             return;
         }
     }
@@ -154,19 +153,7 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
 
     	if(wParam == VK_F2){
 
-            Mono::Dumper::dump_object((Mono::MonoObject*)BrokeProtocol::GetLocalPlayer()->curMount);
-            DEBUG_LOG("POINTER: " << BrokeProtocol::GetLocalPlayer()->curMount);
-      //      auto* weapon = BrokeProtocol::GetLocalPlayer()->current_weapon();
-      //      
-    		//if(weapon->ammoItem != nullptr)
-    		//{
-      //          DEBUG_LOG("NIGGER: "<<weapon);
-    		//	// weapon can fire
-      //          auto fire_weapon = (BrokeProtocol::ShBallistic*)weapon;
-      //          fire_weapon->accuracy = 0;
-      //          fire_weapon->recoil = 0;
-      //          fire_weapon->range = 6000;
-    		//}
+
     	}
 
     	if(wParam == VK_LEFT)

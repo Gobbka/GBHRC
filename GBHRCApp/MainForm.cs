@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GBHRCApp.API;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -33,7 +34,7 @@ namespace GBHRCApp
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            GBHRCApi.Inject();
         }
 
         private void button4_Click(object sender, EventArgs e)

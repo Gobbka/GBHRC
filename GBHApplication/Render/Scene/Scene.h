@@ -23,7 +23,7 @@ namespace Application
 			virtual void draw_element(Render::IRenderObject* obj,Render::DrawEvent*event)=0;
 		public:
 			// public variables
-			void(__stdcall* render_callback)(Render::DrawEvent*event) = nullptr;
+			void(__cdecl* render_callback)(Render::DrawEvent*event) = nullptr;
 			bool hidden = false;
 		public:
 			// public void's

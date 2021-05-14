@@ -49,12 +49,18 @@ BrokeProtocol::Structs::Evaluator* BrokeProtocol::get_evaluator()
 
 BrokeProtocol::Structs::GlobalTypes* BrokeProtocol::get_global_types()
 {
-    return get_evaluator()->GlobalTypes;
+    auto* evaluator = get_evaluator();
+	if(evaluator!=nullptr)
+		return evaluator->GlobalTypes;
+    return nullptr;
 }
 
 BrokeProtocol::Managers::ShManager* BrokeProtocol::get_manager()
 {
-    return get_global_types()->manager;
+    auto* gtypes = get_global_types();
+	if(gtypes!=nullptr)
+		return get_global_types()->manager;
+    return nullptr;
 }
 
 BrokeProtocol::Players::ShPlayer* BrokeProtocol::GetLocalPlayer()

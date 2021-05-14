@@ -11,5 +11,8 @@ namespace GBHRCApp.API
     {
         [DllImport("GBHRC_API.dll", CharSet = CharSet.Ansi,CallingConvention =CallingConvention.StdCall)]
         public static extern bool SendLuaScript(char[] lua_text);
+
+        [DllImport("GBHRC_API.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern bool Inject();
     }
 }

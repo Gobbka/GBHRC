@@ -42,6 +42,11 @@ BOOL inject()
 {
 
 	DWORD process_id = GetProcessId();
+	if(process_id)
+	{
+		MessageBox(0, L"INJECTION ERROR", L"Process cannot be found", MB_OK | MB_ICONERROR);
+		return false;
+	}
 
 	HANDLE hProc = OpenProcess(PROCESS_ALL_ACCESS, 0, process_id);
 
@@ -59,7 +64,7 @@ BOOL inject()
 
 	char* dllname = (char*)malloc(MAX_PATH);
 
-	GetFullPathName(L"GBP.dll", MAX_PATH, (LPWSTR)dllname, NULL);
+	GetFullPathName(L"GBHRC.dll", MAX_PATH, (LPWSTR)dllname, NULL);
 
 	if (dllname != nullptr)
 		WriteProcessMemory(hProc, alloc, dllname, strlen(dllname) + 1, nullptr);

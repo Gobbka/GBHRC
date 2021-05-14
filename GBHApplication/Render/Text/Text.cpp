@@ -6,6 +6,9 @@ Application::Render::Text::Text(DirectX::SpriteFont* font, TextAlign text_align)
 	this->font = font;
 	this->text_align = text_align;
 	this->color = { 1,1,1 };
+	this->limitRect = { 0,0 };
+	this->text = nullptr;
+	this->text_resolution = { 0,0 };
 }
 
 Application::Render::Text::~Text()
@@ -25,7 +28,7 @@ void Application::Render::Text::set_text(const char* text)
 	this->text_resolution = { (UINT)rect.right,(UINT)rect.bottom };
 }
 
-void Application::Render::Text::DrawInRect(Render::DrawEvent* event, Render::Position position,bool scalable)
+void Application::Render::Text::DrawInRect(Render::DrawEvent* event, Render::Position position,bool scalable) const
 {
 
 	auto* batch = event->engine->get_batch();
@@ -33,6 +36,8 @@ void Application::Render::Text::DrawInRect(Render::DrawEvent* event, Render::Pos
 	auto center_pos = Application::point_to_center(position);
 	auto scale = 1.f;
 
+	// center calculations with scale is broken
+	// so TODO: fix it
 	if (this->limitRect.width != 0 || this->limitRect.height != 0)
 	{
 		auto font_rect = this->text_resolution;

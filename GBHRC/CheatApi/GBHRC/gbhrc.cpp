@@ -9,6 +9,7 @@
 #include "../Tools/3dMatrix.h"
 #include "Form/Canvas/elements/rectangle/rectangle.h"
 #include "Application.h"
+#include "../BrokeProtocol/classes/Guns/ShBallistic.h"
 #include "Render/Text/Text.h"
 
 GBHRC::Context::Context()
@@ -42,6 +43,7 @@ void GBHRC::Context::draw_esp(Application::Render::Scene* pScene,Application::Re
         UINT element_index = 0;
 
         float min_target_distance = 99999.f;
+    	
         EspBox* min_target_box=nullptr;
 
         engine->get_batch()->Begin();
@@ -54,6 +56,7 @@ void GBHRC::Context::draw_esp(Application::Render::Scene* pScene,Application::Re
                 continue;
 
             auto* pos = player->rotationT->get_position();
+            auto* local_pos = local_player->rotationT->get_position();
 
             const auto point_top = Matrix4X4::worldToScreen(view_matrix, projection_m, { pos->x,pos->y + 1.5f,pos->z }, camera_resolution);
 
@@ -120,11 +123,18 @@ void GBHRC::Context::draw_esp(Application::Render::Scene* pScene,Application::Re
             	
                 if (this->config->aim_assist) {
                 	
-                    auto distance = sqrt(pow(point_top.x, 2) + pow(point_top.y, 2));
-                    if (distance <= this->config->fov_size && distance < min_target_distance)
+                    auto display_distance = sqrt(pow(point_top.x, 2) + pow(point_top.y, 2));
+                    auto map_distance = sqrt(pow(local_pos->x-pos->x, 2) + pow(local_pos->z-pos->z, 2));
+                	
+                    if (
+                        display_distance <= this->config->fov_size &&
+                        min(display_distance, map_distance) <= min_target_distance
+                        )
                     {
-                        aim_target = player->rotationT;
-                        min_target_distance = distance;
+                        this->aim_target = player->rotationT;
+                    	
+                        min_target_distance = min(display_distance,map_distance);
+                    	
                         min_target_box = esp_box;
                     }
                 }
@@ -142,7 +152,6 @@ void GBHRC::Context::draw_esp(Application::Render::Scene* pScene,Application::Re
             esp_box->box->render = false;
             esp_box->max_health_box->render = false;
             esp_box->health_box->render = false;
-        	
         }
 
         if (min_target_box == nullptr)
@@ -243,6 +252,20 @@ void GBHRC::Context::life_cycle()
                 local_player->curMount->maxSpeed = 500.f;
                 local_player->curMount->speedLimit = 500.f;
             }
+
+        	if(config->no_recoil && local_player->curEquipable != nullptr)
+        	{
+                auto* weapon = BrokeProtocol::GetLocalPlayer()->current_weapon();
+
+                if (weapon->ammoItem != nullptr)
+                {
+                    // weapon can fire
+                    auto fire_weapon = (BrokeProtocol::ShBallistic*)weapon;
+                    fire_weapon->accuracy = 0;
+                    fire_weapon->recoil = 0;
+                    fire_weapon->range = 6000;
+                }
+        	}
 
             if (config->aim_assist == true && aim_active && aim_target != nullptr)
             {

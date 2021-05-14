@@ -6,6 +6,8 @@
 
 using namespace Mono;
 
+Mono::Context* MonoContext;
+
 void Context::mono_field_from_name_get_value(MonoObject* object, const char* name, void* pValue)
 {
 	auto* pClass = mono_object_get_class(object);
@@ -102,7 +104,9 @@ Context::Context()
 
 Mono::Context* Context::get_context()
 {
-	static Mono::Context* context = new Mono::Context();
-	return context;
+	if (MonoContext == nullptr)
+		MonoContext = new Mono::Context();
+	
+	return MonoContext;
 }
 

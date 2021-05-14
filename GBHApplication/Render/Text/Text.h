@@ -32,7 +32,7 @@ namespace Application
 
 			void set_font(DirectX::SpriteFont* font);
 			void set_text(const char*text);
-			void DrawInRect(Render::DrawEvent* event,Render::Position pos,bool scale=false);
+			void DrawInRect(Render::DrawEvent* event,Render::Position pos,bool scale=false) const;
 		};
 	}
 }
