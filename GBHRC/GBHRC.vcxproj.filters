@@ -209,4 +209,7 @@
     </None>
     <None Include="..\resource\visby.spritefont" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="todo.txt" />
+  </ItemGroup>
 </Project>

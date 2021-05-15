@@ -152,8 +152,12 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
         }
 
     	if(wParam == VK_F2){
-
-
+            auto playrator = BrokeProtocol::GetPlayersCollection()->items->iterator();
+    		while(playrator.next())
+    		{
+                auto* item = playrator.item();
+                DEBUG_LOG("ID: " << item->ID << " " << item->health);
+    		}
     	}
 
     	if(wParam == VK_LEFT)

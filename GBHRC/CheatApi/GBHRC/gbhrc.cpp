@@ -9,6 +9,7 @@
 #include "../Tools/3dMatrix.h"
 #include "Form/Canvas/elements/rectangle/rectangle.h"
 #include "Application.h"
+#include "../../Forms/Menu/MenuMain.h"
 #include "../BrokeProtocol/classes/Guns/ShBallistic.h"
 #include "Render/Text/Text.h"
 
@@ -17,13 +18,103 @@ GBHRC::Context::Context()
 	this->config = new Config();
 }
 
-void GBHRC::Context::draw_esp(Application::Render::Scene* pScene,Application::Render::Engine*engine)
-{
 
-    static DirectX::SpriteFont* esp_font = engine->create_font(
-        (void*)LoadResource(DllInst, FindResourceW(DllInst, MAKEINTRESOURCEW(IDR_VISBY_ROUND), L"SPRITEFONT")),
-        0x6608
-    );
+
+void GBHRC::Context::draw_esp(Application::Render::DrawEvent* event)
+{
+    if(BrokeProtocol::get_manager() != nullptr && BrokeProtocol::get_manager()->host != nullptr)
+    {
+        auto* local_player = BrokeProtocol::GetLocalPlayer();
+        auto* local_pos = local_player->rotationT->get_position();
+        auto* local_camera = BrokeProtocol::get_camera();
+        auto* view_matrix = local_camera->worldCamera->worldToCameraMatrix();
+        auto* projection_m = local_camera->worldCamera->projectionMatrix();
+        auto  camera_resolution = Application::Render::Resolution{ (UINT)local_camera->worldCamera->get_pixelWidth() ,(UINT)local_camera->worldCamera->get_pixelHeight() };
+
+        auto player_iterator = BrokeProtocol::GetPlayersCollection()->items->iterator();
+
+        const auto elements_size = esp_boxes.size();
+        UINT element_index = 0;
+        EspBox* min_target_box = nullptr;
+        EspPlayer min_aimbot_target{ nullptr };
+    	
+        while (player_iterator.next())
+        {
+            EspPlayer player;
+            {
+                auto* sh_player = player_iterator.item();
+            	if(sh_player == local_player || sh_player->health <= 0)
+                    goto next_element;
+                auto* pos = sh_player->rotationT->get_position();
+                const auto point_top = Matrix4X4::worldToScreen(view_matrix, projection_m, { pos->x,pos->y + 1.5f,pos->z }, camera_resolution);
+
+                if(point_top.z < 0)
+                    goto next_element;
+            	
+                player = { sh_player,point_top,0,0,0};
+            }
+        	
+        	// draw player
+            if (this->config->esp_active)
+            {
+                auto* pos = player.player->rotationT->get_position();
+                player.bottom_point = Matrix4X4::worldToScreen(view_matrix, projection_m, { pos->x,pos->y - player.player->stance->capsuleHeight,pos->z }, camera_resolution);
+                player.display_distance = sqrt(pow(player.top_point.x, 2) + pow(player.top_point.y, 2));
+                player.map_distance = sqrt(pow(local_pos->x - pos->x, 2) + pow(local_pos->z - pos->z, 2));
+            	
+                this->draw_player(event,element_index, camera_resolution, &player);
+            }
+
+        	// check player for aim target status
+        	if(this->config->aim_assist)
+        	{
+        		if(this->is_aim_target(&min_aimbot_target,&player))
+        		{
+                    min_aimbot_target = player;
+                    min_target_box = this->esp_boxes[element_index];
+        			
+                    this->aim_target = player.player->rotationT;
+        		}
+        	}
+
+            next_element:
+            element_index++;
+        }
+
+        for (; element_index < elements_size; element_index++)
+        {
+            //auto* esp_box = (Application::Canvas::Rectangle*)esp_scene->element_at(element_index);
+            auto* esp_box = this->esp_boxes[element_index];
+            esp_box->box->render = false;
+            esp_box->max_health_box->render = false;
+            esp_box->health_box->render = false;
+        }
+
+        if (min_target_box == nullptr)
+        {
+            aim_target = nullptr;
+        }
+        else
+        {
+            min_target_box->box->set_color(0.5f, 0, 0);
+        }
+    }
+
+
+	
+    // draw player
+
+	// check if this player is new aim target
+	
+    
+    return;
+    //                  //
+	// :: DEPRECATED :: //
+	//                  //
+	
+    auto* engine = event->engine;
+	
+
 
     if (this->config->esp_active && BrokeProtocol::get_manager() != nullptr && BrokeProtocol::get_manager()->host != nullptr)
     {
@@ -33,9 +124,6 @@ void GBHRC::Context::draw_esp(Application::Render::Scene* pScene,Application::Re
         auto* view_matrix = local_camera->worldCamera->worldToCameraMatrix();
         auto* projection_m = local_camera->worldCamera->projectionMatrix();
 
-        auto* players = BrokeProtocol::GetPlayersCollection();
-        auto* ptr = players->items->pointer();
-        const auto players_size = players->items->size();
         const auto elements_size = esp_boxes.size();
 
         const Application::Render::Resolution camera_resolution = { local_camera->worldCamera->get_pixelWidth() ,local_camera->worldCamera->get_pixelHeight() };
@@ -48,9 +136,11 @@ void GBHRC::Context::draw_esp(Application::Render::Scene* pScene,Application::Re
 
         engine->get_batch()->Begin();
 
-        for (int i = 0; i < players_size && element_index < elements_size; i++)
+        auto player_iterator = BrokeProtocol::GetPlayersCollection()->items->iterator();
+
+        while(player_iterator.next() && element_index < elements_size)
         {
-            auto* player = ptr[i];
+            auto* player = player_iterator.item();
 
             if (player == local_player || player->health == 0.f)
                 continue;
@@ -91,35 +181,13 @@ void GBHRC::Context::draw_esp(Application::Render::Scene* pScene,Application::Re
                 }
                 element_index++;
 
-                auto rect = esp_font->MeasureDrawBounds((wchar_t*)player->username->array, DirectX::XMFLOAT2(0,0));
+            	if(this->is_friend((wchar_t*)&player->username->array))
+            	{
+                    esp_box->health_box->set_color(COLOR_FROM_RGB(75, 128, 207));
+                    continue;
+            	}
 
-            	if(this->config->esp_draw_name)
-	                esp_font->DrawString(
-	                    engine->get_batch(),
-	                    (wchar_t*)&player->username->array,
-	                    DirectX::XMFLOAT2(
-	                        point_top.x + camera_resolution.width/2 - (rect.right) / 2 * 0.5f,
-                            camera_resolution.height/2 - point_top.y - (rect.bottom) * 0.5
-	                    ),
-	                    DirectX::Colors::White, 
-	                    0.0f,
-	                    DirectX::XMFLOAT2(0.0f, 0.0f),
-	                    DirectX::XMFLOAT2(0.5f, 0.5f)
-	                );
-            	
-                if(this->config->esp_draw_gun_name)
-	                esp_font->DrawString(
-	                    engine->get_batch(),
-	                    (wchar_t*)&player->curEquipable->itemName->array,
-	                    DirectX::XMFLOAT2(
-	                        point_bottom.x + camera_resolution.width / 2 - (rect.right) / 2 * 0.5f,
-	                        camera_resolution.height / 2 - point_bottom.y + (rect.bottom) * 0.5f
-	                    ),
-	                    DirectX::Colors::White,
-	                    0.0f,
-	                    DirectX::XMFLOAT2(0.0f, 0.0f),
-	                    DirectX::XMFLOAT2(0.5, 0.5)
-	                );
+
             	
                 if (this->config->aim_assist) {
                 	
@@ -164,6 +232,98 @@ void GBHRC::Context::draw_esp(Application::Render::Scene* pScene,Application::Re
     }
 }
 
+void GBHRC::Context::draw_player(Application::Render::DrawEvent* event,UINT element_index,Application::Render::Resolution camera_resolution ,EspPlayer* player)
+{
+    if (player->top_point.z <= 0)
+        return;
+	
+    auto* engine = event->engine;
+	
+    static DirectX::SpriteFont* esp_font = engine->create_font(
+        (void*)LoadResource(DllInst, FindResourceW(DllInst, MAKEINTRESOURCEW(IDR_VISBY_ROUND), L"SPRITEFONT")),
+        0x6608
+    );
+
+    auto point_top = player->top_point;
+    auto point_bottom = player->bottom_point;
+	
+    const auto player_height = round(abs(point_top.y - point_bottom.y));
+
+    auto* esp_box = this->esp_boxes[element_index];
+    {
+        //auto* box = esp_box->box;
+        //box->set_pos(point_top.x, point_top.y);
+        //box->set_resolution((float)abs(point_top.x - point_bottom.x), (float)abs(point_top.y - point_bottom.y));
+        //box->render = true;
+    }
+    if (this->config->esp_health_active)
+    {
+        auto* max_h_box = esp_box->max_health_box;
+        max_h_box->set_pos(point_top.x,point_top.y);
+        max_h_box->set_resolution(10, player_height - 1);
+        max_h_box->render = true;
+
+        auto* h_box = esp_box->health_box;
+
+        const auto nigger = player_height * (player->player->health / player->player->healthLimit);
+
+        h_box->set_pos(point_top.x, point_top.y - (player_height - nigger));
+
+        h_box->set_resolution(10, nigger);
+        h_box->render = true;
+    }
+
+    if (this->is_friend((wchar_t*)&player->player->username->array))
+    {
+        esp_box->health_box->set_color(COLOR_FROM_RGB(75, 128, 207));
+    }
+
+    event->engine->get_batch()->Begin();
+    auto rect = esp_font->MeasureDrawBounds((wchar_t*)player->player->username->array, DirectX::XMFLOAT2(0, 0));
+
+    if (this->config->esp_draw_name)
+        esp_font->DrawString(
+            engine->get_batch(),
+            (wchar_t*)&player->player->username->array,
+            DirectX::XMFLOAT2(
+                point_top.x + camera_resolution.width / 2 - (rect.right) / 2 * 0.5f,
+                camera_resolution.height / 2 - point_top.y - (rect.bottom) * 0.5
+            ),
+            DirectX::Colors::White,
+            0.0f,
+            DirectX::XMFLOAT2(0.0f, 0.0f),
+            DirectX::XMFLOAT2(0.5f, 0.5f)
+        );
+
+    if (this->config->esp_draw_gun_name)
+        esp_font->DrawString(
+            engine->get_batch(),
+            (wchar_t*)&player->player->curEquipable->itemName->array,
+            DirectX::XMFLOAT2(
+                point_bottom.x + camera_resolution.width / 2 - (rect.right) / 2 * 0.5f,
+                camera_resolution.height / 2 - point_bottom.y + (rect.bottom) * 0.5f
+            ),
+            DirectX::Colors::White,
+            0.0f,
+            DirectX::XMFLOAT2(0.0f, 0.0f),
+            DirectX::XMFLOAT2(0.5, 0.5)
+        );
+    event->engine->get_batch()->End();
+}
+
+bool GBHRC::Context::is_aim_target(EspPlayer* old_player, EspPlayer* new_player) const
+{
+	if(old_player->player!=nullptr)
+	{
+        return (
+            new_player->display_distance <= this->config->fov_size &&
+            min(new_player->display_distance, new_player->map_distance) <= min(old_player->display_distance, old_player->map_distance)
+            );
+    }
+    else
+        return new_player->display_distance <= this->config->fov_size;
+}
+
 void GBHRC::Context::set_esp(bool status)
 {
     this->config->esp_active = status;
@@ -181,6 +341,21 @@ void GBHRC::Context::set_esp(bool status)
 		}
             
 	}
+}
+
+bool GBHRC::Context::is_friend(wchar_t* nickname)
+{
+	for (auto* friendn : this->friend_list)
+	{
+        if (wcscmp(nickname, friendn) == 0)
+            return true;
+	}
+    return false;
+}
+
+void GBHRC::Context::add_friend(wchar_t* nickname)
+{
+    this->friend_list.push_back(nickname);
 }
 
 void GBHRC::Context::implement(HMODULE DllInst)
@@ -231,7 +406,7 @@ void GBHRC::Context::set_esp_scene(Application::Canvas::CanvasForm* form)
 void GBHRC::Context::static_draw_callback(Application::Render::DrawEvent* event)
 {
     auto* context = GBHRC::Context::instance();
-    context->draw_esp(event->scene,event->engine);
+    context->draw_esp(event);
 }
 
 void GBHRC::Context::life_cycle()

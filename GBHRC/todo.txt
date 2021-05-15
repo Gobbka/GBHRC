@@ -1,0 +1,4 @@
+TODO:
+~= change AudioSource
+~= complete friend list/menu
+~= make loader

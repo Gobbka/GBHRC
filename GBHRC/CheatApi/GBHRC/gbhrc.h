@@ -25,6 +25,15 @@ namespace GBHRC
 		Application::Canvas::Rectangle* max_health_box;
 		Application::Canvas::Rectangle* health_box;
 	};
+
+	struct EspPlayer
+	{
+		BrokeProtocol::Players::ShPlayer* player;
+		Vector3 top_point;
+		Vector3 bottom_point;
+		float map_distance;
+		float display_distance;
+	};
 	
 	class Context
 	{
@@ -34,12 +43,18 @@ namespace GBHRC
 		
 		Context();
 
-		void draw_esp(Application::Render::Scene* pScene,Application::Render::Engine*engine);
+		void draw_esp(Application::Render::DrawEvent*event);
+		void draw_player(Application::Render::DrawEvent* event,UINT element_index,Application::Render::Resolution camera_resolution,EspPlayer*player);
+		bool is_aim_target(EspPlayer* old_player, EspPlayer* new_player) const;
 
 		std::vector<EspBox*> esp_boxes;
 		Application::Canvas::CanvasForm* esp_scene;
+		std::vector<wchar_t*> friend_list;
 	public:
 		void set_esp(bool status);
+		bool is_friend(wchar_t* nickname);
+
+		void add_friend(wchar_t* nickname);
 		
 		Config* config;
 
