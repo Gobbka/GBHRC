@@ -8,8 +8,7 @@
 #include "../BrokeProtocol/BrokeProtocol.h"
 #include "../Tools/3dMatrix.h"
 #include "Form/Canvas/elements/rectangle/rectangle.h"
-#include "Application.h"
-#include "../../Forms/Menu/MenuMain.h"
+#include "FloatColors.h"
 #include "../BrokeProtocol/classes/Guns/ShBallistic.h"
 #include "Render/Text/Text.h"
 
@@ -20,11 +19,13 @@ GBHRC::Context::Context()
 
 
 
-void GBHRC::Context::draw_esp(Application::Render::DrawEvent* event)
+void GBHRC::Context::render_callback(Application::Render::DrawEvent* event)
 {
     if(BrokeProtocol::get_manager() != nullptr && BrokeProtocol::get_manager()->host != nullptr)
     {
         auto* local_player = BrokeProtocol::GetLocalPlayer();
+        if (local_player == nullptr)
+            return;
         auto* local_pos = local_player->rotationT->get_position();
         auto* local_camera = BrokeProtocol::get_camera();
         auto* view_matrix = local_camera->worldCamera->worldToCameraMatrix();
@@ -44,12 +45,12 @@ void GBHRC::Context::draw_esp(Application::Render::DrawEvent* event)
             {
                 auto* sh_player = player_iterator.item();
             	if(sh_player == local_player || sh_player->health <= 0)
-                    goto next_element;
+                    continue;
                 auto* pos = sh_player->rotationT->get_position();
                 const auto point_top = Matrix4X4::worldToScreen(view_matrix, projection_m, { pos->x,pos->y + 1.5f,pos->z }, camera_resolution);
 
-                if(point_top.z < 0)
-                    goto next_element;
+                if (point_top.z < 0)
+                    continue;
             	
                 player = { sh_player,point_top,0,0,0};
             }
@@ -77,7 +78,6 @@ void GBHRC::Context::draw_esp(Application::Render::DrawEvent* event)
         		}
         	}
 
-            next_element:
             element_index++;
         }
 
@@ -95,137 +95,6 @@ void GBHRC::Context::draw_esp(Application::Render::DrawEvent* event)
             aim_target = nullptr;
         }
         else
-        {
-            min_target_box->box->set_color(0.5f, 0, 0);
-        }
-    }
-
-
-	
-    // draw player
-
-	// check if this player is new aim target
-	
-    
-    return;
-    //                  //
-	// :: DEPRECATED :: //
-	//                  //
-	
-    auto* engine = event->engine;
-	
-
-
-    if (this->config->esp_active && BrokeProtocol::get_manager() != nullptr && BrokeProtocol::get_manager()->host != nullptr)
-    {
-        auto* local_player = BrokeProtocol::GetLocalPlayer();
-
-        auto* local_camera = BrokeProtocol::get_camera();
-        auto* view_matrix = local_camera->worldCamera->worldToCameraMatrix();
-        auto* projection_m = local_camera->worldCamera->projectionMatrix();
-
-        const auto elements_size = esp_boxes.size();
-
-        const Application::Render::Resolution camera_resolution = { local_camera->worldCamera->get_pixelWidth() ,local_camera->worldCamera->get_pixelHeight() };
-
-        UINT element_index = 0;
-
-        float min_target_distance = 99999.f;
-    	
-        EspBox* min_target_box=nullptr;
-
-        engine->get_batch()->Begin();
-
-        auto player_iterator = BrokeProtocol::GetPlayersCollection()->items->iterator();
-
-        while(player_iterator.next() && element_index < elements_size)
-        {
-            auto* player = player_iterator.item();
-
-            if (player == local_player || player->health == 0.f)
-                continue;
-
-            auto* pos = player->rotationT->get_position();
-            auto* local_pos = local_player->rotationT->get_position();
-
-            const auto point_top = Matrix4X4::worldToScreen(view_matrix, projection_m, { pos->x,pos->y + 1.5f,pos->z }, camera_resolution);
-
-            if (point_top.z > 0)
-            {
-                const auto point_bottom = Matrix4X4::worldToScreen(view_matrix, projection_m, { pos->x,pos->y - player->stance->capsuleHeight,pos->z }, camera_resolution);
-
-                const auto player_height = round(abs(point_top.y - point_bottom.y));
-            	
-                auto* esp_box = this->esp_boxes[element_index];
-                {
-                    //auto* box = esp_box->box;
-                    //box->set_pos(point_top.x, point_top.y);
-                    //box->set_resolution((float)abs(point_top.x - point_bottom.x), (float)abs(point_top.y - point_bottom.y));
-                    //box->render = true;
-                }
-            	if(this->config->esp_health_active)
-                {
-                    auto* max_h_box = esp_box->max_health_box;
-                    max_h_box->set_pos(point_top.x, point_top.y);
-                    max_h_box->set_resolution(10, player_height-1);
-                    max_h_box->render = true;
-
-                    auto* h_box = esp_box->health_box;
-
-                    const auto nigger = player_height * (player->health / player->healthLimit);
-                	
-                    h_box->set_pos(point_top.x, point_top.y - (player_height - nigger));
-                	
-                    h_box->set_resolution(10, nigger);
-                    h_box->render = true;
-                }
-                element_index++;
-
-            	if(this->is_friend((wchar_t*)&player->username->array))
-            	{
-                    esp_box->health_box->set_color(COLOR_FROM_RGB(75, 128, 207));
-                    continue;
-            	}
-
-
-            	
-                if (this->config->aim_assist) {
-                	
-                    auto display_distance = sqrt(pow(point_top.x, 2) + pow(point_top.y, 2));
-                    auto map_distance = sqrt(pow(local_pos->x-pos->x, 2) + pow(local_pos->z-pos->z, 2));
-                	
-                    if (
-                        display_distance <= this->config->fov_size &&
-                        min(display_distance, map_distance) <= min_target_distance
-                        )
-                    {
-                        this->aim_target = player->rotationT;
-                    	
-                        min_target_distance = min(display_distance,map_distance);
-                    	
-                        min_target_box = esp_box;
-                    }
-                }
-            	
-                esp_box->box->set_color(0, 0.8f, 0);
-            }
-        }
-
-        engine->get_batch()->End();
-
-        for (; element_index < elements_size; element_index++)
-        {
-            //auto* esp_box = (Application::Canvas::Rectangle*)esp_scene->element_at(element_index);
-            auto* esp_box = this->esp_boxes[element_index];
-            esp_box->box->render = false;
-            esp_box->max_health_box->render = false;
-            esp_box->health_box->render = false;
-        }
-
-        if (min_target_box == nullptr)
-        {
-            aim_target = nullptr;
-        }else
         {
             min_target_box->box->set_color(0.5f, 0, 0);
         }
@@ -317,7 +186,7 @@ bool GBHRC::Context::is_aim_target(EspPlayer* old_player, EspPlayer* new_player)
 	{
         return (
             new_player->display_distance <= this->config->fov_size &&
-            min(new_player->display_distance, new_player->map_distance) <= min(old_player->display_distance, old_player->map_distance)
+            new_player->display_distance <= old_player->display_distance
             );
     }
     else
@@ -339,7 +208,6 @@ void GBHRC::Context::set_esp(bool status)
             element->health_box->render = false;
             element->max_health_box->render = false;
 		}
-            
 	}
 }
 
@@ -356,6 +224,19 @@ bool GBHRC::Context::is_friend(wchar_t* nickname)
 void GBHRC::Context::add_friend(wchar_t* nickname)
 {
     this->friend_list.push_back(nickname);
+}
+
+void GBHRC::Context::remove_friend(wchar_t* nickname)
+{
+    for(int i =0;i<friend_list.size();i++)
+    {
+        auto* name = friend_list[i];
+        if (wcscmp(name, nickname) == 0)
+        {
+            this->friend_list.erase(friend_list.begin() + i);
+            return;
+        }
+    }
 }
 
 void GBHRC::Context::implement(HMODULE DllInst)
@@ -406,7 +287,7 @@ void GBHRC::Context::set_esp_scene(Application::Canvas::CanvasForm* form)
 void GBHRC::Context::static_draw_callback(Application::Render::DrawEvent* event)
 {
     auto* context = GBHRC::Context::instance();
-    context->draw_esp(event);
+    context->render_callback(event);
 }
 
 void GBHRC::Context::life_cycle()

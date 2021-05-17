@@ -22,12 +22,14 @@
 #include "includes/clientdefs.h"
 
 #include "Asserts/VersionAssert/ClientVersionAssers.h"
+#include "Forms/FriendList/FriendList.h"
 
 
 // static_assert(offsetof(BrokeProtocol::ShBallistic, recoil) == 0X01E4,"WRONG OFFSET");
 
 HINSTANCE DllInst;
 Application::InteractiveForm* menu;
+Application::InteractiveForm* friend_list;
 Application::Canvas::CanvasForm* esp_scene;
 void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam);
 HWND main__window;
@@ -44,12 +46,16 @@ void init_callback(Application::Render::Engine* instance)
     DEBUG_LOG("USER WELCOMED");
 	
     menu = new Application::InteractiveForm();
-
+    friend_list = new Application::InteractiveForm();
+	
     Application::register_form(menu);
+    Application::register_form(friend_list);
 
     MainMenuMarkup(menu, instance);
+    FiendListMarkup(friend_list, instance);
     
     menu->hidden = true;
+    friend_list->hidden = true;
 
     DEBUG_LOG("MENU FORM REGISTERED");
 	
@@ -63,7 +69,9 @@ void init_callback(Application::Render::Engine* instance)
 	
     instance
         ->append_scene(menu)
-		->append_scene(esp_scene)
+        ->append_scene(friend_list)
+	
+		->append_scene(esp_scene)	
 	;
 
     DEBUG_LOG("SCENE'S APPENDED");
@@ -138,6 +146,7 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
             bool state = menu->hidden;
 
             menu->hidden = !state;
+            friend_list->hidden = !state;
             Hooks::WndProc::setInputState(!state);
         }
 

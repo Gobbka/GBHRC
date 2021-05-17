@@ -22,6 +22,8 @@ namespace Application
 			const char* text;
 			Render::Resolution text_resolution;
 		public:
+			bool wchar = false;
+			
 			TextAlign text_align;
 			Render::Color color;
 			Render::Resolution limitRect;
@@ -32,6 +34,10 @@ namespace Application
 
 			void set_font(DirectX::SpriteFont* font);
 			void set_text(const char*text);
+			void set_text(const wchar_t*text);
+
+			char* get_text();
+			
 			void DrawInRect(Render::DrawEvent* event,Render::Position pos,bool scale=false) const;
 		};
 	}

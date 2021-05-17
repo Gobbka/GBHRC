@@ -91,7 +91,14 @@ Application::Render::Resolution Application::UI::Button::get_resolution()
 void Application::UI::Button::handle_mouse_up()
 {
 	this->onClick(this);
+	this->handle_mouse_enter();
 	InteractiveElement::handle_mouse_up();
+}
+
+void Application::UI::Button::handle_mouse_down()
+{
+	this->set_color(this->non_active_color.r + .2f, non_active_color.g + 0.2f, non_active_color.b + 0.2f);
+	InteractiveElement::handle_mouse_down();
 }
 
 void Application::UI::Button::handle_mouse_enter()

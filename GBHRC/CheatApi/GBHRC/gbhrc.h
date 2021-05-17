@@ -43,7 +43,7 @@ namespace GBHRC
 		
 		Context();
 
-		void draw_esp(Application::Render::DrawEvent*event);
+		void render_callback(Application::Render::DrawEvent*event);
 		void draw_player(Application::Render::DrawEvent* event,UINT element_index,Application::Render::Resolution camera_resolution,EspPlayer*player);
 		bool is_aim_target(EspPlayer* old_player, EspPlayer* new_player) const;
 
@@ -55,6 +55,7 @@ namespace GBHRC
 		bool is_friend(wchar_t* nickname);
 
 		void add_friend(wchar_t* nickname);
+		void remove_friend(wchar_t* nickname);
 		
 		Config* config;
 

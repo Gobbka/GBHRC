@@ -79,6 +79,18 @@ void Application::InteractiveForm::window_proc(UINT msg, WPARAM wParam, LPARAM l
 			});
 		return;
 	}
+
+	if (msg == WM_MOUSEWHEEL)
+	{
+		this->foreach([wParam](Render::IRenderObject* obj)
+			{
+				auto* element = (UI::InteractiveElement*)obj;
+				if (element->hovered == true)
+					element->handle_mouse_scroll(GET_WHEEL_DELTA_WPARAM(wParam));
+
+			});
+		return;
+	}
 }
 
 void Application::InteractiveForm::drag_move(UI::InteractiveElement* element)

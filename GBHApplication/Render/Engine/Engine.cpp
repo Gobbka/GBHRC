@@ -228,7 +228,6 @@ void Engine::update_scene()
 void Engine::present()
 {
 
-
 	this->render_prepare();
 
 	this->pDevContext->RSSetViewports(1, pViewports);
@@ -237,6 +236,7 @@ void Engine::present()
 	ID3D11RasterizerState* r_state;
 	this->pDevContext->RSGetState(&r_state);
 	Render::DrawEvent event{ this,nullptr,r_state,0,false};
+
 	
 	for (auto* scene : this->pScenes)
 	{

@@ -68,8 +68,10 @@ namespace Application
 			EventCallback onMouseEnter = default_event_callback;
 			EventCallback onMouseLeave = default_event_callback;
 			void(*onMouseMove)(UIElementEventArgs args, float mX, float mY) = [](UIElementEventArgs,float,float){};
+			std::function<void(UIElementEventArgs args, int delta)>onMouseScroll = [](UIElementEventArgs,int){};
 			EventCallback onMouseUp = default_event_callback;
 			EventCallback onMouseDown = default_event_callback;
+			
 
 		public:
 			//====================
@@ -83,6 +85,7 @@ namespace Application
 			virtual void handle_mouse_enter();
 			virtual void handle_mouse_up();
 			virtual void handle_mouse_down();
+			virtual void handle_mouse_scroll(int delta);
 		};
 	}
 }

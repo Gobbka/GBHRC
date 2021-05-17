@@ -131,5 +131,8 @@
     <ClInclude Include="Render\Events\EngineEvents.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="FloatColors.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

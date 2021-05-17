@@ -52,6 +52,7 @@ namespace Application
 			EventCallback onClick = default_event_callback;
 
 			void handle_mouse_up() override;
+			void handle_mouse_down() override;
 			void handle_mouse_enter() override;
 			void handle_mouse_leave() override;
 		};

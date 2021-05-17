@@ -65,6 +65,16 @@ void Application::UI::Parent::handle_mouse_move(float mX, float mY)
 	InteractiveElement::handle_mouse_move(mX, mY);
 }
 
+void Application::UI::Parent::handle_mouse_scroll(int delta)
+{
+	for (auto* element : this->elements)
+	{
+		if (element->hovered)
+			element->handle_mouse_scroll(delta);
+	}
+	InteractiveElement::handle_mouse_scroll(delta);
+}
+
 void Application::UI::Parent::set_index_offset(UINT offset)
 {
 	this->index_offset = offset;
@@ -126,6 +136,19 @@ void Application::UI::Parent::init(Application::InteractiveForm* pForm)
 		
 		index += element->size();
 	}
+}
+
+void Application::UI::Parent::foreach(std::function<void(InteractiveElement* element)> iterator)
+{
+	for (auto* element : elements)
+	{
+		iterator(element);
+	}
+}
+
+Application::UI::InteractiveElement* Application::UI::Parent::element_at(UINT index)
+{
+	return this->elements[index];
 }
 
 Application::UI::Parent* Application::UI::Parent::add_element(InteractiveElement* element)

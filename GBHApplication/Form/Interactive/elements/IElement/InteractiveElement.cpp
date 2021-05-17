@@ -68,3 +68,8 @@ void Application::UI::InteractiveElement::handle_mouse_down()
 	this->onMouseDown(this);
 }
 
+void Application::UI::InteractiveElement::handle_mouse_scroll(int delta)
+{
+	this->onMouseScroll(this, delta);
+}
+

@@ -1,6 +1,8 @@
 #pragma region includes
+
 #include "MenuMain.h"
 
+#include "FloatColors.h"
 #include "../../resource.h"
 #include "Render/Engine/Engine.h"
 #include "Form/Interactive/elements/Panel/Panel.h"

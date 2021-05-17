@@ -166,6 +166,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="FloatColors.h" />
     <ClInclude Include="Form\Canvas\CanvasForm.h" />
     <ClInclude Include="Form\Canvas\elements\IElement\CanvasElement.h" />
     <ClInclude Include="Form\Canvas\elements\rectangle\rectangle.h" />

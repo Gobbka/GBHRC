@@ -24,26 +24,45 @@ void Application::Render::Text::set_font(DirectX::SpriteFont* font)
 void Application::Render::Text::set_text(const char* text)
 {
 	this->text = text;
-	auto rect = this->font->MeasureDrawBounds(text, DirectX::XMFLOAT2{ 0, 0 });
+	RECT rect= this->font->MeasureDrawBounds(text, DirectX::XMFLOAT2{ 0, 0 });;
+	this->wchar = false;
 	this->text_resolution = { (UINT)rect.right,(UINT)rect.bottom };
+}
+
+void Application::Render::Text::set_text(const wchar_t* text)
+{
+	this->text = (const char*)text;
+	this->wchar = true;
+	auto rect = this->font->MeasureDrawBounds((wchar_t*)text, DirectX::XMFLOAT2{ 0, 0 });
+	this->text_resolution = { (UINT)rect.right,(UINT)rect.bottom };
+}
+
+char* Application::Render::Text::get_text()
+{
+	return (char*)this->text;
 }
 
 void Application::Render::Text::DrawInRect(Render::DrawEvent* event, Render::Position position,bool scalable) const
 {
-
+	
 	auto* batch = event->engine->get_batch();
 	batch->Begin();
 	auto center_pos = Application::point_to_center(position);
 	auto scale = 1.f;
 
+	//if(strcmp(this->text,"alyykes228")==0)
+	//{
+	//	DEBUG_LOG("PAPV'S");
+	//}
+	
 	// center calculations with scale is broken
 	// so TODO: fix it
 	if (this->limitRect.width != 0 || this->limitRect.height != 0)
 	{
 		auto font_rect = this->text_resolution;
 
-		float width_scale = limitRect.width / font_rect.width;
-		float height_scale = limitRect.height / font_rect.height;
+		float width_scale = (float)limitRect.width / (float)font_rect.width;
+		float height_scale = (float)limitRect.height / (float)font_rect.height;
 		
 		if(scalable)
 		{
@@ -53,25 +72,35 @@ void Application::Render::Text::DrawInRect(Render::DrawEvent* event, Render::Pos
 			scale = min(scale, width_scale);
 			scale = min(scale, height_scale);
 		}
-		
 
 		if (this->text_align == TextAlign::Center)
 		{
 			center_pos.x += limitRect.width / 2 - font_rect.width / 2;
-			center_pos.y += limitRect.height / 2 - font_rect.height / 2 - 3;
+			center_pos.y += limitRect.height / 2 - font_rect.height / 2;
 		}
 	}
 
-	this->font->DrawString(
-		batch,
-		this->text,
-		DirectX::XMFLOAT2{center_pos.x, center_pos.y},
-		{ color.r,color.g,color.b },
-		0,
-		DirectX::XMFLOAT2{ 0,0 },
-		scale
-	);
-
+	if(this->wchar)	
+		this->font->DrawString(
+			batch,
+			(wchar_t*)this->text,
+			DirectX::XMFLOAT2{center_pos.x, center_pos.y},
+			{ color.r,color.g,color.b },
+			0,
+			DirectX::XMFLOAT2{ 0,0 },
+			scale
+		);
+	else
+		this->font->DrawString(
+			batch,
+			this->text,
+			DirectX::XMFLOAT2{center_pos.x, center_pos.y},
+			{ color.r,color.g,color.b },
+			0,
+			DirectX::XMFLOAT2{ 0,0 },
+			scale
+		);
+	
 	batch->End();
 	
 	event->reset_render_state();

@@ -24,6 +24,11 @@ namespace Collections {
 			this->iteration = -1;
 		}
 
+		void set_iteration(int iteration)
+		{
+			this->iteration = iteration;
+		}
+		
 		bool next()
 		{
 			if (iteration < size-1)
