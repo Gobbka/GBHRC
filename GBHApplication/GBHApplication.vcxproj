@@ -157,6 +157,7 @@
     <ClCompile Include="Form\Interactive\InteractiveForm.cpp" />
     <ClCompile Include="Render\d3d\Vertex.cpp" />
     <ClCompile Include="Render\Engine\Engine.cpp" />
+    <ClCompile Include="Render\Engine\MaskEngine.cpp" />
     <ClCompile Include="Render\Events\EngineEvents.cpp" />
     <ClCompile Include="Render\Scene\Scene.cpp" />
     <ClCompile Include="Form\Interactive\elements\Checkbox\Checkbox.cpp" />
@@ -180,6 +181,7 @@
     <ClInclude Include="Render\d3d\szShadez.h" />
     <ClInclude Include="Render\d3d\Vertex.h" />
     <ClInclude Include="Render\Engine\Engine.h" />
+    <ClInclude Include="Render\Engine\MaskEngine.h" />
     <ClInclude Include="Render\Events\EngineEvents.h" />
     <ClInclude Include="Render\Render.h" />
     <ClInclude Include="Render\Scene\IRenderObject.h" />

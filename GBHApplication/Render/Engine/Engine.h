@@ -4,6 +4,8 @@
 #include "../../Application.h"
 #include <vector>
 
+
+#include "MaskEngine.h"
 #include "../Render.h"
 
 namespace Application
@@ -19,7 +21,8 @@ namespace Application
 		public:
 			ID3D11Device* pDevice;
 			ID3D11DeviceContext* pDevContext;
-			DirectX::SpriteBatch* get_batch();
+			DirectX::SpriteBatch* get_batch() const;
+			MaskEngine* get_mask() const;
 		private:
 			ID3D11RenderTargetView* pRenderTargetView;
 			//
@@ -34,6 +37,8 @@ namespace Application
 			DirectX::SpriteBatch* spriteBatch;
 			
 			D3D11_VIEWPORT pViewports[D3D11_VIEWPORT_AND_SCISSORRECT_OBJECT_COUNT_PER_PIPELINE]{ 0 };
+
+			MaskEngine* mask_engine;
 		private:
 			bool initialize();
 			bool initialize_scene();

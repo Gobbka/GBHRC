@@ -31,20 +31,31 @@ namespace Application
 			static void default_event_callback (UIElementEventArgs args) {};
 		public:
 			// public variables
-			
+
+			// if value is a true, this object will handle all interactive events (such as click,mousescroll e.t.d)
 			bool hovered = false;
+			// if value is a true, this object will not render
 			bool hidden = false;
 
+			// for debug purposes
+			// or what u wanna
+			UINT unique_id = 0;
 		public:
 			// public getters
 
+			// return's screen position
 			Render::Position get_position() const;
-
+			// return's memory region pointer where you can edit vertex
 			GVertex::Vertex* get_ptr() const;
-			Parent* get_parent() const;
-			InteractiveForm* get_form() const;
+			// vertex size of object
 			UINT size() override = 0;
+			// return's parent, if have
+			Parent* get_parent() const;
+			// return's form where this object where registered
+			InteractiveForm* get_form() const;
 
+
+			
 			bool point_belongs(POINT point) override = 0;
 		public:
 			// public setters

@@ -30,11 +30,16 @@ Resolution Engine::get_resolution(const HWND hwnd)
 
 Engine::Engine(const HWND hwnd, ID3D11Device* pDevice,
                IDXGISwapChain* pSwapChain)
+	               
 {
-	
 	this->window = hwnd;
 	this->pDevice = pDevice;
 	pDevice->GetImmediateContext(&this->pDevContext);
+
+	RECT rect;
+	GetClientRect(hwnd, &rect);
+	
+	this->mask_engine = new MaskEngine(pDevice, pDevContext, rect.right, rect.bottom);
 
 	this->pRenderTargetView = this->get_render_target(pSwapChain);
 
@@ -53,24 +58,7 @@ void Engine::set_vbuffer(GVertex::VertexBuffer* buffer)
 	this->pDevContext->IASetVertexBuffers(0, 1, &buffer->buffer, &stride, &offset);
 }
 
-void Engine::render_prepare() const
-{
-	this->pDevContext->OMSetRenderTargets(1, &pRenderTargetView, nullptr);
 
-	ConstantBuffer cb;
-	cb.mProjection = DirectX::XMMatrixTranspose(mOrtho);
-	cb.xOffset = 0.f;
-	cb.yOffset = 0.f;
-
-	this->pDevContext->UpdateSubresource(this->pConstantBuffer, 0, nullptr, &cb, 0, 0);
-	this->pDevContext->VSSetConstantBuffers(0, 1, &this->pConstantBuffer);
-	
-	this->pDevContext->IASetInputLayout(pVertexLayout);
-	this->pDevContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-
-	this->pDevContext->VSSetShader(pVertexShader, nullptr, 0);
-	this->pDevContext->PSSetShader(pPixelShader, nullptr, 0);
-}
 
 DirectX::SpriteFont* Engine::create_font(void* font_source, UINT source_size)
 {
@@ -87,9 +75,14 @@ Engine* Engine::append_scene(Render::Scene* scene)
 	return this;
 }
 
-DirectX::SpriteBatch* Engine::get_batch()
+DirectX::SpriteBatch* Engine::get_batch() const
 {
 	return this->spriteBatch;
+}
+
+MaskEngine* Engine::get_mask() const
+{
+	return this->mask_engine;
 }
 
 bool Engine::initialize()
@@ -223,20 +216,43 @@ void Engine::update_scene()
 		scene->update(this);
 }
 
+void Engine::render_prepare() const
+{
 
+	// this->pDevContext->OMSetBlendState(NULL, NULL, 0xFFFFFFFF);
+
+	ConstantBuffer cb;
+	cb.mProjection = DirectX::XMMatrixTranspose(mOrtho);
+	cb.xOffset = 0;
+	cb.yOffset = 0;
+
+	this->pDevContext->UpdateSubresource(this->pConstantBuffer, 0, nullptr, &cb, 0, 0);
+	this->pDevContext->VSSetConstantBuffers(0, 1, &this->pConstantBuffer);
+
+	this->pDevContext->IASetInputLayout(pVertexLayout);
+	this->pDevContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+
+	this->pDevContext->VSSetShader(pVertexShader, nullptr, 0);
+	this->pDevContext->PSSetShader(pPixelShader, nullptr, 0);
+
+
+}
 
 void Engine::present()
 {
 
+	this->mask_engine->clearBuffer();
 	this->render_prepare();
 
 	this->pDevContext->RSSetViewports(1, pViewports);
+	this->pDevContext->OMSetRenderTargets(1, &pRenderTargetView, this->get_mask()->get_stencil_view());
+	this->mask_engine->clearBuffer();
+
 
 	//pDevContext->RSSetState();
 	ID3D11RasterizerState* r_state;
 	this->pDevContext->RSGetState(&r_state);
 	Render::DrawEvent event{ this,nullptr,r_state,0,false};
-
 	
 	for (auto* scene : this->pScenes)
 	{

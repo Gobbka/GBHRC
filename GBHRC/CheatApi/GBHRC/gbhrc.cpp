@@ -12,6 +12,8 @@
 #include "../BrokeProtocol/classes/Guns/ShBallistic.h"
 #include "Render/Text/Text.h"
 
+extern DirectX::SpriteFont* VisbyRoundCFFont;
+
 GBHRC::Context::Context()
 {
 	this->config = new Config();
@@ -107,11 +109,6 @@ void GBHRC::Context::draw_player(Application::Render::DrawEvent* event,UINT elem
         return;
 	
     auto* engine = event->engine;
-	
-    static DirectX::SpriteFont* esp_font = engine->create_font(
-        (void*)LoadResource(DllInst, FindResourceW(DllInst, MAKEINTRESOURCEW(IDR_VISBY_ROUND), L"SPRITEFONT")),
-        0x6608
-    );
 
     auto point_top = player->top_point;
     auto point_bottom = player->bottom_point;
@@ -148,10 +145,10 @@ void GBHRC::Context::draw_player(Application::Render::DrawEvent* event,UINT elem
     }
 
     event->engine->get_batch()->Begin();
-    auto rect = esp_font->MeasureDrawBounds((wchar_t*)player->player->username->array, DirectX::XMFLOAT2(0, 0));
+    auto rect = VisbyRoundCFFont->MeasureDrawBounds((wchar_t*)player->player->username->array, DirectX::XMFLOAT2(0, 0));
 
     if (this->config->esp_draw_name)
-        esp_font->DrawString(
+        VisbyRoundCFFont->DrawString(
             engine->get_batch(),
             (wchar_t*)&player->player->username->array,
             DirectX::XMFLOAT2(
@@ -165,7 +162,7 @@ void GBHRC::Context::draw_player(Application::Render::DrawEvent* event,UINT elem
         );
 
     if (this->config->esp_draw_gun_name)
-        esp_font->DrawString(
+        VisbyRoundCFFont->DrawString(
             engine->get_batch(),
             (wchar_t*)&player->player->curEquipable->itemName->array,
             DirectX::XMFLOAT2(

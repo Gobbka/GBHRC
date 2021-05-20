@@ -44,6 +44,8 @@ char* Application::Render::Text::get_text()
 
 void Application::Render::Text::DrawInRect(Render::DrawEvent* event, Render::Position position,bool scalable) const
 {
+	// TODO: remove this;
+	return;
 	
 	auto* batch = event->engine->get_batch();
 	batch->Begin();

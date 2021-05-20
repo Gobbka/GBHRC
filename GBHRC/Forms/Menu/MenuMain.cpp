@@ -16,7 +16,7 @@
 #pragma region elements
 
 Application::UI::Panel* background_panel = new Application::UI::Panel({ 0,0 }, { 400, 500 }, { FLOAT_COLORS_BLACK });
-Application::UI::Panel* topbar_panel = new Application::UI::Panel({ 0,0 }, { 400, 30 }, { FLOAT_COLORS_GREEN });
+Application::UI::Panel* topbar_panel = new Application::UI::Panel({ 0,0 }, { 500, 30 }, { FLOAT_COLORS_GREEN });
 
 
 auto* esp_inner = new Application::UI::Panel{ {0,-80},{400,420},{FLOAT_COLORS_BLACK} };
@@ -56,49 +56,51 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 	form
 		->add_element(background_panel)
 	;
+
+	background_panel->unique_id = 1;
 	
-	background_panel
-		->add_element(esp_button)
-		->add_element(aim_button)
-		->add_element(misc_button)
+	//background_panel
+	//	->add_element(esp_button)
+	//	->add_element(aim_button)
+	//	->add_element(misc_button)
 
 
-		// inners
+	//	// inners
 
-		// ESP INNER
-		->add_element(
-			esp_inner
-			->add_element(esp_checkbox)
-			->add_element(name_checkbox)
-			->add_element(new Application::UI::Label{ {60,-10},"ESP ACTIVE",esp_font,{FLOAT_COLORS_WHITE} })
-			->add_element(new Application::UI::Label{ {60,-50},"NAME ESP",esp_font,{FLOAT_COLORS_WHITE} })
-		)
-		// END ESP INNER
-		// AIM INNER
-		->add_element(
-			aim_inner
-			->add_element(aim_checkbox)
-			->add_element(new Application::UI::Label{ {60,-10},"AIM ACTIVE",esp_font,{FLOAT_COLORS_WHITE} }),
-			false
-		)
-		// END AIM INNER
-		->add_element(
-			misc_inner
-			->add_element(jump_checkbox)
-			->add_element(car_sh_checkbox)
-			->add_element(no_recoil_checkbox)
-			->add_element(new Application::UI::Label{ {60,-10},"FLY",esp_font,{FLOAT_COLORS_WHITE} })
-			->add_element(new Application::UI::Label{ {60,-50},"CAR SPEED",esp_font,{FLOAT_COLORS_WHITE} })
-			->add_element(new Application::UI::Label{ {60,-90},"NO RECOIL",esp_font,{FLOAT_COLORS_WHITE} })
-			,false
-		)
+	//	// ESP INNER
+	//	->add_element(
+	//		esp_inner
+	//		->add_element(esp_checkbox)
+	//		->add_element(name_checkbox)
+	//		->add_element(new Application::UI::Label{ {60,-10},"ESP ACTIVE",esp_font,{FLOAT_COLORS_WHITE} })
+	//		->add_element(new Application::UI::Label{ {60,-50},"NAME ESP",esp_font,{FLOAT_COLORS_WHITE} })
+	//	)
+	//	// END ESP INNER
+	//	// AIM INNER
+	//	->add_element(
+	//		aim_inner
+	//		->add_element(aim_checkbox)
+	//		->add_element(new Application::UI::Label{ {60,-10},"AIM ACTIVE",esp_font,{FLOAT_COLORS_WHITE} }),
+	//		false
+	//	)
+	//	// END AIM INNER
+	//	->add_element(
+	//		misc_inner
+	//		->add_element(jump_checkbox)
+	//		->add_element(car_sh_checkbox)
+	//		->add_element(no_recoil_checkbox)
+	//		->add_element(new Application::UI::Label{ {60,-10},"FLY",esp_font,{FLOAT_COLORS_WHITE} })
+	//		->add_element(new Application::UI::Label{ {60,-50},"CAR SPEED",esp_font,{FLOAT_COLORS_WHITE} })
+	//		->add_element(new Application::UI::Label{ {60,-90},"NO RECOIL",esp_font,{FLOAT_COLORS_WHITE} })
+	//		,false
+	//	)
 
-		->add_element(
-			topbar_panel
-			->add_element(new Application::UI::Label{ {0,0},"GBHRC",esp_font,{FLOAT_COLORS_WHITE},{400,30} })
-		)
+	//	->add_element(
+	//		topbar_panel
+	//		->add_element(new Application::UI::Label{ {0,0},"GBHRC",esp_font,{FLOAT_COLORS_WHITE},{400,30} })
+	//	)
 
-	;
+	//;
 
 	form->initialize_components(pEngine);
 	// ; paste ur initialize code below

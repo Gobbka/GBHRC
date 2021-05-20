@@ -5,7 +5,9 @@
 
 void Application::UI::Panel::draw(Render::DrawEvent* event)
 {
+	
 	event->get_context()->Draw(5, this->__index);
+	
 	Parent::draw(event);
 }
 

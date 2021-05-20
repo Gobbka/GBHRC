@@ -18,11 +18,14 @@
 #include <string>
 #include <sstream>
 
+
+#include "resource.h"
 #include "CheatApi/BrokeProtocol/classes/Guns/ShBallistic.h"
 #include "includes/clientdefs.h"
 
 #include "Asserts/VersionAssert/ClientVersionAssers.h"
 #include "Forms/FriendList/FriendList.h"
+#include "Forms/test/testScene.h"
 
 
 // static_assert(offsetof(BrokeProtocol::ShBallistic, recoil) == 0X01E4,"WRONG OFFSET");
@@ -31,8 +34,12 @@ HINSTANCE DllInst;
 Application::InteractiveForm* menu;
 Application::InteractiveForm* friend_list;
 Application::Canvas::CanvasForm* esp_scene;
+Application::Canvas::CanvasForm* test_scene;
 void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam);
 HWND main__window;
+
+DirectX::SpriteFont* VisbyRoundCFFont;
+
 extern Mono::Context* MonoContext;
 
 void init_callback(Application::Render::Engine* instance)
@@ -43,10 +50,16 @@ void init_callback(Application::Render::Engine* instance)
     BrokeProtocol::show_local_message((char*)"<color=#39d668>[info]</color> GBHRC injected | press <color=#39d668>INSERT</color> to show menu!");
 	BrokeProtocol::show_local_message((char*)"<color=#3966d6>[info]</color> join our discord: " DISCORD_CHANNEL);
 
+    VisbyRoundCFFont = instance->create_font(
+        (void*)LoadResource(DllInst, FindResourceW(DllInst, MAKEINTRESOURCEW(IDR_VISBY_ROUND), L"SPRITEFONT")),
+        0x6608
+    );
+
     DEBUG_LOG("USER WELCOMED");
 	
     menu = new Application::InteractiveForm();
     friend_list = new Application::InteractiveForm();
+	
 	
     Application::register_form(menu);
     Application::register_form(friend_list);
@@ -65,12 +78,17 @@ void init_callback(Application::Render::Engine* instance)
     GBHRC::Context::instance()->set_esp_scene(esp_scene);
     GBHRC::Context::instance()->make_esp_boxes();
 
+    test_scene = new Application::Canvas::CanvasForm();
+    TestSceneMarkup(test_scene,instance);
+    test_scene->pre_render_callback = test_scene_draw;
+
     DEBUG_LOG("ESP REGISTERED");
 	
     instance
         ->append_scene(menu)
-        ->append_scene(friend_list)
-	
+        //->append_scene(friend_list)
+
+        ->append_scene(test_scene)
 		->append_scene(esp_scene)	
 	;
 

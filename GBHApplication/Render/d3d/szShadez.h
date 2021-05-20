@@ -31,6 +31,7 @@ PSI VS( float4 pos : POSITION, float4 color : COLOR )
 // PixelShader
 float4 PS(PSI psi) : SV_TARGET
 {
+	
 	return psi.color;
 }
 )";

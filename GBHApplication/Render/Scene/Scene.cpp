@@ -31,17 +31,14 @@ void Application::Render::Scene::render(Render::DrawEvent* draw_event)
 {
 	DRAW_ASSERT;
 
-	//UINT stride = sizeof(GVertex::Vertex);
-	//UINT offset = 0;
-
-	//draw_event->engine->pDevContext->IASetVertexBuffers(0, 1, &this->pVBuffer->buffer, &stride, &offset);
-
 	draw_event->engine->set_vbuffer(this->get_vbuffer());
+
+	if (this->pre_render_callback != nullptr)
+		pre_render_callback(draw_event);
 	
 	for (auto* element : this->pElements)
 		this->draw_element(element, draw_event);
 		//element->__draw(draw_event);
-
 
 	if (this->render_callback != nullptr)
 		render_callback(draw_event);

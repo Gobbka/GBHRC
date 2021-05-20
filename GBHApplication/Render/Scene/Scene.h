@@ -24,6 +24,7 @@ namespace Application
 		public:
 			// public variables
 			void(__cdecl* render_callback)(Render::DrawEvent*event) = nullptr;
+			void(__cdecl* pre_render_callback)(Render::DrawEvent*event) = nullptr;
 			bool hidden = false;
 		public:
 			// public void's
