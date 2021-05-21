@@ -25,12 +25,11 @@ bool Application::UI::Panel::point_belongs(POINT point)
 		(point.y <= position.y && point.y >= (position.y - resolution.height));
 }
 
-void Application::UI::Panel::init(Application::InteractiveForm* pForm)
+void Application::UI::Panel::init()
 {
-	this->pForm = pForm;
 
 	Parent::set_index_offset(5);
-	Parent::init(pForm);
+	Parent::init();
 
 	this->set_pos(position.x, position.y);
 	this->set_color(color.r, color.g, color.b);

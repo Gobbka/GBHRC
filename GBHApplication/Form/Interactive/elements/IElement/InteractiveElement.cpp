@@ -20,6 +20,13 @@ void Application::UI::InteractiveElement::move_by(float x, float y)
 	this->position.y += y;
 }
 
+void Application::UI::InteractiveElement::initialize(Application::InteractiveForm* pForm,UINT index)
+{
+	this->set_index(index);
+	this->pForm = pForm;
+	this->init();
+}
+
 GVertex::Vertex* Application::UI::InteractiveElement::get_ptr() const
 {
 	return this->pForm->get_ptr() + this->__index;

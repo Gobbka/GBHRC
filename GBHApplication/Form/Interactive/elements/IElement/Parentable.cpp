@@ -121,15 +121,13 @@ void Application::UI::Parent::move_by(float x, float y)
 		element->move_by(x,y);
 }
 
-void Application::UI::Parent::init(Application::InteractiveForm* pForm)
+void Application::UI::Parent::init()
 {	
 	UINT index = this->index_offset+this->__index;
 	
 	for(auto*element:this->elements)
 	{
-		element->set_index(index);
-
-		element->init(this->pForm);
+		element->initialize(this->pForm,index);
 		element->set__parent(this);
 
 		element->move_by(this->position.x, this->position.y);

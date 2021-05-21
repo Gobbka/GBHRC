@@ -29,10 +29,8 @@ Application::UI::Checkbox::Checkbox(Render::Position position, Render::Resolutio
 	this->color = color;
 }
 
-void Application::UI::Checkbox::init(Application::InteractiveForm* pForm)
+void Application::UI::Checkbox::init()
 {
-	this->pForm = pForm;
-	
 	this->set_pos(position.x, position.y);
 	this->set_color(color.r, color.g, color.b);
 

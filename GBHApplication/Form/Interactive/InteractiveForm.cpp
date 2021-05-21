@@ -117,9 +117,7 @@ void Application::InteractiveForm::initialize_components(Render::Engine* pEngine
 	Scene::foreach([this, &size](Render::IRenderObject* obj)
 		{
 			auto* iUIObject = (UI::InteractiveElement*)obj;
-			iUIObject->set_pForm(this);
-			iUIObject->set_index(size);
-			iUIObject->init(this);
+			iUIObject->initialize(this,size);
 
 			size += obj->size();
 		});

@@ -28,6 +28,8 @@ namespace Application
 			Render::Position position{ 0,0 };
 			Parent* _parent = nullptr;
 		protected:
+			virtual void init(){};
+
 			static void default_event_callback (UIElementEventArgs args) {};
 		public:
 			// public variables
@@ -48,12 +50,11 @@ namespace Application
 			// return's memory region pointer where you can edit vertex
 			GVertex::Vertex* get_ptr() const;
 			// vertex size of object
-			UINT size() override = 0;
+			UINT size() override = 0; 
 			// return's parent, if have
 			Parent* get_parent() const;
 			// return's form where this object where registered
 			InteractiveForm* get_form() const;
-
 
 			
 			bool point_belongs(POINT point) override = 0;
@@ -61,7 +62,6 @@ namespace Application
 			// public setters
 
 			FIELD_SETTER(Parent*, _parent);
-			FIELD_SETTER(InteractiveForm*, pForm);
 
 			void set_pos(float x, float y) override = 0;
 			void set_color(float r, float g, float b) override = 0;
@@ -70,7 +70,7 @@ namespace Application
 			// public voids
 
 			void move_by(float x, float y) override = 0;
-			virtual void init(Application::InteractiveForm* pForm) = 0;
+			void initialize(Application::InteractiveForm* pForm,UINT index);
 		protected:
 			
 		public:

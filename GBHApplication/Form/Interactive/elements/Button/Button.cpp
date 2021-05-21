@@ -29,10 +29,9 @@ bool Application::UI::Button::point_belongs(POINT point)
 		(point.y <= position.y && point.y >= (position.y - resolution.height));
 }
 
-void Application::UI::Button::init(Application::InteractiveForm* pForm)
+void Application::UI::Button::init()
 {
-	this->set_pForm(pForm);
-	this->text.init(pForm);
+	this->text.initialize(pForm,0);
 	
 	this->set_pos(position.x, position.y);
 	this->set_color(color.r, color.g, color.b);

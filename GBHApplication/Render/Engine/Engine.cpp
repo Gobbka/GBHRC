@@ -15,7 +15,7 @@ ID3D11RenderTargetView* Engine::get_render_target(IDXGISwapChain* pSwap) const
 		pSwap->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
 		if (pBackBuffer)
 			pDevice->CreateRenderTargetView(pBackBuffer, nullptr, (ID3D11RenderTargetView**)&pRenderTargetView);
-		pBackBuffer->Release();
+		
 	}
 
 	return this->pRenderTargetView;
@@ -36,11 +36,6 @@ Engine::Engine(const HWND hwnd, ID3D11Device* pDevice,
 	this->pDevice = pDevice;
 	pDevice->GetImmediateContext(&this->pDevContext);
 
-	RECT rect;
-	GetClientRect(hwnd, &rect);
-	
-	this->mask_engine = new MaskEngine(pDevice, pDevContext, rect.right, rect.bottom);
-
 	this->pRenderTargetView = this->get_render_target(pSwapChain);
 
 	this->initialize();
@@ -48,6 +43,12 @@ Engine::Engine(const HWND hwnd, ID3D11Device* pDevice,
 	this->initialize_scene();
 
 	this->spriteBatch = new DirectX::SpriteBatch(pDevContext);
+	
+	RECT rect;
+	GetClientRect(hwnd, &rect);
+
+	this->mask_engine = new MaskEngine(pDevice, pDevContext,this->pRenderTargetView, rect.right, rect.bottom);
+
 }
 
 void Engine::set_vbuffer(GVertex::VertexBuffer* buffer)
@@ -57,7 +58,6 @@ void Engine::set_vbuffer(GVertex::VertexBuffer* buffer)
 
 	this->pDevContext->IASetVertexBuffers(0, 1, &buffer->buffer, &stride, &offset);
 }
-
 
 
 DirectX::SpriteFont* Engine::create_font(void* font_source, UINT source_size)
@@ -218,9 +218,6 @@ void Engine::update_scene()
 
 void Engine::render_prepare() const
 {
-
-	// this->pDevContext->OMSetBlendState(NULL, NULL, 0xFFFFFFFF);
-
 	ConstantBuffer cb;
 	cb.mProjection = DirectX::XMMatrixTranspose(mOrtho);
 	cb.xOffset = 0;
@@ -234,22 +231,18 @@ void Engine::render_prepare() const
 
 	this->pDevContext->VSSetShader(pVertexShader, nullptr, 0);
 	this->pDevContext->PSSetShader(pPixelShader, nullptr, 0);
-
-
 }
 
 void Engine::present()
 {
-
-	this->mask_engine->clearBuffer();
 	this->render_prepare();
 
 	this->pDevContext->RSSetViewports(1, pViewports);
-	this->pDevContext->OMSetRenderTargets(1, &pRenderTargetView, this->get_mask()->get_stencil_view());
+	
 	this->mask_engine->clearBuffer();
+	this->pDevContext->OMSetRenderTargets(1, &pRenderTargetView, this->get_mask()->get_stencil_view());
 
-
-	//pDevContext->RSSetState();
+	
 	ID3D11RasterizerState* r_state;
 	this->pDevContext->RSGetState(&r_state);
 	Render::DrawEvent event{ this,nullptr,r_state,0,false};

@@ -25,7 +25,7 @@ namespace Application
 			Label(Render::Position position, const char* text,DirectX::SpriteFont*font, Render::Color color, Render::Resolution limitResolution);
 
 			bool point_belongs(POINT point) override;
-			void init(Application::InteractiveForm* pForm) override;
+
 			void set_pos(float x, float y) override;
 			void set_color(float r, float g, float b) override;
 			void move_by(float x, float y) override;

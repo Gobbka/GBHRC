@@ -80,7 +80,7 @@ void init_callback(Application::Render::Engine* instance)
 
     test_scene = new Application::Canvas::CanvasForm();
     TestSceneMarkup(test_scene,instance);
-    test_scene->pre_render_callback = test_scene_draw;
+    test_scene->render_callback = test_scene_draw;
 
     DEBUG_LOG("ESP REGISTERED");
 	

@@ -31,11 +31,6 @@ bool Application::UI::Label::point_belongs(POINT point)
 	return false;
 }
 
-void Application::UI::Label::init(Application::InteractiveForm* pForm)
-{
-	this->pForm = pForm;
-}
-
 void Application::UI::Label::set_pos(float x, float y)
 {
 	this->position = { x, y };
