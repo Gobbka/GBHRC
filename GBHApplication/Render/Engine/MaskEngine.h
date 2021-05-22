@@ -7,9 +7,9 @@ namespace Application
 	{
 		class MaskEngine
 		{
-			ID3D11DepthStencilState* drawMask;
-			ID3D11DepthStencilState* applyMask;
-			ID3D11DepthStencilState* depthStencilState;
+			ID3D11DepthStencilState* drawState;
+			ID3D11DepthStencilState* discardState;
+			ID3D11DepthStencilState* disabledState;
 			
 			ID3D11Texture2D* depthStencilBuffer;
 			ID3D11DepthStencilView* depthStencilView;
@@ -25,20 +25,20 @@ namespace Application
 			void clearBuffer() const;
 
 			void set_draw_mask() const;
-			void set_apply_mask() const;
+			void set_discard_mask() const;
 			void unset_mask() const;
 
-			ID3D11DepthStencilState* get_drawMask() CONST
+			ID3D11DepthStencilState* get_drawState() CONST
 			{
-				return this->drawMask;
+				return this->drawState;
 			}
-			ID3D11DepthStencilState* get_applyMask() CONST
+			ID3D11DepthStencilState* get_discardState() CONST
 			{
-				return this->applyMask;
+				return this->discardState;
 			}
-			ID3D11DepthStencilState* get_noneMask() CONST
+			ID3D11DepthStencilState* get_disabledState() CONST
 			{
-				return this->depthStencilState;
+				return this->disabledState;
 			}
 
 			ID3D11DepthStencilView* get_stencil_view() CONST;

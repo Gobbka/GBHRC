@@ -27,25 +27,31 @@ Application::Render::MaskEngine::MaskEngine(ID3D11Device* pDevice, ID3D11DeviceC
 
 	HRESULT hr;
 	
-	hr = this->pDevice->CreateTexture2D(&depthStencilTextureDesc, NULL, &this->depthStencilBuffer);
+	hr = this->pDevice->CreateTexture2D(&depthStencilTextureDesc, nullptr, &this->depthStencilBuffer);
 	if (FAILED(hr))
 		DEBUG_LOG("[D3D]::ERROR CANNOT CREATE STENCIL TEXTURE");
+
+	D3D11_DEPTH_STENCIL_VIEW_DESC descDSV;
+	ZeroMemory(&descDSV, sizeof(D3D11_DEPTH_STENCIL_VIEW_DESC));
+	descDSV.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	descDSV.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+	descDSV.Texture2D.MipSlice = 0;
 	
-	hr = this->pDevice->CreateDepthStencilView(this->depthStencilBuffer, NULL, &this->depthStencilView);
+	hr = this->pDevice->CreateDepthStencilView(this->depthStencilBuffer, &descDSV, &this->depthStencilView);
 	if (FAILED(hr))
-		DEBUG_LOG("[D3D]::ERROR CANNOT CREATE STENCIL BUFFER");
+		DEBUG_LOG("[D3D]::ERROR CANNOT CREATE STENCIL VIEW");
 
 	this->pContext->OMSetRenderTargets(1, &pRenderTarget, this->depthStencilView);
 	
 	D3D11_DEPTH_STENCIL_DESC depthstencildesc{};
 
-	depthstencildesc.DepthEnable = FALSE;
+	depthstencildesc.DepthEnable = TRUE;
 	depthstencildesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
-	depthstencildesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_NEVER;
+	depthstencildesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_ALWAYS;
 
 	depthstencildesc.StencilEnable = TRUE;
-	depthstencildesc.StencilReadMask = D3D11_DEFAULT_STENCIL_READ_MASK;
-	depthstencildesc.StencilWriteMask = D3D11_DEFAULT_STENCIL_WRITE_MASK;
+	depthstencildesc.StencilReadMask = 0XFF;
+	depthstencildesc.StencilWriteMask = 0XFF;
 
 	depthstencildesc.FrontFace.StencilFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_ALWAYS; //In the default stencil state, always pass, don't even do a comparison function
 	depthstencildesc.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP; //KEEP STENCIL BUFFER VALUE (WILL NEVER FAIL SO TECHNICALLY IRRELEVANT)
@@ -64,43 +70,48 @@ Application::Render::MaskEngine::MaskEngine(ID3D11Device* pDevice, ID3D11DeviceC
 	depthstencildesc.BackFace.StencilPassOp = D3D11_STENCIL_OP_KEEP; //NOT RELEVANT, TEST NEVER OCCURS
 	depthstencildesc.BackFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP; //NOT RELEVANT, TEST NEVER OCCURS
 
-	hr = this->pDevice->CreateDepthStencilState(&depthstencildesc, &this->drawMask);
+	hr = this->pDevice->CreateDepthStencilState(&depthstencildesc, &this->drawState);
 
 	if (FAILED(hr))
 		DEBUG_LOG("Failed to create depth stencil state.");
 
 	//Discard blend state (Just need to change a few things from default depth stencil)
-	depthstencildesc.FrontFace.StencilFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_EQUAL; //ONLY PASS IF THE SOURCE PIXEL VALUE = STENCILREF
+	depthstencildesc.FrontFace.StencilFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS; //ONLY PASS IF THE SOURCE PIXEL VALUE = STENCILREF
 	depthstencildesc.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP; //KEEP STENCIL BUFFER VALUE (same as default)
 	depthstencildesc.FrontFace.StencilPassOp = D3D11_STENCIL_OP_KEEP; //KEEP STENCIL BUFFER VALUE (Notice in default we incremented, but in this we don't! We only want to compare to the stencil value written by the previous stencil state)
 	depthstencildesc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP; //KEEP STENCIL BUFFER VALUE (same as default)
+	
+	hr = this->pDevice->CreateDepthStencilState(&depthstencildesc, &this->discardState);
 
-	hr = this->pDevice->CreateDepthStencilState(&depthstencildesc, &this->applyMask);
+	CD3D11_DEPTH_STENCIL_DESC defstate(D3D11_DEFAULT);
+	defstate.DepthFunc = D3D11_COMPARISON_ALWAYS;
+
+	hr = this->pDevice->CreateDepthStencilState(&defstate, &this->disabledState);
 
 	if (FAILED(hr))
 	{
-		DEBUG_LOG(hr, "Failed to create depth stencil state.");
+		DEBUG_LOG(hr << " Failed to create depth stencil state.");
 	}
 }
 
 void Application::Render::MaskEngine::clearBuffer() const
 {
-	this->pContext->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+	this->pContext->ClearDepthStencilView(depthStencilView,D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 0.0, 0);
 }
 
 void Application::Render::MaskEngine::set_draw_mask() const
 {
-	this->pContext->OMSetDepthStencilState(this->drawMask, 0);
+	this->pContext->OMSetDepthStencilState(this->drawState, 0);
 }
 
-void Application::Render::MaskEngine::set_apply_mask() const
+void Application::Render::MaskEngine::set_discard_mask() const
 {
-	this->pContext->OMSetDepthStencilState(this->applyMask, 0);
+	this->pContext->OMSetDepthStencilState(this->discardState, 0);
 }
 
 void Application::Render::MaskEngine::unset_mask() const
 {
-	this->pContext->OMSetDepthStencilState(this->depthStencilState, 0);
+	this->pContext->OMSetDepthStencilState(disabledState, 0);
 }
 
 ID3D11DepthStencilView* Application::Render::MaskEngine::get_stencil_view() const

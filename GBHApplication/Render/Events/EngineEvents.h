@@ -14,7 +14,7 @@ namespace Application
 		{
 			Engine* engine;
 			Scene* scene;
-			const ID3D11RasterizerState* old_state;
+			ID3D11RasterizerState* old_state;
 
 			unsigned int scenes_completed;
 			bool has_texts;

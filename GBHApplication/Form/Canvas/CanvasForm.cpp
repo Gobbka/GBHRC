@@ -5,11 +5,18 @@
 
 void Application::Canvas::CanvasForm::draw_element(Render::IRenderObject* obj, Render::DrawEvent* event)
 {
-	event->engine->get_mask()->set_draw_mask();
-	event->engine->pDevContext->PSSetShader(nullptr, nullptr, 0);
+	// event->engine->pDevContext->PSSetShader(nullptr, nullptr, 0);
 	
 	if (((Canvas::CanvasElement*)obj)->render == true)
+	{
+
+		event->engine->get_mask()->set_draw_mask();
+
 		obj->draw(event);
+		event->engine->get_mask()->unset_mask();
+		//obj->draw(event);
+
+	}
 }
 
 void Application::Canvas::CanvasForm::update_markup(Application::Render::Engine* pEngine)
@@ -26,7 +33,8 @@ void Application::Canvas::CanvasForm::update_markup(Application::Render::Engine*
 		});
 }
 
-void Application::Canvas::CanvasForm::add_element(CanvasElement* element)
+Application::Canvas::CanvasForm* Application::Canvas::CanvasForm::add_element(CanvasElement* element)
 {
 	this->add_render_object(element);
+	return this;
 }

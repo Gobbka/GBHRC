@@ -10,7 +10,7 @@ extern DirectX::SpriteFont* VisbyRoundCFFont;
 void TestSceneMarkup(Application::Canvas::CanvasForm* form, Application::Render::Engine* pEngine)
 {
     form
-        ->add_element(new Application::Canvas::Rectangle{ {-500,500},{1000,1000},{FLOAT_COLORS_RED} })
+        ->add_element(new Application::Canvas::Rectangle{ {-250,250},{400,500},{FLOAT_COLORS_GREEN} })
 	;
 	
 	form->update_markup(pEngine);
@@ -22,13 +22,13 @@ void test_scene_draw(Application::Render::DrawEvent* event)
 	
     auto*engine = event->engine;
 
-    engine->get_batch()->Begin(DirectX::SpriteSortMode_Deferred, nullptr, nullptr, engine->get_mask()->get_applyMask());
+    engine->get_batch()->Begin(DirectX::SpriteSortMode_Deferred, nullptr, nullptr,engine->get_mask()->get_discardState());
 
     VisbyRoundCFFont->DrawString(
         engine->get_batch(),
-        "NIGGER",
+        "NUMB DIGGER DUMB NIGGER",
         DirectX::XMFLOAT2(
-            pos.x,
+            pos.x-70,
             pos.y
         ),
         DirectX::Colors::Red,

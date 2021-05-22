@@ -20,7 +20,7 @@ namespace Application
 		protected:
 			Render::Resolution screen_resolution;
 
-			virtual void draw_element(Render::IRenderObject* obj,Render::DrawEvent*event)=0;
+			virtual void draw_element(Render::IRenderObject* obj,Render::DrawEvent*event) PURE;
 		public:
 			// public variables
 			void(__cdecl* render_callback)(Render::DrawEvent*event) = nullptr;

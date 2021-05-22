@@ -18,7 +18,7 @@ namespace Application {
 			void draw_element(Render::IRenderObject* obj, Render::DrawEvent* event) override;
 			
 			void update_markup(Application::Render::Engine* pEngine);
-			void add_element(CanvasElement* element);
+			Canvas::CanvasForm* add_element(CanvasElement* element);
 		};
 	}
 }
