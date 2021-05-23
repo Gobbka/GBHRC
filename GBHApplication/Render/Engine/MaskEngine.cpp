@@ -41,7 +41,7 @@ Application::Render::MaskEngine::MaskEngine(ID3D11Device* pDevice, ID3D11DeviceC
 	D3D11_DEPTH_STENCIL_VIEW_DESC descDSV;
 	ZeroMemory(&descDSV, sizeof(D3D11_DEPTH_STENCIL_VIEW_DESC));
 	descDSV.Format = view_format;
-	descDSV.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2DMS;
+	descDSV.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
 	descDSV.Texture2D.MipSlice = 0;
 	
 	hr = this->pDevice->CreateDepthStencilView(this->depthStencilBuffer, &descDSV, &this->depthStencilView);
@@ -52,22 +52,17 @@ Application::Render::MaskEngine::MaskEngine(ID3D11Device* pDevice, ID3D11DeviceC
 	
 	D3D11_DEPTH_STENCIL_DESC depthstencildesc{};
 
-	depthstencildesc.DepthEnable = TRUE;
+	depthstencildesc.DepthEnable = false;
 	depthstencildesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
 	depthstencildesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_ALWAYS;
 
-	depthstencildesc.StencilEnable = TRUE;
+	depthstencildesc.StencilEnable = 1;
 	depthstencildesc.StencilReadMask = 0XFF;
 	depthstencildesc.StencilWriteMask = 0XFF;
 
 	depthstencildesc.FrontFace.StencilFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_ALWAYS; //In the default stencil state, always pass, don't even do a comparison function
 	depthstencildesc.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP; //KEEP STENCIL BUFFER VALUE (WILL NEVER FAIL SO TECHNICALLY IRRELEVANT)
-	/*
-	Explanation of "depthstencildesc.FrontFace.StencilPassOp = D3D11_STENCIL_OP_INCR_SAT; "
-	INCREMENT & CLAMP VALUE - IF THE VALUE WAS 0 (DEFAULT), AND WE PASS TEST (WHICH WE WILL SINCE WE USE ALWAYS)
-	INCREMENT VALUE OF STENCIL BUFFER BY 1 AND CLAMP. MAX 255 I THINK?
-	THE DISCARD DEPTH STENCIL WILL USE THIS VALUE TO COMPARE TO SEE IF A PIXEL HAS BEEN WRITTEN TO IN THAT STENCIL
-	BUFFER LOCATION.*/
+
 	depthstencildesc.FrontFace.StencilPassOp = D3D11_STENCIL_OP_INCR_SAT;
 	depthstencildesc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP; //KEEP STENCIL BUFFER VALUE (DEPTH IS DISABLED SO SHOULD NEVER FAIL? TECHNICALLY IRRELEVANT)
 
@@ -83,7 +78,7 @@ Application::Render::MaskEngine::MaskEngine(ID3D11Device* pDevice, ID3D11DeviceC
 		DEBUG_LOG("Failed to create depth stencil state.");
 
 	//Discard blend state (Just need to change a few things from default depth stencil)
-	depthstencildesc.FrontFace.StencilFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS; //ONLY PASS IF THE SOURCE PIXEL VALUE = STENCILREF
+	depthstencildesc.FrontFace.StencilFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS_EQUAL; //ONLY PASS IF THE SOURCE PIXEL VALUE = STENCILREF
 	depthstencildesc.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP; //KEEP STENCIL BUFFER VALUE (same as default)
 	depthstencildesc.FrontFace.StencilPassOp = D3D11_STENCIL_OP_KEEP; //KEEP STENCIL BUFFER VALUE (Notice in default we incremented, but in this we don't! We only want to compare to the stencil value written by the previous stencil state)
 	depthstencildesc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP; //KEEP STENCIL BUFFER VALUE (same as default)

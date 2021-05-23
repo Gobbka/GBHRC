@@ -216,7 +216,9 @@ void Engine::update_scene()
 		scene->update(this);
 }
 
-void Engine::render_prepare() const
+
+
+void Engine::render_prepare()
 {
 	ConstantBuffer cb;
 	cb.mProjection = DirectX::XMMatrixTranspose(mOrtho);
@@ -229,6 +231,11 @@ void Engine::render_prepare() const
 	this->pDevContext->IASetInputLayout(pVertexLayout);
 	this->pDevContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
+	this->set_shaders();
+}
+
+void Engine::set_shaders()
+{
 	this->pDevContext->VSSetShader(pVertexShader, nullptr, 0);
 	this->pDevContext->PSSetShader(pPixelShader, nullptr, 0);
 }

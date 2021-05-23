@@ -53,7 +53,9 @@ namespace Application
 
 		public:
 			void set_vbuffer(GVertex::VertexBuffer* buffer);
-			void render_prepare() const;
+			void render_prepare();
+
+			void set_shaders();
 
 			DirectX::SpriteFont* create_font(void* font_source,UINT source_size);
 			
