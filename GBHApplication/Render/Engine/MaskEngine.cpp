@@ -96,6 +96,8 @@ Application::Render::MaskEngine::MaskEngine(ID3D11Device* pDevice, ID3D11DeviceC
 	{
 		DEBUG_LOG(hr << " Failed to create depth stencil state.");
 	}
+
+	this->current_state = disabledState;
 }
 
 void Application::Render::MaskEngine::clearBuffer() const
@@ -103,22 +105,25 @@ void Application::Render::MaskEngine::clearBuffer() const
 	this->pContext->ClearDepthStencilView(depthStencilView,D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 0.0f, 0);
 }
 
-void Application::Render::MaskEngine::set_draw_mask() const
+void Application::Render::MaskEngine::set_draw_mask()
 {
 	this->pContext->OMSetDepthStencilState(this->drawState, 0);
+	this->current_state = drawState;
 }
 
-void Application::Render::MaskEngine::set_discard_mask() const
+void Application::Render::MaskEngine::set_discard_mask()
 {
 	this->pContext->OMSetDepthStencilState(this->discardState, 0);
+	this->current_state = discardState;
 }
 
-void Application::Render::MaskEngine::unset_mask() const
+void Application::Render::MaskEngine::unset_mask()
 {
 	this->pContext->OMSetDepthStencilState(disabledState, 0);
+	this->current_state = disabledState;
 }
 
-ID3D11DepthStencilView* Application::Render::MaskEngine::get_stencil_view() const
+ID3D11DepthStencilView* Application::Render::MaskEngine::get_stencil_view() CONST
 {
 	return this->depthStencilView;
 }

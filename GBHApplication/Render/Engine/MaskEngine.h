@@ -10,6 +10,7 @@ namespace Application
 			ID3D11DepthStencilState* drawState;
 			ID3D11DepthStencilState* discardState;
 			ID3D11DepthStencilState* disabledState;
+			ID3D11DepthStencilState* current_state;
 			
 			ID3D11Texture2D* depthStencilBuffer;
 			ID3D11DepthStencilView* depthStencilView;
@@ -24,9 +25,9 @@ namespace Application
 
 			void clearBuffer() const;
 
-			void set_draw_mask() const;
-			void set_discard_mask() const;
-			void unset_mask() const;
+			void set_draw_mask();
+			void set_discard_mask();
+			void unset_mask();
 
 			ID3D11DepthStencilState* get_drawState() CONST
 			{
@@ -39,6 +40,11 @@ namespace Application
 			ID3D11DepthStencilState* get_disabledState() CONST
 			{
 				return this->disabledState;
+			}
+
+			ID3D11DepthStencilState* get_current_state() CONST
+			{
+				return this->current_state;
 			}
 
 			ID3D11DepthStencilView* get_stencil_view() CONST;

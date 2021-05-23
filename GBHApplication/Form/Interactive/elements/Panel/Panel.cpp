@@ -5,9 +5,9 @@
 
 void Application::UI::Panel::draw(Render::DrawEvent* event)
 {
-	
-	event->get_context()->Draw(5, this->__index);
-	
+	event->engine->get_mask()->set_draw_mask();
+	event->get_context()->Draw(4, this->__index);
+	event->engine->get_mask()->set_discard_mask();
 	Parent::draw(event);
 }
 
@@ -28,7 +28,7 @@ bool Application::UI::Panel::point_belongs(POINT point)
 void Application::UI::Panel::init()
 {
 
-	Parent::set_index_offset(5);
+	Parent::set_index_offset(4);
 	Parent::init();
 
 	this->set_pos(position.x, position.y);

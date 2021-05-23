@@ -36,7 +36,7 @@ namespace Application
 			
 			UINT size() override
 			{
-				return 5;
+				return 4;
 			}
 			Button(Render::Position position, Render::Resolution resolution, Render::Color color,DirectX::SpriteFont*font,const char*text);
 

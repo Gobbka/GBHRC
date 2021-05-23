@@ -16,7 +16,7 @@ namespace Application
 		public:
 			UINT size() override
 			{
-				return 5 + Parent::size();
+				return 4 + Parent::size();
 			}
 			Panel(Render::Position position,Render::Resolution resolution, Render::Color color);
 			

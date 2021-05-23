@@ -7,9 +7,9 @@ void Application::UI::Checkbox::draw(Render::DrawEvent* event)
 	auto* pContext = event->get_context();
 
 	pContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
-	pContext->Draw(5, this->__index);
+	pContext->Draw(4, this->__index);
 	pContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-	pContext->Draw(5, this->__index + 5);
+	pContext->Draw(4, this->__index + 4);
 }
 
 bool Application::UI::Checkbox::is_checked()
@@ -19,7 +19,7 @@ bool Application::UI::Checkbox::is_checked()
 
 UINT Application::UI::Checkbox::size()
 {
-	return 10;
+	return 8;
 }
 
 Application::UI::Checkbox::Checkbox(Render::Position position, Render::Resolution resolution, Render::Color color)

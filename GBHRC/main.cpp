@@ -88,8 +88,8 @@ void init_callback(Application::Render::Engine* instance)
         ->append_scene(menu)
         //->append_scene(friend_list)
 
-        ->append_scene(test_scene)
-		->append_scene(esp_scene)	
+        //->append_scene(test_scene)
+		//->append_scene(esp_scene)	
 	;
 
     DEBUG_LOG("SCENE'S APPENDED");

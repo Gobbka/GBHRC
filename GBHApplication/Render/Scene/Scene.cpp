@@ -37,7 +37,6 @@ void Application::Render::Scene::render(Render::DrawEvent* draw_event)
 	
 	for (auto* element : this->pElements)
 		this->draw_element(element, draw_event);
-		//element->__draw(draw_event);
 
 	if (this->render_callback != nullptr)
 		render_callback(draw_event);

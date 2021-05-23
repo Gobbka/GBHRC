@@ -4,7 +4,7 @@
 
 void Application::UI::Button::draw(Render::DrawEvent* event)
 {
-	event->get_context()->Draw(5, this->__index);
+	event->get_context()->Draw(4, this->__index);
 	this->text.draw(event);
 }
 

@@ -25,7 +25,7 @@ void Application::Canvas::Rectangle::draw(Render::DrawEvent* event)
 
 	if (this->wireframed == false)
 	{
-		p_context->Draw(5, this->__index);
+		p_context->Draw(4, this->__index);
 		return;
 	}
 
@@ -41,7 +41,7 @@ void Application::Canvas::Rectangle::draw(Render::DrawEvent* event)
 	ID3D11RasterizerState* old_state;
 	p_context->RSGetState(&old_state);
 	p_context->RSSetState(state);
-	p_context->Draw(5, this->__index);
+	p_context->Draw(4, this->__index);
 	p_context->RSSetState(old_state);
 }
 
@@ -72,7 +72,7 @@ bool Application::Canvas::Rectangle::point_belongs(POINT point)
 
 UINT Application::Canvas::Rectangle::size()
 {
-	return 5;
+	return 4;
 }
 
 void Application::Canvas::Rectangle::init(Canvas::CanvasForm* pForm)

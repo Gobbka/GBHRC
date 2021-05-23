@@ -44,18 +44,10 @@ char* Application::Render::Text::get_text()
 
 void Application::Render::Text::DrawInRect(Render::DrawEvent* event, Render::Position position,bool scalable) const
 {
-	// TODO: remove this;
-	return;
-	
 	auto* batch = event->engine->get_batch();
-	batch->Begin();
+	batch->Begin(DirectX::SpriteSortMode_Deferred,nullptr,nullptr,event->engine->get_mask()->get_current_state());
 	auto center_pos = Application::point_to_center(position);
 	auto scale = 1.f;
-
-	//if(strcmp(this->text,"alyykes228")==0)
-	//{
-	//	DEBUG_LOG("PAPV'S");
-	//}
 	
 	// center calculations with scale is broken
 	// so TODO: fix it
