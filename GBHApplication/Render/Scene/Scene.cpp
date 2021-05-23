@@ -6,7 +6,6 @@
 
 void Application::Render::Scene::alloc_vbuffer(Render::Engine* pEngine)
 {
-
 	delete this->pVBuffer;
 	const UINT size = this->total_size();
 
@@ -44,10 +43,10 @@ void Application::Render::Scene::render(Render::DrawEvent* draw_event)
 		render_callback(draw_event);
 }
 
-void Application::Render::Scene::foreach(std::function<void(IRenderObject*)> const& nigger)
+void Application::Render::Scene::foreach(std::function<void(IRenderObject*)> const& callback)
 {
 	for (auto* element : this->pElements)
-		nigger(element);
+		callback(element);
 }
 
 UINT Application::Render::Scene::total_size()

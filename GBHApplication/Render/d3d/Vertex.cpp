@@ -6,6 +6,12 @@ GVertex::Vertex::Vertex()
 	this->color = DirectX::XMFLOAT4{ 0.f,0.f,0.f,0.f };
 }
 
+GVertex::Vertex::Vertex(float x, float y, float z, float r, float g, float b, float a)
+{
+	this->pos = DirectX::XMFLOAT3{ x,y,z };
+	this->color = DirectX::XMFLOAT4{ r,g,b,a };
+}
+
 GVertex::Vertex::Vertex(float x, float y, float r, float g, float b, float a)
 {
 	this->pos = DirectX::XMFLOAT3{ x,y,1.f };
