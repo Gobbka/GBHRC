@@ -26,8 +26,7 @@ void Application::Canvas::CanvasForm::draw_element(Render::IRenderObject* obj, R
 	if (((Canvas::CanvasElement*)obj)->render == true)
 	{
 		//event->engine->get_mask()->set_draw_mask();
-
-		obj->draw(event);
+		event->draw_element(obj);
 		//event->engine->get_mask()->unset_mask();
 		//obj->draw(event);
 		//event->engine->pDevContext->Draw(4, 0);

@@ -17,7 +17,7 @@ void Application::Canvas::CanvasElement::move_by(float x, float y)
 	}
 }
 
-GVertex::Vertex* Application::Canvas::CanvasElement::get_ptr() const
+GVertex::Vertex* Application::Canvas::CanvasElement::get_ptr()
 {
 	return this->pcanvas->get_ptr() + this->__index;
 }

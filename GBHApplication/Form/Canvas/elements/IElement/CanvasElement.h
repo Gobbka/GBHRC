@@ -23,7 +23,7 @@ namespace Application
 
 			virtual void init(CanvasForm* pForm) = 0;
 
-			GVertex::Vertex* get_ptr() const;
+			GVertex::Vertex* get_ptr();
 		};
 	}
 }

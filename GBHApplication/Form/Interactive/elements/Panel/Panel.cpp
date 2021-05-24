@@ -5,9 +5,10 @@
 
 void Application::UI::Panel::draw(Render::DrawEvent* event)
 {
-	event->engine->get_mask()->set_draw_mask();
-	event->get_context()->Draw(4, this->__index);
-	event->engine->get_mask()->set_discard_mask();
+	//event->engine->get_mask()->set_draw_mask();
+	event->draw(4);
+	//event->get_context()->Draw(4, this->__index);
+	//event->engine->get_mask()->set_discard_mask();
 	Parent::draw(event);
 }
 

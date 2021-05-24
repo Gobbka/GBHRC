@@ -28,9 +28,9 @@ namespace Application
 			Render::Position position{ 0,0 };
 			Parent* _parent = nullptr;
 		protected:
-			virtual void init(){};
-
-			static void default_event_callback (UIElementEventArgs args) {};
+			virtual void init(){}
+			void draw(Render::DrawEvent* event) override PURE;
+			static void default_event_callback (UIElementEventArgs args) {}
 		public:
 			// public variables
 
@@ -48,7 +48,7 @@ namespace Application
 			// return's screen position
 			Render::Position get_position() const;
 			// return's memory region pointer where you can edit vertex
-			GVertex::Vertex* get_ptr() const;
+			GVertex::Vertex* get_ptr();
 			// vertex size of object
 			UINT size() override = 0; 
 			// return's parent, if have

@@ -83,8 +83,8 @@ void Application::UI::Parent::set_index_offset(UINT offset)
 void Application::UI::Parent::draw(Render::DrawEvent* event)
 {
 	for (auto* element : this->elements)
-		if(element->hidden == false)
-			element->draw(event);
+		if (element->hidden == false)
+			event->draw_element(element);
 }
 
 void Application::UI::Parent::set_pos(float x, float y)

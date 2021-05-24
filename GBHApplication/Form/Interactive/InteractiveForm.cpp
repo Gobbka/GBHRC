@@ -7,7 +7,7 @@
 void Application::InteractiveForm::draw_element(Render::IRenderObject* obj, Render::DrawEvent* event)
 {
 	if (((UI::InteractiveElement*)obj)->hidden == false)
-		obj->draw(event);
+		event->draw_element(obj);
 }
 
 void Application::InteractiveForm::window_proc(UINT msg, WPARAM wParam, LPARAM lParam)

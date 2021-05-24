@@ -23,6 +23,11 @@ namespace Application
 			virtual UINT size() PURE;
 			virtual void move_by(float x, float y) PURE;
 
+			UINT get_index() CONST
+			{
+				return this->__index;
+			}
+			
 			void set_index(UINT index)
 			{
 				this->__index = index;

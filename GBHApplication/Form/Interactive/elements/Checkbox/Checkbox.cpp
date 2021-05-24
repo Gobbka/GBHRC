@@ -7,9 +7,9 @@ void Application::UI::Checkbox::draw(Render::DrawEvent* event)
 	auto* pContext = event->get_context();
 
 	pContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
-	pContext->Draw(4, this->__index);
+	event->draw(4);
 	pContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-	pContext->Draw(4, this->__index + 4);
+	event->draw(4, 4);
 }
 
 bool Application::UI::Checkbox::is_checked()
@@ -19,7 +19,7 @@ bool Application::UI::Checkbox::is_checked()
 
 UINT Application::UI::Checkbox::size()
 {
-	return 8;
+	return 10;
 }
 
 Application::UI::Checkbox::Checkbox(Render::Position position, Render::Resolution resolution, Render::Color color)
@@ -44,12 +44,12 @@ void Application::UI::Checkbox::set_pos(float x, float y)
 	auto* ptr = this->get_ptr();
 	
 	Managers::Rectangle::set_rect(ptr, x, y, resolution.width, resolution.height);
-	Managers::Rectangle::set_rect(ptr + 5, x + 4, y - 4, resolution.width - 8, resolution.height - 8);
+	Managers::Rectangle::set_rect(ptr + 4, x + 4, y - 4, resolution.width - 8, resolution.height - 8);
 }
 
 void Application::UI::Checkbox::set_color(float r, float g, float b)
 {
-	Managers::Rectangle::set_color(this->get_ptr()+5, r, g, b);
+	Managers::Rectangle::set_color(this->get_ptr()+4, r, g, b);
 }
 
 bool Application::UI::Checkbox::point_belongs(POINT point)

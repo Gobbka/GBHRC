@@ -60,13 +60,13 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 	background_panel->unique_id = 1;
 	
 	background_panel
-		->add_element(new Application::UI::Label{ {-50,0},"SKIGIDI SKIGER YOU ARE A NIGGER",esp_font,{FLOAT_COLORS_WHITE},{400,30} })
+		->add_element(esp_checkbox)
 		//->add_element(esp_button)
 		//->add_element(aim_button)
 		//->add_element(misc_button)
 
 
-	//	// inners
+		//// inners
 
 		//// ESP INNER
 		//->add_element(
@@ -76,25 +76,25 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 		//	->add_element(new Application::UI::Label{ {60,-10},"ESP ACTIVE",esp_font,{FLOAT_COLORS_WHITE} })
 		//	->add_element(new Application::UI::Label{ {60,-50},"NAME ESP",esp_font,{FLOAT_COLORS_WHITE} })
 		//)
-	//	// END ESP INNER
-	//	// AIM INNER
-	//	->add_element(
-	//		aim_inner
-	//		->add_element(aim_checkbox)
-	//		->add_element(new Application::UI::Label{ {60,-10},"AIM ACTIVE",esp_font,{FLOAT_COLORS_WHITE} }),
-	//		false
-	//	)
-	//	// END AIM INNER
-	//	->add_element(
-	//		misc_inner
-	//		->add_element(jump_checkbox)
-	//		->add_element(car_sh_checkbox)
-	//		->add_element(no_recoil_checkbox)
-	//		->add_element(new Application::UI::Label{ {60,-10},"FLY",esp_font,{FLOAT_COLORS_WHITE} })
-	//		->add_element(new Application::UI::Label{ {60,-50},"CAR SPEED",esp_font,{FLOAT_COLORS_WHITE} })
-	//		->add_element(new Application::UI::Label{ {60,-90},"NO RECOIL",esp_font,{FLOAT_COLORS_WHITE} })
-	//		,false
-	//	)
+		//// END ESP INNER
+		//// AIM INNER
+		//->add_element(
+		//	aim_inner
+		//	->add_element(aim_checkbox)
+		//	->add_element(new Application::UI::Label{ {60,-10},"AIM ACTIVE",esp_font,{FLOAT_COLORS_WHITE} }),
+		//	false
+		//)
+		//// END AIM INNER
+		//->add_element(
+		//	misc_inner
+		//	->add_element(jump_checkbox)
+		//	->add_element(car_sh_checkbox)
+		//	->add_element(no_recoil_checkbox)
+		//	->add_element(new Application::UI::Label{ {60,-10},"FLY",esp_font,{FLOAT_COLORS_WHITE} })
+		//	->add_element(new Application::UI::Label{ {60,-50},"CAR SPEED",esp_font,{FLOAT_COLORS_WHITE} })
+		//	->add_element(new Application::UI::Label{ {60,-90},"NO RECOIL",esp_font,{FLOAT_COLORS_WHITE} })
+		//	,false
+		//)
 
 		//->add_element(
 		//	topbar_panel

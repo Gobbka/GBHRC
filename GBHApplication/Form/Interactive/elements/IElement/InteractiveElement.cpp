@@ -27,7 +27,7 @@ void Application::UI::InteractiveElement::initialize(Application::InteractiveFor
 	this->init();
 }
 
-GVertex::Vertex* Application::UI::InteractiveElement::get_ptr() const
+GVertex::Vertex* Application::UI::InteractiveElement::get_ptr()
 {
 	return this->pForm->get_ptr() + this->__index;
 }
