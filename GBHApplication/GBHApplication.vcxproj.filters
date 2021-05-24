@@ -66,6 +66,9 @@
     <ClCompile Include="Render\Engine\MaskEngine.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="Form\Interactive\Events\WinIntEventHandler.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Managers\RectangleManager.h">
@@ -138,6 +141,12 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Render\Engine\MaskEngine.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Form\Interactive\Events\WinIntEventHandler.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Form\Interactive\Events\InteractionEventHandler.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

@@ -129,3 +129,20 @@ Application::InteractiveForm* Application::InteractiveForm::add_element(UI::Inte
 	return this;
 }
 
+void Application::InteractiveForm::on_mouse_down()
+{
+	
+}
+
+void Application::InteractiveForm::on_mouse_move()
+{
+}
+
+void Application::InteractiveForm::on_mouse_scroll()
+{
+}
+
+void Application::InteractiveForm::on_mouse_up()
+{
+}
+

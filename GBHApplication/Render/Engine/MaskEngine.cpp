@@ -78,7 +78,7 @@ Application::Render::MaskEngine::MaskEngine(ID3D11Device* pDevice, ID3D11DeviceC
 		DEBUG_LOG("Failed to create depth stencil state.");
 
 	//Discard blend state (Just need to change a few things from default depth stencil)
-	depthstencildesc.FrontFace.StencilFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS_EQUAL; //ONLY PASS IF THE SOURCE PIXEL VALUE = STENCILREF
+	depthstencildesc.FrontFace.StencilFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS; //ONLY PASS IF THE SOURCE PIXEL VALUE = STENCILREF
 	depthstencildesc.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP; //KEEP STENCIL BUFFER VALUE (same as default)
 	depthstencildesc.FrontFace.StencilPassOp = D3D11_STENCIL_OP_KEEP; //KEEP STENCIL BUFFER VALUE (Notice in default we incremented, but in this we don't! We only want to compare to the stencil value written by the previous stencil state)
 	depthstencildesc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP; //KEEP STENCIL BUFFER VALUE (same as default)

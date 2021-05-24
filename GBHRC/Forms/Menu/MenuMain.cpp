@@ -57,9 +57,15 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 		->add_element(background_panel)
 	;
 
+	topbar_panel->unique_id = 2;
 	background_panel->unique_id = 1;
 	
 	background_panel
+		->add_element(
+			topbar_panel
+			->add_element(new Application::UI::Label{ {0,0},"GBHRC",esp_font,{FLOAT_COLORS_WHITE},{400,30} })
+		)
+	
 		->add_element(esp_button)
 		->add_element(aim_button)
 		->add_element(misc_button)
@@ -95,10 +101,7 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 			,false
 		)
 
-		->add_element(
-			topbar_panel
-			->add_element(new Application::UI::Label{ {0,0},"GBHRC",esp_font,{FLOAT_COLORS_WHITE},{400,30} })
-		)
+
 
 	;
 

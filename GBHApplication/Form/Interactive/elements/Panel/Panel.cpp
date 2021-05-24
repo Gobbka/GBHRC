@@ -5,8 +5,17 @@
 
 void Application::UI::Panel::draw(Render::DrawEvent* event)
 {
+	if(this->unique_id==1)
+	{
+		auto* mask = event->engine->get_mask();
+		mask->set_draw_mask();
+		event->draw(4);
+		mask->set_discard_mask();
+	}else
+	{
+		event->draw(4);
+	}
 	//event->engine->get_mask()->set_draw_mask();
-	event->draw(4);
 	//event->get_context()->Draw(4, this->__index);
 	//event->engine->get_mask()->set_discard_mask();
 	Parent::draw(event);

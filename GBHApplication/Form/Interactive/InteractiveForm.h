@@ -1,5 +1,6 @@
 #pragma once
 #include "../../Render/Scene/Scene.h"
+#include "Events/WinIntEventHandler.h"
 
 namespace Application
 {
@@ -8,7 +9,7 @@ namespace Application
 		class InteractiveElement;
 	}
 
-	class InteractiveForm final : public Render::Scene
+	class InteractiveForm final : public Render::Scene,public Interaction::IEventHandler
 	{
 	private:
 		void draw_element(Render::IRenderObject* obj, Render::DrawEvent* event) override;
@@ -29,5 +30,10 @@ namespace Application
 		void initialize_components(Render::Engine* pEngine);
 
 		InteractiveForm* add_element(UI::InteractiveElement* element);
+	protected:
+		void on_mouse_down() override;
+		void on_mouse_move() override;
+		void on_mouse_scroll() override;
+		void on_mouse_up() override;
 	};
 }
