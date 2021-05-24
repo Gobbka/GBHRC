@@ -63,7 +63,7 @@ void Application::Canvas::Rectangle::set_resolution(UINT width, UINT height)
 	this->resolution = { width,height };
 }
 
-bool Application::Canvas::Rectangle::point_belongs(POINT point)
+bool Application::Canvas::Rectangle::point_belongs(Render::Position point)
 {
 	return
 		(point.x >= position.x && point.x <= position.x + resolution.width) &&

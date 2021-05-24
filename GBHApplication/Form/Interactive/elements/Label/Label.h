@@ -24,7 +24,7 @@ namespace Application
 			Label(Render::Position position, const char* text,DirectX::SpriteFont*font, Render::Color color);
 			Label(Render::Position position, const char* text,DirectX::SpriteFont*font, Render::Color color, Render::Resolution limitResolution);
 
-			bool point_belongs(POINT point) override;
+			bool point_belongs(Render::Position point) override;
 
 			void set_pos(float x, float y) override;
 			void set_color(float r, float g, float b) override;

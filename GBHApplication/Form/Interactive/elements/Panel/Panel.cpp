@@ -28,7 +28,7 @@ Application::UI::Panel::Panel(Render::Position position, Render::Resolution reso
 	this->resolution = resolution;
 }
 
-bool Application::UI::Panel::point_belongs(POINT point)
+bool Application::UI::Panel::point_belongs(Render::Position point)
 {
 	return
 		(point.x >= position.x && point.x <= position.x + resolution.width) &&

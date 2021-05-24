@@ -18,7 +18,7 @@ namespace Application
 			virtual void draw(Render::DrawEvent*event)        PURE;
 			virtual void set_pos(float x, float y)            PURE;
 			virtual void set_color(float r, float g, float b) PURE;
-			virtual bool point_belongs(POINT point) = 0;
+			virtual bool point_belongs(Render::Position point) = 0;
 
 			virtual UINT size() PURE;
 			virtual void move_by(float x, float y) PURE;

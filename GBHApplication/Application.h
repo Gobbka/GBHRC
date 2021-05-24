@@ -3,10 +3,21 @@
 #include "Managers/RectangleManager.h"
 #include "Render/Render.h"
 
+
 #define FIELD_SETTER(field_type,field_name) void set_##field_name(field_type field_name){this->##field_name = field_name;}
 
 namespace Application
 {
+	namespace Interaction {
+		class WinIntEventHandler;
+	}
+#ifdef WIN32
+	typedef Interaction::WinIntEventHandler OS_EVENT_HANDLER;
+#else
+	static_assert(1,"UNSUPORTED OS");
+#endif
+
+	
 	class InteractiveForm;
 	
 	void implement(HWND hwnd);

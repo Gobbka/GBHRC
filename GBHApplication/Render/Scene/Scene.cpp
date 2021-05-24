@@ -77,7 +77,7 @@ void Application::Render::Scene::set_resolution(Resolution resolution)
 	this->screen_resolution = resolution;
 }
 
-UINT Application::Render::Scene::elements_length() const
+size_t Application::Render::Scene::elements_length() const
 {
 	return this->pElements.size();
 }

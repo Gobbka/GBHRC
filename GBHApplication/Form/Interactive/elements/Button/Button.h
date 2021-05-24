@@ -40,7 +40,7 @@ namespace Application
 			}
 			Button(Render::Position position, Render::Resolution resolution, Render::Color color,DirectX::SpriteFont*font,const char*text);
 
-			bool point_belongs(POINT point) override;
+			bool point_belongs(Render::Position point) override;
 			void init() override;
 			void set_pos(float x, float y) override;
 			void set_color(float r, float g, float b) override;

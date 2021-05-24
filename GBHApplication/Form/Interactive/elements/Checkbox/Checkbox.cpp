@@ -52,7 +52,7 @@ void Application::UI::Checkbox::set_color(float r, float g, float b)
 	Managers::Rectangle::set_color(this->get_ptr()+4, r, g, b);
 }
 
-bool Application::UI::Checkbox::point_belongs(POINT point)
+bool Application::UI::Checkbox::point_belongs(Render::Position point)
 {
 	return
 		(point.x >= position.x && point.x <= position.x + resolution.width) &&

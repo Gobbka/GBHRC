@@ -57,7 +57,7 @@ namespace Application
 			InteractiveForm* get_form() const;
 
 			
-			bool point_belongs(POINT point) override = 0;
+			bool point_belongs(Render::Position point) override PURE;
 		public:
 			// public setters
 

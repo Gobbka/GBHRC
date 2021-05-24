@@ -22,7 +22,7 @@ Application::UI::Button::Button(Render::Position position, Render::Resolution re
 	this->text.set_text(text);
 }
 
-bool Application::UI::Button::point_belongs(POINT point)
+bool Application::UI::Button::point_belongs(Render::Position point)
 {
 	return
 		(point.x >= position.x && point.x <= position.x + resolution.width) &&

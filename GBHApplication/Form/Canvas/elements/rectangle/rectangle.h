@@ -20,7 +20,7 @@ namespace Application
 			void set_pos(float x, float y) override;
 			void set_color(float r, float g, float b) override;
 			void set_resolution(UINT width, UINT height);
-			bool point_belongs(POINT point) override;
+			bool point_belongs(Render::Position point) override;
 			UINT size() override;
 			void init(Canvas::CanvasForm* pForm) override;
 

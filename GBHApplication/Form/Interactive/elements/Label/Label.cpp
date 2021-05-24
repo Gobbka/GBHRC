@@ -25,7 +25,7 @@ Application::UI::Label::Label(Render::Position position, const char* text, Direc
 	this->position = position;
 }
 
-bool Application::UI::Label::point_belongs(POINT point)
+bool Application::UI::Label::point_belongs(Render::Position point)
 {
 	// TODO: make
 	return false;

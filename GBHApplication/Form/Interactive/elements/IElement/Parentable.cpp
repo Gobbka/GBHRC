@@ -39,14 +39,14 @@ void Application::UI::Parent::handle_mouse_move(float mX, float mY)
 	const auto length = this->elements.size() - 1;
 	bool e_handled = false;
 
-	for (int i = length; i >= 0; i--)
+	for (auto i = length; i >= 0; i--)
 	{
 		auto* element = (UI::InteractiveElement*)this->elements[i];
 		
 		if (
 			e_handled == false &&
 			element->hidden == false &&
-			element->point_belongs({(LONG)(mX),(LONG)(mY)})
+			element->point_belongs({(mX),(mY)})
 			)
 		{
 			if (element->hovered == false)
@@ -98,7 +98,7 @@ void Application::UI::Parent::set_color(float r, float g, float b)
 		element->set_color(r, g, b);
 }
 
-bool Application::UI::Parent::point_belongs(POINT point)
+bool Application::UI::Parent::point_belongs(Render::Position point)
 {
 	for (auto* element : this->elements)
 		if (element->point_belongs(point))

@@ -10,88 +10,31 @@ void Application::InteractiveForm::draw_element(Render::IRenderObject* obj, Rend
 		event->draw_element(obj);
 }
 
-void Application::InteractiveForm::window_proc(UINT msg, WPARAM wParam, LPARAM lParam)
-{
-	if (this->hidden == true)
-		return;
-	
-	if (msg == WM_MOUSEMOVE)
-	{
-		POINT center{ (LONG)(this->screen_resolution.width / 2),(LONG)(this->screen_resolution.height / 2) };
-
-		const POINT cursor{ GET_X_LPARAM(lParam) - center.x , center.y - GET_Y_LPARAM(lParam) };
-
-		if (this->dragged)
-		{
-			this->dragged->element->set_pos(cursor.x - this->dragged->dragged_offset.x, cursor.y + this->dragged->dragged_offset.y);
-			return;
-		}
-		
-		const auto length = this->elements_length() - 1;
-		bool e_handled = false;
-		
-		for (int i = length; i >= 0; i--)
-		{
-			auto* element = (UI::InteractiveElement*)this->element_at(i);
-			if (
-				element->hidden == false &&
-				e_handled == false &&
-				element->point_belongs(cursor)
-			)
-			{
-				if (element->hovered == false)
-				{
-					element->handle_mouse_enter();
-				}
-				element->handle_mouse_move(cursor.x, cursor.y);
-				e_handled = true;
-			}
-			else if (element->hovered == true)
-			{
-				element->handle_mouse_leave();
-			}
-		}
-
-		return;
-	}
-
-	if (msg == WM_LBUTTONUP)
-	{
-		this->foreach([](Render::IRenderObject* obj)
-			{
-				auto* element = (UI::InteractiveElement*)obj;
-				if (element->hovered == true)
-					element->handle_mouse_up();
-			});
-
-		this->free_drag_move();
-
-		return;
-	}
-
-	if (msg == WM_LBUTTONDOWN)
-	{
-		this->foreach([](Render::IRenderObject*obj)
-			{
-				auto* element = (UI::InteractiveElement*)obj;
-				if (element->hovered == true)
-					element->handle_mouse_down();
-			});
-		return;
-	}
-
-	if (msg == WM_MOUSEWHEEL)
-	{
-		this->foreach([wParam](Render::IRenderObject* obj)
-			{
-				auto* element = (UI::InteractiveElement*)obj;
-				if (element->hovered == true)
-					element->handle_mouse_scroll(GET_WHEEL_DELTA_WPARAM(wParam));
-
-			});
-		return;
-	}
-}
+//void Application::InteractiveForm::window_proc(UINT msg, WPARAM wParam, LPARAM lParam)
+//{
+//	if (this->hidden == true)
+//		return;
+//	
+//	if (msg == WM_MOUSEMOVE)
+//	{
+//		
+//	}
+//
+//	if (msg == WM_LBUTTONUP)
+//	{
+//
+//	}
+//
+//	if (msg == WM_LBUTTONDOWN)
+//	{
+//
+//	}
+//
+//	if (msg == WM_MOUSEWHEEL)
+//	{
+//
+//	}
+//}
 
 void Application::InteractiveForm::drag_move(UI::InteractiveElement* element)
 {
@@ -129,20 +72,80 @@ Application::InteractiveForm* Application::InteractiveForm::add_element(UI::Inte
 	return this;
 }
 
-void Application::InteractiveForm::on_mouse_down()
+void Application::InteractiveForm::on_lbmouse_down()
 {
-	
+	this->foreach([](Render::IRenderObject* obj)
+		{
+			auto* element = (UI::InteractiveElement*)obj;
+			if (element->hovered == true)
+				element->handle_mouse_down();
+		});
+	return;
 }
 
-void Application::InteractiveForm::on_mouse_move()
+void Application::InteractiveForm::on_mouse_move(int mx,int my)
 {
+	POINT center{ (LONG)(this->screen_resolution.width / 2),(LONG)(this->screen_resolution.height / 2) };
+
+	const Render::Position cursor{ mx - center.x , center.y - my };
+
+	if (this->dragged)
+	{
+		this->dragged->element->set_pos(cursor.x - this->dragged->dragged_offset.x, cursor.y + this->dragged->dragged_offset.y);
+		return;
+	}
+
+	const auto length = this->elements_length() - 1;
+	bool e_handled = false;
+
+	for (auto i = length; i >= 0; i--)
+	{
+		auto* element = (UI::InteractiveElement*)this->element_at(i);
+		if (
+			element->hidden == false &&
+			e_handled == false &&
+			element->point_belongs(cursor)
+			)
+		{
+			if (element->hovered == false)
+			{
+				element->handle_mouse_enter();
+			}
+			element->handle_mouse_move(cursor.x, cursor.y);
+			e_handled = true;
+		}
+		else if (element->hovered == true)
+		{
+			element->handle_mouse_leave();
+		}
+	}
+
+	return;
 }
 
-void Application::InteractiveForm::on_mouse_scroll()
+void Application::InteractiveForm::on_mouse_scroll(short direction)
 {
+	this->foreach([direction](Render::IRenderObject* obj)
+		{
+			auto* element = (UI::InteractiveElement*)obj;
+			if (element->hovered == true)
+				element->handle_mouse_scroll(direction);
+
+		});
+	return;
 }
 
-void Application::InteractiveForm::on_mouse_up()
+void Application::InteractiveForm::on_lbmouse_up()
 {
+	this->foreach([](Render::IRenderObject* obj)
+		{
+			auto* element = (UI::InteractiveElement*)obj;
+			if (element->hovered == true)
+				element->handle_mouse_up();
+		});
+
+	this->free_drag_move();
+
+	return;
 }
 

@@ -1,4 +1,5 @@
 #pragma once
+#include "../../Application.h"
 #include "../../Render/Scene/Scene.h"
 #include "Events/WinIntEventHandler.h"
 
@@ -9,7 +10,7 @@ namespace Application
 		class InteractiveElement;
 	}
 
-	class InteractiveForm final : public Render::Scene,public Interaction::IEventHandler
+	class InteractiveForm final : public Render::Scene,public OS_EVENT_HANDLER
 	{
 	private:
 		void draw_element(Render::IRenderObject* obj, Render::DrawEvent* event) override;
@@ -23,7 +24,7 @@ namespace Application
 		DragStruct* dragged = nullptr;
 	public:
 
-		void window_proc(UINT msg, WPARAM wParam, LPARAM lParam);
+		//void window_proc(UINT msg, WPARAM wParam, LPARAM lParam);
 		void drag_move(UI::InteractiveElement* element);
 		void free_drag_move();
 
@@ -31,9 +32,9 @@ namespace Application
 
 		InteractiveForm* add_element(UI::InteractiveElement* element);
 	protected:
-		void on_mouse_down() override;
-		void on_mouse_move() override;
-		void on_mouse_scroll() override;
-		void on_mouse_up() override;
+		void on_lbmouse_up() override;
+		void on_lbmouse_down() override;
+		void on_mouse_move(int mx,int my) override;
+		void on_mouse_scroll(short direction) override;
 	};
 }

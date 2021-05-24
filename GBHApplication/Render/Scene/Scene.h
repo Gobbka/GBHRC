@@ -44,7 +44,7 @@ namespace Application
 		public:
 			// public getters
 
-			UINT elements_length() const;
+			size_t elements_length() const;
 			GVertex::Vertex* get_ptr() const;
 			GVertex::VertexBuffer* get_vbuffer();
 			IRenderObject* element_at(UINT index);
