@@ -6,7 +6,7 @@ void Application::UI::Parent::handle_mouse_up()
 {
 	for (auto* element : this->elements)
 	{
-		if (element->hovered)
+		if (element->state.hovered)
 			element->handle_mouse_up();
 	}
 	InteractiveElement::handle_mouse_up();
@@ -16,7 +16,7 @@ void Application::UI::Parent::handle_mouse_down()
 {
 	for(auto*element:this->elements)
 	{
-		if (element->hovered)
+		if (element->state.hovered)
 			element->handle_mouse_down();
 	}
 	InteractiveElement::handle_mouse_down();
@@ -39,24 +39,24 @@ void Application::UI::Parent::handle_mouse_move(float mX, float mY)
 	const auto length = this->elements.size() - 1;
 	bool e_handled = false;
 
-	for (auto i = length; i >= 0; i--)
+	for (long long i = length; i >= 0; i--)
 	{
 		auto* element = (UI::InteractiveElement*)this->elements[i];
 		
 		if (
 			e_handled == false &&
-			element->hidden == false &&
+			element->state.visible == VisibleState::VISIBLE_STATE_VISIBLE &&
 			element->point_belongs({(mX),(mY)})
 			)
 		{
-			if (element->hovered == false)
+			if (element->state.hovered == false)
 			{
 				element->handle_mouse_enter();
 			}
 			element->handle_mouse_move(mX,mY);
 			e_handled = true;
 		}
-		else if (element->hovered == true)
+		else if (element->state.hovered == true)
 		{
 			element->handle_mouse_leave();
 		}
@@ -69,7 +69,7 @@ void Application::UI::Parent::handle_mouse_scroll(int delta)
 {
 	for (auto* element : this->elements)
 	{
-		if (element->hovered)
+		if (element->state.hovered)
 			element->handle_mouse_scroll(delta);
 	}
 	InteractiveElement::handle_mouse_scroll(delta);
@@ -83,7 +83,7 @@ void Application::UI::Parent::set_index_offset(UINT offset)
 void Application::UI::Parent::draw(Render::DrawEvent* event)
 {
 	for (auto* element : this->elements)
-		if (element->hidden == false)
+		if (element->state.visible == VisibleState::VISIBLE_STATE_VISIBLE)
 			event->draw_element(element);
 }
 
@@ -157,7 +157,7 @@ Application::UI::Parent* Application::UI::Parent::add_element(InteractiveElement
 
 Application::UI::Parent* Application::UI::Parent::add_element(InteractiveElement* element, bool visible)
 {
-	element->hidden = !visible;
+	element->state.visible = (VisibleState) !element->state.visible;
 	return this->add_element(element);
 }
 

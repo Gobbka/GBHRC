@@ -15,6 +15,23 @@ namespace Application
 		class Parent;
 		class InteractiveElement;
 		typedef InteractiveElement* UIElementEventArgs;
+
+		enum VisibleState : bool
+		{
+			VISIBLE_STATE_VISIBLE = true,
+			VISIBLE_STATE_HIDDEN  = false,
+		};
+
+		struct ElementStyles
+		{
+			VisibleState overflow = VISIBLE_STATE_VISIBLE;
+		};
+
+		struct ElementState
+		{
+			bool         hovered = false;
+			VisibleState visible = VISIBLE_STATE_VISIBLE;
+		};
 		
 		class InteractiveElement : public Render::IRenderObject
 		{
@@ -34,11 +51,9 @@ namespace Application
 		public:
 			// public variables
 
-			// if value is a true, this object will handle all interactive events (such as click,mousescroll e.t.d)
-			bool hovered = false;
-			// if value is a true, this object will not render
-			bool hidden = false;
-
+			ElementStyles styles;
+			ElementState  state;
+			
 			// for debug purposes
 			// or what u wanna
 			UINT unique_id = 0;

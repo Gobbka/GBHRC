@@ -29,8 +29,8 @@ void Application::Interaction::WinIntEventHandler::window_proc(UINT msg, WPARAM 
 
 	if(msg == WM_LBUTTONDBLCLK)
 	{
-		this->on_lbmouse_down();
-		Sleep(5);
-		this->on_lbmouse_up();
+		//this->on_lbmouse_down();
+		//Sleep(5);
+		//this->on_lbmouse_up();
 	}
 }

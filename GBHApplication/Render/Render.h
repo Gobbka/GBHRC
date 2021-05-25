@@ -18,7 +18,7 @@ namespace Application
 			UINT width;
 			UINT height;
 		};
-
+		
 		struct Position
 		{
 			float x; float y;

@@ -55,13 +55,13 @@ void Application::UI::InteractiveElement::handle_mouse_move( float mX, float mY)
 
 void Application::UI::InteractiveElement::handle_mouse_leave()
 {
-	this->hovered = false;
+	this->state.hovered = false;
 	this->onMouseLeave(this);
 }
 
 void Application::UI::InteractiveElement::handle_mouse_enter()
 {
-	this->hovered = true;
+	this->state.hovered = true;
 	this->onMouseEnter(this);
 }
 

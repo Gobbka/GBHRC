@@ -54,13 +54,13 @@ void update_friend_list(int offset)
 			if (iterator.item() == local_player)
 				if (!iterator.next())
 				{
-					button->hidden = true;
+					button->state.visible = Application::UI::VISIBLE_STATE_HIDDEN;
 					return;
 				}
 			
 			button->text.set_text((const wchar_t*)&iterator.item()->username->array);
 			button->onClick = add_friend;
-			button->hidden = false;
+			button->state.visible = Application::UI::VISIBLE_STATE_VISIBLE;
 
 			if(GBHRC::Context::instance()->is_friend((wchar_t*)button->text.get_text()))
 			{
@@ -71,7 +71,7 @@ void update_friend_list(int offset)
 			}
 		}else
 		{
-			button->hidden = true;
+			button->state.visible = Application::UI::VISIBLE_STATE_HIDDEN;
 		}
 	}
 }

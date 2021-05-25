@@ -6,7 +6,7 @@
 
 void Application::InteractiveForm::draw_element(Render::IRenderObject* obj, Render::DrawEvent* event)
 {
-	if (((UI::InteractiveElement*)obj)->hidden == false)
+	if (((UI::InteractiveElement*)obj)->state.visible == UI::VISIBLE_STATE_VISIBLE)
 		event->draw_element(obj);
 }
 
@@ -77,7 +77,7 @@ void Application::InteractiveForm::on_lbmouse_down()
 	this->foreach([](Render::IRenderObject* obj)
 		{
 			auto* element = (UI::InteractiveElement*)obj;
-			if (element->hovered == true)
+			if (element->state.hovered == true)
 				element->handle_mouse_down();
 		});
 	return;
@@ -85,7 +85,7 @@ void Application::InteractiveForm::on_lbmouse_down()
 
 void Application::InteractiveForm::on_mouse_move(int mx,int my)
 {
-	POINT center{ (LONG)(this->screen_resolution.width / 2),(LONG)(this->screen_resolution.height / 2) };
+	const Render::Position center{ (this->screen_resolution.width / 2),(this->screen_resolution.height / 2) };
 
 	const Render::Position cursor{ mx - center.x , center.y - my };
 
@@ -95,26 +95,26 @@ void Application::InteractiveForm::on_mouse_move(int mx,int my)
 		return;
 	}
 
-	const auto length = this->elements_length() - 1;
+	const auto length = this->elements_length();
 	bool e_handled = false;
 
-	for (auto i = length; i >= 0; i--)
+	for (auto i = length; i > 0; i--)
 	{
-		auto* element = (UI::InteractiveElement*)this->element_at(i);
+		auto* element = (UI::InteractiveElement*)this->element_at(i-1);
 		if (
-			element->hidden == false &&
+			element->state.visible == UI::VISIBLE_STATE_VISIBLE &&
 			e_handled == false &&
 			element->point_belongs(cursor)
 			)
 		{
-			if (element->hovered == false)
+			if (element->state.hovered == false)
 			{
 				element->handle_mouse_enter();
 			}
 			element->handle_mouse_move(cursor.x, cursor.y);
 			e_handled = true;
 		}
-		else if (element->hovered == true)
+		else if (element->state.hovered == true)
 		{
 			element->handle_mouse_leave();
 		}
@@ -128,7 +128,7 @@ void Application::InteractiveForm::on_mouse_scroll(short direction)
 	this->foreach([direction](Render::IRenderObject* obj)
 		{
 			auto* element = (UI::InteractiveElement*)obj;
-			if (element->hovered == true)
+			if (element->state.hovered == true)
 				element->handle_mouse_scroll(direction);
 
 		});
@@ -140,7 +140,7 @@ void Application::InteractiveForm::on_lbmouse_up()
 	this->foreach([](Render::IRenderObject* obj)
 		{
 			auto* element = (UI::InteractiveElement*)obj;
-			if (element->hovered == true)
+			if (element->state.hovered == true)
 				element->handle_mouse_up();
 		});
 

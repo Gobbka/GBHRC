@@ -43,7 +43,7 @@ extern HMODULE DllInst;
 
 void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engine*pEngine)
 {
-
+	
 	auto* esp_font = pEngine->create_font(
 		(void*)LoadResource(DllInst, FindResourceW(DllInst, MAKEINTRESOURCE(IDR_VISBY_ROUND), L"SPRITEFONT")),
 		0x6608
@@ -139,27 +139,26 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 		GBHRC::Context::instance()->config->no_recoil = (((Application::UI::Checkbox*)args)->is_checked());
 	};
 
+	using namespace Application::UI;
+	
 	esp_button->onClick = [](Application::UI::UIElementEventArgs args)
 	{
-		esp_inner->hidden = false;
-		aim_inner->hidden = true;
-		misc_inner->hidden = true;
-		GBHRC::Context::instance()->config->car_speed = (((Application::UI::Checkbox*)args)->is_checked());
+		esp_inner->state.visible  = VISIBLE_STATE_VISIBLE;
+		aim_inner->state.visible  = VISIBLE_STATE_HIDDEN;
+		misc_inner->state.visible = VISIBLE_STATE_HIDDEN;
 	};
 
 	aim_button->onClick = [](Application::UI::UIElementEventArgs args)
 	{
-		esp_inner->hidden = true;
-		aim_inner->hidden = false;
-		misc_inner->hidden = true;
-		GBHRC::Context::instance()->config->car_speed = (((Application::UI::Checkbox*)args)->is_checked());
+		esp_inner->state.visible = VISIBLE_STATE_HIDDEN;
+		aim_inner->state.visible = VISIBLE_STATE_VISIBLE;
+		misc_inner->state.visible = VISIBLE_STATE_HIDDEN;
 	};
 
 	misc_button->onClick = [](Application::UI::UIElementEventArgs args)
 	{
-		esp_inner->hidden = true;
-		aim_inner->hidden = true;
-		misc_inner->hidden = false;
-		GBHRC::Context::instance()->config->car_speed = (((Application::UI::Checkbox*)args)->is_checked());
+		esp_inner->state.visible = VISIBLE_STATE_HIDDEN;
+		aim_inner->state.visible = VISIBLE_STATE_HIDDEN;
+		misc_inner->state.visible = VISIBLE_STATE_VISIBLE;
 	};
 }
