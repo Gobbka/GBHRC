@@ -85,6 +85,9 @@ void Application::InteractiveForm::on_lbmouse_down()
 
 void Application::InteractiveForm::on_mouse_move(int mx,int my)
 {
+	if (this->hidden == true)
+		return;
+	
 	const Render::Position center{ (this->screen_resolution.width / 2),(this->screen_resolution.height / 2) };
 
 	const Render::Position cursor{ mx - center.x , center.y - my };

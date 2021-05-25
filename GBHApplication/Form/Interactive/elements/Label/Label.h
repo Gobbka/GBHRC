@@ -12,6 +12,8 @@ namespace Application
 		{
 		private:
 		public:
+			ElementDescription get_desc() override;
+			
 			bool scalable = false;
 			
 			void draw(Render::DrawEvent* event) override;
@@ -26,6 +28,9 @@ namespace Application
 
 			bool point_belongs(Render::Position point) override;
 
+			InteractiveElement* set_resolution(float width, float height) override;
+			Render::Resolution get_resolution() override;
+			
 			void set_pos(float x, float y) override;
 			void set_color(float r, float g, float b) override;
 			void move_by(float x, float y) override;

@@ -37,6 +37,8 @@ namespace Application
 			void set_text(const wchar_t*text);
 
 			char* get_text();
+
+			Render::Resolution get_resolution();
 			
 			void DrawInRect(Render::DrawEvent* event,Render::Position pos,bool scale=false) const;
 		};

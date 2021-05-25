@@ -6,14 +6,16 @@ namespace Application
 	namespace UI
 	{
 		
-		class Panel final : public UI::Parent
+		class Panel : public UI::Parent
 		{
 		private:
 			Render::Color color;
 			Render::Resolution resolution;
-		private:
+		protected:
 			void draw(Render::DrawEvent*event) override;
 		public:
+			ElementDescription get_desc() override;
+			
 			UINT size() override
 			{
 				return 4 + Parent::size();
@@ -26,8 +28,9 @@ namespace Application
 			void set_color(float r, float g, float b) override;
 			void move_by(float x, float y) override;
 			UI::InteractiveElement* set_rect(float width, float height);
-
-			Render::Resolution get_resolution();
+			
+			Render::Resolution get_resolution() override;
+			InteractiveElement* set_resolution(float width, float height) override;
 		};
 	}
 

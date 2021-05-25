@@ -24,13 +24,28 @@ namespace Application
 
 		struct ElementStyles
 		{
-			VisibleState overflow = VISIBLE_STATE_VISIBLE;
+			VisibleState      overflow = VISIBLE_STATE_VISIBLE;
+			#define MARGIN_AUTO -1
+			DirectX::XMFLOAT4 margin   = { 0,0,0,0};
 		};
 
 		struct ElementState
 		{
 			bool         hovered = false;
 			VisibleState visible = VISIBLE_STATE_VISIBLE;
+		};
+
+		struct ElementDescription
+		{
+			// flags
+
+			bool has_children : 1;
+
+			// other
+
+			const char* string_name;
+
+			ElementDescription(bool has_children, const char* string_name);
 		};
 		
 		class InteractiveElement : public Render::IRenderObject
@@ -43,7 +58,7 @@ namespace Application
 
 			InteractiveForm* pForm = nullptr;
 			Render::Position position{ 0,0 };
-			Parent* _parent = nullptr;
+			Parent*          _parent = nullptr;
 		protected:
 			virtual void init(){}
 			void draw(Render::DrawEvent* event) override PURE;
@@ -71,6 +86,10 @@ namespace Application
 			// return's form where this object where registered
 			InteractiveForm* get_form() const;
 
+			virtual ElementDescription get_desc() PURE;
+
+			virtual Render::Resolution get_resolution() PURE;
+			
 			
 			bool point_belongs(Render::Position point) override PURE;
 		public:
@@ -80,6 +99,10 @@ namespace Application
 
 			void set_pos(float x, float y) override = 0;
 			void set_color(float r, float g, float b) override = 0;
+			virtual InteractiveElement* set_resolution(float width,float height) PURE;
+
+			void set_margin(float x,float y);
+			void set_margin(float x,float y,float z,float w);
 			
 		public:
 			// public voids

@@ -153,6 +153,7 @@
     <ClCompile Include="Form\Canvas\elements\rectangle\rectangle.cpp" />
     <ClCompile Include="Form\Interactive\elements\Button\Button.cpp" />
     <ClCompile Include="Form\Interactive\elements\IElement\Parentable.cpp" />
+    <ClCompile Include="Form\Interactive\elements\ItemList\ItemList.cpp" />
     <ClCompile Include="Form\Interactive\elements\Label\Label.cpp" />
     <ClCompile Include="Form\Interactive\Events\WinIntEventHandler.cpp" />
     <ClCompile Include="Form\Interactive\InteractiveForm.cpp" />
@@ -175,6 +176,7 @@
     <ClInclude Include="Form\Forms.h" />
     <ClInclude Include="Form\Interactive\elements\Button\Button.h" />
     <ClInclude Include="Form\Interactive\elements\IElement\Parentable.h" />
+    <ClInclude Include="Form\Interactive\elements\ItemList\ItemList.h" />
     <ClInclude Include="Form\Interactive\elements\Label\Label.h" />
     <ClInclude Include="Form\Interactive\Events\InteractionEventHandler.h" />
     <ClInclude Include="Form\Interactive\Events\WinIntEventHandler.h" />

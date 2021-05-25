@@ -69,6 +69,9 @@
     <ClCompile Include="Form\Interactive\Events\WinIntEventHandler.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="Form\Interactive\elements\ItemList\ItemList.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Managers\RectangleManager.h">
@@ -147,6 +150,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Form\Interactive\Events\InteractionEventHandler.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Form\Interactive\elements\ItemList\ItemList.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

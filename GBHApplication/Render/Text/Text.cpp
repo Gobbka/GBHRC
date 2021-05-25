@@ -42,6 +42,11 @@ char* Application::Render::Text::get_text()
 	return (char*)this->text;
 }
 
+Application::Render::Resolution Application::Render::Text::get_resolution()
+{
+	return this->text_resolution;
+}
+
 void Application::Render::Text::DrawInRect(Render::DrawEvent* event, Render::Position position,bool scalable) const
 {
 	auto* batch = event->engine->get_batch();

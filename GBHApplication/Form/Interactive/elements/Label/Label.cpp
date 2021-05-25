@@ -2,6 +2,11 @@
 #include "../../../../Render/Engine/Engine.h"
 #include "../../InteractiveForm.h"
 
+Application::UI::ElementDescription Application::UI::Label::get_desc()
+{
+	return { false,"LABEl" };
+}
+
 void Application::UI::Label::draw(Render::DrawEvent* event)
 {
 	Text::DrawInRect(event, this->position,this->scalable);
@@ -29,6 +34,16 @@ bool Application::UI::Label::point_belongs(Render::Position point)
 {
 	// TODO: make
 	return false;
+}
+
+Application::UI::InteractiveElement* Application::UI::Label::set_resolution(float width, float height)
+{
+	return this;
+}
+
+Application::Render::Resolution Application::UI::Label::get_resolution()
+{
+	return Text::get_resolution();
 }
 
 void Application::UI::Label::set_pos(float x, float y)

@@ -48,6 +48,11 @@ void Application::UI::Button::set_temp_color(float r, float g, float b)
 	Managers::Rectangle::set_color(this->get_ptr(), r, g, b);
 }
 
+Application::UI::ElementDescription Application::UI::Button::get_desc()
+{
+	return { true,"BUTTON" };
+}
+
 void Application::UI::Button::set_color(float r, float g, float b)
 {
 	this->non_active_color = { r,g,b };
@@ -69,12 +74,12 @@ void Application::UI::Button::move_by(float x, float y)
 	this->text.move_by(x, y);
 }
 
-Application::UI::InteractiveElement* Application::UI::Button::set_rect(float width, float height)
+Application::UI::InteractiveElement* Application::UI::Button::set_resolution(float width, float height)
 {
-	auto x = this->position.x;
-	auto y = this->position.y;
+	//auto x = this->position.x;
+	//auto y = this->position.y;
 
-	Managers::Rectangle::set_rect(this->get_ptr(), x, y, width, height);
+	//Managers::Rectangle::set_rect(this->get_ptr(), x, y, width, height);
 	Managers::Rectangle::set_rect(this->get_ptr(),
 		position.x,
 		position.y,

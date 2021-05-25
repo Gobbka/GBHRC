@@ -17,6 +17,11 @@ bool Application::UI::Checkbox::is_checked()
 	return this->checked;
 }
 
+Application::UI::ElementDescription Application::UI::Checkbox::get_desc()
+{
+	return { false,"CHECKBOX" };
+}
+
 UINT Application::UI::Checkbox::size()
 {
 	return 10;
@@ -34,9 +39,7 @@ void Application::UI::Checkbox::init()
 	this->set_pos(position.x, position.y);
 	this->set_color(color.r, color.g, color.b);
 
-	auto* ptr = this->get_ptr();
-
-	Managers::Rectangle::set_color(ptr, 0.819f, 0.819f, 0.819f);
+	Managers::Rectangle::set_color(this->get_ptr(), 0.819f, 0.819f, 0.819f);
 }
 
 void Application::UI::Checkbox::set_pos(float x, float y)
@@ -50,6 +53,24 @@ void Application::UI::Checkbox::set_pos(float x, float y)
 void Application::UI::Checkbox::set_color(float r, float g, float b)
 {
 	Managers::Rectangle::set_color(this->get_ptr()+4, r, g, b);
+}
+
+Application::Render::Resolution Application::UI::Checkbox::get_resolution()
+{
+	return this->resolution;
+}
+
+Application::UI::InteractiveElement* Application::UI::Checkbox::set_resolution(float width, float height)
+{
+	Managers::Rectangle::set_rect(this->get_ptr(),
+		position.x,
+		position.y,
+		width,
+		height
+	);
+	this->resolution = { (UINT)width,(UINT)height };
+	
+	return this;
 }
 
 bool Application::UI::Checkbox::point_belongs(Render::Position point)
@@ -72,7 +93,6 @@ void Application::UI::Checkbox::handle_mouse_up()
 		this->set_color(active_color.r, active_color.g, active_color.b);
 	else
 		this->set_color(non_active_color.r, non_active_color.g, non_active_color.b);
-
 
 	onChange(this);
 	InteractiveElement::handle_mouse_up();

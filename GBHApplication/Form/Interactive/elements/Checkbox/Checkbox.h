@@ -19,7 +19,7 @@ namespace Application
 		public:
 
 			bool is_checked();
-			
+			ElementDescription get_desc() override;
 			UINT size() override;
 			
 			EventCallback onChange = default_event_callback;
@@ -29,6 +29,9 @@ namespace Application
 
 			void set_pos(float x, float y) override;
 			void set_color(float r, float g, float b) override;
+
+			Render::Resolution get_resolution() override;
+			InteractiveElement* set_resolution(float width, float height) override;
 
 			bool point_belongs(Render::Position point) override;
 

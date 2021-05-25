@@ -20,7 +20,7 @@ namespace Application
 		private:
 			std::vector<InteractiveElement*> elements;
 			UINT index_offset=0;
-
+		protected:
 			void handle_mouse_up() override;
 			void handle_mouse_down() override;
 			void handle_mouse_enter() override;
@@ -43,7 +43,7 @@ namespace Application
 			void foreach(std::function<void(InteractiveElement* element)> iterator);
 			InteractiveElement* element_at(UINT index);
 			
-			Parent* add_element(InteractiveElement* element);
+			virtual Parent* add_element(InteractiveElement* element);
 			Parent* add_element(InteractiveElement* element,bool visible);
 		};
 	}

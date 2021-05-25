@@ -9,6 +9,7 @@
 #include "Form/Interactive/elements/Checkbox/Checkbox.h"
 #include "Form/Interactive/elements/Label/Label.h"
 #include "Form/Interactive/elements/Button/Button.h"
+#include "Form/Interactive/elements/ItemList/ItemList.h"
 #include "../../CheatApi/GBHRC/gbhrc.h"
 
 #pragma endregion
@@ -44,14 +45,26 @@ extern DirectX::SpriteFont* VisbyRoundCFFont;
 
 void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engine*pEngine)
 {
-
-	
 	auto* esp_button = new Application::UI::Button({ 0,-30 }, { 400/3,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "ESP");
 	auto* aim_button = new Application::UI::Button({ 400/3,-30 }, { 400/3,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "AIM");
 	auto* misc_button = new Application::UI::Button({ 2*400/3,-30 }, { 400/3+1,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "MISC");
 	
+	auto* items_list = new Application::UI::ItemList({ 0,0 }, { 500,600 }, { FLOAT_COLORS_BLACK });
+
+	auto test_button = (new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "1NIGGER_BUTTON"));
+	test_button->unique_id = 3;
+	test_button->set_margin(5, 5);
+	
+	items_list
+		->add_element(new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "TEST_BUTTON"))
+		->add_element(new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "NIGGER_BUTTON"))
+		->add_element(test_button)
+		->add_element(new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "NIGGER_BUTTON"))
+	;
+	
 	form
 		->add_element(background_panel)
+		->add_element(items_list)
 	;
 
 	topbar_panel->unique_id = 2;

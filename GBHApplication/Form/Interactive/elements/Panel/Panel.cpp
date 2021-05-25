@@ -21,6 +21,11 @@ void Application::UI::Panel::draw(Render::DrawEvent* event)
 	Parent::draw(event);
 }
 
+Application::UI::ElementDescription Application::UI::Panel::get_desc()
+{
+	return { true,"PANEL" };
+}
+
 Application::UI::Panel::Panel(Render::Position position, Render::Resolution resolution, Render::Color color)
 {
 	this->color = color;
@@ -73,12 +78,8 @@ void Application::UI::Panel::move_by(float x, float y)
 	this->position.y += y;
 }
 
-Application::UI::InteractiveElement* Application::UI::Panel::set_rect(float width, float height)
+Application::UI::InteractiveElement* Application::UI::Panel::set_resolution(float width, float height)
 {
-	auto x = this->position.x;
-	auto y = this->position.y;
-
-	Managers::Rectangle::set_rect(this -> get_ptr(), x, y, width, height);
 	Managers::Rectangle::set_rect(this->get_ptr(),
 		position.x,
 		position.y,

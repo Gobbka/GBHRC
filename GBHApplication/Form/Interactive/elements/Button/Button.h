@@ -32,6 +32,8 @@ namespace Application
 			void set_temp_color(float r, float g, float b);
 		public:
 			Render::Color non_active_color;
+
+			ElementDescription get_desc() override;
 			
 			UI::Label text;
 			
@@ -46,9 +48,9 @@ namespace Application
 			void set_pos(float x, float y) override;
 			void set_color(float r, float g, float b) override;
 			void move_by(float x, float y) override;
-			UI::InteractiveElement* set_rect(float width, float height);
+			UI::InteractiveElement* set_resolution(float width, float height) override;
 
-			Render::Resolution get_resolution();
+			Render::Resolution get_resolution() override;
 
 			EventCallback onClick = default_event_callback;
 
