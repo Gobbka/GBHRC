@@ -5,33 +5,16 @@
 
 void Application::Canvas::CanvasForm::draw_element(Render::IRenderObject* obj, Render::DrawEvent* event)
 {
-
-	static auto*nigger = event->engine->make_vertex_buffer(4);
-	nigger->data[0] = GVertex::Vertex(-50.f,50.f, 1.f,1,1,1,1);
-	nigger->data[1] = GVertex::Vertex(50,50, 1.f, 1, 1, 1, 1);
-	nigger->data[2] = GVertex::Vertex(-50,-50, 1.f, 1, 1, 1, 1);
-	nigger->data[3] = GVertex::Vertex(50,-50, 1.f,1,1,1,1);
-
-	event->engine->set_vbuffer(nigger);
-	
-	auto* pContext = event->engine->pDevContext;
-	D3D11_MAPPED_SUBRESOURCE subdata;
-	pContext->Map(nigger->buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &subdata);
-	memcpy(subdata.pData, nigger->data, nigger->size * sizeof(GVertex::Vertex));
-	pContext->Unmap(nigger->buffer, 0);
-
-	event->engine->get_mask()->set_draw_mask();
-	event->engine->pDevContext->Draw(4, 0);
-
 	if (((Canvas::CanvasElement*)obj)->render == true)
 	{
 		//event->engine->get_mask()->set_draw_mask();
 		//event->draw_element(obj);
 		//event->engine->get_mask()->unset_mask();
 		//obj->draw(event);
-		event->engine->set_vbuffer(this->get_vbuffer());
-		event->engine->get_mask()->set_discard_mask();
-		event->engine->pDevContext->Draw(4, 0);
+		//event->engine->set_vbuffer(this->get_vbuffer());
+		//event->engine->get_mask()->set_discard_mask();
+		//event->engine->pDevContext->Draw(4, 0);
+		event->draw_element(obj);
 	}
 
 }

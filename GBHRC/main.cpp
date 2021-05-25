@@ -34,7 +34,7 @@ HINSTANCE DllInst;
 Application::InteractiveForm* menu;
 Application::InteractiveForm* friend_list;
 Application::Canvas::CanvasForm* esp_scene;
-Application::Canvas::CanvasForm* test_scene;
+//Application::Canvas::CanvasForm* test_scene;
 void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam);
 HWND main__window;
 
@@ -78,18 +78,18 @@ void init_callback(Application::Render::Engine* instance)
     GBHRC::Context::instance()->set_esp_scene(esp_scene);
     GBHRC::Context::instance()->make_esp_boxes();
 
-    test_scene = new Application::Canvas::CanvasForm();
-    TestSceneMarkup(test_scene,instance);
-    test_scene->render_callback = test_scene_draw;
+    //test_scene = new Application::Canvas::CanvasForm();
+    //TestSceneMarkup(test_scene,instance);
+    //test_scene->render_callback = test_scene_draw;
 
     DEBUG_LOG("ESP REGISTERED");
 	
     instance
         ->append_scene(menu)
-        //->append_scene(friend_list)
+        ->append_scene(friend_list)
 
         //->append_scene(test_scene)
-		//->append_scene(esp_scene)	
+		->append_scene(esp_scene)	
 	;
 
     DEBUG_LOG("SCENE'S APPENDED");

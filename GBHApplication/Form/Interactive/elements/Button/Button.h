@@ -29,6 +29,7 @@ namespace Application
 			Render::Resolution resolution;
 		private:
 			void draw(Render::DrawEvent* event) override;
+			void set_temp_color(float r, float g, float b);
 		public:
 			Render::Color non_active_color;
 			

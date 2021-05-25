@@ -8,7 +8,6 @@ void Application::UI::Button::draw(Render::DrawEvent* event)
 	this->text.draw(event);
 }
 
-
 Application::UI::Button::Button(Render::Position position, Render::Resolution resolution, Render::Color color, DirectX::SpriteFont* font,
                                 const char* text)
 		: text(position,text,font,{1,1,1})
@@ -44,9 +43,15 @@ void Application::UI::Button::set_pos(float x, float y)
 	this->text.set_pos(x, y);
 }
 
-void Application::UI::Button::set_color(float r, float g, float b)
+void Application::UI::Button::set_temp_color(float r, float g, float b)
 {
 	Managers::Rectangle::set_color(this->get_ptr(), r, g, b);
+}
+
+void Application::UI::Button::set_color(float r, float g, float b)
+{
+	this->non_active_color = { r,g,b };
+	this->set_temp_color(r, g, b);
 }
 
 void Application::UI::Button::move_by(float x, float y)
@@ -96,19 +101,19 @@ void Application::UI::Button::handle_mouse_up()
 
 void Application::UI::Button::handle_mouse_down()
 {
-	this->set_color(this->non_active_color.r + .2f, non_active_color.g + 0.2f, non_active_color.b + 0.2f);
+	this->set_temp_color(this->non_active_color.r + .2f, non_active_color.g + 0.2f, non_active_color.b + 0.2f);
 	InteractiveElement::handle_mouse_down();
 }
 
 void Application::UI::Button::handle_mouse_enter()
 {
-	this->set_color(this->non_active_color.r+.1f, non_active_color.g+0.1f, non_active_color.b+0.1f);
+	this->set_temp_color(this->non_active_color.r+.1f, non_active_color.g+0.1f, non_active_color.b+0.1f);
 	InteractiveElement::handle_mouse_enter();
 }
 
 void Application::UI::Button::handle_mouse_leave()
 {
-	this->set_color(this->non_active_color.r, non_active_color.g, non_active_color.b);
+	this->set_temp_color(this->non_active_color.r, non_active_color.g, non_active_color.b);
 	InteractiveElement::handle_mouse_leave();
 }
 

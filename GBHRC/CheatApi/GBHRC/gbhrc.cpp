@@ -71,7 +71,7 @@ void GBHRC::Context::render_callback(Application::Render::DrawEvent* event)
         	// check player for aim target status
         	if(this->config->aim_assist)
         	{
-        		if(this->is_aim_target(&min_aimbot_target,&player))
+        		if(player.top_point.z > 0 && this->is_aim_target(&min_aimbot_target,&player))
         		{
                     min_aimbot_target = player;
                     min_target_box = this->esp_boxes[element_index];
@@ -142,6 +142,9 @@ void GBHRC::Context::draw_player(Application::Render::DrawEvent* event,UINT elem
     if (this->is_friend((wchar_t*)&player->player->username->array))
     {
         esp_box->health_box->set_color(COLOR_FROM_RGB(75, 128, 207));
+    }else
+    {
+        esp_box->health_box->set_color(COLOR_FROM_RGB(0, 204, 0));
     }
 
     event->engine->get_batch()->Begin();
@@ -186,8 +189,8 @@ bool GBHRC::Context::is_aim_target(EspPlayer* old_player, EspPlayer* new_player)
             new_player->display_distance <= old_player->display_distance
             );
     }
-    else
-        return new_player->display_distance <= this->config->fov_size;
+
+	return new_player->display_distance <= this->config->fov_size;
 }
 
 void GBHRC::Context::set_esp(bool status)
