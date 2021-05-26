@@ -123,7 +123,7 @@ void Application::UI::Parent::move_by(float x, float y)
 
 void Application::UI::Parent::init()
 {	
-	UINT index = this->index_offset+this->__index;
+	UINT index = this->index_offset+this->index;
 	
 	for(auto*element:this->elements)
 	{

@@ -6,17 +6,7 @@
 void Application::Canvas::CanvasForm::draw_element(Render::IRenderObject* obj, Render::DrawEvent* event)
 {
 	if (((Canvas::CanvasElement*)obj)->render == true)
-	{
-		//event->engine->get_mask()->set_draw_mask();
-		//event->draw_element(obj);
-		//event->engine->get_mask()->unset_mask();
-		//obj->draw(event);
-		//event->engine->set_vbuffer(this->get_vbuffer());
-		//event->engine->get_mask()->set_discard_mask();
-		//event->engine->pDevContext->Draw(4, 0);
 		event->draw_element(obj);
-	}
-
 }
 
 void Application::Canvas::CanvasForm::update_markup(Application::Render::Engine* pEngine)

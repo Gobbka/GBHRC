@@ -91,7 +91,7 @@ namespace Application
 			virtual Render::Resolution get_resolution() PURE;
 			
 			
-			bool point_belongs(Render::Position point) override PURE;
+			virtual bool point_belongs(Render::Position point) PURE;
 		public:
 			// public setters
 

@@ -46,7 +46,7 @@ void Application::UI::InteractiveElement::initialize(Application::InteractiveFor
 
 GVertex::Vertex* Application::UI::InteractiveElement::get_ptr()
 {
-	return this->pForm->get_ptr() + this->__index;
+	return this->pForm->get_ptr() + this->index;
 }
 
 Application::UI::Parent* Application::UI::InteractiveElement::get_parent() const

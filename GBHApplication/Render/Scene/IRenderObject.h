@@ -11,26 +11,25 @@ namespace Application
 		class IRenderObject
 		{
 		protected:
-			UINT __index;
+			UINT index PURE;
 			
 		public:
 			virtual ~IRenderObject() = default;
-			virtual void draw(Render::DrawEvent*event)        PURE;
-			virtual void set_pos(float x, float y)            PURE;
-			virtual void set_color(float r, float g, float b) PURE;
-			virtual bool point_belongs(Render::Position point) = 0;
+			virtual void draw(Render::DrawEvent*event)         PURE;
+			virtual void set_pos(float x, float y)             PURE;
+			virtual void set_color(float r, float g, float b)  PURE;
 
 			virtual UINT size() PURE;
 			virtual void move_by(float x, float y) PURE;
 
 			UINT get_index() CONST
 			{
-				return this->__index;
+				return this->index;
 			}
 			
 			void set_index(UINT index)
 			{
-				this->__index = index;
+				this->index = index;
 			}
 		};
 	}

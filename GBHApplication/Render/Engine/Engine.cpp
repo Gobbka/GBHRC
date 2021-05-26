@@ -40,7 +40,7 @@ Engine::Engine(const HWND hwnd, ID3D11Device* pDevice,
 
 	this->initialize();
 	this->mOrtho = get_ortho_matrix();
-	this->initialize_scene();
+	this->create_const_buffer();
 
 	this->spriteBatch = new DirectX::SpriteBatch(pDevContext);
 	
@@ -70,7 +70,6 @@ DirectX::SpriteFont* Engine::create_font(void* font_source, UINT source_size)
 
 Engine* Engine::append_scene(Render::Scene* scene)
 {
-	scene->set_resolution(get_resolution(this->window));
 	this->pScenes.push_back(scene);
 	return this;
 }
@@ -170,7 +169,7 @@ bool Engine::compile_shader(const char* szShader, const char* szEntrypoint, cons
 	return true;
 }
 
-bool Engine::initialize_scene()
+bool Engine::create_const_buffer()
 {
 	HRESULT hr;
 
@@ -215,7 +214,6 @@ void Engine::update_scene()
 	for (auto* scene : pScenes)
 		scene->update(this);
 }
-
 
 
 void Engine::render_prepare()

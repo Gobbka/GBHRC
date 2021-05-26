@@ -2,8 +2,10 @@
 #include <vector>
 #include <functional>
 
+
+#include "D3D11Canvas.h"
 #include "IRenderObject.h"
-#include "../d3d/Vertex.h"
+
 #include "../Render.h"
 
 namespace Application
@@ -12,13 +14,12 @@ namespace Application
 	{
 		class Engine;
 		
-		class Scene
+		class Scene : public D3D11Canvas
 		{
 		private:
-			GVertex::VertexBuffer* pVBuffer;
+
 			std::vector<Render::IRenderObject*> pElements;
 		protected:
-			Render::Resolution screen_resolution{};
 
 			virtual void draw_element(Render::IRenderObject* obj,Render::DrawEvent*event) PURE;
 		public:
@@ -36,25 +37,14 @@ namespace Application
 		protected:
 			void alloc_vbuffer(Render::Engine* pEngine);
 			void add_render_object(IRenderObject* object);
-
-		public:
-			// public setters
-			
-			void set_resolution(Resolution resolution);
 		public:
 			// public getters
 
 			size_t elements_length() const;
-			GVertex::Vertex* get_ptr() const;
-			GVertex::VertexBuffer* get_vbuffer();
+
 			IRenderObject* element_at(UINT index);
 
 			UINT total_size();
-
-			Resolution get_screen_resolution() const;
-
-		protected:
-			~Scene();
 		};
 	}
 }

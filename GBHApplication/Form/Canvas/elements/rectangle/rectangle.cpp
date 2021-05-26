@@ -25,7 +25,8 @@ void Application::Canvas::Rectangle::draw(Render::DrawEvent* event)
 
 	if (this->wireframed == false)
 	{
-		p_context->Draw(4, this->__index);
+		event->draw(4);
+		p_context->Draw(4, this->index);
 		return;
 	}
 
@@ -41,7 +42,7 @@ void Application::Canvas::Rectangle::draw(Render::DrawEvent* event)
 	ID3D11RasterizerState* old_state;
 	p_context->RSGetState(&old_state);
 	p_context->RSSetState(state);
-	p_context->Draw(4, this->__index);
+	event->draw(4);
 	p_context->RSSetState(old_state);
 }
 
@@ -61,13 +62,6 @@ void Application::Canvas::Rectangle::set_resolution(UINT width, UINT height)
 {
 	Managers::Rectangle::set_rect(this->get_ptr(), this->position.x, this->position.y, width, height);
 	this->resolution = { width,height };
-}
-
-bool Application::Canvas::Rectangle::point_belongs(Render::Position point)
-{
-	return
-		(point.x >= position.x && point.x <= position.x + resolution.width) &&
-		(point.y <= position.y && point.y >= (position.y - resolution.height));
 }
 
 UINT Application::Canvas::Rectangle::size()

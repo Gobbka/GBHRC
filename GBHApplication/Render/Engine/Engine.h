@@ -41,7 +41,7 @@ namespace Application
 			MaskEngine* mask_engine;
 		private:
 			bool initialize();
-			bool initialize_scene();
+			bool create_const_buffer();
 			ID3DBlob* create_vs_shader();
 			ID3DBlob* create_ps_shader(ID3DBlob* blob);
 

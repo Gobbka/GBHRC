@@ -19,7 +19,7 @@ void Application::implement(HWND hwnd)
 
 void Application::register_form(InteractiveForm* form)
 {
-	form->set_resolution(AppResolution);
+	//form->set_resolution(AppResolution);
 	_registered_forms.push_back(form);
 }
 

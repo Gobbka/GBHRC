@@ -6,24 +6,14 @@
 
 void Application::Render::Scene::alloc_vbuffer(Render::Engine* pEngine)
 {
-	delete this->pVBuffer;
-	const UINT size = this->total_size();
-
-	this->pVBuffer = pEngine->make_vertex_buffer(size);
+	D3D11Canvas::alloc_vbuffer(pEngine, this->total_size());
 }
 
 void Application::Render::Scene::update(Render::Engine* pEngine)
 {
 	DRAW_ASSERT;
 
-	if (this->pVBuffer->size <= 0)
-		return;
-
-	auto* pContext = pEngine->pDevContext;
-	D3D11_MAPPED_SUBRESOURCE subdata;
-	pContext->Map(this->pVBuffer->buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &subdata);
-	memcpy(subdata.pData, this->pVBuffer->data, this->pVBuffer->size * sizeof(GVertex::Vertex));
-	pContext->Unmap(this->pVBuffer->buffer, 0);
+	D3D11Canvas::update(pEngine);
 }
 
 void Application::Render::Scene::render(Render::DrawEvent* draw_event)
@@ -53,7 +43,6 @@ UINT Application::Render::Scene::total_size()
 	UINT size = 0;
 	for (auto* element : this->pElements)
 		size += element->size();
-	
 	return size;
 }
 
@@ -67,33 +56,7 @@ Application::Render::IRenderObject* Application::Render::Scene::element_at(UINT 
 	return this->pElements[index];
 }
 
-Application::Render::Resolution Application::Render::Scene::get_screen_resolution() const
-{
-	return this->screen_resolution;
-}
-
-void Application::Render::Scene::set_resolution(Resolution resolution)
-{
-	this->screen_resolution = resolution;
-}
-
 size_t Application::Render::Scene::elements_length() const
 {
 	return this->pElements.size();
-}
-
-
-GVertex::Vertex* Application::Render::Scene::get_ptr() const
-{
-	return this->pVBuffer->data;
-}
-
-GVertex::VertexBuffer* Application::Render::Scene::get_vbuffer()
-{
-	return  this->pVBuffer;
-}
-
-Application::Render::Scene::~Scene()
-{
-	delete this->pVBuffer;
 }

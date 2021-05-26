@@ -23,8 +23,6 @@ namespace Application
 	private:
 		DragStruct* dragged = nullptr;
 	public:
-
-		//void window_proc(UINT msg, WPARAM wParam, LPARAM lParam);
 		void drag_move(UI::InteractiveElement* element);
 		void free_drag_move();
 
