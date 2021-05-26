@@ -5,7 +5,7 @@
 
 void Application::UI::Panel::draw(Render::DrawEvent* event)
 {
-	if(this->unique_id==1)
+	if(this->styles.overflow==VISIBLE_STATE_HIDDEN)
 	{
 		auto* mask = event->engine->get_mask();
 		mask->set_draw_mask();
@@ -19,6 +19,13 @@ void Application::UI::Panel::draw(Render::DrawEvent* event)
 	//event->get_context()->Draw(4, this->__index);
 	//event->engine->get_mask()->set_discard_mask();
 	Parent::draw(event);
+	if (this->styles.overflow == VISIBLE_STATE_HIDDEN)
+	{
+		auto* mask = event->engine->get_mask();
+	
+		mask->unset_mask();
+	}
+	
 }
 
 Application::UI::ElementDescription Application::UI::Panel::get_desc()

@@ -10,32 +10,6 @@ void Application::InteractiveForm::draw_element(Render::IRenderObject* obj, Rend
 		event->draw_element(obj);
 }
 
-//void Application::InteractiveForm::window_proc(UINT msg, WPARAM wParam, LPARAM lParam)
-//{
-//	if (this->hidden == true)
-//		return;
-//	
-//	if (msg == WM_MOUSEMOVE)
-//	{
-//		
-//	}
-//
-//	if (msg == WM_LBUTTONUP)
-//	{
-//
-//	}
-//
-//	if (msg == WM_LBUTTONDOWN)
-//	{
-//
-//	}
-//
-//	if (msg == WM_MOUSEWHEEL)
-//	{
-//
-//	}
-//}
-
 void Application::InteractiveForm::drag_move(UI::InteractiveElement* element)
 {
 	auto pos = element->get_position();

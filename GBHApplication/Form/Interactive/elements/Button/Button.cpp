@@ -4,8 +4,9 @@
 
 void Application::UI::Button::draw(Render::DrawEvent* event)
 {
-	event->get_context()->Draw(4, this->__index);
-	this->text.draw(event);
+	event->draw(4);
+	//event->get_context()->Draw(4, this->__index);
+	//this->text.draw(event);
 }
 
 Application::UI::Button::Button(Render::Position position, Render::Resolution resolution, Render::Color color, DirectX::SpriteFont* font,

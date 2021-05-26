@@ -13,6 +13,8 @@ namespace Application
 			ElementDescription get_desc() override;
 			
 			void init() override;
+
+			void handle_mouse_scroll(int delta) override;
 		};
 	}
 }

@@ -26,8 +26,19 @@ void Application::UI::ItemList::init()
 				this_resolution.width - margin.x - margin.z, 
 				element_resolution.height
 			);
-			element->set_pos(margin.x, offset - margin.y);
+			element->move_by(margin.x, offset - margin.y);
+			//element->set_pos(margin.x, offset - margin.y);
 
 			offset -= (element_resolution.height + margin.y + margin.w);
+		});
+}
+
+void Application::UI::ItemList::handle_mouse_scroll(int delta)
+{
+	Panel::handle_mouse_scroll(delta);
+
+	Panel::foreach([delta](InteractiveElement* element)
+		{
+			element->move_by(0, (float)delta*-1);
 		});
 }
