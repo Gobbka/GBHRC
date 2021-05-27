@@ -15,10 +15,9 @@ void Application::UI::Panel::draw(Render::DrawEvent* event)
 	{
 		event->draw(4);
 	}
-	//event->engine->get_mask()->set_draw_mask();
-	//event->get_context()->Draw(4, this->__index);
-	//event->engine->get_mask()->set_discard_mask();
+
 	Parent::draw(event);
+	
 	if (this->styles.overflow == VISIBLE_STATE_HIDDEN)
 	{
 		auto* mask = event->engine->get_mask();
@@ -84,6 +83,7 @@ void Application::UI::Panel::move_by(float x, float y)
 	this->position.x += x;
 	this->position.y += y;
 }
+
 
 Application::UI::InteractiveElement* Application::UI::Panel::set_resolution(float width, float height)
 {

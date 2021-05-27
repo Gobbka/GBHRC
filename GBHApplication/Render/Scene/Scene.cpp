@@ -51,6 +51,16 @@ void Application::Render::Scene::add_render_object(IRenderObject* object)
 	this->pElements.push_back(object);
 }
 
+void Application::Render::Scene::set_indexes()
+{
+	UINT index = 0;
+	this->foreach([&index](IRenderObject* obj)
+		{
+			obj->set_index(index);
+			index += obj->size();
+		});
+}
+
 Application::Render::IRenderObject* Application::Render::Scene::element_at(UINT index)
 {
 	return this->pElements[index];

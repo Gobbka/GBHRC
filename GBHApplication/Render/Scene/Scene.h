@@ -37,6 +37,8 @@ namespace Application
 		protected:
 			void alloc_vbuffer(Render::Engine* pEngine);
 			void add_render_object(IRenderObject* object);
+
+			void set_indexes();
 		public:
 			// public getters
 

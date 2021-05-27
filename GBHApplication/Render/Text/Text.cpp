@@ -50,6 +50,8 @@ Application::Render::Resolution Application::Render::Text::get_resolution()
 void Application::Render::Text::DrawInRect(Render::DrawEvent* event, Render::Position position,bool scalable) const
 {
 	auto* batch = event->engine->get_batch();
+	auto* mask = event->engine->get_mask();
+	// DirectX::SpriteSortMode_Deferred,nullptr,nullptr,mask->get_current_state()
 	batch->Begin();
 	auto center_pos = Application::point_to_center(position);
 	auto scale = 1.f;
@@ -103,4 +105,5 @@ void Application::Render::Text::DrawInRect(Render::DrawEvent* event, Render::Pos
 	batch->End();
 	
 	event->reset_render_state();
+	mask->reset_mask();
 }

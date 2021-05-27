@@ -70,7 +70,7 @@ namespace BrokeProtocol
 		{
 		public:
 			char pad_0000[48]; //0x0000
-			class ClManager* clManager; //0x0030
+			Managers::ClManager* clManager; //0x0030
 			char pad_0038[212]; //0x0038
 		}; //Size: 0x010C
 	}

@@ -5,8 +5,7 @@
 void Application::UI::Button::draw(Render::DrawEvent* event)
 {
 	event->draw(4);
-	//event->get_context()->Draw(4, this->__index);
-	//this->text.draw(event);
+	this->text.draw(event);
 }
 
 Application::UI::Button::Button(Render::Position position, Render::Resolution resolution, Render::Color color, DirectX::SpriteFont* font,
@@ -77,10 +76,6 @@ void Application::UI::Button::move_by(float x, float y)
 
 Application::UI::InteractiveElement* Application::UI::Button::set_resolution(float width, float height)
 {
-	//auto x = this->position.x;
-	//auto y = this->position.y;
-
-	//Managers::Rectangle::set_rect(this->get_ptr(), x, y, width, height);
 	Managers::Rectangle::set_rect(this->get_ptr(),
 		position.x,
 		position.y,

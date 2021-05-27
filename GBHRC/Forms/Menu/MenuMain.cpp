@@ -70,7 +70,7 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 	
 	form
 		->add_element(background_panel)
-		->add_element(items_list)
+		//->add_element(items_list)
 	;
 
 	topbar_panel->unique_id = 2;
