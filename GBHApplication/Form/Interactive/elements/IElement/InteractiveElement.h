@@ -57,7 +57,6 @@ namespace Application
 			// protected variables
 
 			InteractiveForm* pForm = nullptr;
-			Render::Position position{ 0,0 };
 			Parent*          _parent = nullptr;
 		protected:
 			virtual void init() PURE;
@@ -75,7 +74,7 @@ namespace Application
 			// public getters
 
 			// return's screen position
-			Render::Position get_position() const;
+			virtual Render::Position get_position() PURE;
 			//// return's memory region pointer where you can edit vertex
 			//GVertex::Vertex* get_ptr();
 			//// vertex size of object
@@ -88,7 +87,6 @@ namespace Application
 			virtual ElementDescription get_desc() PURE;
 
 			virtual Render::Resolution get_resolution() PURE;
-			
 			
 			virtual bool point_belongs(Render::Position point) PURE;
 		public:

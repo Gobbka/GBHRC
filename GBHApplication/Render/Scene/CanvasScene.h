@@ -24,7 +24,7 @@ namespace Application
 
 		protected:
 			virtual void render_components(Render::DrawEvent*event);
-			void draw_element(Canvas::CanvasElement* obj,Render::DrawEvent*event);
+			static void draw_element(Canvas::CanvasElement* obj,Render::DrawEvent*event);
 		public:
 			// public variables
 			void(__cdecl* render_callback)(Render::DrawEvent*event)     = nullptr;
@@ -40,8 +40,9 @@ namespace Application
 			void foreach(std::function<void(Canvas::CanvasElement*)> const& callback);
 			void add_element(Canvas::CanvasElement* object);
 
+		private:
+			UINT count_size();
 		protected:
-
 			void set_indexes();
 		public:
 			// public getters
@@ -50,7 +51,6 @@ namespace Application
 
 			Canvas::CanvasElement* element_at(UINT index);
 
-			UINT total_size();
 		};
 	}
 }

@@ -19,11 +19,11 @@ void Application::Canvas::CanvasElement::move_by(float x, float y)
 
 void Application::Canvas::CanvasElement::initialize(Render::CanvasScene* pForm)
 {
-	this->pcanvas = pForm;
+	this->canvas_scene = pForm;
 	this->init();
 }
 
-GVertex::Vertex* Application::Canvas::CanvasElement::get_ptr()
+GVertex::Vertex* Application::Canvas::CanvasElement::get_ptr() const
 {
-	return this->pcanvas->get_ptr() + this->index;
+	return this->canvas_scene->get_ptr() + this->index;
 }

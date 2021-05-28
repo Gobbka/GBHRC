@@ -9,9 +9,6 @@ namespace Application
 		
 		class Panel : public InteractiveElement//: public UI::Parent
 		{
-		private:
-			Render::Color color;
-			Render::Resolution resolution;
 		protected:
 			Canvas::Rectangle rect;
 			
@@ -32,7 +29,8 @@ namespace Application
 			void set_pos(float x, float y) override;
 			void set_color(float r, float g, float b) override;
 			void move_by(float x, float y) override;
-			
+
+			Render::Position get_position() override;
 			Render::Resolution get_resolution() override;
 			InteractiveElement* set_resolution(float width, float height) override;
 		};

@@ -10,7 +10,7 @@ void Application::Render::CanvasScene::render_components(Render::DrawEvent*draw_
 		pre_render_callback(draw_event);
 
 	for (auto* element : this->pElements)
-		this->draw_element(element, draw_event);
+		CanvasScene::draw_element(element, draw_event);
 
 	if (this->render_callback != nullptr)
 		render_callback(draw_event);
@@ -24,7 +24,7 @@ void Application::Render::CanvasScene::draw_element(Canvas::CanvasElement* obj, 
 
 void Application::Render::CanvasScene::initialize_components(Application::Render::Engine* pEngine)
 {
-	D3D11Canvas::alloc_vbuffer(pEngine, this->total_size());
+	D3D11Canvas::alloc_vbuffer(pEngine, this->count_size());
 
 	UINT size = 0;
 
@@ -58,7 +58,7 @@ void Application::Render::CanvasScene::foreach(std::function<void(Canvas::Canvas
 		callback(element);
 }
 
-UINT Application::Render::CanvasScene::total_size()
+UINT Application::Render::CanvasScene::count_size()
 {
 	UINT size = 0;
 	for (auto* element : this->pElements)

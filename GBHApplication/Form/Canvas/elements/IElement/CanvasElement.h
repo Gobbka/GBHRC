@@ -13,7 +13,7 @@ namespace Application
 		protected:
 			UINT index PURE;
 
-			Application::Render::CanvasScene* pcanvas = nullptr;
+			Application::Render::CanvasScene* canvas_scene = nullptr;
 			Render::Position position{ 0,0 };
 			virtual void init() PURE;
 
@@ -38,7 +38,7 @@ namespace Application
 
 			void initialize(Render::CanvasScene* pForm);
 
-			GVertex::Vertex* get_ptr();
+			GVertex::Vertex* get_ptr() const;
 		};
 	}
 }

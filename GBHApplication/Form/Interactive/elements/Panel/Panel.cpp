@@ -41,16 +41,13 @@ Application::UI::ElementDescription Application::UI::Panel::get_desc()
 Application::UI::Panel::Panel(Render::Position position, Render::Resolution resolution, Render::Color color)
 	:rect(position,resolution,color)
 {
-	this->color = color;
-	this->position = position;
-	this->resolution = resolution;
-
-	// TODO: этап добавления элементов в массив канваса
-
 }
 
 bool Application::UI::Panel::point_belongs(Render::Position point)
 {
+	auto resolution = this->rect.get_resolution();
+	auto position = this->rect.get_position();
+	
 	return
 		(point.x >= position.x && point.x <= position.x + resolution.width) &&
 		(point.y <= position.y && point.y >= (position.y - resolution.height));
@@ -86,6 +83,7 @@ void Application::UI::Panel::set_color(float r, float g, float b)
 
 void Application::UI::Panel::move_by(float x, float y)
 {
+	this->rect.move_by(x, y);
 	//Parent::move_by(x, y);
 
 	//Managers::Rectangle::set_rect(this->get_ptr(),
@@ -97,6 +95,11 @@ void Application::UI::Panel::move_by(float x, float y)
 	//
 	//this->position.x += x;
 	//this->position.y += y;
+}
+
+Application::Render::Position Application::UI::Panel::get_position()
+{
+	return this->rect.get_position();
 }
 
 
@@ -115,5 +118,5 @@ Application::UI::InteractiveElement* Application::UI::Panel::set_resolution(floa
 
 Application::Render::Resolution Application::UI::Panel::get_resolution()
 {
-	return this->resolution;
+	return this->rect.get_resolution();
 }

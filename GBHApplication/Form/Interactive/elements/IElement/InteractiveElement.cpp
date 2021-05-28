@@ -7,11 +7,6 @@ Application::UI::ElementDescription::ElementDescription(bool has_children, const
 	this->string_name = string_name;
 }
 
-Application::Render::Position Application::UI::InteractiveElement::get_position() const
-{
-	return this->position;
-}
-
 void Application::UI::InteractiveElement::set_margin(float x, float y)
 {
 	this->styles.margin.x = this->styles.margin.z = x;
