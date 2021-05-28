@@ -60,8 +60,7 @@ namespace Application
 			Render::Position position{ 0,0 };
 			Parent*          _parent = nullptr;
 		protected:
-			virtual void init(){}
-			void draw(Render::DrawEvent* event) override PURE;
+			virtual void init() PURE;
 			static void default_event_callback (UIElementEventArgs args) {}
 		public:
 			// public variables
@@ -77,10 +76,10 @@ namespace Application
 
 			// return's screen position
 			Render::Position get_position() const;
-			// return's memory region pointer where you can edit vertex
-			GVertex::Vertex* get_ptr();
-			// vertex size of object
-			UINT size() override = 0; 
+			//// return's memory region pointer where you can edit vertex
+			//GVertex::Vertex* get_ptr();
+			//// vertex size of object
+			// virtual UINT size() PURE; 
 			// return's parent, if have
 			Parent* get_parent() const;
 			// return's form where this object where registered
@@ -97,8 +96,8 @@ namespace Application
 
 			FIELD_SETTER(Parent*, _parent);
 
-			void set_pos(float x, float y) override = 0;
-			void set_color(float r, float g, float b) override = 0;
+			void set_pos(float x, float y) override PURE;
+			void set_color(float r, float g, float b) override PURE;
 			virtual InteractiveElement* set_resolution(float width,float height) PURE;
 
 			void set_margin(float x,float y);
@@ -106,9 +105,11 @@ namespace Application
 			
 		public:
 			// public voids
+			void draw(Render::DrawEvent* event) override PURE;
 
-			void move_by(float x, float y) override = 0;
-			void initialize(Application::InteractiveForm* pForm,UINT index);
+		 	virtual void move_by(float x, float y) PURE;
+			void initialize(InteractiveForm*form);
+			virtual void add_elements(Render::CanvasScene*scene) PURE;
 		protected:
 			
 		public:

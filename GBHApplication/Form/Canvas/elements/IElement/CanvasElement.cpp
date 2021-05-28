@@ -17,6 +17,12 @@ void Application::Canvas::CanvasElement::move_by(float x, float y)
 	}
 }
 
+void Application::Canvas::CanvasElement::initialize(Render::CanvasScene* pForm)
+{
+	this->pcanvas = pForm;
+	this->init();
+}
+
 GVertex::Vertex* Application::Canvas::CanvasElement::get_ptr()
 {
 	return this->pcanvas->get_ptr() + this->index;

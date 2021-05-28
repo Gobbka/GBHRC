@@ -279,7 +279,7 @@ void GBHRC::Context::make_esp_boxes()
     }
 }
 
-void GBHRC::Context::set_esp_scene(Application::Canvas::CanvasForm* form)
+void GBHRC::Context::set_esp_scene(Application::Render::CanvasScene* form)
 {
     this->esp_scene = form;
 }

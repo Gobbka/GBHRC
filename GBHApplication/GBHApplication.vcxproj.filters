@@ -21,16 +21,10 @@
     <ClCompile Include="Render\Engine\Engine.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Render\Scene\Scene.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="Application.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="Form\Interactive\InteractiveForm.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="Form\Interactive\elements\Checkbox\Checkbox.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="Form\Interactive\elements\Panel\Panel.cpp">
@@ -48,16 +42,7 @@
     <ClCompile Include="Form\Canvas\elements\IElement\CanvasElement.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Form\Interactive\elements\IElement\Parentable.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="Form\Interactive\elements\Label\Label.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="Render\Text\Text.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="Form\Interactive\elements\Button\Button.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="Render\Events\EngineEvents.cpp">
@@ -69,10 +54,10 @@
     <ClCompile Include="Form\Interactive\Events\WinIntEventHandler.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Form\Interactive\elements\ItemList\ItemList.cpp">
+    <ClCompile Include="Render\Scene\D3D11Canvas.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Render\Scene\D3D11Canvas.cpp">
+    <ClCompile Include="Render\Scene\CanvasScene.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -92,16 +77,10 @@
     <ClInclude Include="Render\Engine\Engine.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Render\Scene\Scene.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="Application.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Form\Interactive\InteractiveForm.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Form\Interactive\elements\Checkbox\Checkbox.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Form\Interactive\elements\Panel\Panel.h">
@@ -128,12 +107,6 @@
     <ClInclude Include="Form\Canvas\elements\IElement\CanvasElement.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Form\Interactive\elements\IElement\Parentable.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Form\Interactive\elements\Label\Label.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="Render\Text\Text.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
@@ -155,10 +128,10 @@
     <ClInclude Include="Form\Interactive\Events\InteractionEventHandler.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Form\Interactive\elements\ItemList\ItemList.h">
+    <ClInclude Include="Render\Scene\D3D11Canvas.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Render\Scene\D3D11Canvas.h">
+    <ClInclude Include="Render\Scene\CanvasScene.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,6 +1,6 @@
 #include "Engine.h"
 #include "../Render.h"
-#include "../Scene/Scene.h"
+#include "../Scene/CanvasScene.h"
 #include "../d3d/szShadez.h"
 #include "../d3d/ConstantBuffer.h"
 
@@ -68,7 +68,7 @@ DirectX::SpriteFont* Engine::create_font(void* font_source, UINT source_size)
 	return font;
 }
 
-Engine* Engine::append_scene(Render::Scene* scene)
+Engine* Engine::append_scene(Render::CanvasScene* scene)
 {
 	this->pScenes.push_back(scene);
 	return this;

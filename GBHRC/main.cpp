@@ -33,7 +33,7 @@
 HINSTANCE DllInst;
 Application::InteractiveForm* menu;
 Application::InteractiveForm* friend_list;
-Application::Canvas::CanvasForm* esp_scene;
+Application::Render::CanvasScene* esp_scene;
 //Application::Canvas::CanvasForm* test_scene;
 void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam);
 HWND main__window;
@@ -65,18 +65,18 @@ void init_callback(Application::Render::Engine* instance)
     Application::register_form(friend_list);
 
     MainMenuMarkup(menu, instance);
-    FiendListMarkup(friend_list, instance);
+    // FiendListMarkup(friend_list, instance);
     
     menu->hidden = true;
     friend_list->hidden = true;
 
     DEBUG_LOG("MENU FORM REGISTERED");
 	
-    esp_scene = new Application::Canvas::CanvasForm();
-    esp_scene->render_callback = GBHRC::Context::static_draw_callback;
-    esp_scene->hidden = false;
-    GBHRC::Context::instance()->set_esp_scene(esp_scene);
-    GBHRC::Context::instance()->make_esp_boxes();
+    //esp_scene = new Application::Render::CanvasScene();
+    //esp_scene->render_callback = GBHRC::Context::static_draw_callback;
+    //esp_scene->hidden = false;
+    //GBHRC::Context::instance()->set_esp_scene(esp_scene);
+    //GBHRC::Context::instance()->make_esp_boxes();
 
     //test_scene = new Application::Canvas::CanvasForm();
     //TestSceneMarkup(test_scene,instance);
@@ -86,15 +86,15 @@ void init_callback(Application::Render::Engine* instance)
 	
     instance
         ->append_scene(menu)
-        ->append_scene(friend_list)
+        //->append_scene(friend_list)
 
         //->append_scene(test_scene)
-		->append_scene(esp_scene)	
+		//->append_scene(esp_scene)	
 	;
 
     DEBUG_LOG("SCENE'S APPENDED");
 
-    esp_scene->update_markup(instance);
+    //esp_scene->update_markup(instance);
 }
 
 

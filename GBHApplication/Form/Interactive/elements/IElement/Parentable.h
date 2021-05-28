@@ -38,7 +38,7 @@ namespace Application
 			UINT size() override;
 			void move_by(float x, float y) override;
 			
-			void init() override;
+			void initialize();
 
 			void foreach(std::function<void(InteractiveElement* element)> iterator);
 			InteractiveElement* element_at(UINT index);

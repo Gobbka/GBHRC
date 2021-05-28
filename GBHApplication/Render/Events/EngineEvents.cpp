@@ -1,8 +1,8 @@
 #include "EngineEvents.h"
 #include "../Engine/Engine.h"
-#include "../Scene/Scene.h"
+#include "../Scene/CanvasScene.h"
 
-void Application::Render::DrawEvent::draw_element(Render::IRenderObject* object)
+void Application::Render::DrawEvent::draw_element(Canvas::CanvasElement* object)
 {
 	this->element_ptr = object->get_index();
 	object->draw(this);
@@ -26,7 +26,7 @@ void Application::Render::DrawEvent::reset_render_state()
 	this->engine->set_vbuffer(this->scene->get_vbuffer());
 }
 
-Application::Render::DrawEvent::DrawEvent(Engine* engine, Scene* scene, ID3D11RasterizerState* old_state)
+Application::Render::DrawEvent::DrawEvent(Engine* engine, CanvasScene* scene, ID3D11RasterizerState* old_state)
 {
 	this->engine = engine;
 	this->scene = scene;

@@ -12,7 +12,7 @@ namespace Application
 {
 	namespace Render
 	{
-		class Scene;
+		class CanvasScene;
 		
 		class Engine
 		{
@@ -49,7 +49,7 @@ namespace Application
 			ID3D11RenderTargetView* get_render_target(IDXGISwapChain* pSwap) const;
 			static Application::Render::Resolution get_resolution(HWND hwnd);
 			//
-			std::vector<Application::Render::Scene*> pScenes;
+			std::vector<Application::Render::CanvasScene*> pScenes;
 
 		public:
 			void set_vbuffer(GVertex::VertexBuffer* buffer);
@@ -60,7 +60,7 @@ namespace Application
 			DirectX::SpriteFont* create_font(void* font_source,UINT source_size);
 			
 			Engine(HWND hwnd, ID3D11Device* pDevice, IDXGISwapChain* pSwapChain);
-			Engine* append_scene(Application::Render::Scene* scene);
+			Engine* append_scene(Application::Render::CanvasScene* scene);
 
 			//void wnd_proc(UINT msg, WPARAM wParam, LPARAM lParam);
 			void update_scene();

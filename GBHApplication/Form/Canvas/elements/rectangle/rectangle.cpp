@@ -4,6 +4,13 @@
 
 using namespace Application::Render;
 
+void Application::Canvas::Rectangle::init()
+{
+
+	this->set_pos(position.x, position.y);
+	this->set_color(color.r, color.g, color.b);
+}
+
 Application::Canvas::Rectangle::Rectangle(Position pos, Resolution res, Color col)
 {
 	this->position = pos;
@@ -69,13 +76,6 @@ UINT Application::Canvas::Rectangle::size()
 	return 4;
 }
 
-void Application::Canvas::Rectangle::init(Canvas::CanvasForm* pForm)
-{
-	this->pcanvas = pForm;
-
-	this->set_pos(position.x, position.y);
-	this->set_color(color.r, color.g, color.b);
-}
 
 Resolution Application::Canvas::Rectangle::get_resolution() const
 {

@@ -1,6 +1,6 @@
 #include "Parentable.h"
 
-#include "../../../../Render/Scene/Scene.h"
+#include "../../../../Render/Scene/CanvasScene.h"
 
 void Application::UI::Parent::handle_mouse_up()
 {
@@ -123,17 +123,17 @@ void Application::UI::Parent::move_by(float x, float y)
 
 void Application::UI::Parent::init()
 {	
-	UINT index = this->index_offset+this->index;
-	
-	for(auto*element:this->elements)
-	{
-		element->initialize(this->pForm,index);
-		element->set__parent(this);
+	//UINT index = this->index_offset+this->index;
+	//
+	//for(auto*element:this->elements)
+	//{
+	//	element->initialize(this->pForm,index);
+	//	element->set__parent(this);
 
-		element->move_by(this->position.x, this->position.y);
-		
-		index += element->size();
-	}
+	//	element->move_by(this->position.x, this->position.y);
+	//	
+	//	index += element->size();
+	//}
 }
 
 void Application::UI::Parent::foreach(std::function<void(InteractiveElement* element)> iterator)

@@ -7,13 +7,13 @@
 
 extern DirectX::SpriteFont* VisbyRoundCFFont;
 
-void TestSceneMarkup(Application::Canvas::CanvasForm* form, Application::Render::Engine* pEngine)
+void TestSceneMarkup(Application::Render::CanvasScene* form, Application::Render::Engine* pEngine)
 {
     form
         ->add_element(new Application::Canvas::Rectangle{ {-250,50},{800,200},{FLOAT_COLORS_GREEN} })
 	;
 	
-	form->update_markup(pEngine);
+	form->initialize_components(pEngine);
 }
 
 void test_scene_draw(Application::Render::DrawEvent* event)

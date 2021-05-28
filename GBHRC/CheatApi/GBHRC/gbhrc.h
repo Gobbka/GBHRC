@@ -1,18 +1,21 @@
 #pragma once
+#include <vector>
+
 #include "config/Config.h"
 #include "../BrokeProtocol/BrokeProtocol.h"
-#include "Form/Canvas/elements/rectangle/rectangle.h"
+//#include "Form/Canvas/elements/rectangle/rectangle.h"
 
 namespace Application {
 	namespace Canvas {
-		class CanvasForm;
+		class Rectangle;
 	}
 }
 
 namespace Application {
 	namespace Render {
+		struct DrawEvent;
 		class Engine;
-		class Scene;
+		class CanvasScene;
 	}
 }
 
@@ -48,7 +51,7 @@ namespace GBHRC
 		bool is_aim_target(EspPlayer* old_player, EspPlayer* new_player) const;
 
 		std::vector<EspBox*> esp_boxes;
-		Application::Canvas::CanvasForm* esp_scene;
+		Application::Render::CanvasScene* esp_scene;
 		std::vector<wchar_t*> friend_list;
 	public:
 		void set_esp(bool status);
@@ -66,7 +69,7 @@ namespace GBHRC
 		static Context* instance();
 
 		void make_esp_boxes();
-		void set_esp_scene(Application::Canvas::CanvasForm*form);
+		void set_esp_scene(Application::Render::CanvasScene*form);
 
 		static void static_draw_callback(Application::Render::DrawEvent*event);
 		void life_cycle();

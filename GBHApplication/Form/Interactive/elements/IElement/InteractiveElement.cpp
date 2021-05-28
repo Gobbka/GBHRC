@@ -23,31 +23,26 @@ void Application::UI::InteractiveElement::set_margin(float x, float y, float z, 
 	this->styles.margin = { x,y,z,w };
 }
 
-void Application::UI::InteractiveElement::move_by(float x, float y)
+void Application::UI::InteractiveElement::initialize(InteractiveForm* form)
 {
-	const auto size = this->size();
-	GVertex::Vertex* ptr = this->get_ptr();
-	for (UINT i = 0; i < size; i++)
-	{
-		const auto pos = ptr[i].pos;
-		ptr[i].pos = DirectX::XMFLOAT3(pos.x + x, pos.y + y, 1.f);
-	}
-
-	this->position.x += x;
-	this->position.y += y;
-}
-
-void Application::UI::InteractiveElement::initialize(Application::InteractiveForm* pForm,UINT index)
-{
-	this->set_index(index);
-	this->pForm = pForm;
+	this->pForm = form;
 	this->init();
 }
 
-GVertex::Vertex* Application::UI::InteractiveElement::get_ptr()
-{
-	return this->pForm->get_ptr() + this->index;
-}
+//void Application::UI::InteractiveElement::move_by(float x, float y)
+//{
+//	
+//	const auto size = this->size();
+//	GVertex::Vertex* ptr = this->get_ptr();
+//	for (UINT i = 0; i < size; i++)
+//	{
+//		const auto pos = ptr[i].pos;
+//		ptr[i].pos = DirectX::XMFLOAT3(pos.x + x, pos.y + y, 1.f);
+//	}
+//
+//	this->position.x += x;
+//	this->position.y += y;
+//}
 
 Application::UI::Parent* Application::UI::InteractiveElement::get_parent() const
 {

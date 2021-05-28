@@ -1,25 +1,30 @@
 #pragma once
-#include "../IElement/Parentable.h"
+#include "../../../Canvas/elements/rectangle/rectangle.h"
+#include "../IElement/InteractiveElement.h"
 
 namespace Application
 {
 	namespace UI
 	{
 		
-		class Panel : public UI::Parent
+		class Panel : public InteractiveElement//: public UI::Parent
 		{
 		private:
 			Render::Color color;
 			Render::Resolution resolution;
 		protected:
+			Canvas::Rectangle rect;
+			
 			void draw(Render::DrawEvent*event) override;
+			void add_elements(Render::CanvasScene* scene) override;
 		public:
 			ElementDescription get_desc() override;
 			
-			UINT size() override
-			{
-				return 4 + Parent::size();
-			}
+			//UINT size() override
+			//{
+			//	return 4;// + Parent::size();
+			//}
+			
 			Panel(Render::Position position,Render::Resolution resolution, Render::Color color);
 			
 			bool point_belongs(Render::Position point) override;

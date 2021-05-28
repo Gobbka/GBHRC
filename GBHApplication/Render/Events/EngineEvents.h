@@ -3,6 +3,12 @@
 
 #include "../Render.h"
 
+namespace Application {
+	namespace Canvas {
+		class CanvasElement;
+	}
+}
+
 namespace GVertex {
 	struct Vertex;
 }
@@ -13,12 +19,12 @@ namespace Application
 	{
 		class IRenderObject;
 		class Engine;
-		class Scene;
+		class CanvasScene;
 
 		struct DrawEvent
 		{
 			Engine* engine;
-			Scene* scene;
+			CanvasScene* scene;
 			ID3D11RasterizerState* old_state;
 
 			
@@ -27,13 +33,13 @@ namespace Application
 			UINT element_ptr;
 		public:
 			
-			void draw_element(Render::IRenderObject*object);
+			void draw_element(Canvas::CanvasElement*object);
 			void draw(UINT count,UINT offset=0);
 
 			ID3D11DeviceContext* get_context() const;
 			void reset_render_state();
 
-			DrawEvent(Engine* engine, Scene* scene, ID3D11RasterizerState* old_state);
+			DrawEvent(Engine* engine, CanvasScene* scene, ID3D11RasterizerState* old_state);
 		};
 
 	}

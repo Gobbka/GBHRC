@@ -4,10 +4,14 @@
 #include "../../Application.h"
 #include <windowsx.h>
 
-void Application::InteractiveForm::draw_element(Render::IRenderObject* obj, Render::DrawEvent* event)
+void Application::InteractiveForm::render_components(Render::DrawEvent* event)
 {
-	if (((UI::InteractiveElement*)obj)->state.visible == UI::VISIBLE_STATE_VISIBLE)
-		event->draw_element(obj);
+	for(auto*element:this->interactive_elements)
+	{
+		if (element->state.visible == UI::VISIBLE_STATE_VISIBLE)
+			element->draw(event);
+			//event->draw_element(element);
+	}
 }
 
 void Application::InteractiveForm::drag_move(UI::InteractiveElement* element)
@@ -28,21 +32,21 @@ void Application::InteractiveForm::free_drag_move()
 
 void Application::InteractiveForm::initialize_components(Render::Engine* pEngine)
 {
-	this->alloc_vbuffer(pEngine);
-	UINT size = 0;
+	
+	for (auto* element : this->interactive_elements)
+		element->add_elements(this);
 
-	Scene::foreach([this, &size](Render::IRenderObject* obj)
-		{
-			auto* iUIObject = (UI::InteractiveElement*)obj;
-			iUIObject->initialize(this,size);
+	CanvasScene::initialize_components(pEngine);
 
-			size += obj->size();
-		});
+	for (auto* element : this->interactive_elements)
+		element->initialize(this);
+	
 }
 
 Application::InteractiveForm* Application::InteractiveForm::add_element(UI::InteractiveElement* element)
 {
-	this->add_render_object(element);
+	this->interactive_elements.push_back(element);
+	//this->add_render_object(element);
 	return this;
 }
 

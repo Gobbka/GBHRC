@@ -151,10 +151,6 @@
     <ClCompile Include="Form\Canvas\CanvasForm.cpp" />
     <ClCompile Include="Form\Canvas\elements\IElement\CanvasElement.cpp" />
     <ClCompile Include="Form\Canvas\elements\rectangle\rectangle.cpp" />
-    <ClCompile Include="Form\Interactive\elements\Button\Button.cpp" />
-    <ClCompile Include="Form\Interactive\elements\IElement\Parentable.cpp" />
-    <ClCompile Include="Form\Interactive\elements\ItemList\ItemList.cpp" />
-    <ClCompile Include="Form\Interactive\elements\Label\Label.cpp" />
     <ClCompile Include="Form\Interactive\Events\WinIntEventHandler.cpp" />
     <ClCompile Include="Form\Interactive\InteractiveForm.cpp" />
     <ClCompile Include="Render\d3d\Vertex.cpp" />
@@ -162,8 +158,7 @@
     <ClCompile Include="Render\Engine\MaskEngine.cpp" />
     <ClCompile Include="Render\Events\EngineEvents.cpp" />
     <ClCompile Include="Render\Scene\D3D11Canvas.cpp" />
-    <ClCompile Include="Render\Scene\Scene.cpp" />
-    <ClCompile Include="Form\Interactive\elements\Checkbox\Checkbox.cpp" />
+    <ClCompile Include="Render\Scene\CanvasScene.cpp" />
     <ClCompile Include="Form\Interactive\elements\IElement\InteractiveElement.cpp" />
     <ClCompile Include="Form\Interactive\elements\Panel\Panel.cpp" />
     <ClCompile Include="Render\Text\Text.cpp" />
@@ -175,10 +170,12 @@
     <ClInclude Include="Form\Canvas\elements\IElement\CanvasElement.h" />
     <ClInclude Include="Form\Canvas\elements\rectangle\rectangle.h" />
     <ClInclude Include="Form\Forms.h" />
-    <ClInclude Include="Form\Interactive\elements\Button\Button.h" />
-    <ClInclude Include="Form\Interactive\elements\IElement\Parentable.h" />
-    <ClInclude Include="Form\Interactive\elements\ItemList\ItemList.h" />
-    <ClInclude Include="Form\Interactive\elements\Label\Label.h" />
+    <ClInclude Include="Form\Interactive\elements\Button\Button.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Form\Interactive\Events\InteractionEventHandler.h" />
     <ClInclude Include="Form\Interactive\Events\WinIntEventHandler.h" />
     <ClInclude Include="Form\Interactive\InteractiveForm.h" />
@@ -192,8 +189,7 @@
     <ClInclude Include="Render\Render.h" />
     <ClInclude Include="Render\Scene\D3D11Canvas.h" />
     <ClInclude Include="Render\Scene\IRenderObject.h" />
-    <ClInclude Include="Render\Scene\Scene.h" />
-    <ClInclude Include="Form\Interactive\elements\Checkbox\Checkbox.h" />
+    <ClInclude Include="Render\Scene\CanvasScene.h" />
     <ClInclude Include="Form\Interactive\elements\IElement\InteractiveElement.h" />
     <ClInclude Include="Form\Interactive\elements\Panel\Panel.h" />
     <ClInclude Include="Render\Text\Text.h" />
