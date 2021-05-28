@@ -4,7 +4,7 @@
 #include "../../Application.h"
 #include <windowsx.h>
 
-void Application::InteractiveForm::render_components(Render::DrawEvent* event)
+void Application::InteractiveForm::render_components(Render::D3D11DrawEvent* event)
 {
 	for(auto*element:this->interactive_elements)
 	{
@@ -82,7 +82,8 @@ void Application::InteractiveForm::on_mouse_move(int mx,int my)
 
 	for (auto i = length; i > 0; i--)
 	{
-		auto* element = (UI::InteractiveElement*)this->element_at(i-1);
+		auto* element = this->interactive_elements[i-1];
+		
 		if (
 			element->state.visible == UI::VISIBLE_STATE_VISIBLE &&
 			e_handled == false &&

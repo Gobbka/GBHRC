@@ -16,7 +16,7 @@ void TestSceneMarkup(Application::Render::CanvasScene* form, Application::Render
 	form->initialize_components(pEngine);
 }
 
-void test_scene_draw(Application::Render::DrawEvent* event)
+void test_scene_draw(Application::Render::D3D11DrawEvent* event)
 {
 	
     auto pos = Application::point_to_center(Application::Render::Position{ 0,0 });

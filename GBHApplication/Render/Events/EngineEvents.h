@@ -21,7 +21,7 @@ namespace Application
 		class Engine;
 		class CanvasScene;
 
-		struct DrawEvent
+		struct D3D11DrawEvent
 		{
 			Engine* engine;
 			CanvasScene* scene;
@@ -39,7 +39,7 @@ namespace Application
 			ID3D11DeviceContext* get_context() const;
 			void reset_render_state();
 
-			DrawEvent(Engine* engine, CanvasScene* scene, ID3D11RasterizerState* old_state);
+			D3D11DrawEvent(Engine* engine, CanvasScene* scene, ID3D11RasterizerState* old_state);
 		};
 
 	}

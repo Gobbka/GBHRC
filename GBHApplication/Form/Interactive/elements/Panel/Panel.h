@@ -12,7 +12,7 @@ namespace Application
 		protected:
 			Canvas::Rectangle rect;
 			
-			void draw(Render::DrawEvent*event) override;
+			void draw(Render::D3D11DrawEvent*event) override;
 			void add_elements(Render::CanvasScene* scene) override;
 		public:
 			ElementDescription get_desc() override;

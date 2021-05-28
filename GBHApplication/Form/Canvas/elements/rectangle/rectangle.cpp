@@ -23,7 +23,7 @@ void Application::Canvas::Rectangle::move_by(float x, float y)
 	CanvasElement::move_by(x, y);
 }
 
-void Application::Canvas::Rectangle::draw(Render::DrawEvent* event)
+void Application::Canvas::Rectangle::draw(Render::D3D11DrawEvent* event)
 {
 	auto* p_context = event->get_context();
 

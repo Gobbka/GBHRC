@@ -40,7 +40,7 @@ namespace Application
 
 			Render::Resolution get_resolution();
 			
-			void DrawInRect(Render::DrawEvent* event,Render::Position pos,bool scale=false) const;
+			void DrawInRect(Render::D3D11DrawEvent* event,Render::Position pos,bool scale=false) const;
 		};
 	}
 }

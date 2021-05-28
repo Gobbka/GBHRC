@@ -3,7 +3,7 @@
 #include "../../InteractiveForm.h"
 #include "../../../../Managers/RectangleManager.h"
 
-void Application::UI::Panel::draw(Render::DrawEvent* event)
+void Application::UI::Panel::draw(Render::D3D11DrawEvent* event)
 {
 	event->draw_element(&this->rect);
 	//if(this->styles.overflow==VISIBLE_STATE_HIDDEN)

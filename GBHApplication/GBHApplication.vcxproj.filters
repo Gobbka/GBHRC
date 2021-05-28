@@ -60,6 +60,9 @@
     <ClCompile Include="Render\Scene\CanvasScene.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="configuration\drawconf.h">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Managers\RectangleManager.h">
@@ -132,6 +135,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Render\Scene\CanvasScene.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="configuration\projectconf.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

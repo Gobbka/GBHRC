@@ -103,7 +103,7 @@ namespace Application
 			
 		public:
 			// public voids
-			void draw(Render::DrawEvent* event) override PURE;
+			void draw(Render::D3D11DrawEvent* event) override PURE;
 
 		 	virtual void move_by(float x, float y) PURE;
 			void initialize(InteractiveForm*form);

@@ -4,4 +4,4 @@
 
 void TestSceneMarkup(Application::Render::CanvasScene* form, Application::Render::Engine* pEngine);
 
-void test_scene_draw(Application::Render::DrawEvent* event);
+void test_scene_draw(Application::Render::D3D11DrawEvent* event);
