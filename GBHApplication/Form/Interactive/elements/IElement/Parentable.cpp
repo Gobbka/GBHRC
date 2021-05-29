@@ -75,21 +75,17 @@ void Application::UI::Parent::handle_mouse_scroll(int delta)
 	InteractiveElement::handle_mouse_scroll(delta);
 }
 
-void Application::UI::Parent::set_index_offset(UINT offset)
+void Application::UI::Parent::add_elements(Render::CanvasScene* scene)
 {
-	this->index_offset = offset;
+	for (auto* element : this->elements)
+		element->add_elements(scene);
 }
 
 void Application::UI::Parent::draw(Render::DrawEvent* event)
 {
 	for (auto* element : this->elements)
 		if (element->state.visible == VisibleState::VISIBLE_STATE_VISIBLE)
-			event->draw_element(element);
-}
-
-void Application::UI::Parent::set_pos(float x, float y)
-{
-	this->move_by(x - this->position.x, y - this->position.y);
+			element->draw(event);
 }
 
 void Application::UI::Parent::set_color(float r, float g, float b)
@@ -98,43 +94,19 @@ void Application::UI::Parent::set_color(float r, float g, float b)
 		element->set_color(r, g, b);
 }
 
-bool Application::UI::Parent::point_belongs(Render::Position point)
-{
-	for (auto* element : this->elements)
-		if (element->point_belongs(point))
-			return true;
-	return false;
-}
-
-UINT Application::UI::Parent::size()
-{
-	UINT size = 0;
-	for (auto* element : this->elements)
-		size += element->size();
-
-	return size;
-}
-
 void Application::UI::Parent::move_by(float x, float y)
 {
 	for (auto* element : this->elements)
 		element->move_by(x,y);
 }
 
-void Application::UI::Parent::init()
-{	
-	//UINT index = this->index_offset+this->index;
-	//
-	//for(auto*element:this->elements)
-	//{
-	//	element->initialize(this->pForm,index);
-	//	element->set__parent(this);
-
-	//	element->move_by(this->position.x, this->position.y);
-	//	
-	//	index += element->size();
-	//}
-}
+//void Application::UI::Parent::init()
+//{
+//	for (auto* element : this->elements)
+//	{
+//		element->initialize(this->pForm);
+//	}
+//}
 
 void Application::UI::Parent::foreach(std::function<void(InteractiveElement* element)> iterator)
 {

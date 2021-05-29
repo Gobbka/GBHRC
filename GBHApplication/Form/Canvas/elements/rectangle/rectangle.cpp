@@ -46,11 +46,9 @@ void Application::Canvas::Rectangle::draw(Render::D3D11DrawEvent* event)
 		rDesc.DepthClipEnable = true;
 		event->engine->pDevice->CreateRasterizerState(&rDesc, &state);
 	}
-	ID3D11RasterizerState* old_state;
-	p_context->RSGetState(&old_state);
 	p_context->RSSetState(state);
 	event->draw(4);
-	p_context->RSSetState(old_state);
+	p_context->RSSetState(event->old_state);
 }
 
 void Application::Canvas::Rectangle::set_pos(float x, float y)

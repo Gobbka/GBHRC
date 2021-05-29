@@ -1,13 +1,14 @@
 #pragma once
 #include "../../../Canvas/elements/rectangle/rectangle.h"
-#include "../IElement/InteractiveElement.h"
+#include "../IElement/Parentable.h"
+
 
 namespace Application
 {
 	namespace UI
 	{
 		
-		class Panel : public InteractiveElement//: public UI::Parent
+		class Panel : public UI::Parent
 		{
 		protected:
 			Canvas::Rectangle rect;
@@ -25,7 +26,6 @@ namespace Application
 			Panel(Render::Position position,Render::Resolution resolution, Render::Color color);
 			
 			bool point_belongs(Render::Position point) override;
-			void init() override;
 			void set_pos(float x, float y) override;
 			void set_color(float r, float g, float b) override;
 			void move_by(float x, float y) override;

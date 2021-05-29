@@ -19,7 +19,6 @@ namespace Application
 		{
 		private:
 			std::vector<InteractiveElement*> elements;
-			UINT index_offset=0;
 		protected:
 			void handle_mouse_up() override;
 			void handle_mouse_down() override;
@@ -27,18 +26,13 @@ namespace Application
 			void handle_mouse_leave() override;
 			void handle_mouse_move(float mX, float mY) override;
 			void handle_mouse_scroll(int delta) override;
-		protected:
-			void set_index_offset(UINT offset);
+
+			void add_elements(Render::CanvasScene* scene) override;
 		public:
 			
 			void draw(Render::DrawEvent*event) override;
-			void set_pos(float x, float y) override;
 			void set_color(float r, float g, float b) override;
-			bool point_belongs(Render::Position point) override;
-			UINT size() override;
 			void move_by(float x, float y) override;
-			
-			void initialize();
 
 			void foreach(std::function<void(InteractiveElement* element)> iterator);
 			InteractiveElement* element_at(UINT index);

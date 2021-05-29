@@ -3,7 +3,7 @@
 #include "../../InteractiveForm.h"
 #include "../../../../Managers/RectangleManager.h"
 
-void Application::UI::Panel::draw(Render::D3D11DrawEvent* event)
+void Application::UI::Panel::draw(Render::DrawEvent* event)
 {
 	event->draw_element(&this->rect);
 	//if(this->styles.overflow==VISIBLE_STATE_HIDDEN)
@@ -31,6 +31,7 @@ void Application::UI::Panel::draw(Render::D3D11DrawEvent* event)
 void Application::UI::Panel::add_elements(Render::CanvasScene* scene)
 {
 	scene->add_element((Canvas::CanvasElement*) & rect);
+	Parent::add_elements(scene);
 }
 
 Application::UI::ElementDescription Application::UI::Panel::get_desc()
@@ -53,10 +54,11 @@ bool Application::UI::Panel::point_belongs(Render::Position point)
 		(point.y <= position.y && point.y >= (position.y - resolution.height));
 }
 
-void Application::UI::Panel::init()
-{
-	this->rect.initialize(this->pForm);
-}
+//void Application::UI::Panel::init()
+//{
+//	this->rect.initialize(this->pForm);
+//	Parent::init();
+//}
 
 //void Application::UI::Panel::init()
 //{
