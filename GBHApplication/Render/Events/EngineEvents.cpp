@@ -4,27 +4,29 @@
 
 void Application::Render::D3D11DrawEvent::draw_element(Canvas::CanvasElement* object)
 {
-	this->element_ptr = object->get_index();
+	this->element_index = object->get_index();
 	object->draw(this);
 }
 
 void Application::Render::D3D11DrawEvent::draw(UINT count, UINT offset)
 {
-	this->engine->pDevContext->Draw(count, this->element_ptr + offset);
+	this->engine->pDevContext->Draw(count, this->element_index + offset);
 }
 
 void Application::Render::D3D11DrawEvent::mask_draw_begin()
 {
-	this->engine->get_mask()->set_draw_mask();
+	this->engine->get_mask()->set_draw_mask(draw_mask_index);
 }
 
 void Application::Render::D3D11DrawEvent::mask_discard_begin()
 {
-	this->engine->get_mask()->set_discard_mask();
+	this->draw_mask_index++;
+	this->engine->get_mask()->set_discard_mask(draw_mask_index);
 }
 
 void Application::Render::D3D11DrawEvent::mask_discard_end()
 {
+	this->draw_mask_index--;
 	this->engine->get_mask()->unset_mask();
 }
 
@@ -48,4 +50,6 @@ Application::Render::D3D11DrawEvent::D3D11DrawEvent(Engine* engine, CanvasScene*
 	this->old_state = old_state;
 	
 	this->scenes_completed = 0;
+	this->element_index = 0;
+	this->draw_mask_index = 0;
 }

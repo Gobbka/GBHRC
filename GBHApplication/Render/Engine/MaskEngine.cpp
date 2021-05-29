@@ -78,7 +78,7 @@ Application::Render::MaskEngine::MaskEngine(ID3D11Device* pDevice, ID3D11DeviceC
 		DEBUG_LOG("Failed to create depth stencil state.");
 
 	//Discard blend state (Just need to change a few things from default depth stencil)
-	depthstencildesc.FrontFace.StencilFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS;
+	depthstencildesc.FrontFace.StencilFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_EQUAL;
 	depthstencildesc.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP; //KEEP STENCIL BUFFER VALUE (same as default)
 	depthstencildesc.FrontFace.StencilPassOp = D3D11_STENCIL_OP_KEEP; //KEEP STENCIL BUFFER VALUE (Notice in default we incremented, but in this we don't! We only want to compare to the stencil value written by the previous stencil state)
 	depthstencildesc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP; //KEEP STENCIL BUFFER VALUE (same as default)
@@ -105,15 +105,15 @@ void Application::Render::MaskEngine::clearBuffer() const
 	this->pContext->ClearDepthStencilView(depthStencilView,D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 0.0f, 0);
 }
 
-void Application::Render::MaskEngine::set_draw_mask()
+void Application::Render::MaskEngine::set_draw_mask(BYTE reference)
 {
-	this->pContext->OMSetDepthStencilState(this->drawState, 0);
+	this->pContext->OMSetDepthStencilState(this->drawState, reference);
 	this->current_state = drawState;
 }
 
-void Application::Render::MaskEngine::set_discard_mask()
+void Application::Render::MaskEngine::set_discard_mask(BYTE reference)
 {
-	this->pContext->OMSetDepthStencilState(this->discardState, 0);
+	this->pContext->OMSetDepthStencilState(this->discardState, reference);
 	this->current_state = discardState;
 }
 

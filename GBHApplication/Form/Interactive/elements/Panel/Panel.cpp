@@ -7,11 +7,14 @@ void Application::UI::Panel::draw(Render::DrawEvent* event)
 {
 	if(this->styles.overflow == VISIBLE_STATE_HIDDEN)
 	{
-		event->engine->get_mask()->set_draw_mask();
+		event->mask_draw_begin();
+		//event->engine->get_mask()->set_draw_mask();
 		event->draw_element(&this->rect);
-		event->engine->get_mask()->set_discard_mask();
+		event->mask_discard_begin();
+		//event->engine->get_mask()->set_discard_mask();
 		Parent::draw(event);
-		event->engine->get_mask()->unset_mask();
+		event->mask_discard_end();
+		//event->engine->get_mask()->unset_mask();
 	}else
 	{
 		event->draw_element(&this->rect);

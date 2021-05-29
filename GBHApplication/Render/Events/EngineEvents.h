@@ -26,11 +26,11 @@ namespace Application
 			Engine* engine;
 			CanvasScene* scene;
 			ID3D11RasterizerState* old_state;
-
 			
 			unsigned int scenes_completed;
 		private:
-			UINT element_ptr;
+			UINT element_index;
+			BYTE draw_mask_index;
 		public:
 			
 			void draw_element(Canvas::CanvasElement*object);

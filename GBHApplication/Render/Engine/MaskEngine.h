@@ -25,8 +25,8 @@ namespace Application
 
 			void clearBuffer() const;
 
-			void set_draw_mask();
-			void set_discard_mask();
+			void set_draw_mask(BYTE reference    = 0x0);
+			void set_discard_mask(BYTE reference = 0x0);
 			void unset_mask();
 			void reset_mask();
 
