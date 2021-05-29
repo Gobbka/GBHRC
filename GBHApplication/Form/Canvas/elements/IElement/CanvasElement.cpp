@@ -15,6 +15,9 @@ void Application::Canvas::CanvasElement::move_by(float x, float y)
 		const auto pos = ptr[i].pos;
 		ptr[i].pos = DirectX::XMFLOAT3(pos.x + x, pos.y + y, 1.f);
 	}
+
+	this->position.x += x;
+	this->position.y += y;
 }
 
 void Application::Canvas::CanvasElement::initialize(Render::CanvasScene* pForm)

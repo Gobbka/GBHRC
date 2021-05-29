@@ -13,12 +13,15 @@ namespace Application
 		private:
 			Render::Position position;
 		public:
+
+			Render::Resolution get_resolution() override;
+			
 			ElementDescription get_desc() override;
 			
 			bool scalable = false;
 			
 			void draw(Render::DrawEvent* event) override;
-
+			
 			Label(Render::Position position, const char* text,DirectX::SpriteFont*font, Render::Color color);
 			Label(Render::Position position, const char* text,DirectX::SpriteFont*font, Render::Color color, Render::Resolution limitResolution);
 

@@ -2,6 +2,11 @@
 #include "../../../../Render/Engine/Engine.h"
 #include "../../InteractiveForm.h"
 
+Application::Render::Resolution Application::UI::Label::get_resolution()
+{
+	return Text::get_resolution();
+}
+
 Application::UI::ElementDescription Application::UI::Label::get_desc()
 {
 	return { false,"LABEl" };

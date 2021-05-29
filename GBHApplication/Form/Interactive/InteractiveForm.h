@@ -26,6 +26,7 @@ namespace Application
 		void render_components(Render::D3D11DrawEvent* event) override;
 		DragStruct* dragged = nullptr;
 	public:
+		void foreach(std::function<void(UI::InteractiveElement* element)>callback);
 		void drag_move(UI::InteractiveElement* element);
 		void free_drag_move();
 

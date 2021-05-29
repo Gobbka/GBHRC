@@ -154,6 +154,7 @@
     <ClCompile Include="Form\Canvas\CanvasForm.cpp" />
     <ClCompile Include="Form\Canvas\elements\IElement\CanvasElement.cpp" />
     <ClCompile Include="Form\Canvas\elements\rectangle\rectangle.cpp" />
+    <ClCompile Include="Form\Interactive\elements\Button\Button.cpp" />
     <ClCompile Include="Form\Interactive\elements\IElement\Parentable.cpp" />
     <ClCompile Include="Form\Interactive\elements\Label\Label.cpp" />
     <ClCompile Include="Form\Interactive\Events\WinIntEventHandler.cpp" />
@@ -176,12 +177,7 @@
     <ClInclude Include="Form\Canvas\elements\IElement\CanvasElement.h" />
     <ClInclude Include="Form\Canvas\elements\rectangle\rectangle.h" />
     <ClInclude Include="Form\Forms.h" />
-    <ClInclude Include="Form\Interactive\elements\Button\Button.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClInclude>
+    <ClInclude Include="Form\Interactive\elements\Button\Button.h" />
     <ClInclude Include="Form\Interactive\elements\IElement\Parentable.h" />
     <ClInclude Include="Form\Interactive\elements\Label\Label.h" />
     <ClInclude Include="Form\Interactive\Events\InteractionEventHandler.h" />

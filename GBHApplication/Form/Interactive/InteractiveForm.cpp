@@ -14,6 +14,14 @@ void Application::InteractiveForm::render_components(Render::D3D11DrawEvent* eve
 	}
 }
 
+void Application::InteractiveForm::foreach(std::function<void(UI::InteractiveElement* element)> callback)
+{
+	for(auto*element:this->interactive_elements)
+	{
+		callback(element);
+	}
+}
+
 void Application::InteractiveForm::drag_move(UI::InteractiveElement* element)
 {
 	auto pos = element->get_position();
@@ -48,17 +56,6 @@ Application::InteractiveForm* Application::InteractiveForm::add_element(UI::Inte
 	this->interactive_elements.push_back(element);
 	//this->add_render_object(element);
 	return this;
-}
-
-void Application::InteractiveForm::on_lbmouse_down()
-{
-	this->foreach([](Render::IRenderObject* obj)
-		{
-			auto* element = (UI::InteractiveElement*)obj;
-			if (element->state.hovered == true)
-				element->handle_mouse_down();
-		});
-	return;
 }
 
 void Application::InteractiveForm::on_mouse_move(int mx,int my)
@@ -108,27 +105,34 @@ void Application::InteractiveForm::on_mouse_move(int mx,int my)
 
 void Application::InteractiveForm::on_mouse_scroll(short direction)
 {
-	this->foreach([direction](Render::IRenderObject* obj)
+	this->foreach([direction](UI::InteractiveElement* element)
 		{
-			auto* element = (UI::InteractiveElement*)obj;
 			if (element->state.hovered == true)
 				element->handle_mouse_scroll(direction);
-
 		});
 	return;
 }
 
 void Application::InteractiveForm::on_lbmouse_up()
 {
-	this->foreach([](Render::IRenderObject* obj)
+	this->foreach([](UI::InteractiveElement* element)
 		{
-			auto* element = (UI::InteractiveElement*)obj;
 			if (element->state.hovered == true)
 				element->handle_mouse_up();
 		});
 
 	this->free_drag_move();
 
+	return;
+}
+
+void Application::InteractiveForm::on_lbmouse_down()
+{
+	this->foreach([](UI::InteractiveElement* element)
+		{
+			if (element->state.hovered == true)
+				element->handle_mouse_down();
+		});
 	return;
 }
 

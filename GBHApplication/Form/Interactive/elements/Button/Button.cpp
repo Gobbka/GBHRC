@@ -4,48 +4,48 @@
 
 void Application::UI::Button::draw(Render::DrawEvent* event)
 {
-	event->draw(4);
+	event->draw_element(&this->back_rect);
 	this->text.draw(event);
 }
 
 Application::UI::Button::Button(Render::Position position, Render::Resolution resolution, Render::Color color, DirectX::SpriteFont* font,
                                 const char* text)
-		: text(position,text,font,{1,1,1})
+		: back_rect(position,resolution,color),
+			text(position,text,font,{1,1,1})
 {
-	this->position = position;
 	this->non_active_color = color;
-	this->color = color;
-	this->resolution = resolution;
-
 	this->text.limitRect = resolution;	
 	this->text.set_text(text);
 }
 
 bool Application::UI::Button::point_belongs(Render::Position point)
 {
+	auto position = back_rect.get_position();
+	auto resolution = back_rect.get_resolution();
+	
 	return
 		(point.x >= position.x && point.x <= position.x + resolution.width) &&
 		(point.y <= position.y && point.y >= (position.y - resolution.height));
 }
-
-void Application::UI::Button::init()
-{
-	this->text.initialize(pForm,0);
-	
-	this->set_pos(position.x, position.y);
-	this->set_color(color.r, color.g, color.b);
-}
+//
+//void Application::UI::Button::init()
+//{
+//	this->text.initialize(pForm,0);
+//	
+//	this->set_pos(position.x, position.y);
+//	this->set_color(color.r, color.g, color.b);
+//}
 
 void Application::UI::Button::set_pos(float x, float y)
 {
-	Managers::Rectangle::set_rect(this->get_ptr(), x, y, this->resolution.width, this->resolution.height);
-	this->position = { x,y };
-	this->text.set_pos(x, y);
+	//Managers::Rectangle::set_rect(this->get_ptr(), x, y, this->resolution.width, this->resolution.height);
+	//this->position = { x,y };
+	//this->text.set_pos(x, y);
 }
 
 void Application::UI::Button::set_temp_color(float r, float g, float b)
 {
-	Managers::Rectangle::set_color(this->get_ptr(), r, g, b);
+	back_rect.set_color(r, g, b);
 }
 
 Application::UI::ElementDescription Application::UI::Button::get_desc()
@@ -61,36 +61,20 @@ void Application::UI::Button::set_color(float r, float g, float b)
 
 void Application::UI::Button::move_by(float x, float y)
 {
-	Managers::Rectangle::set_rect(this->get_ptr(),
-		position.x + x,
-		position.y + y,
-		resolution.width,
-		resolution.height
-	);
-
-	this->position.x += x;
-	this->position.y += y;
-
+	this->back_rect.move_by(x, y);
 	this->text.move_by(x, y);
 }
 
 Application::UI::InteractiveElement* Application::UI::Button::set_resolution(float width, float height)
 {
-	Managers::Rectangle::set_rect(this->get_ptr(),
-		position.x,
-		position.y,
-		width,
-		height
-	);
+	this->back_rect.set_resolution(width, height);
 	this->text.limitRect = { (UINT)width,(UINT)height };
-	this->resolution = { (UINT)width,(UINT)height };
-
 	return this;
 }
 
 Application::Render::Resolution Application::UI::Button::get_resolution()
 {
-	return this->resolution;
+	return this->back_rect.get_resolution();
 }
 
 void Application::UI::Button::handle_mouse_up()
@@ -116,6 +100,17 @@ void Application::UI::Button::handle_mouse_leave()
 {
 	this->set_temp_color(this->non_active_color.r, non_active_color.g, non_active_color.b);
 	InteractiveElement::handle_mouse_leave();
+}
+
+Application::Render::Position Application::UI::Button::get_position()
+{
+	return this->back_rect.get_position();
+}
+
+void Application::UI::Button::add_elements(Render::CanvasScene* scene)
+{
+	scene->add_element(&this->back_rect);
+	this->text.initialize(this->pForm);
 }
 
 

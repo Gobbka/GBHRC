@@ -33,7 +33,6 @@ void Application::Canvas::Rectangle::draw(Render::D3D11DrawEvent* event)
 	if (this->wireframed == false)
 	{
 		event->draw(4);
-		p_context->Draw(4, this->index);
 		return;
 	}
 

@@ -69,6 +69,9 @@
     <ClCompile Include="Form\Interactive\elements\Label\Label.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="Form\Interactive\elements\Button\Button.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Managers\RectangleManager.h">
@@ -119,9 +122,6 @@
     <ClInclude Include="Render\Text\Text.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Form\Interactive\elements\Button\Button.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="Render\Events\EngineEvents.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
@@ -150,6 +150,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Form\Interactive\elements\Label\Label.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Form\Interactive\elements\Button\Button.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

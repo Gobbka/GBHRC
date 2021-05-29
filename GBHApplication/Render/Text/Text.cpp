@@ -64,6 +64,9 @@ void Application::Render::Text::DrawInRect(Render::D3D11DrawEvent* event, Render
 
 		float width_scale = (float)limitRect.width / (float)font_rect.width;
 		float height_scale = (float)limitRect.height / (float)font_rect.height;
+
+		width_scale = width_scale == 0.0f ? 1 : width_scale;
+		height_scale = height_scale == 0.0f ? 1 : height_scale;
 		
 		if(scalable)
 		{
