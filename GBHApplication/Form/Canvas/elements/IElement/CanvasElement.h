@@ -29,7 +29,7 @@ namespace Application
 			}
 			
 			virtual UINT size() PURE;
-
+			
 			bool render = true;
 
 			Render::Position get_position() const;

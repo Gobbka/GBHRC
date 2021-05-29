@@ -36,6 +36,11 @@ namespace Application
 			void draw_element(Canvas::CanvasElement*object);
 			void draw(UINT count,UINT offset=0);
 
+			void mask_draw_begin();
+			void mask_discard_begin();
+			void mask_discard_end();
+			
+
 			ID3D11DeviceContext* get_context() const;
 			void reset_render_state();
 

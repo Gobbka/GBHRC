@@ -5,8 +5,19 @@
 
 void Application::UI::Panel::draw(Render::DrawEvent* event)
 {
-	event->draw_element(&this->rect);
-	Parent::draw(event);
+	if(this->styles.overflow == VISIBLE_STATE_HIDDEN)
+	{
+		event->engine->get_mask()->set_draw_mask();
+		event->draw_element(&this->rect);
+		event->engine->get_mask()->set_discard_mask();
+		Parent::draw(event);
+		event->engine->get_mask()->unset_mask();
+	}else
+	{
+		event->draw_element(&this->rect);
+		Parent::draw(event);
+	}
+	
 	//if(this->styles.overflow==VISIBLE_STATE_HIDDEN)
 	//{
 	//	auto* mask = event->engine->get_mask();

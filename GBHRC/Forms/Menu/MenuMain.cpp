@@ -17,7 +17,7 @@
 #pragma region elements
 
 Application::UI::Panel* background_panel = new Application::UI::Panel({ 0,0 }, { 400, 500 }, { FLOAT_COLORS_BLACK });
-Application::UI::Panel* topbar_panel = new Application::UI::Panel({ 0,0 }, { 400, 30 }, { FLOAT_COLORS_GREEN });
+Application::UI::Panel* topbar_panel = new Application::UI::Panel({ -50,0 }, { 400, 30 }, { FLOAT_COLORS_GREEN });
 
 
 //auto* esp_inner = new Application::UI::Panel{ {0,-80},{400,420},{FLOAT_COLORS_BLACK} };
@@ -73,11 +73,10 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 
 		//->add_element(items_list)
 	;
-	
+	background_panel->styles.overflow = Application::UI::VISIBLE_STATE_HIDDEN;
 	background_panel
 		->add_element(topbar_panel)
-		->add_element(new Application::UI::Button({ 50,0 }, { 250,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "NIGGER_BUTTON"))
-
+		->add_element(new Application::UI::Button({ -50,10 }, { 250,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "NIGGER_BUTTON"))
 		//->add_element(new Application::UI::Label{ {60,-10},"AIM ACTIVE",VisbyRoundCFFont,{FLOAT_COLORS_WHITE} })
 	
 	;

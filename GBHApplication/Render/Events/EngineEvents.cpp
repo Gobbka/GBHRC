@@ -13,6 +13,21 @@ void Application::Render::D3D11DrawEvent::draw(UINT count, UINT offset)
 	this->engine->pDevContext->Draw(count, this->element_ptr + offset);
 }
 
+void Application::Render::D3D11DrawEvent::mask_draw_begin()
+{
+	this->engine->get_mask()->set_draw_mask();
+}
+
+void Application::Render::D3D11DrawEvent::mask_discard_begin()
+{
+	this->engine->get_mask()->set_discard_mask();
+}
+
+void Application::Render::D3D11DrawEvent::mask_discard_end()
+{
+	this->engine->get_mask()->unset_mask();
+}
+
 ID3D11DeviceContext* Application::Render::D3D11DrawEvent::get_context() const
 {
 	return this->engine->pDevContext;
