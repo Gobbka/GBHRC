@@ -66,6 +66,9 @@
     <ClCompile Include="Form\Interactive\elements\IElement\Parentable.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="Form\Interactive\elements\Label\Label.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Managers\RectangleManager.h">
@@ -144,6 +147,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Form\Interactive\elements\IElement\Parentable.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Form\Interactive\elements\Label\Label.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

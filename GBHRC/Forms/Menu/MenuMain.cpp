@@ -73,7 +73,10 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 		//->add_element(items_list)
 	;
 	
-	background_panel->add_element(topbar_panel);
+	background_panel
+		->add_element(topbar_panel)
+		->add_element(new Application::UI::Label{ {60,-10},"AIM ACTIVE",VisbyRoundCFFont,{FLOAT_COLORS_WHITE} })
+	;
 
 	//topbar_panel->unique_id = 2;
 	//background_panel->unique_id = 1;

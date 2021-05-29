@@ -41,11 +41,6 @@ Application::UI::InteractiveElement* Application::UI::Label::set_resolution(floa
 	return this;
 }
 
-Application::Render::Resolution Application::UI::Label::get_resolution()
-{
-	return Text::get_resolution();
-}
-
 void Application::UI::Label::set_pos(float x, float y)
 {
 	this->position = { x, y };
@@ -62,5 +57,10 @@ void Application::UI::Label::move_by(float x, float y)
 		x + position.x,
 		position.y + y
 	};
+}
+
+Application::Render::Position Application::UI::Label::get_position()
+{
+	return this->position;
 }
 

@@ -100,7 +100,7 @@ namespace Application
 			void draw(Render::DrawEvent* event) override PURE;
 
 			void initialize(InteractiveForm*form);
-			virtual void add_elements(Render::CanvasScene*scene) PURE;
+			virtual void add_elements(Render::CanvasScene*scene) {};
 		protected:
 			
 		public:

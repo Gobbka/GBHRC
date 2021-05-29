@@ -155,6 +155,7 @@
     <ClCompile Include="Form\Canvas\elements\IElement\CanvasElement.cpp" />
     <ClCompile Include="Form\Canvas\elements\rectangle\rectangle.cpp" />
     <ClCompile Include="Form\Interactive\elements\IElement\Parentable.cpp" />
+    <ClCompile Include="Form\Interactive\elements\Label\Label.cpp" />
     <ClCompile Include="Form\Interactive\Events\WinIntEventHandler.cpp" />
     <ClCompile Include="Form\Interactive\InteractiveForm.cpp" />
     <ClCompile Include="Render\d3d\Vertex.cpp" />
@@ -182,6 +183,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="Form\Interactive\elements\IElement\Parentable.h" />
+    <ClInclude Include="Form\Interactive\elements\Label\Label.h" />
     <ClInclude Include="Form\Interactive\Events\InteractionEventHandler.h" />
     <ClInclude Include="Form\Interactive\Events\WinIntEventHandler.h" />
     <ClInclude Include="Form\Interactive\InteractiveForm.h" />
