@@ -2,6 +2,7 @@ TODO:
 ~= change AudioSource
 ~= complete friend list/menu
 ~= make loader
+~= происходит краш при добавлении элемента в parent. Interactiveform считает что у него двое детей, но в массиве зарегистрированно два элемента
 
 ~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~
 

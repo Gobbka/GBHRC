@@ -6,6 +6,7 @@
 void Application::UI::Panel::draw(Render::DrawEvent* event)
 {
 	event->draw_element(&this->rect);
+	Parent::draw(event);
 	//if(this->styles.overflow==VISIBLE_STATE_HIDDEN)
 	//{
 	//	auto* mask = event->engine->get_mask();
@@ -72,6 +73,10 @@ bool Application::UI::Panel::point_belongs(Render::Position point)
 
 void Application::UI::Panel::set_pos(float x, float y)
 {
+	auto pos = this->rect.get_position();
+	float move_x = x - pos.x;
+	float move_y = y - pos.y;
+	this->move_by(move_x, move_y);
 	//Parent::set_pos(x, y);
 	//Managers::Rectangle::set_rect(this->get_ptr(), x, y, this->resolution.width, this->resolution.height);
 	//this->position = { x,y };
@@ -86,6 +91,7 @@ void Application::UI::Panel::set_color(float r, float g, float b)
 void Application::UI::Panel::move_by(float x, float y)
 {
 	this->rect.move_by(x, y);
+	Parent::move_by(x, y);
 	//Parent::move_by(x, y);
 
 	//Managers::Rectangle::set_rect(this->get_ptr(),

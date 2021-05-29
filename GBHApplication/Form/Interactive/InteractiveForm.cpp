@@ -77,7 +77,7 @@ void Application::InteractiveForm::on_mouse_move(int mx,int my)
 		return;
 	}
 
-	const auto length = this->elements_length();
+	const auto length = this->interactive_elements.size();
 	bool e_handled = false;
 
 	for (auto i = length; i > 0; i--)
