@@ -59,8 +59,8 @@ Application::Render::MaskEngine::MaskEngine(ID3D11Device* pDevice, ID3D11DeviceC
 	depthstencildesc.StencilEnable = 1;
 	depthstencildesc.StencilReadMask = 0XFF;
 	depthstencildesc.StencilWriteMask = 0XFF;
-
-	depthstencildesc.FrontFace.StencilFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_ALWAYS; //In the default stencil state, always pass, don't even do a comparison function
+	// COMPARISON_ALWAYS
+	depthstencildesc.FrontFace.StencilFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_EQUAL; //In the default stencil state, always pass, don't even do a comparison function
 	depthstencildesc.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP; //KEEP STENCIL BUFFER VALUE (WILL NEVER FAIL SO TECHNICALLY IRRELEVANT)
 
 	depthstencildesc.FrontFace.StencilPassOp = D3D11_STENCIL_OP_INCR;

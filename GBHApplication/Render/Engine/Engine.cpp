@@ -244,7 +244,6 @@ void Engine::present()
 
 	this->pDevContext->RSSetViewports(1, pViewports);
 	
-	this->mask_engine->clearBuffer();
 	this->pDevContext->OMSetRenderTargets(1, &pRenderTargetView, this->get_mask()->get_stencil_view());
 
 	
@@ -257,6 +256,7 @@ void Engine::present()
 		event.scene = scene;
 		scene->render(&event);
 		event.scenes_completed++;
+		this->mask_engine->clearBuffer();
 	}
 
 	pDevContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
