@@ -256,7 +256,9 @@ void Engine::present()
 		event.scene = scene;
 		scene->render(&event);
 		event.scenes_completed++;
+		
 		this->mask_engine->clearBuffer();
+		event.mask_set_index(NULL);
 	}
 
 	pDevContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);

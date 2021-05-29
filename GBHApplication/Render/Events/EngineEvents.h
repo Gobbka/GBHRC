@@ -39,7 +39,7 @@ namespace Application
 			void mask_draw_begin();
 			void mask_discard_begin();
 			void mask_discard_end();
-			
+			void mask_set_index(BYTE new_index);
 
 			ID3D11DeviceContext* get_context() const;
 			void reset_render_state();
