@@ -60,6 +60,7 @@ namespace Application
 			Parent*          _parent = nullptr;
 		protected:
 			static void default_event_callback (UIElementEventArgs args) {}
+			virtual void on_initialize(){};
 		public:
 			// public variables
 			UINT unique_id = 0;

@@ -18,6 +18,7 @@ namespace Application
 		class Parent : public InteractiveElement
 		{
 		private:
+			Render::Position offset_position;
 			std::vector<InteractiveElement*> elements;
 		protected:
 			void handle_mouse_up() override;
@@ -28,7 +29,10 @@ namespace Application
 			void handle_mouse_scroll(int delta) override;
 
 			void add_elements(Render::CanvasScene* scene) override;
+			void on_initialize() override;
 		public:
+
+			Parent(Render::Position position);
 			
 			void draw(Render::DrawEvent*event) override;
 			void set_color(float r, float g, float b) override;

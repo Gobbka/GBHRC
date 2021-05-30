@@ -76,9 +76,27 @@ void Application::UI::Parent::handle_mouse_scroll(int delta)
 }
 
 void Application::UI::Parent::add_elements(Render::CanvasScene* scene)
-{
+{	
 	for (auto* element : this->elements)
+	{
 		element->add_elements(scene);
+	}
+}
+
+void Application::UI::Parent::on_initialize()
+{
+	
+	this->foreach([this](InteractiveElement* element)
+		{
+			
+			element->move_by(this->offset_position.x, this->offset_position.y);
+			element->initialize(this->pForm);
+		});
+}
+
+Application::UI::Parent::Parent(Render::Position position)
+{
+	this->offset_position = position;
 }
 
 void Application::UI::Parent::draw(Render::DrawEvent* event)

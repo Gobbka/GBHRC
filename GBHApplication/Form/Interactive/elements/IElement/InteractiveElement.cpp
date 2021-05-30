@@ -21,6 +21,7 @@ void Application::UI::InteractiveElement::set_margin(float x, float y, float z, 
 void Application::UI::InteractiveElement::initialize(InteractiveForm* form)
 {
 	this->pForm = form;
+	this->on_initialize();
 }
 
 //void Application::UI::InteractiveElement::move_by(float x, float y)

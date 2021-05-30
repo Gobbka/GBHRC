@@ -57,7 +57,8 @@ Application::UI::ElementDescription Application::UI::Panel::get_desc()
 }
 
 Application::UI::Panel::Panel(Render::Position position, Render::Resolution resolution, Render::Color color)
-	:rect(position,resolution,color)
+	:Parent(position),
+	rect(position,resolution,color)
 {
 }
 
@@ -108,17 +109,6 @@ void Application::UI::Panel::move_by(float x, float y)
 {
 	this->rect.move_by(x, y);
 	Parent::move_by(x, y);
-	//Parent::move_by(x, y);
-
-	//Managers::Rectangle::set_rect(this->get_ptr(),
-	//	position.x + x,
-	//	position.y + y,
-	//	resolution.width,
-	//	resolution.height
-	//);
-	//
-	//this->position.x += x;
-	//this->position.y += y;
 }
 
 Application::Render::Position Application::UI::Panel::get_position()

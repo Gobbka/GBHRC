@@ -4,12 +4,7 @@
 
 void Application::UI::Checkbox::draw(Render::DrawEvent* event)
 {
-	auto* pContext = event->get_context();
-
-	pContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
-	event->draw(4);
-	pContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-	event->draw(4, 4);
+	event->draw_element(&this->rectangle);
 }
 
 bool Application::UI::Checkbox::is_checked()
@@ -22,59 +17,48 @@ Application::UI::ElementDescription Application::UI::Checkbox::get_desc()
 	return { false,"CHECKBOX" };
 }
 
-UINT Application::UI::Checkbox::size()
+void Application::UI::Checkbox::add_elements(Render::CanvasScene* scene)
 {
-	return 10;
+	scene->add_element(&this->rectangle);
 }
+
 
 Application::UI::Checkbox::Checkbox(Render::Position position, Render::Resolution resolution, Render::Color color)
+	:rectangle(position,resolution,color)
 {
-	this->position = position;
-	this->resolution = resolution;
-	this->color = color;
-}
-
-void Application::UI::Checkbox::init()
-{
-	this->set_pos(position.x, position.y);
-	this->set_color(color.r, color.g, color.b);
-
-	Managers::Rectangle::set_color(this->get_ptr(), 0.819f, 0.819f, 0.819f);
 }
 
 void Application::UI::Checkbox::set_pos(float x, float y)
 {
-	auto* ptr = this->get_ptr();
-	
-	Managers::Rectangle::set_rect(ptr, x, y, resolution.width, resolution.height);
-	Managers::Rectangle::set_rect(ptr + 4, x + 4, y - 4, resolution.width - 8, resolution.height - 8);
+	this->rectangle.set_pos(x, y);
 }
 
 void Application::UI::Checkbox::set_color(float r, float g, float b)
 {
-	Managers::Rectangle::set_color(this->get_ptr()+4, r, g, b);
+	this->rectangle.set_color(r, g, b);
+}
+
+Application::Render::Position Application::UI::Checkbox::get_position()
+{
+	return this->rectangle.get_position();
 }
 
 Application::Render::Resolution Application::UI::Checkbox::get_resolution()
 {
-	return this->resolution;
+	return this->rectangle.get_resolution();
 }
 
 Application::UI::InteractiveElement* Application::UI::Checkbox::set_resolution(float width, float height)
 {
-	Managers::Rectangle::set_rect(this->get_ptr(),
-		position.x,
-		position.y,
-		width,
-		height
-	);
-	this->resolution = { (UINT)width,(UINT)height };
-	
+	this->rectangle.set_resolution(width, height);
 	return this;
 }
 
 bool Application::UI::Checkbox::point_belongs(Render::Position point)
 {
+	auto position = this->rectangle.get_position();
+	auto resolution = this->rectangle.get_resolution();
+	
 	return
 		(point.x >= position.x && point.x <= position.x + resolution.width) &&
 		(point.y <= position.y && point.y >= (position.y - resolution.height));
@@ -82,7 +66,7 @@ bool Application::UI::Checkbox::point_belongs(Render::Position point)
 
 void Application::UI::Checkbox::move_by(float x, float y)
 {
-	InteractiveElement::move_by(x, y);
+	this->rectangle.move_by(x, y);
 }
 
 void Application::UI::Checkbox::handle_mouse_up()
