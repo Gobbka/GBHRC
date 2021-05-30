@@ -37,8 +37,8 @@ namespace Application
 			void draw(UINT count,UINT offset=0);
 
 			void mask_draw_begin();
-			void mask_discard_begin();
-			void mask_discard_end();
+			void mask_discard_begin(bool increase = true);
+			void mask_discard_end(bool decrease = true);
 			void mask_set_index(BYTE new_index);
 
 			ID3D11DeviceContext* get_context() const;

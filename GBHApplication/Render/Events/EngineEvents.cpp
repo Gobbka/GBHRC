@@ -18,15 +18,17 @@ void Application::Render::D3D11DrawEvent::mask_draw_begin()
 	this->engine->get_mask()->set_draw_mask(draw_mask_index);
 }
 
-void Application::Render::D3D11DrawEvent::mask_discard_begin()
+void Application::Render::D3D11DrawEvent::mask_discard_begin(bool increase)
 {
-	this->draw_mask_index++;
+	if(increase)
+		this->draw_mask_index++;
 	this->engine->get_mask()->set_discard_mask(draw_mask_index);
 }
 
-void Application::Render::D3D11DrawEvent::mask_discard_end()
+void Application::Render::D3D11DrawEvent::mask_discard_end(bool decrease)
 {
-	this->draw_mask_index--;
+	if(decrease)
+		this->draw_mask_index--;
 	this->engine->get_mask()->unset_mask();
 }
 

@@ -75,6 +75,7 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 	;
 	background_panel->styles.overflow = Application::UI::VISIBLE_STATE_HIDDEN;
 	topbar_panel->styles.overflow = Application::UI::VISIBLE_STATE_HIDDEN;
+	
 	background_panel
 		->add_element(
 			topbar_panel
