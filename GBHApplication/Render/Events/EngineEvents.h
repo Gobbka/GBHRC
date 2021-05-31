@@ -40,6 +40,7 @@ namespace Application
 			void mask_discard_begin(bool increase = true);
 			void mask_discard_end(bool decrease = true);
 			void mask_set_index(BYTE new_index);
+			void mask_clear();
 
 			ID3D11DeviceContext* get_context() const;
 			void reset_render_state();

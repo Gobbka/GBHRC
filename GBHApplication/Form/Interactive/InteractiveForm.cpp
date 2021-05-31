@@ -4,13 +4,14 @@
 #include "../../Application.h"
 #include <windowsx.h>
 
-void Application::InteractiveForm::render_components(Render::D3D11DrawEvent* event)
+void Application::InteractiveForm::render_components(Render::DrawEvent* event)
 {
 	for(auto*element:this->interactive_elements)
 	{
 		if (element->state.visible == UI::VISIBLE_STATE_VISIBLE)
 			element->draw(event);
 			//event->draw_element(element);
+		event->mask_clear();
 	}
 }
 
@@ -54,7 +55,6 @@ void Application::InteractiveForm::initialize_components(Render::Engine* pEngine
 Application::InteractiveForm* Application::InteractiveForm::add_element(UI::InteractiveElement* element)
 {
 	this->interactive_elements.push_back(element);
-	//this->add_render_object(element);
 	return this;
 }
 

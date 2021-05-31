@@ -37,6 +37,11 @@ void Application::Render::D3D11DrawEvent::mask_set_index(BYTE new_index)
 	this->draw_mask_index = new_index;
 }
 
+void Application::Render::D3D11DrawEvent::mask_clear()
+{
+	this->engine->get_mask()->clearBuffer();
+}
+
 ID3D11DeviceContext* Application::Render::D3D11DrawEvent::get_context() const
 {
 	return this->engine->pDevContext;

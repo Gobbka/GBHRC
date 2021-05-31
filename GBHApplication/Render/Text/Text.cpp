@@ -53,6 +53,7 @@ void Application::Render::Text::DrawInRect(Render::D3D11DrawEvent* event, Render
 	auto* mask = event->engine->get_mask();
 	// DirectX::SpriteSortMode_Deferred,nullptr,nullptr,mask->get_current_state()
 	batch->Begin();
+	event->mask_discard_begin(false);
 	auto center_pos = Application::point_to_center(position);
 	auto scale = 1.f;
 	
@@ -104,7 +105,8 @@ void Application::Render::Text::DrawInRect(Render::D3D11DrawEvent* event, Render
 			DirectX::XMFLOAT2{ 0,0 },
 			scale
 		);
-	
+
+	event->mask_discard_end(false);
 	batch->End();
 	
 	event->reset_render_state();

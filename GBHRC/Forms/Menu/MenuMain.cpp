@@ -48,30 +48,29 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 	auto* esp_button = new Application::UI::Button({ 0,-30 }, { 400/3,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "ESP");
 	auto* aim_button = new Application::UI::Button({ 400/3,-30 }, { 400/3,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "AIM");
 	auto* misc_button = new Application::UI::Button({ 2*400/3,-30 }, { 400/3+1,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "MISC");
-	//
-	//auto* items_list = new Application::UI::ItemList({ 0,400 }, { 500,325 }, { FLOAT_COLORS_BLACK });
-	//items_list->styles.overflow = Application::UI::VISIBLE_STATE_HIDDEN;
-	//
-	//auto test_button = (new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "1NIGGER_BUTTON"));
-	//test_button->unique_id = 3;
-	//test_button->set_margin(5, 5);
-	//
-	//items_list
-	//	->add_element(new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "TEST_BUTTON"))
-	//	->add_element(new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "NIGGER_BUTTON"))
-	//	->add_element(test_button)
-	//	->add_element(new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "NIGGER_BUTTON"))
-	//	->add_element(new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "NIGGER_BUTTON"))
-	//	->add_element(new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "NIGGER_BUTTON"))
-	//	->add_element(new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "NIGGER_BUTTON"))
-	//	->add_element(new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "NIGGER_BUTTON"))
-	//	->add_element(new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "NIGGER_BUTTON"))
-	//;
-	//
+	
+	auto* items_list = new Application::UI::ItemList({ 0,400 }, { 500,325 }, { FLOAT_COLORS_BLACK });
+	
+	auto test_button = (new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "1NIGGER_BUTTON"));
+	test_button->unique_id = 3;
+	test_button->set_margin(5, 5);
+	
+	items_list
+		->add_element(new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "TEST_BUTTON"))
+		->add_element(new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "NIGGER_BUTTON"))
+		->add_element(test_button)
+		->add_element(new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "NIGGER_BUTTON"))
+		->add_element(new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "NIGGER_BUTTON"))
+		->add_element(new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "NIGGER_BUTTON"))
+		->add_element(new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "NIGGER_BUTTON"))
+		->add_element(new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "NIGGER_BUTTON"))
+		->add_element(new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "NIGGER_BUTTON"))
+	;
+	
 	form
 		->add_element(background_panel)
 
-		//->add_element(items_list)
+		->add_element(items_list)
 	;
 	background_panel->styles.overflow = Application::UI::VISIBLE_STATE_HIDDEN;
 	//topbar_panel->styles.overflow = Application::UI::VISIBLE_STATE_HIDDEN;
@@ -82,8 +81,6 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 	//	//->add_element(new Application::UI::Label{ {60,-10},"AIM ACTIVE",VisbyRoundCFFont,{FLOAT_COLORS_WHITE} })
 	//
 	//;
-
-	esp_inner->unique_id = 2;
 	
 	background_panel
 		->add_element(
@@ -130,7 +127,6 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 	form->initialize_components(pEngine);
 	// ; paste ur initialize code below
 	
-	// esp_inner->hidden = false;
 	{
 		auto resolut = background_panel->get_resolution();
 		background_panel->move_by( -200, resolut.height/2);

@@ -1,19 +1,8 @@
 #include "ItemList.h"
 
-Application::UI::ItemList::ItemList(Render::Position position, Render::Resolution resolution, Render::Color color)
-	: Panel(position,resolution,color)
+void Application::UI::ItemList::on_initialize()
 {
-	
-}
-
-Application::UI::ElementDescription Application::UI::ItemList::get_desc()
-{
-	return { true,"ItemList" };
-}
-
-void Application::UI::ItemList::init()
-{
-	Panel::init();
+	Panel::on_initialize();
 
 	auto this_resolution = this->get_resolution();
 
@@ -23,7 +12,7 @@ void Application::UI::ItemList::init()
 			auto element_resolution = element->get_resolution();
 			auto margin = element->styles.margin;
 			element->set_resolution(
-				this_resolution.width - margin.x - margin.z, 
+				this_resolution.width - margin.x - margin.z,
 				element_resolution.height
 			);
 			element->move_by(margin.x, offset - margin.y);
@@ -31,6 +20,17 @@ void Application::UI::ItemList::init()
 
 			offset -= (element_resolution.height + margin.y + margin.w);
 		});
+}
+
+Application::UI::ItemList::ItemList(Render::Position position, Render::Resolution resolution, Render::Color color)
+	: Panel(position,resolution,color)
+{
+	Panel::styles.overflow = VISIBLE_STATE_HIDDEN;
+}
+
+Application::UI::ElementDescription Application::UI::ItemList::get_desc()
+{
+	return { true,"ItemList" };
 }
 
 void Application::UI::ItemList::handle_mouse_scroll(int delta)

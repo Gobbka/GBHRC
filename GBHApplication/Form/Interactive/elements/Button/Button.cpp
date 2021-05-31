@@ -5,7 +5,7 @@
 void Application::UI::Button::draw(Render::DrawEvent* event)
 {
 	event->draw_element(&this->back_rect);
-	this->text.draw(event);
+	//this->text.draw(event);
 }
 
 Application::UI::Button::Button(Render::Position position, Render::Resolution resolution, Render::Color color, DirectX::SpriteFont* font,
