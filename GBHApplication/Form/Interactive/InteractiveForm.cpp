@@ -24,7 +24,7 @@ void Application::InteractiveForm::foreach(std::function<void(UI::InteractiveEle
 void Application::InteractiveForm::drag_move(UI::InteractiveElement* element)
 {
 	auto pos = element->get_position();
-	auto cursor = ( Application::get_client_cursor_point()); // Application::point_to_center
+	auto cursor = ( Application::Context::get_client_cursor_point()); // Application::point_to_center
 	DEBUG_LOG(std::dec<< cursor.x << " " << cursor.x << " " << pos.x << " "<<pos.y);
 	//this->dragged = new DragStruct{ cursor.x - (LONG)pos.x ,cursor.y - (LONG)pos.y ,element};
 }
@@ -61,7 +61,7 @@ void Application::InteractiveForm::on_mouse_move(int mx,int my)
 	if (this->hidden == true)
 		return;
 
-	auto screen_resolution = Application::get_window_resolution();
+	auto screen_resolution = Application::Context::get_window_resolution();
 	const Render::Position center{ (screen_resolution.width / 2),(screen_resolution.height / 2) };
 
 	const Render::Position cursor{ mx - center.x , center.y - my };

@@ -1,5 +1,4 @@
 #include "Checkbox.h"
-#include "../../../../Managers/RectangleManager.h"
 #include "../../../../Render/Engine/Engine.h"
 
 void Application::UI::Checkbox::draw(Render::DrawEvent* event)

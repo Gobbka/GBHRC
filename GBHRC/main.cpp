@@ -61,8 +61,8 @@ void init_callback(Application::Render::Engine* instance)
     friend_list = new Application::InteractiveForm();
 	
 	
-    Application::register_form(menu);
-    Application::register_form(friend_list);
+    Application::Context::register_form(menu);
+    Application::Context::register_form(friend_list);
 
     MainMenuMarkup(menu, instance);
     // FiendListMarkup(friend_list, instance);
@@ -121,21 +121,23 @@ void MainThread()
             return;
         }
     }
-    DEBUG_LOG("INSTALLED LAST VERSION");
-    {
-        Hooks::WndProc::init_hook(main__window);
-        Hooks::WndProc::callback(wnd_key_hook);
-    }
+
 	
     Hooks::D3D11::fnPresent present_addres;
     auto hr = Hooks::D3D11::GetPresentAddress(&present_addres);
 
-    Application::implement(main__window);
+    Application::Context::implement(main__window);
 
     if (FAILED(hr))
     {
         DEBUG_LOG("CANNOT GET PRESENT ADDRESS: " << std::hex << hr);
         return;
+    }
+
+    DEBUG_LOG("INSTALLED LAST VERSION");
+    {
+        Hooks::WndProc::init_hook(main__window);
+        Hooks::WndProc::callback(wnd_key_hook);
     }
 	
     Hooks::D3D11::hook(present_addres, init_callback);
@@ -150,7 +152,7 @@ void MainThread()
 
 void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
 {
-    Application::wnd_proc(msg, wParam, lParam);
+    Application::Context::wnd_proc(msg, wParam, lParam);
 
     if (msg == WM_KEYUP)
     {

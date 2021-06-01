@@ -1,7 +1,6 @@
 #include "Panel.h"
 #include "../../../../Render/Engine/Engine.h"
 #include "../../InteractiveForm.h"
-#include "../../../../Managers/RectangleManager.h"
 
 void Application::UI::Panel::draw(Render::DrawEvent* event)
 {

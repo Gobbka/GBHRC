@@ -1,5 +1,6 @@
 #include "rectangle.h"
-#include "../../../../Managers/RectangleManager.h"
+
+#include "../../../../Render/d3d/Managers/RectangleManager.h"
 #include "../../../../Render/Engine/Engine.h"
 
 using namespace Application::Render;
@@ -32,7 +33,7 @@ void Application::Canvas::Rectangle::draw(Render::D3D11DrawEvent* event)
 
 	if (this->wireframed == false)
 	{
-		event->draw_vertex(4);
+		event->draw_vertex(Managers::Rectangle::vertex_size);
 		return;
 	}
 
@@ -46,7 +47,7 @@ void Application::Canvas::Rectangle::draw(Render::D3D11DrawEvent* event)
 		event->engine->pDevice->CreateRasterizerState(&rDesc, &state);
 	}
 	p_context->RSSetState(state);
-	event->draw_vertex(4);
+	event->draw_vertex(Managers::Rectangle::vertex_size);
 	p_context->RSSetState(event->old_state);
 }
 
@@ -70,7 +71,7 @@ void Application::Canvas::Rectangle::set_resolution(UINT width, UINT height)
 
 UINT Application::Canvas::Rectangle::size()
 {
-	return 4;
+	return Managers::Rectangle::vertex_size;
 }
 
 

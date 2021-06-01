@@ -1,4 +1,6 @@
 #include "Text.h"
+
+#include "../../Application.h"
 #include "../Engine/Engine.h"
 
 Application::Render::Text::Text(DirectX::SpriteFont* font, TextAlign text_align)
@@ -54,7 +56,7 @@ void Application::Render::Text::DrawInRect(Render::D3D11DrawEvent* event, Render
 	// DirectX::SpriteSortMode_Deferred,nullptr,nullptr,mask->get_current_state()
 	batch->Begin();
 	event->mask_discard_begin(false);
-	auto center_pos = Application::point_to_center(position);
+	auto center_pos = Application::Context::point_to_center(position);
 	auto scale = 1.f;
 	
 	// center calculations with scale is broken

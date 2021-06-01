@@ -1,6 +1,8 @@
 #pragma once
+#include <vector>
+
 #include "../GBHRC/includes/win.h"
-#include "Managers/RectangleManager.h"
+#include "Managers/Animation/Animator.h"
 #include "Render/Render.h"
 
 
@@ -11,24 +13,33 @@ namespace Application
 	namespace Interaction {
 		class WinIntEventHandler;
 	}
-#ifdef WIN32
-	typedef Interaction::WinIntEventHandler OS_EVENT_HANDLER;
-#else
-	static_assert(1,"UNSUPORTED OS");
-#endif
+	#ifdef WIN32
+		typedef Interaction::WinIntEventHandler OS_EVENT_HANDLER;
+	#else
+		static_assert(1,"UNSUPORTED OS");
+	#endif
 
-	
 	class InteractiveForm;
 	
-	void implement(HWND hwnd);
+	class Context
+	{
+		std::vector<Application::InteractiveForm*> _registered_forms;
+		Application::Render::Resolution AppResolution;
+		HWND main_window;
+		Animator animator;
 
-	void register_form(InteractiveForm* form);
-	void wnd_proc(UINT msg, WPARAM wParam, LPARAM lParam);
+		Context(HWND window);
+	public:
+		static void implement(HWND hwnd);
 
-	Render::Resolution get_window_resolution();
+		static void register_form(InteractiveForm* form);
+		static void wnd_proc(UINT msg, WPARAM wParam, LPARAM lParam);
 
-	POINT get_client_cursor_point();
+		static Render::Resolution get_window_resolution();
 
-	Render::Position point_to_center(Render::Position pos);
-	POINT point_to_center(POINT p);
+		static POINT get_client_cursor_point();
+
+		static Render::Position point_to_center(Render::Position pos);
+		static POINT point_to_center(POINT p);
+	};
 }

@@ -19,7 +19,7 @@ void TestSceneMarkup(Application::Render::CanvasScene* form, Application::Render
 void test_scene_draw(Application::Render::D3D11DrawEvent* event)
 {
 	
-    auto pos = Application::point_to_center(Application::Render::Position{ 0,0 });
+    auto pos = Application::Context::point_to_center(Application::Render::Position{ 0,0 });
 	
     auto*engine = event->engine;
 

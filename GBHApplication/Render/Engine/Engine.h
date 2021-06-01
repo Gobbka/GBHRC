@@ -1,12 +1,12 @@
 #pragma once
 #include "SpriteBatch.h"
 #include "SpriteFont.h"
-#include "../../Application.h"
 #include <vector>
 
 
 #include "MaskEngine.h"
 #include "../Render.h"
+#include "../d3d/Vertex.h"
 
 namespace Application
 {

@@ -161,6 +161,7 @@
     <ClCompile Include="Form\Interactive\elements\Label\Label.cpp" />
     <ClCompile Include="Form\Interactive\Events\WinIntEventHandler.cpp" />
     <ClCompile Include="Form\Interactive\InteractiveForm.cpp" />
+    <ClCompile Include="Managers\Animation\Animator.cpp" />
     <ClCompile Include="Render\d3d\Vertex.cpp" />
     <ClCompile Include="Render\Engine\Engine.cpp" />
     <ClCompile Include="Render\Engine\MaskEngine.cpp" />
@@ -187,7 +188,8 @@
     <ClInclude Include="Form\Interactive\Events\InteractionEventHandler.h" />
     <ClInclude Include="Form\Interactive\Events\WinIntEventHandler.h" />
     <ClInclude Include="Form\Interactive\InteractiveForm.h" />
-    <ClInclude Include="Managers\RectangleManager.h" />
+    <ClInclude Include="Managers\Animation\Animator.h" />
+    <ClInclude Include="Render\d3d\Managers\RectangleManager.h" />
     <ClInclude Include="Render\d3d\ConstantBuffer.h" />
     <ClInclude Include="Render\d3d\szShadez.h" />
     <ClInclude Include="Render\d3d\Vertex.h" />
