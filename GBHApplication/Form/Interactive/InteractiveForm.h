@@ -1,6 +1,7 @@
 #pragma once
 #include "../../Application.h"
 #include "../../../GBHRC/CheatApi/GBHRC/gbhrc.h"
+#include "../../configuration/drawconf.h"
 #include "../../Render/Scene/CanvasScene.h"
 #include "Events/WinIntEventHandler.h"
 
@@ -23,7 +24,7 @@ namespace Application
 		};
 	private:
 		std::vector<UI::InteractiveElement*> interactive_elements;
-		void render_components(Render::D3D11DrawEvent* event) override;
+		void render_components(Render::DrawEvent* event) override;
 		DragStruct* dragged = nullptr;
 	public:
 		void foreach(std::function<void(UI::InteractiveElement* element)>callback);

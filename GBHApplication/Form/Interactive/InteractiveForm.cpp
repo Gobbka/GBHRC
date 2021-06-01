@@ -10,7 +10,7 @@ void Application::InteractiveForm::render_components(Render::DrawEvent* event)
 	{
 		if (element->state.visible == UI::VISIBLE_STATE_VISIBLE)
 			element->draw(event);
-			//event->draw_element(element);
+		
 		event->mask_clear();
 	}
 }
@@ -18,9 +18,7 @@ void Application::InteractiveForm::render_components(Render::DrawEvent* event)
 void Application::InteractiveForm::foreach(std::function<void(UI::InteractiveElement* element)> callback)
 {
 	for(auto*element:this->interactive_elements)
-	{
 		callback(element);
-	}
 }
 
 void Application::InteractiveForm::drag_move(UI::InteractiveElement* element)
