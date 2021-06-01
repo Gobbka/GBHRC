@@ -4,7 +4,7 @@
 
 #define DRAW_ASSERT if(this->hidden==true) return
 
-void Application::Render::CanvasScene::render_components(Render::D3D11DrawEvent*draw_event)
+void Application::Render::CanvasScene::render_components(Render::DrawEvent*draw_event)
 {
 	if (this->pre_render_callback != nullptr)
 		pre_render_callback(draw_event);
@@ -16,7 +16,7 @@ void Application::Render::CanvasScene::render_components(Render::D3D11DrawEvent*
 		render_callback(draw_event);
 }
 
-void Application::Render::CanvasScene::draw_element(Canvas::CanvasElement* obj, Render::D3D11DrawEvent* event)
+void Application::Render::CanvasScene::draw_element(Canvas::CanvasElement* obj, Render::DrawEvent* event)
 {
 	if(obj->render == true)
 		event->draw_element(obj);
@@ -43,7 +43,7 @@ void Application::Render::CanvasScene::update(Render::Engine* pEngine)
 	D3D11Canvas::update(pEngine);
 }
 
-void Application::Render::CanvasScene::render(Render::D3D11DrawEvent* draw_event)
+void Application::Render::CanvasScene::render(Render::DrawEvent* draw_event)
 {
 	DRAW_ASSERT;
 
