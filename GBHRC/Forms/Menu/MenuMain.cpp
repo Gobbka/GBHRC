@@ -28,7 +28,7 @@ auto* name_checkbox = new Application::UI::Checkbox({ 20,-50 }, { 20,20 }, { FLO
 
 auto* aim_inner = new Application::UI::Panel{ {0,-80},{400,420},{FLOAT_COLORS_BLACK} };
 // ELEMENTS
-auto* aim_checkbox = new Application::UI::Checkbox({ 20,-30 }, { 20,20 }, { FLOAT_COLORS_GRAY });
+auto* aim_checkbox = new Application::UI::Checkbox({ 20,-10 }, { 20,20 }, { FLOAT_COLORS_GRAY });
 
 
 auto* misc_inner = new Application::UI::Panel{ {0,-80},{400,420},{FLOAT_COLORS_BLACK} };
@@ -79,7 +79,6 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 	//	->add_element(aim_checkbox)
 	//	//->add_element(new Application::UI::Button({ -50,10 }, { 250,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "NIGGER_BUTTON"))
 	//	//->add_element(new Application::UI::Label{ {60,-10},"AIM ACTIVE",VisbyRoundCFFont,{FLOAT_COLORS_WHITE} })
-	//
 	//;
 	
 	background_panel

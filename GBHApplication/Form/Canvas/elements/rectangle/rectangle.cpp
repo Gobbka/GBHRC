@@ -32,7 +32,7 @@ void Application::Canvas::Rectangle::draw(Render::D3D11DrawEvent* event)
 
 	if (this->wireframed == false)
 	{
-		event->draw(4);
+		event->draw_vertex(4);
 		return;
 	}
 
@@ -46,7 +46,7 @@ void Application::Canvas::Rectangle::draw(Render::D3D11DrawEvent* event)
 		event->engine->pDevice->CreateRasterizerState(&rDesc, &state);
 	}
 	p_context->RSSetState(state);
-	event->draw(4);
+	event->draw_vertex(4);
 	p_context->RSSetState(event->old_state);
 }
 

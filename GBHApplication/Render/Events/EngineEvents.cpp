@@ -8,12 +8,12 @@ void Application::Render::D3D11DrawEvent::draw_element(Canvas::CanvasElement* ob
 	object->draw(this);
 }
 
-void Application::Render::D3D11DrawEvent::draw(UINT count, UINT offset)
+void Application::Render::D3D11DrawEvent::draw_vertex(UINT count, UINT offset) const
 {
 	this->engine->pDevContext->Draw(count, this->element_index + offset);
 }
 
-void Application::Render::D3D11DrawEvent::mask_draw_begin()
+void Application::Render::D3D11DrawEvent::mask_draw_begin() const
 {
 	this->engine->get_mask()->set_draw_mask(draw_mask_index);
 }

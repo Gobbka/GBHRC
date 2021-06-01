@@ -34,9 +34,9 @@ namespace Application
 		public:
 			
 			void draw_element(Canvas::CanvasElement*object);
-			void draw(UINT count,UINT offset=0);
+			void draw_vertex(UINT count,UINT offset=0) const;
 
-			void mask_draw_begin();
+			void mask_draw_begin() const;
 			void mask_discard_begin(bool increase = true);
 			void mask_discard_end(bool decrease = true);
 			void mask_set_index(BYTE new_index);
