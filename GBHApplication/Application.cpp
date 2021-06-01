@@ -11,6 +11,7 @@ Application::Context::Context(HWND window)
 
 	this->AppResolution = { (UINT)wndRect.right,(UINT)wndRect.bottom };
 	this->main_window = window;
+	this->animator.start();
 }
 
 void Application::Context::implement(HWND hwnd)

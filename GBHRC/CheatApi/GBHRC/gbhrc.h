@@ -3,6 +3,7 @@
 
 #include "config/Config.h"
 #include "../BrokeProtocol/BrokeProtocol.h"
+#include "configuration/drawconf.h"
 //#include "Form/Canvas/elements/rectangle/rectangle.h"
 
 namespace Application {
@@ -46,8 +47,8 @@ namespace GBHRC
 		
 		Context();
 
-		void render_callback(Application::Render::D3D11DrawEvent*event);
-		void draw_player(Application::Render::D3D11DrawEvent* event,UINT element_index,Application::Render::Resolution camera_resolution,EspPlayer*player);
+		void render_callback(Application::Render::DrawEvent*event);
+		void draw_player(Application::Render::DrawEvent* event,UINT element_index,Application::Render::Resolution camera_resolution,EspPlayer*player);
 		bool is_aim_target(EspPlayer* old_player, EspPlayer* new_player) const;
 
 		std::vector<EspBox*> esp_boxes;
@@ -71,7 +72,7 @@ namespace GBHRC
 		void make_esp_boxes();
 		void set_esp_scene(Application::Render::CanvasScene*form);
 
-		static void static_draw_callback(Application::Render::D3D11DrawEvent*event);
+		static void static_draw_callback(Application::Render::DrawEvent*event);
 		void life_cycle();
 	};
 

@@ -72,11 +72,11 @@ void init_callback(Application::Render::Engine* instance)
 
     DEBUG_LOG("MENU FORM REGISTERED");
 	
-    //esp_scene = new Application::Render::CanvasScene();
-    //esp_scene->render_callback = GBHRC::Context::static_draw_callback;
-    //esp_scene->hidden = false;
-    //GBHRC::Context::instance()->set_esp_scene(esp_scene);
-    //GBHRC::Context::instance()->make_esp_boxes();
+    esp_scene = new Application::Render::CanvasScene();
+    esp_scene->render_callback = GBHRC::Context::static_draw_callback;
+    esp_scene->hidden = false;
+    GBHRC::Context::instance()->set_esp_scene(esp_scene);
+    GBHRC::Context::instance()->make_esp_boxes();
 
     //test_scene = new Application::Canvas::CanvasForm();
     //TestSceneMarkup(test_scene,instance);
@@ -89,12 +89,12 @@ void init_callback(Application::Render::Engine* instance)
         //->append_scene(friend_list)
 
         //->append_scene(test_scene)
-		//->append_scene(esp_scene)	
+		->append_scene(esp_scene)	
 	;
 
     DEBUG_LOG("SCENE'S APPENDED");
 
-    //esp_scene->update_markup(instance);
+    esp_scene->initialize_components(instance);
 }
 
 

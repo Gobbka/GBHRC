@@ -21,7 +21,7 @@ GBHRC::Context::Context()
 
 
 
-void GBHRC::Context::render_callback(Application::Render::D3D11DrawEvent* event)
+void GBHRC::Context::render_callback(Application::Render::DrawEvent* event)
 {
     if(BrokeProtocol::get_manager() != nullptr && BrokeProtocol::get_manager()->host != nullptr)
     {
@@ -103,7 +103,7 @@ void GBHRC::Context::render_callback(Application::Render::D3D11DrawEvent* event)
     }
 }
 
-void GBHRC::Context::draw_player(Application::Render::D3D11DrawEvent* event,UINT element_index,Application::Render::Resolution camera_resolution ,EspPlayer* player)
+void GBHRC::Context::draw_player(Application::Render::DrawEvent* event,UINT element_index,Application::Render::Resolution camera_resolution ,EspPlayer* player)
 {
     if (player->top_point.z <= 0)
         return;
@@ -284,7 +284,7 @@ void GBHRC::Context::set_esp_scene(Application::Render::CanvasScene* form)
     this->esp_scene = form;
 }
 
-void GBHRC::Context::static_draw_callback(Application::Render::D3D11DrawEvent* event)
+void GBHRC::Context::static_draw_callback(Application::Render::DrawEvent* event)
 {
     auto* context = GBHRC::Context::instance();
     context->render_callback(event);
