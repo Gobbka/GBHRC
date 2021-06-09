@@ -63,6 +63,11 @@ void Application::Canvas::Rectangle::set_color(float r, float g, float b)
 	this->color = { r,g,b };
 }
 
+void Application::Canvas::Rectangle::set_alpha(float alpha)
+{
+	Managers::Rectangle::set_color(this->get_ptr(), color.r, color.g, color.b,alpha);
+}
+
 void Application::Canvas::Rectangle::set_resolution(UINT width, UINT height)
 {
 	Managers::Rectangle::set_rect(this->get_ptr(), this->position.x, this->position.y, width, height);

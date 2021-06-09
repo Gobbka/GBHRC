@@ -21,6 +21,7 @@ namespace Application
 			void draw(Render::D3D11DrawEvent*engine) override;
 			void set_pos(float x, float y) override;
 			void set_color(float r, float g, float b) override;
+			void set_alpha(float alpha);
 			void set_resolution(UINT width, UINT height);
 			UINT size() override;
 

@@ -5,6 +5,7 @@
 
 namespace Application
 {
+
 	struct Animation
 	{
 	public:
@@ -14,10 +15,9 @@ namespace Application
 		AnimationHandler handler;
 		void* p_value;
 		uint32_t step;
-		uint32_t during;
+		volatile int during;
 	public:
 		Animation(void* p_value, uint32_t during, AnimationHandler handler);
-
 
 		bool play_step();
 	};
@@ -32,6 +32,7 @@ namespace Application
 		static void def_anim_float(void* flt, uint32_t step);
 	public:
 		void add_anim(float* value, UINT during, Animation::AnimationHandler = def_anim_float);
+		void remove_anim(UINT index);
 		
 		void start();
 		void end();

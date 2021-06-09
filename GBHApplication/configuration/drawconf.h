@@ -9,6 +9,4 @@ namespace Application {
 		typedef Application::Render::D3D11DrawEvent DrawEvent;
 	}
 }
-
-
 #endif

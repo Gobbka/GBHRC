@@ -1,5 +1,7 @@
 #include "Animator.h"
 
+#include "../../../GBHRC/includes/logger.h"
+
 
 Application::Animation::Animation(void* p_value, uint32_t during, AnimationHandler handler)
 {
@@ -9,11 +11,31 @@ Application::Animation::Animation(void* p_value, uint32_t during, AnimationHandl
 	this->step = 0;
 }
 
+bool Application::Animation::play_step()
+{
+	if(this->during > 0)
+	{
+		DEBUG_LOG("ANIMATION: "<<this->during);
+		this->during -= 10;
+		return true;
+	}
+	
+	return false;
+}
+
 void Application::Animator::handle_animations(Animator* animator)
 {
 	while(animator->playing)
 	{
-
+		for(int i = 0;i<animator->animations.size();i++)
+		{
+			auto anim = animator->animations[i];
+			if(!anim.play_step())
+			{
+				// remove animation from anim list;
+				animator->remove_anim(i);
+			}
+		}
 		Sleep(10);
 	}
 
@@ -28,6 +50,11 @@ void Application::Animator::def_anim_float(void* flt, uint32_t step)
 void Application::Animator::add_anim(float* value, UINT during, Animation::AnimationHandler anim)
 {
 	this->animations.push_back(Animation(value,during,anim));
+}
+
+void Application::Animator::remove_anim(UINT index)
+{
+	this->animations.erase(this->animations.begin() + index);
 }
 
 void Application::Animator::start()

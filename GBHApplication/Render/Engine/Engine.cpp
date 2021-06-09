@@ -3,6 +3,7 @@
 #include "../Scene/CanvasScene.h"
 #include "../d3d/szShadez.h"
 #include "../d3d/ConstantBuffer.h"
+#include "BlendEngine.h"
 
 using namespace Application::Render;
 
@@ -48,7 +49,7 @@ Engine::Engine(const HWND hwnd, ID3D11Device* pDevice,
 	GetClientRect(hwnd, &rect);
 
 	this->mask_engine = new MaskEngine(pDevice, pDevContext,this->pRenderTargetView, rect.right, rect.bottom);
-
+	this->blend_engine = new BlendEngine(this);
 }
 
 void Engine::set_vbuffer(GVertex::VertexBuffer* buffer)
@@ -246,6 +247,7 @@ void Engine::present()
 	
 	this->pDevContext->OMSetRenderTargets(1, &pRenderTargetView, this->get_mask()->get_stencil_view());
 
+	this->blend_engine->set_blend_state();
 	
 	ID3D11RasterizerState* r_state;
 	this->pDevContext->RSGetState(&r_state);

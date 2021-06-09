@@ -12,6 +12,7 @@ namespace Application
 {
 	namespace Render
 	{
+		class BlendEngine;
 		class CanvasScene;
 		
 		class Engine
@@ -39,6 +40,7 @@ namespace Application
 			D3D11_VIEWPORT pViewports[D3D11_VIEWPORT_AND_SCISSORRECT_OBJECT_COUNT_PER_PIPELINE]{ 0 };
 
 			MaskEngine* mask_engine;
+			BlendEngine* blend_engine;
 		private:
 			bool initialize();
 			bool create_const_buffer();

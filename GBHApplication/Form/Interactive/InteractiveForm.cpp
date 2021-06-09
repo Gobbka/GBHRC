@@ -24,9 +24,8 @@ void Application::InteractiveForm::foreach(std::function<void(UI::InteractiveEle
 void Application::InteractiveForm::drag_move(UI::InteractiveElement* element)
 {
 	auto pos = element->get_position();
-	auto cursor = ( Application::Context::get_client_cursor_point()); // Application::point_to_center
-	DEBUG_LOG(std::dec<< cursor.x << " " << cursor.x << " " << pos.x << " "<<pos.y);
-	//this->dragged = new DragStruct{ cursor.x - (LONG)pos.x ,cursor.y - (LONG)pos.y ,element};
+	auto cursor = Application::Context::point_to_center( Application::Context::get_client_cursor_point()); // Application::point_to_center
+	this->dragged = new DragStruct{ cursor.x - (LONG)pos.x ,cursor.y - (LONG)pos.y ,element};
 }
 
 void Application::InteractiveForm::free_drag_move()
@@ -61,14 +60,12 @@ void Application::InteractiveForm::on_mouse_move(int mx,int my)
 	if (this->hidden == true)
 		return;
 
-	auto screen_resolution = Application::Context::get_window_resolution();
-	const Render::Position center{ (screen_resolution.width / 2),(screen_resolution.height / 2) };
-
-	const Render::Position cursor{ mx - center.x , center.y - my };
+	const POINT cursor_long = Application::Context::point_to_center(Context::get_client_cursor_point());
+	const Render::Position cursor = { cursor_long.x,cursor_long.y };
 
 	if (this->dragged)
 	{
-		this->dragged->element->set_pos(cursor.x - this->dragged->dragged_offset.x, cursor.y + this->dragged->dragged_offset.y);
+		this->dragged->element->set_pos(cursor.x - this->dragged->dragged_offset.x, cursor.y - this->dragged->dragged_offset.y);
 		return;
 	}
 
@@ -103,6 +100,9 @@ void Application::InteractiveForm::on_mouse_move(int mx,int my)
 
 void Application::InteractiveForm::on_mouse_scroll(short direction)
 {
+	if (this->hidden == true)
+		return;
+	
 	this->foreach([direction](UI::InteractiveElement* element)
 		{
 			if (element->state.hovered == true)
@@ -113,6 +113,9 @@ void Application::InteractiveForm::on_mouse_scroll(short direction)
 
 void Application::InteractiveForm::on_lbmouse_up()
 {
+	if (this->hidden == true)
+		return;
+	
 	this->foreach([](UI::InteractiveElement* element)
 		{
 			if (element->state.hovered == true)
@@ -126,6 +129,9 @@ void Application::InteractiveForm::on_lbmouse_up()
 
 void Application::InteractiveForm::on_lbmouse_down()
 {
+	if (this->hidden == true)
+		return;
+	
 	this->foreach([](UI::InteractiveElement* element)
 		{
 			if (element->state.hovered == true)

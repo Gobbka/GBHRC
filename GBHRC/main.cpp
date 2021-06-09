@@ -122,6 +122,7 @@ void MainThread()
         }
     }
 
+    DEBUG_LOG("INSTALLED LAST VERSION");
 	
     Hooks::D3D11::fnPresent present_addres;
     auto hr = Hooks::D3D11::GetPresentAddress(&present_addres);
@@ -134,7 +135,6 @@ void MainThread()
         return;
     }
 
-    DEBUG_LOG("INSTALLED LAST VERSION");
     {
         Hooks::WndProc::init_hook(main__window);
         Hooks::WndProc::callback(wnd_key_hook);
@@ -172,7 +172,11 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
 
         if (wParam == VK_F5)
         {
-            BrokeProtocol::GetLocalPlayer()->jump();
+            Mono::Dumper::dump_object(
+                (Mono::MonoObject*)BrokeProtocol::GetLocalPlayer()
+            );
+
+            BrokeProtocol::GetLocalPlayer()->mainT->set_position(UnityTypes::Vector3::make(0, 0, 0));
         }
 
         if(wParam == VK_F4)

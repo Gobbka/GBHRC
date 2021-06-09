@@ -9,7 +9,9 @@ namespace BrokeProtocol
 		{
 		public:
 
-			char pad_0000[140]; //0x0000
+			char pad_0000[24]; //0x0000
+			UnityEngine::Transform* mainT; //0x0018
+			char pad_0020[108]; //0x0020
 			uint32_t ID; //0x008C
 			char pad_0090[168]; //0x0090
 			float health; //0x0138

@@ -54,6 +54,10 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 	auto test_button = (new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "1NIGGER_BUTTON"));
 	test_button->unique_id = 3;
 	test_button->set_margin(5, 5);
+	test_button->onClick = [](Application::UI::UIElementEventArgs args)
+	{
+		Application::Context::get_animator()->add_anim(nullptr, 20);
+	};
 	
 	items_list
 		->add_element(new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "TEST_BUTTON"))
@@ -66,11 +70,15 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 		->add_element(new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "NIGGER_BUTTON"))
 		->add_element(new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "NIGGER_BUTTON"))
 	;
+
+	auto* alpha_background = new Application::UI::Panel({ -10000,10000 }, { 20000, 20000 }, { FLOAT_COLORS_BLACK });
+	
 	
 	form
+		->add_element(alpha_background)
 		->add_element(background_panel)
 
-		->add_element(items_list)
+		//->add_element(items_list)
 	;
 	background_panel->styles.overflow = Application::UI::VISIBLE_STATE_HIDDEN;
 	//topbar_panel->styles.overflow = Application::UI::VISIBLE_STATE_HIDDEN;
@@ -125,12 +133,21 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 
 	form->initialize_components(pEngine);
 	// ; paste ur initialize code below
+
 	
 	{
 		auto resolut = background_panel->get_resolution();
 		background_panel->move_by( -200, resolut.height/2);
+		
+		alpha_background->set_alpha(0.7f);
+
 	}
 
+	topbar_panel->onMouseDown = [](Application::UI::UIElementEventArgs args)
+	{
+		topbar_panel->get_form()->drag_move(background_panel);
+	};
+	
 	aim_checkbox->onChange = [](Application::UI::UIElementEventArgs args)
 	{
 		GBHRC::Context::instance()->config->aim_assist = ((Application::UI::Checkbox*)args)->is_checked();

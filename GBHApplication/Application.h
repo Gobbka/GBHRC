@@ -27,6 +27,7 @@ namespace Application
 		Application::Render::Resolution AppResolution;
 		HWND main_window;
 		Animator animator;
+		unsigned long long cursor_point;
 
 		Context(HWND window);
 	public:
@@ -38,6 +39,8 @@ namespace Application
 		static Render::Resolution get_window_resolution();
 
 		static POINT get_client_cursor_point();
+
+		static Animator* get_animator();
 
 		static Render::Position point_to_center(Render::Position pos);
 		static POINT point_to_center(POINT p);

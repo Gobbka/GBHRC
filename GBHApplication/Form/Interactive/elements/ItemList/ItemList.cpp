@@ -37,8 +37,19 @@ void Application::UI::ItemList::handle_mouse_scroll(int delta)
 {
 	Panel::handle_mouse_scroll(delta);
 
+	if(this->list_offset - delta < 0)
+	{
+		delta = list_offset;
+	}
+
+	list_offset -= delta;
+	
 	Panel::foreach([delta](InteractiveElement* element)
 		{
 			element->move_by(0, (float)delta*-1);
 		});
+	
+	const POINT cursor_long = Application::Context::point_to_center(Context::get_client_cursor_point());
+
+	Panel::handle_mouse_move(cursor_long.x, cursor_long.y);
 }

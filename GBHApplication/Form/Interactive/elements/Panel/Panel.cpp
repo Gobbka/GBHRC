@@ -93,15 +93,16 @@ void Application::UI::Panel::set_pos(float x, float y)
 	float move_x = x - pos.x;
 	float move_y = y - pos.y;
 	this->move_by(move_x, move_y);
-	//Parent::set_pos(x, y);
-	//Managers::Rectangle::set_rect(this->get_ptr(), x, y, this->resolution.width, this->resolution.height);
-	//this->position = { x,y };
 }
 
 void Application::UI::Panel::set_color(float r, float g, float b)
 {
-	//Managers::Rectangle::set_color(this->get_ptr(), r, g, b);
-	//this->color = { r,g,b };
+	this->rect.set_color(r, g, b);
+}
+
+void Application::UI::Panel::set_alpha(float alpha)
+{
+	this->rect.set_alpha(alpha);
 }
 
 void Application::UI::Panel::move_by(float x, float y)
@@ -118,14 +119,7 @@ Application::Render::Position Application::UI::Panel::get_position()
 
 Application::UI::InteractiveElement* Application::UI::Panel::set_resolution(float width, float height)
 {
-	//Managers::Rectangle::set_rect(this->get_ptr(),
-	//	position.x,
-	//	position.y,
-	//	width,
-	//	height
-	//);
-	//this->resolution = { (UINT)width,(UINT)height };
-
+	this->rect.set_resolution(width, height);
 	return this;
 }
 

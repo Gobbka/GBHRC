@@ -3,7 +3,9 @@
 
 #include "config/Config.h"
 #include "../BrokeProtocol/BrokeProtocol.h"
-#include "configuration/drawconf.h"
+//#include "configuration/drawconf.h"
+#include "../../../GBHApplication/configuration/drawconf.h"
+//#include "configuration/drawconf.h"
 //#include "Form/Canvas/elements/rectangle/rectangle.h"
 
 namespace Application {
