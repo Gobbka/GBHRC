@@ -9,10 +9,11 @@ void Application::Canvas::Rectangle::init()
 {
 
 	this->set_pos(position.x, position.y);
-	this->set_color(color.r, color.g, color.b);
+	this->set_color(color);
 }
 
 Application::Canvas::Rectangle::Rectangle(Position pos, Resolution res, Color col)
+	: color(col)
 {
 	this->position = pos;
 	this->resolution = res;
@@ -57,10 +58,10 @@ void Application::Canvas::Rectangle::set_pos(float x, float y)
 	this->position = { x,y };
 }
 
-void Application::Canvas::Rectangle::set_color(float r, float g, float b)
+void Application::Canvas::Rectangle::set_color(Render::Color color)
 {
-	Managers::Rectangle::set_color(this->get_ptr(), r, g, b );
-	this->color = { r,g,b };
+	Managers::Rectangle::set_color(this->get_ptr(), color);
+	this->color = color;
 }
 
 void Application::Canvas::Rectangle::set_alpha(float alpha)

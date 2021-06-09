@@ -26,6 +26,14 @@ namespace Application
 					ptr[i].color = DirectX::XMFLOAT4{ r,g,b,a };
 				}
 			}
+
+			static void set_color(GVertex::Vertex* ptr, Render::Color color)
+			{
+				for (int i = 0; i < 4; i++)
+				{
+					ptr[i].color = DirectX::XMFLOAT4{ color.r,color.g,color.b,color.a };
+				}
+			}
 		};
 	}
 }

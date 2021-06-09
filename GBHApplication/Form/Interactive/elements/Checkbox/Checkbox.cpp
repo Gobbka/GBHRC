@@ -32,9 +32,9 @@ void Application::UI::Checkbox::set_pos(float x, float y)
 	this->rectangle.set_pos(x, y);
 }
 
-void Application::UI::Checkbox::set_color(float r, float g, float b)
+void Application::UI::Checkbox::set_color(Render::Color color)
 {
-	this->rectangle.set_color(r, g, b);
+	this->rectangle.set_color(color);
 }
 
 Application::Render::Position Application::UI::Checkbox::get_position()
@@ -73,9 +73,9 @@ void Application::UI::Checkbox::handle_mouse_up()
 	this->checked = !this->checked;
 	
 	if (this->checked == true)
-		this->set_color(active_color.r, active_color.g, active_color.b);
+		this->set_color(active_color);
 	else
-		this->set_color(non_active_color.r, non_active_color.g, non_active_color.b);
+		this->set_color(non_active_color);
 
 	onChange(this);
 	InteractiveElement::handle_mouse_up();

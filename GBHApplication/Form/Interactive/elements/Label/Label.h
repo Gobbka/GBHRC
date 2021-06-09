@@ -30,7 +30,7 @@ namespace Application
 			InteractiveElement* set_resolution(float width, float height) override;
 			
 			void set_pos(float x, float y) override;
-			void set_color(float r, float g, float b) override;
+			void set_color(Render::Color color) override;
 			void move_by(float x, float y) override;
 			Render::Position get_position() override;
 		};

@@ -16,8 +16,8 @@
 
 #pragma region elements
 
-Application::UI::Panel* background_panel = new Application::UI::Panel({ 0,0 }, { 400, 500 }, { FLOAT_COLORS_BLACK });
-Application::UI::Panel* topbar_panel = new Application::UI::Panel({ 0,0 }, { 400, 30 }, { FLOAT_COLORS_GREEN });
+Application::UI::Panel* background_panel = new Application::UI::Panel({ 0,0 }, { 400, 500 }, { FLOAT_COLORS_BLACK,0.5f });
+Application::UI::Panel* topbar_panel = new Application::UI::Panel({ 0,0 }, { 400, 30 }, { FLOAT_COLORS_GREEN,0.5f });
 
 
 auto* esp_inner = new Application::UI::Panel{ {0,-80},{400,420},{FLOAT_COLORS_BLACK} };

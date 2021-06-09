@@ -10,7 +10,9 @@ namespace Application
 	{
 		struct Color
 		{
-			float r; float g; float b;
+			float r; float g; float b; float a;
+			Color(float r, float g, float b) : r(r), g(g), b(b), a(1.f) {};
+			Color(float r, float g, float b,float a) : r(r), g(g), b(b), a(a) {};
 		};
 
 		struct Resolution

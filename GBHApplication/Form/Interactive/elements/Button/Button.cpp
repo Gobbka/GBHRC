@@ -11,9 +11,9 @@ void Application::UI::Button::draw(Render::DrawEvent* event)
 Application::UI::Button::Button(Render::Position position, Render::Resolution resolution, Render::Color color, DirectX::SpriteFont* font,
                                 const char* text)
 		: back_rect(position,resolution,color),
-			text(position,text,font,{1,1,1})
+			text(position,text,font,{1,1,1}),
+		non_active_color(color)
 {
-	this->non_active_color = color;
 	this->text.limitRect = resolution;	
 	this->text.set_text(text);
 }
@@ -43,9 +43,9 @@ void Application::UI::Button::set_pos(float x, float y)
 	//this->text.set_pos(x, y);
 }
 
-void Application::UI::Button::set_temp_color(float r, float g, float b)
+void Application::UI::Button::set_temp_color(Render::Color color)
 {
-	back_rect.set_color(r, g, b);
+	back_rect.set_color(color);
 }
 
 Application::UI::ElementDescription Application::UI::Button::get_desc()
@@ -53,10 +53,10 @@ Application::UI::ElementDescription Application::UI::Button::get_desc()
 	return { true,"BUTTON" };
 }
 
-void Application::UI::Button::set_color(float r, float g, float b)
+void Application::UI::Button::set_color(Render::Color color)
 {
-	this->non_active_color = { r,g,b };
-	this->set_temp_color(r, g, b);
+	this->non_active_color = color;
+	this->set_temp_color(color);
 }
 
 void Application::UI::Button::move_by(float x, float y)
@@ -86,19 +86,19 @@ void Application::UI::Button::handle_mouse_up()
 
 void Application::UI::Button::handle_mouse_down()
 {
-	this->set_temp_color(this->non_active_color.r + .2f, non_active_color.g + 0.2f, non_active_color.b + 0.2f);
+	this->set_temp_color({ this->non_active_color.r + .2f, non_active_color.g + 0.2f, non_active_color.b + 0.2f });
 	InteractiveElement::handle_mouse_down();
 }
 
 void Application::UI::Button::handle_mouse_enter()
 {
-	this->set_temp_color(this->non_active_color.r+.1f, non_active_color.g+0.1f, non_active_color.b+0.1f);
+	this->set_temp_color({ this->non_active_color.r + .1f, non_active_color.g + 0.1f, non_active_color.b + 0.1f });
 	InteractiveElement::handle_mouse_enter();
 }
 
 void Application::UI::Button::handle_mouse_leave()
 {
-	this->set_temp_color(this->non_active_color.r, non_active_color.g, non_active_color.b);
+	this->set_temp_color({this->non_active_color.r, non_active_color.g, non_active_color.b});
 	InteractiveElement::handle_mouse_leave();
 }
 

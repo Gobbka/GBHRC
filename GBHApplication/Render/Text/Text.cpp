@@ -4,10 +4,10 @@
 #include "../Engine/Engine.h"
 
 Application::Render::Text::Text(DirectX::SpriteFont* font, TextAlign text_align)
+	: color(1,1,1)
 {
 	this->font = font;
 	this->text_align = text_align;
-	this->color = { 1,1,1 };
 	this->limitRect = { 0,0 };
 	this->text = nullptr;
 	this->text_resolution = { 0,0 };

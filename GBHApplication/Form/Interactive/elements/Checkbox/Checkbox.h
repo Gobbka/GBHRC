@@ -28,7 +28,7 @@ namespace Application
 			Checkbox(Render::Position position,Render::Resolution resolution, Render::Color color);
 
 			void set_pos(float x, float y) override;
-			void set_color(float r, float g, float b) override;
+			void set_color(Render::Color color) override;
 
 			Render::Position get_position() override;
 

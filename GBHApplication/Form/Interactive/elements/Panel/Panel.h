@@ -27,7 +27,7 @@ namespace Application
 			
 			bool point_belongs(Render::Position point) override;
 			void set_pos(float x, float y) override;
-			void set_color(float r, float g, float b) override;
+			void set_color(Render::Color color) override;
 			void set_alpha(float alpha);
 			void move_by(float x, float y) override;
 

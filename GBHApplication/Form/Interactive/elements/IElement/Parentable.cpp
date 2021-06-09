@@ -106,10 +106,10 @@ void Application::UI::Parent::draw(Render::DrawEvent* event)
 			element->draw(event);
 }
 
-void Application::UI::Parent::set_color(float r, float g, float b)
+void Application::UI::Parent::set_color(Render::Color color)
 {
 	for (auto* element : this->elements)
-		element->set_color(r, g, b);
+		element->set_color(color);
 }
 
 void Application::UI::Parent::move_by(float x, float y)

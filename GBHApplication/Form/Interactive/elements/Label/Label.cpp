@@ -51,9 +51,9 @@ void Application::UI::Label::set_pos(float x, float y)
 	this->position = { x, y };
 }
 
-void Application::UI::Label::set_color(float r, float g, float b)
+void Application::UI::Label::set_color(Render::Color color)
 {
-	this->color = { r,g,b };
+	this->color = color;
 }
 
 void Application::UI::Label::move_by(float x, float y)

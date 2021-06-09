@@ -27,7 +27,7 @@ namespace Application
 		{
 		private:
 			void draw(Render::DrawEvent* event) override;
-			void set_temp_color(float r, float g, float b);
+			void set_temp_color(Render::Color color);
 
 		private:
 			Canvas::Rectangle back_rect;
@@ -43,7 +43,7 @@ namespace Application
 			bool point_belongs(Render::Position point) override;
 
 			void set_pos(float x, float y) override;
-			void set_color(float r, float g, float b) override;
+			void set_color(Render::Color color) override;
 			void move_by(float x, float y) override;
 			UI::InteractiveElement* set_resolution(float width, float height) override;
 

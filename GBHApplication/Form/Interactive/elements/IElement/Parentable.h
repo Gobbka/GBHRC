@@ -35,7 +35,7 @@ namespace Application
 			Parent(Render::Position position);
 			
 			void draw(Render::DrawEvent*event) override;
-			void set_color(float r, float g, float b) override;
+			void set_color(Render::Color color) override;
 			void move_by(float x, float y) override;
 
 			void foreach(std::function<void(InteractiveElement* element)> iterator);

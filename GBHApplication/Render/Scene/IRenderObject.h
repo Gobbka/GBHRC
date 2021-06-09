@@ -14,7 +14,7 @@ namespace Application
 			virtual ~IRenderObject() = default;
 			virtual void draw(Render::D3D11DrawEvent*event)    PURE;
 			virtual void set_pos(float x, float y)             PURE;
-			virtual void set_color(float r, float g, float b)  PURE;
+			virtual void set_color(Render::Color color)  PURE;
 
 			virtual void move_by(float x, float y)             PURE;
 		};

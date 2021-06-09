@@ -95,9 +95,9 @@ void Application::UI::Panel::set_pos(float x, float y)
 	this->move_by(move_x, move_y);
 }
 
-void Application::UI::Panel::set_color(float r, float g, float b)
+void Application::UI::Panel::set_color(Render::Color color)
 {
-	this->rect.set_color(r, g, b);
+	this->rect.set_color(color);
 }
 
 void Application::UI::Panel::set_alpha(float alpha)

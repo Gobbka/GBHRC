@@ -98,7 +98,7 @@ void GBHRC::Context::render_callback(Application::Render::DrawEvent* event)
         }
         else
         {
-            min_target_box->box->set_color(0.5f, 0, 0);
+            min_target_box->box->set_color({ 0.5f, 0, 0 });
         }
     }
 }
@@ -141,10 +141,10 @@ void GBHRC::Context::draw_player(Application::Render::DrawEvent* event,UINT elem
 
     if (this->is_friend((wchar_t*)&player->player->username->array))
     {
-        esp_box->health_box->set_color(COLOR_FROM_RGB(75, 128, 207));
+        esp_box->health_box->set_color({COLOR_FROM_RGB(75, 128, 207)});
     }else
     {
-        esp_box->health_box->set_color(COLOR_FROM_RGB(0, 204, 0));
+        esp_box->health_box->set_color({COLOR_FROM_RGB(0, 204, 0)});
     }
 
     event->engine->get_batch()->Begin();
