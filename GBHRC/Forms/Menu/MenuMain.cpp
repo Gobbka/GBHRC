@@ -16,22 +16,24 @@
 
 #pragma region elements
 
-Application::UI::Panel* background_panel = new Application::UI::Panel({ 0,0 }, { 400, 500 }, { FLOAT_COLORS_BLACK,0.5f });
-Application::UI::Panel* topbar_panel = new Application::UI::Panel({ 0,0 }, { 400, 30 }, { FLOAT_COLORS_GREEN,0.5f });
+#define BACKGROUND_PANEL_COLOR FLOAT_COLORS_BLACK,0.8f
+
+Application::UI::Panel* background_panel = new Application::UI::Panel({ 0,0 }, { 400, 500 }, { BACKGROUND_PANEL_COLOR });
+Application::UI::Panel* topbar_panel = new Application::UI::Panel({ 0,0 }, { 400, 30 }, { FLOAT_COLORS_GREEN });
 
 
-auto* esp_inner = new Application::UI::Panel{ {0,-80},{400,420},{FLOAT_COLORS_BLACK} };
+auto* esp_inner = new Application::UI::Panel{ {0,-80},{400,420},{BACKGROUND_PANEL_COLOR} };
 // ELEMENTS
 auto* esp_checkbox = new Application::UI::Checkbox({ 20,-10 }, { 20,20 }, { FLOAT_COLORS_GRAY });
 auto* name_checkbox = new Application::UI::Checkbox({ 20,-50 }, { 20,20 }, { FLOAT_COLORS_GRAY });
 
 
-auto* aim_inner = new Application::UI::Panel{ {0,-80},{400,420},{FLOAT_COLORS_BLACK} };
+auto* aim_inner = new Application::UI::Panel{ {0,-80},{400,420},{BACKGROUND_PANEL_COLOR} };
 // ELEMENTS
 auto* aim_checkbox = new Application::UI::Checkbox({ 20,-10 }, { 20,20 }, { FLOAT_COLORS_GRAY });
 
 
-auto* misc_inner = new Application::UI::Panel{ {0,-80},{400,420},{FLOAT_COLORS_BLACK} };
+auto* misc_inner = new Application::UI::Panel{ {0,-80},{400,420},{BACKGROUND_PANEL_COLOR} };
 // ELEMENTS
 auto* jump_checkbox = new Application::UI::Checkbox({ 20,-10 }, { 20,20 }, { FLOAT_COLORS_GRAY });
 auto* car_sh_checkbox = new Application::UI::Checkbox({ 20,-50 }, { 20,20 }, { FLOAT_COLORS_GRAY });
@@ -71,8 +73,7 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 		->add_element(new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "NIGGER_BUTTON"))
 	;
 
-	auto* alpha_background = new Application::UI::Panel({ -10000,10000 }, { 20000, 20000 }, { FLOAT_COLORS_BLACK });
-	
+	auto* alpha_background = new Application::UI::Panel({ -10000,10000 }, { 20000, 20000 }, { FLOAT_COLORS_BLACK,0.5f });
 	
 	form
 		->add_element(alpha_background)
@@ -138,9 +139,6 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 	{
 		auto resolut = background_panel->get_resolution();
 		background_panel->move_by( -200, resolut.height/2);
-		
-		alpha_background->set_alpha(0.7f);
-
 	}
 
 	topbar_panel->onMouseDown = [](Application::UI::UIElementEventArgs args)
