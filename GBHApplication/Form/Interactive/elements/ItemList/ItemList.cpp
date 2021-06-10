@@ -35,8 +35,9 @@ Application::UI::ElementDescription Application::UI::ItemList::get_desc()
 
 void Application::UI::ItemList::handle_mouse_scroll(int delta)
 {
+	delta /= 120;
 	Panel::handle_mouse_scroll(delta);
-
+	
 	if(this->list_offset - delta < 0)
 	{
 		delta = list_offset;

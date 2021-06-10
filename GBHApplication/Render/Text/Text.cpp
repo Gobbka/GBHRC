@@ -53,9 +53,8 @@ void Application::Render::Text::DrawInRect(Render::D3D11DrawEvent* event, Render
 {
 	auto* batch = event->engine->get_batch();
 	auto* mask = event->engine->get_mask();
-	// DirectX::SpriteSortMode_Deferred,nullptr,nullptr,mask->get_current_state()
-	batch->Begin();
-	event->mask_discard_begin(false);
+	// 
+
 	auto center_pos = Application::Context::point_to_center(position);
 	auto scale = 1.f;
 	
@@ -86,6 +85,8 @@ void Application::Render::Text::DrawInRect(Render::D3D11DrawEvent* event, Render
 			center_pos.y += limitRect.height / 2 - font_rect.height / 2;
 		}
 	}
+	// DirectX::SpriteSortMode_Deferred,nullptr,nullptr,mask->get_current_state()
+	batch->Begin();
 
 	if(this->wchar)	
 		this->font->DrawString(
@@ -95,7 +96,8 @@ void Application::Render::Text::DrawInRect(Render::D3D11DrawEvent* event, Render
 			{ color.r,color.g,color.b },
 			0,
 			DirectX::XMFLOAT2{ 0,0 },
-			scale
+			scale,DirectX::SpriteEffects_None,
+			event->mask_get_depth()
 		);
 	else
 		this->font->DrawString(
@@ -105,12 +107,14 @@ void Application::Render::Text::DrawInRect(Render::D3D11DrawEvent* event, Render
 			{ color.r,color.g,color.b },
 			0,
 			DirectX::XMFLOAT2{ 0,0 },
-			scale
+			scale,
+			DirectX::SpriteEffects_None,
+			event->mask_get_depth()
 		);
 
-	event->mask_discard_end(false);
+	// event->mask_discard_end();
 	batch->End();
 	
 	event->reset_render_state();
-	mask->reset_mask();
+	//event->mask_reset();
 }

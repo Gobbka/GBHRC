@@ -27,14 +27,7 @@ bool Application::UI::Button::point_belongs(Render::Position point)
 		(point.x >= position.x && point.x <= position.x + resolution.width) &&
 		(point.y <= position.y && point.y >= (position.y - resolution.height));
 }
-//
-//void Application::UI::Button::init()
-//{
-//	this->text.initialize(pForm,0);
-//	
-//	this->set_pos(position.x, position.y);
-//	this->set_color(color.r, color.g, color.b);
-//}
+
 
 void Application::UI::Button::set_pos(float x, float y)
 {

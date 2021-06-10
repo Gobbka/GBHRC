@@ -30,7 +30,7 @@ namespace Application
 			unsigned int scenes_completed;
 		private:
 			UINT element_index;
-			BYTE draw_mask_index;
+			BYTE mask_layer_depth;
 		public:
 			
 			void draw_element(Canvas::CanvasElement*object);
@@ -39,8 +39,10 @@ namespace Application
 			void mask_draw_begin() const;
 			void mask_discard_begin(bool increase = true);
 			void mask_discard_end(bool decrease = true);
-			void mask_set_index(BYTE new_index);
+			void mask_set_depth(BYTE new_index);
+			BYTE mask_get_depth();
 			void mask_clear();
+			void mask_reset();
 
 			ID3D11DeviceContext* get_context() const;
 			void reset_render_state();

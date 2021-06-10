@@ -38,6 +38,7 @@ void GBHRC::Context::render_callback(Application::Render::DrawEvent* event)
 
         const auto elements_size = esp_boxes.size();
         UINT element_index = 0;
+    	
         EspBox* min_target_box = nullptr;
         EspPlayer min_aimbot_target{ nullptr };
     	
@@ -85,7 +86,6 @@ void GBHRC::Context::render_callback(Application::Render::DrawEvent* event)
 
         for (; element_index < elements_size; element_index++)
         {
-            //auto* esp_box = (Application::Canvas::Rectangle*)esp_scene->element_at(element_index);
             auto* esp_box = this->esp_boxes[element_index];
             esp_box->box->render = false;
             esp_box->max_health_box->render = false;

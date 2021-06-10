@@ -19,7 +19,7 @@ namespace GBHRC
 		bool car_speed         = false;
 
 		float draw_distance = 300.f;
-		float fov_size      = 300.f;
+		float fov_size      = 150.f;
 
 		//
 

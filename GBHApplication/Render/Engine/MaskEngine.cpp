@@ -123,9 +123,9 @@ void Application::Render::MaskEngine::unset_mask()
 	this->current_state = disabledState;
 }
 
-void Application::Render::MaskEngine::reset_mask()
+void Application::Render::MaskEngine::reset_mask(BYTE reference) CONST
 {
-	this->pContext->OMSetDepthStencilState(current_state, 0);
+	this->pContext->OMSetDepthStencilState(current_state, reference);
 }
 
 ID3D11DepthStencilView* Application::Render::MaskEngine::get_stencil_view() CONST

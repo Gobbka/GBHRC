@@ -28,7 +28,7 @@ namespace Application
 			void set_draw_mask(BYTE reference    = 0x0);
 			void set_discard_mask(BYTE reference = 0x0);
 			void unset_mask();
-			void reset_mask();
+			void reset_mask(BYTE reference = 0x0) const;
 
 			ID3D11DepthStencilState* get_drawState() CONST
 			{

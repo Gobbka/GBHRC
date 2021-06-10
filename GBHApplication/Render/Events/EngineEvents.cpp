@@ -15,31 +15,41 @@ void Application::Render::D3D11DrawEvent::draw_vertex(UINT count, UINT offset) c
 
 void Application::Render::D3D11DrawEvent::mask_draw_begin() const
 {
-	this->engine->get_mask()->set_draw_mask(draw_mask_index);
+	this->engine->get_mask()->set_draw_mask(mask_layer_depth);
 }
 
 void Application::Render::D3D11DrawEvent::mask_discard_begin(bool increase)
 {
 	if(increase)
-		this->draw_mask_index++;
-	this->engine->get_mask()->set_discard_mask(draw_mask_index);
+		this->mask_layer_depth++;
+	this->engine->get_mask()->set_discard_mask(mask_layer_depth);
 }
 
 void Application::Render::D3D11DrawEvent::mask_discard_end(bool decrease)
 {
 	if(decrease)
-		this->draw_mask_index--;
+		this->mask_layer_depth--;
 	this->engine->get_mask()->unset_mask();
 }
 
-void Application::Render::D3D11DrawEvent::mask_set_index(BYTE new_index)
+void Application::Render::D3D11DrawEvent::mask_set_depth(BYTE new_index)
 {
-	this->draw_mask_index = new_index;
+	this->mask_layer_depth = new_index;
+}
+
+BYTE Application::Render::D3D11DrawEvent::mask_get_depth()
+{
+	return this->mask_layer_depth;
 }
 
 void Application::Render::D3D11DrawEvent::mask_clear()
 {
 	this->engine->get_mask()->clearBuffer();
+}
+
+void Application::Render::D3D11DrawEvent::mask_reset()
+{
+	this->engine->get_mask()->reset_mask(this->mask_layer_depth);
 }
 
 ID3D11DeviceContext* Application::Render::D3D11DrawEvent::get_context() const
@@ -63,5 +73,5 @@ Application::Render::D3D11DrawEvent::D3D11DrawEvent(Engine* engine, CanvasScene*
 	
 	this->scenes_completed = 0;
 	this->element_index = 0;
-	this->draw_mask_index = 0;
+	this->mask_layer_depth = 0;
 }

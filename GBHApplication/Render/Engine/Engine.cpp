@@ -224,6 +224,8 @@ void Engine::render_prepare()
 	cb.xOffset = 0;
 	cb.yOffset = 0;
 
+	this->pDevContext->OMSetRenderTargets(1, &pRenderTargetView, this->get_mask()->get_stencil_view());
+
 	this->pDevContext->UpdateSubresource(this->pConstantBuffer, 0, nullptr, &cb, 0, 0);
 	this->pDevContext->VSSetConstantBuffers(0, 1, &this->pConstantBuffer);
 
@@ -241,11 +243,9 @@ void Engine::set_shaders()
 
 void Engine::present()
 {
-	this->render_prepare();
-
 	this->pDevContext->RSSetViewports(1, pViewports);
 	
-	this->pDevContext->OMSetRenderTargets(1, &pRenderTargetView, this->get_mask()->get_stencil_view());
+	this->render_prepare();
 
 	this->blend_engine->set_blend_state();
 	
@@ -260,7 +260,7 @@ void Engine::present()
 		event.scenes_completed++;
 		
 		this->mask_engine->clearBuffer();
-		event.mask_set_index(NULL);
+		event.mask_set_depth(NULL);
 	}
 
 	pDevContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);

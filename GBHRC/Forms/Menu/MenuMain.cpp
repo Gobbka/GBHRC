@@ -51,7 +51,7 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 	auto* aim_button = new Application::UI::Button({ 400/3,-30 }, { 400/3,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "AIM");
 	auto* misc_button = new Application::UI::Button({ 2*400/3,-30 }, { 400/3+1,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "MISC");
 	
-	auto* items_list = new Application::UI::ItemList({ 0,400 }, { 500,325 }, { FLOAT_COLORS_BLACK });
+	auto* items_list = new Application::UI::ItemList({ 0,300 }, { 500,325 }, { FLOAT_COLORS_BLACK });
 	
 	auto test_button = (new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "1NIGGER_BUTTON"));
 	test_button->unique_id = 3;
@@ -63,23 +63,24 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 	
 	items_list
 		->add_element(new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "TEST_BUTTON"))
-		->add_element(new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "NIGGER_BUTTON"))
-		->add_element(test_button)
-		->add_element(new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "NIGGER_BUTTON"))
-		->add_element(new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "NIGGER_BUTTON"))
-		->add_element(new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "NIGGER_BUTTON"))
-		->add_element(new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "NIGGER_BUTTON"))
-		->add_element(new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "NIGGER_BUTTON"))
-		->add_element(new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "NIGGER_BUTTON"))
+		//->add_element(new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "NIGGER_BUTTON"))
+		//->add_element(test_button)
+		//->add_element(new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "NIGGER_BUTTON"))
+		//->add_element(new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "NIGGER_BUTTON"))
+		//->add_element(new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "NIGGER_BUTTON"))
+		//->add_element(new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "NIGGER_BUTTON"))
+		//->add_element(new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "NIGGER_BUTTON"))
+		//->add_element(new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "NIGGER_BUTTON"))
 	;
 
 	auto* alpha_background = new Application::UI::Panel({ -10000,10000 }, { 20000, 20000 }, { FLOAT_COLORS_BLACK,0.5f });
 	
 	form
 		->add_element(alpha_background)
+		//->add_element(items_list)
+
 		->add_element(background_panel)
 
-		//->add_element(items_list)
 	;
 	background_panel->styles.overflow = Application::UI::VISIBLE_STATE_HIDDEN;
 	//topbar_panel->styles.overflow = Application::UI::VISIBLE_STATE_HIDDEN;
