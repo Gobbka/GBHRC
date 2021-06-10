@@ -27,10 +27,12 @@ void Application::Canvas::Rectangle::move_by(float x, float y)
 
 void Application::Canvas::Rectangle::draw(Render::D3D11DrawEvent* event)
 {
+
+	if (!this->render || this->color.a == 0.f)
+		return;
+
 	auto* p_context = event->get_context();
 
-	if (!this->render)
-		return;
 
 	if (this->wireframed == false)
 	{

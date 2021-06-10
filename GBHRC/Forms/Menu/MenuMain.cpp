@@ -16,24 +16,23 @@
 
 #pragma region elements
 
-#define BACKGROUND_PANEL_COLOR FLOAT_COLORS_BLACK,0.8f
 
-Application::UI::Panel* background_panel = new Application::UI::Panel({ 0,0 }, { 400, 500 }, { BACKGROUND_PANEL_COLOR });
+Application::UI::Panel* background_panel = new Application::UI::Panel({ 0,0 }, { 400, 500 }, { FLOAT_COLORS_BLACK,0.95f });
 Application::UI::Panel* topbar_panel = new Application::UI::Panel({ 0,0 }, { 400, 30 }, { FLOAT_COLORS_GREEN });
 
 
-auto* esp_inner = new Application::UI::Panel{ {0,-80},{400,420},{BACKGROUND_PANEL_COLOR} };
+auto* esp_inner = new Application::UI::Panel{ {0,-80},{400,420},{0,0,0,0} };
 // ELEMENTS
 auto* esp_checkbox = new Application::UI::Checkbox({ 20,-10 }, { 20,20 }, { FLOAT_COLORS_GRAY });
 auto* name_checkbox = new Application::UI::Checkbox({ 20,-50 }, { 20,20 }, { FLOAT_COLORS_GRAY });
 
 
-auto* aim_inner = new Application::UI::Panel{ {0,-80},{400,420},{BACKGROUND_PANEL_COLOR} };
+auto* aim_inner = new Application::UI::Panel{ {0,-80},{400,420},{0,0,0,0} };
 // ELEMENTS
 auto* aim_checkbox = new Application::UI::Checkbox({ 20,-10 }, { 20,20 }, { FLOAT_COLORS_GRAY });
 
 
-auto* misc_inner = new Application::UI::Panel{ {0,-80},{400,420},{BACKGROUND_PANEL_COLOR} };
+auto* misc_inner = new Application::UI::Panel{ {0,-80},{400,420},{0,0,0,0} };
 // ELEMENTS
 auto* jump_checkbox = new Application::UI::Checkbox({ 20,-10 }, { 20,20 }, { FLOAT_COLORS_GRAY });
 auto* car_sh_checkbox = new Application::UI::Checkbox({ 20,-50 }, { 20,20 }, { FLOAT_COLORS_GRAY });

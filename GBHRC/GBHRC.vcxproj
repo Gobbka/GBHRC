@@ -171,6 +171,7 @@
     <ClCompile Include="CheatApi\Hooks\Detour\Detour.cpp" />
     <ClCompile Include="CheatApi\Hooks\wndproc\wndprochook.cpp" />
     <ClCompile Include="CheatApi\Tools\3dMatrix.cpp" />
+    <ClCompile Include="Forms\FriendList\FriendList.cpp" />
     <ClCompile Include="Forms\Menu\MenuMain.cpp" />
     <ClCompile Include="CheatApi\BrokeProtocol\classes\ICollection\ICollection.cpp" />
     <ClCompile Include="Forms\test\testScene.cpp" />
@@ -206,6 +207,7 @@
     <ClInclude Include="CheatApi\Hooks\Detour\Detour.h" />
     <ClInclude Include="CheatApi\Hooks\wndproc\wndprochook.h" />
     <ClInclude Include="CheatApi\Tools\3dMatrix.h" />
+    <ClInclude Include="Forms\FriendList\FriendList.h" />
     <ClInclude Include="Forms\Menu\MenuMain.h" />
     <ClInclude Include="CheatApi\BrokeProtocol\classes\ICollection\ICollection.h" />
     <ClInclude Include="Forms\test\testScene.h" />

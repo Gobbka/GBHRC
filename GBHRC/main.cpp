@@ -65,7 +65,7 @@ void init_callback(Application::Render::Engine* instance)
     Application::Context::register_form(friend_list);
 
     MainMenuMarkup(menu, instance);
-    // FiendListMarkup(friend_list, instance);
+    FiendListMarkup(friend_list, instance);
     
     menu->hidden = true;
     friend_list->hidden = true;
@@ -86,7 +86,7 @@ void init_callback(Application::Render::Engine* instance)
 	
     instance
         ->append_scene(menu)
-        //->append_scene(friend_list)
+        ->append_scene(friend_list)
 
         //->append_scene(test_scene)
 		->append_scene(esp_scene)	
