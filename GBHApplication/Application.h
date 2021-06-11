@@ -42,6 +42,7 @@ namespace Application
 		static Animator* get_animator();
 
 		static Render::Position point_to_center(Render::Position pos);
+		static Render::Position point_to_window(Render::Position pos);
 		static POINT point_to_center(POINT p);
 	protected:
 		void on_lbmouse_down() override;

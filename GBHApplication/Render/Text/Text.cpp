@@ -55,7 +55,7 @@ void Application::Render::Text::DrawInRect(Render::D3D11DrawEvent* event, Render
 	auto* mask = event->engine->get_mask();
 	// 
 
-	auto center_pos = Application::Context::point_to_center(position);
+	auto center_pos = Application::Context::point_to_window(position);
 	auto scale = 1.f;
 	
 	// center calculations with scale is broken

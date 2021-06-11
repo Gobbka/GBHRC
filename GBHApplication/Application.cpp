@@ -48,6 +48,12 @@ Application::Render::Position Application::Context::point_to_center(Render::Posi
 	return { p.x - (res.width / 2),(res.height / 2) - p.y };
 }
 
+Application::Render::Position Application::Context::point_to_window(Render::Position p)
+{
+	auto res = Application::Context::get_window_resolution();
+	return { p.x + res.width / 2, res.height / 2 - p.y };
+}
+
 POINT Application::Context::point_to_center(POINT p)
 {
 	auto rect = Application::Context::get_window_resolution();
@@ -84,7 +90,6 @@ void Application::Context::on_mouse_move(int mx, int my)
 	{
 		if (AppContext->_registered_forms[iteration-1]->on_mouse_move(cursor_point.x,cursor_point.y) == Interaction::EventStatus::handled)
 		{
-			DEBUG_LOG("NIGGER");
 			return;
 		}
 	}
