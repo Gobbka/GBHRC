@@ -5,6 +5,12 @@ namespace Application
 {
 	namespace Interaction
 	{
+		enum class EventStatus
+		{
+			none = false,
+			handled = true,
+		};
+		
 		class IEventHandler
 		{
 		protected:

@@ -75,7 +75,7 @@ void MainMenuMarkup(Application::InteractiveForm* form,Application::Render::Engi
 	auto* alpha_background = new Application::UI::Panel({ -10000,10000 }, { 20000, 20000 }, { FLOAT_COLORS_BLACK,0.5f });
 	
 	form
-		->add_element(alpha_background)
+		//->add_element(alpha_background)
 		//->add_element(items_list)
 
 		->add_element(background_panel)

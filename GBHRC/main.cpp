@@ -149,10 +149,11 @@ void MainThread()
     }
 }
 
+extern Application::Context* AppContext;
 
 void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
 {
-    Application::Context::wnd_proc(msg, wParam, lParam);
+    AppContext->window_proc(msg, wParam, lParam);
 
     if (msg == WM_KEYUP)
     {

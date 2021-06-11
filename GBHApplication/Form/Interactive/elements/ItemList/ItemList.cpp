@@ -50,7 +50,7 @@ void Application::UI::ItemList::handle_mouse_scroll(int delta)
 			element->move_by(0, (float)delta*-1);
 		});
 	
-	const POINT cursor_long = Application::Context::point_to_center(Context::get_client_cursor_point());
+	const auto cursor_long = Application::Context::point_to_center(Context::get_client_cursor_point());
 
 	Panel::handle_mouse_move(cursor_long.x, cursor_long.y);
 }

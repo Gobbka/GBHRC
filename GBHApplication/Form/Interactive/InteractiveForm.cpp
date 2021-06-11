@@ -25,7 +25,7 @@ void Application::InteractiveForm::drag_move(UI::InteractiveElement* element)
 {
 	auto pos = element->get_position();
 	auto cursor = Application::Context::point_to_center( Application::Context::get_client_cursor_point()); // Application::point_to_center
-	this->dragged = new DragStruct{ cursor.x - (LONG)pos.x ,cursor.y - (LONG)pos.y ,element};
+	this->dragged = new DragStruct{ cursor.x - pos.x ,cursor.y - pos.y ,element};
 }
 
 void Application::InteractiveForm::free_drag_move()
@@ -55,30 +55,29 @@ Application::InteractiveForm* Application::InteractiveForm::add_element(UI::Inte
 	return this;
 }
 
-void Application::InteractiveForm::on_mouse_move(int mx,int my)
+Application::Interaction::EventStatus Application::InteractiveForm::on_mouse_move(int mx,int my)
 {
 	if (this->hidden == true)
-		return;
+		return Interaction::EventStatus::none;
 
-	const POINT cursor_long = Application::Context::point_to_center(Context::get_client_cursor_point());
-	const Render::Position cursor = { cursor_long.x,cursor_long.y };
+	const Render::Position cursor = Application::Context::point_to_center(Render::Position{ (float)mx,(float)my });
 
 	if (this->dragged)
 	{
 		this->dragged->element->set_pos(cursor.x - this->dragged->dragged_offset.x, cursor.y - this->dragged->dragged_offset.y);
-		return;
+		return Interaction::EventStatus::handled;
 	}
 
 	const auto length = this->interactive_elements.size();
-	bool e_handled = false;
+	auto e_handled = Interaction::EventStatus::none;
 
-	for (auto i = length; i > 0; i--)
+	for (auto i = this->interactive_elements.size(); i > 0; i--)
 	{
 		auto* element = this->interactive_elements[i-1];
 		
 		if (
 			element->state.visible == UI::VISIBLE_STATE_VISIBLE &&
-			e_handled == false &&
+			e_handled == Interaction::EventStatus::none &&
 			element->point_belongs(cursor)
 			)
 		{
@@ -87,7 +86,7 @@ void Application::InteractiveForm::on_mouse_move(int mx,int my)
 				element->handle_mouse_enter();
 			}
 			element->handle_mouse_move(cursor.x, cursor.y);
-			e_handled = true;
+			e_handled = Interaction::EventStatus::handled;
 		}
 		else if (element->state.hovered == true)
 		{
@@ -95,26 +94,26 @@ void Application::InteractiveForm::on_mouse_move(int mx,int my)
 		}
 	}
 
-	return;
+	return e_handled;
 }
 
-void Application::InteractiveForm::on_mouse_scroll(short direction)
+Application::Interaction::EventStatus Application::InteractiveForm::on_mouse_scroll(short direction)
 {
 	if (this->hidden == true)
-		return;
+		return Interaction::EventStatus::none;
 	
 	this->foreach([direction](UI::InteractiveElement* element)
 		{
 			if (element->state.hovered == true)
 				element->handle_mouse_scroll(direction);
 		});
-	return;
+	return Interaction::EventStatus::none;
 }
 
-void Application::InteractiveForm::on_lbmouse_up()
+Application::Interaction::EventStatus Application::InteractiveForm::on_lbmouse_up()
 {
 	if (this->hidden == true)
-		return;
+		return Interaction::EventStatus::none;
 	
 	this->foreach([](UI::InteractiveElement* element)
 		{
@@ -124,19 +123,19 @@ void Application::InteractiveForm::on_lbmouse_up()
 
 	this->free_drag_move();
 
-	return;
+	return Interaction::EventStatus::none;
 }
 
-void Application::InteractiveForm::on_lbmouse_down()
+Application::Interaction::EventStatus Application::InteractiveForm::on_lbmouse_down()
 {
 	if (this->hidden == true)
-		return;
+		return Interaction::EventStatus::none;
 	
 	this->foreach([](UI::InteractiveElement* element)
 		{
 			if (element->state.hovered == true)
 				element->handle_mouse_down();
 		});
-	return;
+	return Interaction::EventStatus::none;
 }
 

@@ -3,7 +3,6 @@
 #include "../../../GBHRC/CheatApi/GBHRC/gbhrc.h"
 #include "../../configuration/drawconf.h"
 #include "../../Render/Scene/CanvasScene.h"
-#include "Events/WinIntEventHandler.h"
 
 namespace Application
 {
@@ -12,14 +11,14 @@ namespace Application
 		class InteractiveElement;
 	}
 
-	class InteractiveForm final : public Render::CanvasScene,public OS_EVENT_HANDLER
+	class InteractiveForm final : public Render::CanvasScene
 	{
 	private:
 		//void draw_element(Render::IRenderObject* obj, Render::DrawEvent* event) override;
 	public:
 		struct DragStruct
 		{
-			POINT dragged_offset;
+			Render::Position dragged_offset;
 			UI::InteractiveElement* element;
 		};
 	private:
@@ -34,10 +33,10 @@ namespace Application
 		void initialize_components(Render::Engine* pEngine) override;
 
 		InteractiveForm* add_element(UI::InteractiveElement* element);
-	protected:
-		void on_lbmouse_up() override;
-		void on_lbmouse_down() override;
-		void on_mouse_move(int mx,int my) override;
-		void on_mouse_scroll(short direction) override;
+	public:
+		Interaction::EventStatus on_lbmouse_up() ;
+		Interaction::EventStatus on_lbmouse_down() ;
+		Interaction::EventStatus on_mouse_move(int mx,int my) ;
+		Interaction::EventStatus on_mouse_scroll(short direction) ;
 	};
 }
