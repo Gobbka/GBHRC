@@ -1,7 +1,9 @@
 #pragma once
 
-class LuaEngine
+class LuaEngine final
 {
+private:
+	
 public:
 	static void execute(char* command);
 };

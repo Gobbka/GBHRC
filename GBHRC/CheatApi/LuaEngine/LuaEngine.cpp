@@ -28,16 +28,21 @@ int lua_wait(lua_State* L)
 }
 
 
+void add_globals(lua_State* state)
+{
+    luaL_openlibs(state);
+    // register func
+    lua_register(state, "print", lua_exit);
+    //lua_register(L, "wait", lua_wait);
+    // define globals
+    lua_pushboolean(state, 1);
+    lua_setglobal(state, "GBHRC");
+}
+
 void LuaEngine::execute(char* command)
 {
     lua_State* L = luaL_newstate();
-    luaL_openlibs(L);
-	// register func
-    lua_register(L, "print", lua_exit);
-    //lua_register(L, "wait", lua_wait);
-    // define globals
-    lua_pushboolean(L, 1);
-    lua_setglobal(L, "GBHRC");
+    add_globals(L);
 
     auto result = luaL_dostring(L, command);
 	
