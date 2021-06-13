@@ -13,8 +13,6 @@ namespace Application
 
 	class InteractiveForm final : public Render::CanvasScene
 	{
-	private:
-		//void draw_element(Render::IRenderObject* obj, Render::DrawEvent* event) override;
 	public:
 		struct DragStruct
 		{
@@ -33,6 +31,8 @@ namespace Application
 		void initialize_components(Render::Engine* pEngine) override;
 
 		InteractiveForm* add_element(UI::InteractiveElement* element);
+	public:
+		InteractiveForm(Render::Engine* pEngine);
 	public:
 		Interaction::EventStatus on_lbmouse_up() ;
 		Interaction::EventStatus on_lbmouse_down() ;

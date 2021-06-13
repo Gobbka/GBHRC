@@ -24,7 +24,7 @@ void Application::Render::CanvasScene::draw_element(Canvas::CanvasElement* obj, 
 
 void Application::Render::CanvasScene::initialize_components(Application::Render::Engine* pEngine)
 {
-	D3D11Canvas::alloc_vbuffer(pEngine, this->count_size());
+	D3D11Canvas::alloc_vbuffer(this->count_size());
 
 	UINT size = 0;
 
@@ -40,7 +40,7 @@ void Application::Render::CanvasScene::update(Render::Engine* pEngine)
 {
 	DRAW_ASSERT;
 
-	D3D11Canvas::update(pEngine);
+	D3D11Canvas::update();
 }
 
 void Application::Render::CanvasScene::render(Render::DrawEvent* draw_event)
@@ -89,6 +89,11 @@ void Application::Render::CanvasScene::set_indexes()
 Application::Canvas::CanvasElement* Application::Render::CanvasScene::element_at(UINT index)
 {
 	return this->pElements[index];
+}
+
+Application::Render::CanvasScene::CanvasScene(Render::Engine* pEngine)
+	: D3D11Canvas(pEngine)
+{
 }
 
 size_t Application::Render::CanvasScene::elements_length() const

@@ -57,8 +57,8 @@ void init_callback(Application::Render::Engine* instance)
 
     DEBUG_LOG("USER WELCOMED");
 	
-    menu = new Application::InteractiveForm();
-    friend_list = new Application::InteractiveForm();
+    menu = new Application::InteractiveForm(instance);
+    friend_list = new Application::InteractiveForm(instance);
 	
 	
     Application::Context::register_form(menu);
@@ -72,7 +72,7 @@ void init_callback(Application::Render::Engine* instance)
 
     DEBUG_LOG("MENU FORM REGISTERED");
 	
-    esp_scene = new Application::Render::CanvasScene();
+    esp_scene = new Application::Render::CanvasScene(instance);
     esp_scene->render_callback = GBHRC::Context::static_draw_callback;
     esp_scene->hidden = false;
     GBHRC::Context::instance()->set_esp_scene(esp_scene);

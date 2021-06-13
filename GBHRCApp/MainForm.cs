@@ -14,17 +14,12 @@ namespace GBHRCApp
 {
     public partial class MainForm : Form
     {
-        LuaForm form;
+        LuaForm luaForm;
 
         public MainForm()
         {
             InitializeComponent();
-            this.form = new LuaForm();
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            this.form.Show();
+            this.luaForm = new LuaForm();
         }
 
         private void run_proccess_button_Click(object sender, EventArgs e)
@@ -40,6 +35,12 @@ namespace GBHRCApp
         private void button4_Click(object sender, EventArgs e)
         {
             Process.Start("https://discord.gg/QNT6mwXVWg");
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            this.luaForm.Show();
+
         }
     }
 }

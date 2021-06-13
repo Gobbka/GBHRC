@@ -55,6 +55,11 @@ Application::InteractiveForm* Application::InteractiveForm::add_element(UI::Inte
 	return this;
 }
 
+Application::InteractiveForm::InteractiveForm(Render::Engine* pEngine)
+	: CanvasScene(pEngine)
+{
+}
+
 Application::Interaction::EventStatus Application::InteractiveForm::on_mouse_move(int mx,int my)
 {
 	if (this->hidden == true)

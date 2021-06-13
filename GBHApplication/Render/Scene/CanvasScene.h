@@ -52,6 +52,7 @@ namespace Application
 
 			Canvas::CanvasElement* element_at(UINT index);
 
+			CanvasScene(Render::Engine* pEngine);
 		};
 	}
 }

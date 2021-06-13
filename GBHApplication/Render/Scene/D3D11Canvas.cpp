@@ -16,32 +16,34 @@ UINT Application::Render::D3D11Canvas::size() const
 	return this->vertex_buffer->size;
 }
 
-void Application::Render::D3D11Canvas::update(Render::Engine* pEngine) const
+void Application::Render::D3D11Canvas::update() const
 {
 	if (this->vertex_buffer->size <= 0)
 		return;
 
-	auto* pContext = pEngine->pDevContext;
+	auto* pContext = engine->pDevContext;
 	D3D11_MAPPED_SUBRESOURCE subdata;
 	pContext->Map(this->vertex_buffer->buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &subdata);
 	memcpy(subdata.pData, this->vertex_buffer->data, this->vertex_buffer->size * sizeof(GVertex::Vertex));
 	pContext->Unmap(this->vertex_buffer->buffer, 0);
 }
 
-void Application::Render::D3D11Canvas::alloc_vbuffer(Render::Engine* pEngine,UINT size)
+void Application::Render::D3D11Canvas::alloc_vbuffer(UINT size)
 {
 	delete this->vertex_buffer;
-	this->vertex_buffer = pEngine->make_vertex_buffer(size);
+	this->vertex_buffer = engine->make_vertex_buffer(size);
 }
 
-Application::Render::D3D11Canvas::D3D11Canvas(GVertex::VertexBuffer* buffer)
+Application::Render::D3D11Canvas::D3D11Canvas(Render::Engine* pEngine,GVertex::VertexBuffer* buffer)
 {
 	this->vertex_buffer = buffer;
+	this->engine = pEngine;
 }
 
-Application::Render::D3D11Canvas::D3D11Canvas()
+Application::Render::D3D11Canvas::D3D11Canvas(Render::Engine* pEngine)
 {
 	this->vertex_buffer = nullptr;
+	this->engine = pEngine;
 }
 
 Application::Render::D3D11Canvas::~D3D11Canvas()
