@@ -1,3 +1,13 @@
+
+// LUA
+
+extern "C" {
+#include <lua.h>
+#include <lauxlib.h>
+#include <lualib.h>
+}
+
+
 #include <cstdio>
 
 #include "includes/win.h"
@@ -6,7 +16,6 @@
 
 #include "Form/Interactive/InteractiveForm.h"
 #include "Form/Canvas/CanvasForm.h"
-#include "Form/Canvas/elements/rectangle/rectangle.h"
 
 #include "Forms/Menu/MenuMain.h"
 
@@ -18,14 +27,13 @@
 #include <string>
 #include <sstream>
 
-
 #include "resource.h"
 #include "CheatApi/BrokeProtocol/classes/Guns/ShBallistic.h"
 #include "includes/clientdefs.h"
 
 #include "Asserts/VersionAssert/ClientVersionAssers.h"
 #include "Forms/FriendList/FriendList.h"
-#include "Forms/test/testScene.h"
+
 
 
 // static_assert(offsetof(BrokeProtocol::ShBallistic, recoil) == 0X01E4,"WRONG OFFSET");
@@ -41,6 +49,13 @@ HWND main__window;
 DirectX::SpriteFont* VisbyRoundCFFont;
 
 extern Mono::Context* MonoContext;
+
+int lua_exit(lua_State*L)
+{
+    DEBUG_LOG("EXIT");
+	
+    return 0;
+}
 
 void init_callback(Application::Render::Engine* instance)
 {
@@ -95,6 +110,24 @@ void init_callback(Application::Render::Engine* instance)
     DEBUG_LOG("SCENE'S APPENDED");
 
     esp_scene->initialize_components(instance);
+
+	//
+	// LUA TEST
+    auto* lua_code = (char*)LoadResource(DllInst, FindResourceW(DllInst, MAKEINTRESOURCEW(IDR_TEXT1), L"TEXT"));
+	
+    lua_State* L = luaL_newstate();
+    luaL_openlibs(L);
+    lua_register(L, "exit", lua_exit);
+	
+    auto result = luaL_dostring(L, lua_code);
+	if(result == LUA_OK)
+	{
+        DEBUG_LOG("LUA OK!!!");
+        lua_getglobal(L, "a");
+	}else
+	{
+        DEBUG_LOG("LUA ERROR!!! "<<lua_tostring(L,-1));
+	}
 }
 
 
@@ -108,7 +141,7 @@ void MainThread()
     freopen("CONOUT$", "w", stdout);
     freopen("CONIN$", "r", stdin);
 #endif
-
+	
     {
         MonoContext = Mono::Context::get_context();
 

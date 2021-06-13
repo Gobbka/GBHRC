@@ -220,6 +220,10 @@
       <Filter>Файлы ресурсов</Filter>
     </None>
     <None Include="..\resource\visby.spritefont" />
+    <None Include="lua\code.lua" />
+    <None Include="ribbon1.mfcribbon-ms">
+      <Filter>Файлы ресурсов</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="todo.txt" />

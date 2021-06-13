@@ -54,6 +54,14 @@ IDR_COMIS_SANS_FONT     SPRITEFONT              "C:\\Users\\Gobka\\source\\repos
 
 IDR_VISBY_ROUND         SPRITEFONT              "C:\\Users\\Gobka\\source\\repos\\GBHRC\\resource\\visby.spritefont"
 
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXT
+//
+
+IDR_TEXT1               TEXT                    "lua\\code.lua"
+
 #endif    // Русский (Россия) resources
 /////////////////////////////////////////////////////////////////////////////
 
