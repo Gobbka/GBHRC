@@ -63,7 +63,7 @@ var DocCore;
                 returns: new Types.Void()
             },
             {
-                name: "Player::move_by",
+                name: "Player:move_by",
                 params: [
                     {
                         type: new Types.Number(),

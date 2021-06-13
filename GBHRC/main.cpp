@@ -1,13 +1,4 @@
 
-// LUA
-
-extern "C" {
-#include <lua.h>
-#include <lauxlib.h>
-#include <lualib.h>
-}
-
-
 #include <cstdio>
 
 #include "includes/win.h"
@@ -32,6 +23,7 @@ extern "C" {
 #include "includes/clientdefs.h"
 
 #include "Asserts/VersionAssert/ClientVersionAssers.h"
+#include "CheatApi/LuaEngine/LuaEngine.h"
 #include "Forms/FriendList/FriendList.h"
 
 
@@ -50,12 +42,6 @@ DirectX::SpriteFont* VisbyRoundCFFont;
 
 extern Mono::Context* MonoContext;
 
-int lua_exit(lua_State*L)
-{
-    DEBUG_LOG("EXIT");
-	
-    return 0;
-}
 
 void init_callback(Application::Render::Engine* instance)
 {
@@ -113,21 +99,8 @@ void init_callback(Application::Render::Engine* instance)
 
 	//
 	// LUA TEST
-    auto* lua_code = (char*)LoadResource(DllInst, FindResourceW(DllInst, MAKEINTRESOURCEW(IDR_TEXT1), L"TEXT"));
 	
-    lua_State* L = luaL_newstate();
-    luaL_openlibs(L);
-    lua_register(L, "exit", lua_exit);
-	
-    auto result = luaL_dostring(L, lua_code);
-	if(result == LUA_OK)
-	{
-        DEBUG_LOG("LUA OK!!!");
-        lua_getglobal(L, "a");
-	}else
-	{
-        DEBUG_LOG("LUA ERROR!!! "<<lua_tostring(L,-1));
-	}
+    LuaEngine::execute((char*)LoadResource(DllInst, FindResourceW(DllInst, MAKEINTRESOURCEW(IDR_TEXT1), L"TEXT")));
 }
 
 
