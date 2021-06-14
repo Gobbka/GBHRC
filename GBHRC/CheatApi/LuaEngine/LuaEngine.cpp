@@ -11,7 +11,7 @@ extern "C" {
 
 LuaEngine::Context* LuaEngineContext;
 
-int lua_sendMessage(lua_State* L)
+int lua_showMessage(lua_State* L)
 {
     if (lua_isstring(L, 1))
     {
@@ -29,13 +29,21 @@ int lua_wait(lua_State* L)
     return 0;
 }
 
+int lua_messagebox(lua_State* L)
+{
+    MessageBoxA(0, lua_tostring(L, 1), "GBHRC", MB_OK);
+
+    return 0;
+}
+
 
 void add_globals(lua_State* state)
 {
     luaL_openlibs(state);
     // register func
-    lua_register(state, "sendMessage", lua_sendMessage);
+    lua_register(state, "showMessage", lua_showMessage);
     lua_register(state, "wait", lua_wait);
+    lua_register(state, "messageBox", lua_messagebox);
     // define globals
     lua_pushboolean(state, 1);
     lua_setglobal(state, "GBHRC");

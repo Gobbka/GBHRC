@@ -8,27 +8,9 @@ PipeServer::PipeServer(const char*address)
 {
 	// NamedPipe Local Variable
 	char szInputBuffer[1023];
-	char szOutputBuffer[1023];
+	char szOutputBuffer[1];
 	DWORD dwszInputBuffer = sizeof(szInputBuffer);
 	DWORD dwszOutputBuffer = sizeof(szOutputBuffer);
-
-	// ConnectNamedPipe Local Variable
-	BOOL bConnectNamedPipe;
-
-	// WriteFile Local Variable
-	BOOL bWriteFile;
-	char szWriteFileBuffer[1023] = "Hello from NamedPipe Server!";
-	DWORD dwWriteBufferSize = sizeof(szWriteFileBuffer);
-	DWORD dwNoBytesWrite;
-
-	// Flush Buffer
-	BOOL bFlushFileBuffer;
-
-	// ReadFile Local Variable
-	BOOL bReadFile;
-	char szReadFileBuffer[1023];
-	DWORD dwReadBufferSize = sizeof(szWriteFileBuffer);
-	DWORD dwNoBytesRead;
 
 	// CreateNamedPipe - Step 1
 	hCreateNamedPipe = CreateNamedPipe(
@@ -77,8 +59,6 @@ DWORD PipeServer::receive(char* buffer, unsigned int size)
 	) == FALSE) {
 		return 0;
 	}
-
-	DEBUG_LOG("DATA READING FROM CLIENT -> " << buffer);
 	
 	return bytes_readed;
 }

@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 using GBHRCApp.API;
 
 
@@ -29,6 +30,8 @@ namespace GBHRCApp
         FastColoredTextBoxNS.Style graystyle;
         FastColoredTextBoxNS.Style bluestyle;
         FastColoredTextBoxNS.Style pinkstyle;
+
+        bool attached = false;
         public LuaForm()
         {
             InitializeComponent();
@@ -40,11 +43,31 @@ namespace GBHRCApp
             pinkstyle = new FastColoredTextBoxNS.TextStyle(new SolidBrush(Color.FromArgb(0xc4,0x7b,0xad)), new SolidBrush(this.fastColoredTextBox1.BackColor), FontStyle.Bold);
 
             this.fastColoredTextBox1.Text = "-- a new blank space --join GBHRC discord channel";
+            update_files_list();
+        }
+
+        void update_files_list()
+        {
+            if (!Directory.Exists("lua"))
+                Directory.CreateDirectory("lua");
+
+            var files = Directory.GetFiles("lua");
+
+            foreach(var file in files)
+            {
+                ScriptBox.Items.Add(file);
+            }
         }
 
         public string get_text()
         {
             return this.fastColoredTextBox1.Text;
+        }
+
+        public void select_script_item(string path)
+        {
+            fastColoredTextBox1.Text = File.ReadAllText(path);
+            CurrentFileLabel.Text = path;
         }
 
         private void fastColoredTextBox1_Load(object sender, EventArgs e)
@@ -75,8 +98,13 @@ namespace GBHRCApp
 
         private void button2_Click(object sender, EventArgs e)
         {
-            char[] nigger = { 'd', 'g' };
-            GBHRCApi.SendLuaScript(nigger);
+            if (!attached)
+            {
+                GBHRCApi.AttachToProcess();
+                attached = true;
+            }
+
+            GBHRCApi.send_lua(get_text());
         }
 
         private void panel1_MouseDown(object sender, MouseEventArgs e)
@@ -87,6 +115,13 @@ namespace GBHRCApp
                 ReleaseCapture();
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
             }
+        }
+
+        private void ScriptBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string curItem = ScriptBox.SelectedItem.ToString();
+            select_script_item(curItem);
+            //
         }
     }
 }

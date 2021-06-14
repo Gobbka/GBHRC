@@ -35,8 +35,15 @@
             this.button1 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
+            this.ScriptBox = new System.Windows.Forms.ListBox();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.CurrentFileLabel = new System.Windows.Forms.Label();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.fastColoredTextBox1)).BeginInit();
             this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // button2
@@ -45,9 +52,9 @@
             this.button2.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(139)))), ((int)(((byte)(139)))));
-            this.button2.Location = new System.Drawing.Point(12, 403);
+            this.button2.Location = new System.Drawing.Point(6, 405);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(153, 39);
+            this.button2.Size = new System.Drawing.Size(155, 39);
             this.button2.TabIndex = 2;
             this.button2.Text = "LUA::SEND";
             this.button2.UseVisualStyleBackColor = false;
@@ -83,7 +90,7 @@
             this.fastColoredTextBox1.LeftBracket = '(';
             this.fastColoredTextBox1.LeftBracket2 = '{';
             this.fastColoredTextBox1.LineNumberColor = System.Drawing.Color.FromArgb(((int)(((byte)(144)))), ((int)(((byte)(145)))), ((int)(((byte)(139)))));
-            this.fastColoredTextBox1.Location = new System.Drawing.Point(12, 22);
+            this.fastColoredTextBox1.Location = new System.Drawing.Point(167, 48);
             this.fastColoredTextBox1.Name = "fastColoredTextBox1";
             this.fastColoredTextBox1.Paddings = new System.Windows.Forms.Padding(0);
             this.fastColoredTextBox1.RightBracket = ')';
@@ -91,7 +98,7 @@
             this.fastColoredTextBox1.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
             this.fastColoredTextBox1.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("fastColoredTextBox1.ServiceColors")));
             this.fastColoredTextBox1.ServiceLinesColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.fastColoredTextBox1.Size = new System.Drawing.Size(776, 375);
+            this.fastColoredTextBox1.Size = new System.Drawing.Size(627, 351);
             this.fastColoredTextBox1.TabIndex = 3;
             this.fastColoredTextBox1.Zoom = 100;
             this.fastColoredTextBox1.TextChanged += new System.EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(this.fastColoredTextBox1_TextChanged);
@@ -103,7 +110,7 @@
             this.button1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(139)))), ((int)(((byte)(139)))));
-            this.button1.Location = new System.Drawing.Point(635, 403);
+            this.button1.Location = new System.Drawing.Point(167, 405);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(153, 39);
             this.button1.TabIndex = 4;
@@ -130,12 +137,65 @@
             this.label1.Text = "GBHRC::INJECTOR";
             this.label1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseDown);
             // 
+            // ScriptBox
+            // 
+            this.ScriptBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.ScriptBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.ScriptBox.ForeColor = System.Drawing.SystemColors.Menu;
+            this.ScriptBox.FormattingEnabled = true;
+            this.ScriptBox.Location = new System.Drawing.Point(6, 48);
+            this.ScriptBox.Name = "ScriptBox";
+            this.ScriptBox.Size = new System.Drawing.Size(155, 351);
+            this.ScriptBox.TabIndex = 6;
+            this.ScriptBox.SelectedIndexChanged += new System.EventHandler(this.ScriptBox_SelectedIndexChanged);
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.panel2.Controls.Add(this.CurrentFileLabel);
+            this.panel2.Location = new System.Drawing.Point(167, 20);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(627, 22);
+            this.panel2.TabIndex = 7;
+            // 
+            // CurrentFileLabel
+            // 
+            this.CurrentFileLabel.AutoSize = true;
+            this.CurrentFileLabel.ForeColor = System.Drawing.SystemColors.Control;
+            this.CurrentFileLabel.Location = new System.Drawing.Point(3, 5);
+            this.CurrentFileLabel.Name = "CurrentFileLabel";
+            this.CurrentFileLabel.Size = new System.Drawing.Size(52, 13);
+            this.CurrentFileLabel.TabIndex = 8;
+            this.CurrentFileLabel.Text = "Empty file";
+            // 
+            // panel3
+            // 
+            this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.panel3.Controls.Add(this.label3);
+            this.panel3.Location = new System.Drawing.Point(6, 20);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(155, 22);
+            this.panel3.TabIndex = 8;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.ForeColor = System.Drawing.SystemColors.Control;
+            this.label3.Location = new System.Drawing.Point(3, 5);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(28, 13);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "Files";
+            // 
             // LuaForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(38)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.panel3);
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.ScriptBox);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.fastColoredTextBox1);
@@ -146,6 +206,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.fastColoredTextBox1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -156,5 +220,10 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ListBox ScriptBox;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label CurrentFileLabel;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Label label3;
     }
 }

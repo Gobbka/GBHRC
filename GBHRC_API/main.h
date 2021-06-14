@@ -5,5 +5,7 @@
 
 extern "C"{
 	DllExport BOOL GBHRCAPI inject();
-	DllExport BOOL GBHRCAPI SendLuaScript();
+	DllExport BOOL GBHRCAPI SendLuaScript(char*script);
+	DllExport BOOL GBHRCAPI AttachToProcess();
+	DllExport BOOL GBHRCAPI DeAttachFromProcess();
 }

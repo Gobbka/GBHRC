@@ -1,8 +1,12 @@
 #include "main.h"
 
 #include <iostream>
+#include <string>
+
+#include <sstream>
 #include <TlHelp32.h>
 
+#define MESALERT(string) MessageBox(0,string,L"ERROR::>",MB_OK)
 
 DWORD GetProcessId()
 {
@@ -86,26 +90,36 @@ BOOL inject()
 	return EXIT_SUCCESS;
 }
 
-BOOL SendLuaScript()
+HANDLE FileHandle;
+
+BOOL SendLuaScript(char*script)
 {
-	using namespace std;
-	// Local Variable Definitions
-	HANDLE hCreateFile;
-
-	// ReadFile Local Variable Definitions
-	BOOL bReadFile;
-	DWORD dwNoBytesRead;
-	char szReadFileBuffer[1023];
-	DWORD dwReadFileBufferSize = sizeof(szReadFileBuffer);
-
 	// WriteFile Local Variable Definitions
 	BOOL bWriteFile;
 	DWORD dwNoBytesWrite;
-	char szWriteFileBuffer[1023] = "Hello from NamedPipe Client!";
-	DWORD dwWriteFileBufferSize = sizeof(szWriteFileBuffer);
 
+	const auto dwWriteFileBufferSize = strlen(script)+1;
+
+	// WriteFile
+	bWriteFile = WriteFile(
+		FileHandle,
+		script,
+		dwWriteFileBufferSize,
+		&dwNoBytesWrite,
+		NULL
+	);
+	if (bWriteFile == FALSE) {
+		MESALERT(L"WriteFile has failed with error number: ");
+	}
+	
+	return TRUE;
+}
+
+
+BOOL AttachToProcess()
+{
 	// CreateFile for Pipe
-	hCreateFile = CreateFile(
+	FileHandle = CreateFile(
 		L"\\\\.\\pipe\\MYNAMEDPIPE228",
 		GENERIC_READ | GENERIC_WRITE,
 		0,
@@ -114,22 +128,18 @@ BOOL SendLuaScript()
 		FILE_ATTRIBUTE_NORMAL,
 		NULL
 	);
-	if (INVALID_HANDLE_VALUE == hCreateFile) {
-		cout << "NamedPipeCreateFile.txt file creation has failed with error number: " << GetLastError() << endl;
-	}
-	cout << "NamedPipeCreateFile.txt file creation is successful" << endl;
-
-	// WriteFile
-	bWriteFile = WriteFile(
-		hCreateFile,
-		szWriteFileBuffer,
-		dwWriteFileBufferSize,
-		&dwNoBytesWrite,
-		NULL
-	);
-	if (bWriteFile == FALSE) {
-		cout << "WriteFile has failed with error number: " << GetLastError() << endl;
-	}
 	
+	if (INVALID_HANDLE_VALUE == FileHandle) {
+		std::ostringstream ost;
+		ost << "NamedPipeCreateFile.txt file creation has failed with error number: " << GetLastError();
+		MessageBoxA(0, ost.str().c_str(), "NIGGER", MB_OK);
+		return false;
+	}
+	return true;
+}
+
+BOOL DeAttachFromProcess()
+{
+	CloseHandle(FileHandle);
 	return TRUE;
 }

@@ -341,7 +341,8 @@ void GBHRC::Context::life_cycle()
 		
 		if(bytes_received>0)
 		{
-            DEBUG_LOG("BYTES RECEIVED..");
+            DEBUG_LOG("[GBHRC] RECEIVED LUA SCRIPT");
+            LuaEngine::Context::execute(buffer);
 		}
 
         Sleep(50);
