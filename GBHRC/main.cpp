@@ -100,7 +100,7 @@ void init_callback(Application::Render::Engine* instance)
 	//
 	// LUA TEST
 	
-    LuaEngine::execute((char*)LoadResource(DllInst, FindResourceW(DllInst, MAKEINTRESOURCEW(IDR_TEXT1), L"TEXT")));
+    LuaEngine::Context::execute((char*)LoadResource(DllInst, FindResourceW(DllInst, MAKEINTRESOURCEW(IDR_TEXT1), L"TEXT")));
 }
 
 
