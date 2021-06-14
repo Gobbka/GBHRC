@@ -1,4 +1,6 @@
 #include "main.h"
+
+#include <iostream>
 #include <TlHelp32.h>
 
 
@@ -84,7 +86,50 @@ BOOL inject()
 	return EXIT_SUCCESS;
 }
 
-BOOL lua_send()
+BOOL SendLuaScript()
 {
-	return FALSE;
+	using namespace std;
+	// Local Variable Definitions
+	HANDLE hCreateFile;
+
+	// ReadFile Local Variable Definitions
+	BOOL bReadFile;
+	DWORD dwNoBytesRead;
+	char szReadFileBuffer[1023];
+	DWORD dwReadFileBufferSize = sizeof(szReadFileBuffer);
+
+	// WriteFile Local Variable Definitions
+	BOOL bWriteFile;
+	DWORD dwNoBytesWrite;
+	char szWriteFileBuffer[1023] = "Hello from NamedPipe Client!";
+	DWORD dwWriteFileBufferSize = sizeof(szWriteFileBuffer);
+
+	// CreateFile for Pipe
+	hCreateFile = CreateFile(
+		L"\\\\.\\pipe\\MYNAMEDPIPE228",
+		GENERIC_READ | GENERIC_WRITE,
+		0,
+		NULL,
+		OPEN_EXISTING,
+		FILE_ATTRIBUTE_NORMAL,
+		NULL
+	);
+	if (INVALID_HANDLE_VALUE == hCreateFile) {
+		cout << "NamedPipeCreateFile.txt file creation has failed with error number: " << GetLastError() << endl;
+	}
+	cout << "NamedPipeCreateFile.txt file creation is successful" << endl;
+
+	// WriteFile
+	bWriteFile = WriteFile(
+		hCreateFile,
+		szWriteFileBuffer,
+		dwWriteFileBufferSize,
+		&dwNoBytesWrite,
+		NULL
+	);
+	if (bWriteFile == FALSE) {
+		cout << "WriteFile has failed with error number: " << GetLastError() << endl;
+	}
+	
+	return TRUE;
 }

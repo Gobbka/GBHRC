@@ -93,6 +93,9 @@
     <ClCompile Include="CheatApi\LuaEngine\LuaEngine.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="CheatApi\PipeServer\PipeServer.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CheatApi\Hooks\d3d11\d3d11hook.h">
@@ -212,6 +215,9 @@
     <ClInclude Include="CheatApi\LuaEngine\LuaEngine.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="CheatApi\PipeServer\PipeServer.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GBHRC.rc">
@@ -226,12 +232,12 @@
       <Filter>Файлы ресурсов</Filter>
     </None>
     <None Include="..\resource\visby.spritefont" />
-    <None Include="lua\code.lua" />
     <None Include="ribbon1.mfcribbon-ms">
       <Filter>Файлы ресурсов</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="todo.txt" />
+    <Text Include="lua\code.lua" />
   </ItemGroup>
 </Project>

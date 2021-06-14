@@ -5,5 +5,5 @@
 
 extern "C"{
 	DllExport BOOL GBHRCAPI inject();
-	DllExport BOOL GBHRCAPI lua_send();
+	DllExport BOOL GBHRCAPI SendLuaScript();
 }

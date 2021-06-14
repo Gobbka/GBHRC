@@ -8,6 +8,8 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GBHRCApp.API;
+
 
 namespace GBHRCApp
 {
@@ -73,7 +75,8 @@ namespace GBHRCApp
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            char[] nigger = { 'd', 'g' };
+            GBHRCApi.SendLuaScript(nigger);
         }
 
         private void panel1_MouseDown(object sender, MouseEventArgs e)

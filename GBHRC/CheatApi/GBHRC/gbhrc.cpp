@@ -10,6 +10,8 @@
 #include "Form/Canvas/elements/rectangle/rectangle.h"
 #include "FloatColors.h"
 #include "../BrokeProtocol/classes/Guns/ShBallistic.h"
+#include "../LuaEngine/LuaEngine.h"
+#include "../PipeServer/PipeServer.h"
 #include "Render/Text/Text.h"
 
 extern DirectX::SpriteFont* VisbyRoundCFFont;
@@ -292,6 +294,8 @@ void GBHRC::Context::static_draw_callback(Application::Render::DrawEvent* event)
 
 void GBHRC::Context::life_cycle()
 {
+    auto* pipe_server = PipeServer::create("");
+	
 	while(true)
 	{
         if (BrokeProtocol::get_manager() != nullptr && BrokeProtocol::get_manager()->host != nullptr)
@@ -331,6 +335,14 @@ void GBHRC::Context::life_cycle()
                 continue;
             }
         }
+
+        char buffer[1024];
+        auto bytes_received = pipe_server->receive(buffer, 1024);
+		
+		if(bytes_received>0)
+		{
+            DEBUG_LOG("BYTES RECEIVED..");
+		}
 
         Sleep(50);
     }
