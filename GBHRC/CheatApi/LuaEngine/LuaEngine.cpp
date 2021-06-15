@@ -36,6 +36,64 @@ int lua_messagebox(lua_State* L)
     return 0;
 }
 
+int lua_get_player(lua_State*L)
+{
+	if(lua_isstring(L,2) && strcmp("local_player",lua_tostring(L,2))==0)
+	{
+        lua_pushinteger(L, (lua_Integer)BrokeProtocol::GetLocalPlayer());
+        return 1;
+	}
+
+	if(lua_isnumber(L,2))
+		lua_pushinteger(L, (lua_Integer)BrokeProtocol::GetPlayersCollection()->items->pointer()[lua_tointeger(L,2)]);
+	
+    DEBUG_LOG("GET_PLAYER");
+    return 1;
+}
+
+int lua_get_players(lua_State*L)
+{
+    luaL_newmetatable(L, "PlayerCollectionMetaTable");
+    lua_pushstring(L, "__index");
+    lua_pushcfunction(L, lua_get_player);
+    lua_settable(L, -3);
+
+	
+    lua_newtable(L);
+    luaL_getmetatable(L, "PlayerCollectionMetaTable");
+
+    lua_setmetatable(L, -2);
+
+    return 1;
+}
+
+int lua_workspace__index(lua_State*L)
+{
+
+    if (lua_isstring(L, 2) && strcmp("players", lua_tostring(L, 2)) == 0)
+    {
+        return lua_get_players(L);
+    }
+
+    lua_pushnil(L);
+    return 1;
+}
+
+int lua_getworkspace_metatable(lua_State*L)
+{
+    luaL_newmetatable(L, "WorkSpaceMetaTable");
+    lua_pushstring(L, "__index");
+    lua_pushcfunction(L, lua_workspace__index);
+    lua_settable(L, -3);
+
+
+    lua_newtable(L);
+    luaL_getmetatable(L, "WorkSpaceMetaTable");
+
+    lua_setmetatable(L, -2);
+	
+    return 1;
+}
 
 void add_globals(lua_State* state)
 {
@@ -44,9 +102,12 @@ void add_globals(lua_State* state)
     lua_register(state, "showMessage", lua_showMessage);
     lua_register(state, "wait", lua_wait);
     lua_register(state, "messageBox", lua_messagebox);
+    lua_register(state, "getPlayers", lua_get_players);
     // define globals
     lua_pushboolean(state, 1);
     lua_setglobal(state, "GBHRC");
+    lua_getworkspace_metatable(state);
+    lua_setglobal(state, "workspace");
 }
 
 LuaEngine::LuaExecution::LuaExecution(lua_State* state)
