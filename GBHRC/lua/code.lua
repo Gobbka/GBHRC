@@ -1,2 +1,1 @@
-
-print(workspace.players.local_player)
+Instance.new("Panel")

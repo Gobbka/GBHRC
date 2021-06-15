@@ -44,6 +44,12 @@ int lua_get_player(lua_State*L)
         return 1;
 	}
 
+    if (lua_isstring(L, 2) && strcmp("length", lua_tostring(L, 2)) == 0)
+    {
+        lua_pushnumber(L, (lua_Number)BrokeProtocol::GetPlayersCollection()->items->size());
+        return 1;
+    }
+
 	if(lua_isnumber(L,2))
 		lua_pushinteger(L, (lua_Integer)BrokeProtocol::GetPlayersCollection()->items->pointer()[lua_tointeger(L,2)]);
 	
@@ -79,6 +85,13 @@ int lua_workspace__index(lua_State*L)
     return 1;
 }
 
+int lua_instance_new(lua_State*L)
+{
+    lua_newuserdata(L, 5);
+	
+    return 0;
+}
+
 int lua_getworkspace_metatable(lua_State*L)
 {
     luaL_newmetatable(L, "WorkSpaceMetaTable");
@@ -108,6 +121,14 @@ void add_globals(lua_State* state)
     lua_setglobal(state, "GBHRC");
     lua_getworkspace_metatable(state);
     lua_setglobal(state, "workspace");
+
+    lua_newtable(state);
+    int indextab = lua_gettop(state);
+    lua_pushvalue(state, indextab);
+    lua_setglobal(state, "Instance");
+
+    lua_pushcfunction(state, lua_instance_new);
+    lua_setfield(state, -2, "new");
 }
 
 LuaEngine::LuaExecution::LuaExecution(lua_State* state)
