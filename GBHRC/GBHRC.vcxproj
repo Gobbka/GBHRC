@@ -175,6 +175,7 @@
     <ClCompile Include="CheatApi\Hooks\Detour\Detour.cpp" />
     <ClCompile Include="CheatApi\Hooks\wndproc\wndprochook.cpp" />
     <ClCompile Include="CheatApi\LuaEngine\LuaEngine.cpp" />
+    <ClCompile Include="CheatApi\LuaEngine\LuaUi.cpp" />
     <ClCompile Include="CheatApi\PipeServer\PipeServer.cpp" />
     <ClCompile Include="CheatApi\Tools\3dMatrix.cpp" />
     <ClCompile Include="Forms\FriendList\FriendList.cpp" />
@@ -213,6 +214,7 @@
     <ClInclude Include="CheatApi\Hooks\Detour\Detour.h" />
     <ClInclude Include="CheatApi\Hooks\wndproc\wndprochook.h" />
     <ClInclude Include="CheatApi\LuaEngine\LuaEngine.h" />
+    <ClInclude Include="CheatApi\LuaEngine\LuaUi.h" />
     <ClInclude Include="CheatApi\PipeServer\PipeServer.h" />
     <ClInclude Include="CheatApi\Tools\3dMatrix.h" />
     <ClInclude Include="Forms\FriendList\FriendList.h" />

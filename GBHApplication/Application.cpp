@@ -20,10 +20,34 @@ void Application::Context::implement(HWND hwnd)
 	AppContext = new Application::Context(hwnd);
 }
 
+void Application::Context::set_engine(Render::Engine* engine)
+{
+	AppContext->engine = engine;
+}
+
+Application::InteractiveForm* Application::Context::create_form()
+{
+	auto* form = new InteractiveForm(AppContext->engine);
+	AppContext->register_form(form);
+	return form;
+}
+
 void Application::Context::register_form(InteractiveForm* form)
 {
-	//form->set_resolution(AppResolution);
 	AppContext->_registered_forms.push_back(form);
+}
+
+void Application::Context::remove_form(InteractiveForm* form)
+{
+	auto* forms = &AppContext->_registered_forms;
+	for (int i = 0; i < forms->size(); i++)
+	{
+		if (form == (*forms)[i])
+		{
+			AppContext->_registered_forms.erase(forms->begin() + i);
+			return;
+		}
+	}
 }
 
 Application::Render::Resolution Application::Context::get_window_resolution()

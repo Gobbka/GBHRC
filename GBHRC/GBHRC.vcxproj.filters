@@ -96,6 +96,9 @@
     <ClCompile Include="CheatApi\PipeServer\PipeServer.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="CheatApi\LuaEngine\LuaUi.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CheatApi\Hooks\d3d11\d3d11hook.h">
@@ -216,6 +219,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="CheatApi\PipeServer\PipeServer.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="CheatApi\LuaEngine\LuaUi.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

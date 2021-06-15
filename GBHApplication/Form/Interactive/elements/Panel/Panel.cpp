@@ -55,6 +55,11 @@ Application::UI::ElementDescription Application::UI::Panel::get_desc()
 	return { true,"PANEL" };
 }
 
+Application::UI::InteractiveElement* Application::UI::Panel::create(InteractiveElementDesc* desc)
+{
+	return new Panel(desc->pos, desc->resolution, desc->color);
+}
+
 Application::UI::Panel::Panel(Render::Position position, Render::Resolution resolution, Render::Color color)
 	:Parent(position),
 	rect(position,resolution,color)

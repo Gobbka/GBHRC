@@ -33,6 +33,7 @@ namespace Application
 		InteractiveForm* add_element(UI::InteractiveElement* element);
 	public:
 		InteractiveForm(Render::Engine* pEngine);
+		~InteractiveForm();
 	public:
 		Interaction::EventStatus on_lbmouse_up() ;
 		Interaction::EventStatus on_lbmouse_down() ;

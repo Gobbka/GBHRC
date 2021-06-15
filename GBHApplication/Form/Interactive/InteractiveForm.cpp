@@ -60,6 +60,11 @@ Application::InteractiveForm::InteractiveForm(Render::Engine* pEngine)
 {
 }
 
+Application::InteractiveForm::~InteractiveForm()
+{
+	
+}
+
 Application::Interaction::EventStatus Application::InteractiveForm::on_mouse_move(int mx,int my)
 {
 	if (this->hidden == true)

@@ -58,12 +58,8 @@ void init_callback(Application::Render::Engine* instance)
 
     DEBUG_LOG("USER WELCOMED");
 	
-    menu = new Application::InteractiveForm(instance);
-    friend_list = new Application::InteractiveForm(instance);
-	
-	
-    Application::Context::register_form(menu);
-    Application::Context::register_form(friend_list);
+    menu = Application::Context::create_form();
+    friend_list = Application::Context::create_form();
 
     MainMenuMarkup(menu, instance);
     FiendListMarkup(friend_list, instance);

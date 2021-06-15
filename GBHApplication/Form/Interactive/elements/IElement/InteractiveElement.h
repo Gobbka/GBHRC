@@ -48,7 +48,8 @@ namespace Application
 
 			ElementDescription(bool has_children, const char* string_name);
 		};
-		
+
+
 		class InteractiveElement : public Render::IRenderObject
 		{
 		public:
@@ -128,6 +129,13 @@ namespace Application
 			virtual void handle_mouse_up();
 			virtual void handle_mouse_down();
 			virtual void handle_mouse_scroll(int delta);
+		};
+
+		struct InteractiveElementDesc {
+			InteractiveElement* (*create_func)(InteractiveElementDesc*);
+			Render::Position pos{0,0};
+			Render::Resolution resolution{0,0};
+			Render::Color color{0,0,0,0};
 		};
 	}
 }

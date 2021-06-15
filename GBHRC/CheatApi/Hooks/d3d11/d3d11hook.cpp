@@ -120,6 +120,7 @@ void Hooks::D3D11::HookedPresentFunction(IDXGISwapChain* self, UINT SyncInterval
 
 
 		pRenderEngine = new Application::Render::Engine(window, pDevice, self);
+		Application::Context::set_engine(pRenderEngine);
 		hook_init_callback(pRenderEngine);
 	}
 

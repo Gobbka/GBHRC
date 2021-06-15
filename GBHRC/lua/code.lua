@@ -1,1 +1,1 @@
-Instance.new("Panel")
+print(GUI.new())

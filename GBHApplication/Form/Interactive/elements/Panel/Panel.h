@@ -17,6 +17,8 @@ namespace Application
 			void add_elements(Render::CanvasScene* scene) override;
 		public:
 			ElementDescription get_desc() override;
+
+			static InteractiveElement* create(InteractiveElementDesc*desc);
 			
 			//UINT size() override
 			//{

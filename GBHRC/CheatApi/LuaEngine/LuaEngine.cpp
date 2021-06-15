@@ -2,6 +2,8 @@
 
 #include "../../includes/logger.h"
 #include "../BrokeProtocol/BrokeProtocol.h"
+#include "Form/Interactive/elements/IElement/InteractiveElement.h"
+#include "Form/Interactive/elements/Panel/Panel.h"
 
 extern "C" {
 #include <lua.h>
@@ -85,11 +87,19 @@ int lua_workspace__index(lua_State*L)
     return 1;
 }
 
-int lua_instance_new(lua_State*L)
+int lua_ui_new(lua_State*L)
 {
-    lua_newuserdata(L, 5);
 	
-    return 0;
+    Application::UI::InteractiveElementDesc* desc = (Application::UI::InteractiveElementDesc*)lua_newuserdata(L, sizeof(Application::UI::InteractiveElementDesc));
+    new (desc) Application::UI::InteractiveElementDesc;
+
+	if(lua_isstring(L,1) && strcmp("Panel",lua_tostring(L,1)) == 0)
+	{
+        desc->create_func = Application::UI::Panel::create;
+	}
+
+    lua_pushinteger(L, (lua_Integer)desc);
+    return 1;
 }
 
 int lua_getworkspace_metatable(lua_State*L)
@@ -122,16 +132,17 @@ void add_globals(lua_State* state)
     lua_getworkspace_metatable(state);
     lua_setglobal(state, "workspace");
 
-    lua_newtable(state);
-    int indextab = lua_gettop(state);
-    lua_pushvalue(state, indextab);
-    lua_setglobal(state, "Instance");
 
-    lua_pushcfunction(state, lua_instance_new);
-    lua_setfield(state, -2, "new");
+}
+
+lua_State* LuaEngine::LuaExecution::get_state()
+{
+    return this->state;
 }
 
 LuaEngine::LuaExecution::LuaExecution(lua_State* state)
+	:
+luaUi(state)
 {
     this->state = state;
 }

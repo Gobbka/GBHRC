@@ -27,13 +27,18 @@ namespace Application
 		HWND main_window;
 		Animator animator;
 		Render::Position cursor_point;
+		Render::Engine* engine;
 
 		Context(HWND window);
+
 		
 	public:
 		static void implement(HWND hwnd);
-
+		static void set_engine(Render::Engine* engine);
+		
+		static InteractiveForm* create_form();
 		static void register_form(InteractiveForm* form);
+		static void remove_form(InteractiveForm* form);
 
 		static Render::Resolution get_window_resolution();
 
