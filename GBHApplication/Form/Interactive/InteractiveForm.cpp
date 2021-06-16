@@ -55,6 +55,12 @@ Application::InteractiveForm* Application::InteractiveForm::add_element(UI::Inte
 	return this;
 }
 
+Application::InteractiveForm* Application::InteractiveForm::add_element(UI::InteractiveElementDesc* desc)
+{
+	this->add_element(desc->new_instance());
+	return this;
+}
+
 Application::InteractiveForm::InteractiveForm(Render::Engine* pEngine)
 	: CanvasScene(pEngine)
 {

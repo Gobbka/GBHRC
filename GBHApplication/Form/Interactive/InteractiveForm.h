@@ -8,6 +8,7 @@ namespace Application
 {
 
 	namespace UI {
+		struct InteractiveElementDesc;
 		class InteractiveElement;
 	}
 
@@ -31,6 +32,7 @@ namespace Application
 		void initialize_components(Render::Engine* pEngine) override;
 
 		InteractiveForm* add_element(UI::InteractiveElement* element);
+		InteractiveForm* add_element(UI::InteractiveElementDesc* desc);
 	public:
 		InteractiveForm(Render::Engine* pEngine);
 		~InteractiveForm();

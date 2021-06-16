@@ -24,21 +24,6 @@ void Application::UI::InteractiveElement::initialize(InteractiveForm* form)
 	this->on_initialize();
 }
 
-//void Application::UI::InteractiveElement::move_by(float x, float y)
-//{
-//	
-//	const auto size = this->size();
-//	GVertex::Vertex* ptr = this->get_ptr();
-//	for (UINT i = 0; i < size; i++)
-//	{
-//		const auto pos = ptr[i].pos;
-//		ptr[i].pos = DirectX::XMFLOAT3(pos.x + x, pos.y + y, 1.f);
-//	}
-//
-//	this->position.x += x;
-//	this->position.y += y;
-//}
-
 Application::UI::Parent* Application::UI::InteractiveElement::get_parent() const
 {
 	return this->_parent;
@@ -49,11 +34,7 @@ Application::InteractiveForm* Application::UI::InteractiveElement::get_form() co
 	return this->pForm;
 }
 
-
-//============================\\
-//  EVENT'S HANDLER'S
-//
-//
+#pragma region events handler
 
 void Application::UI::InteractiveElement::handle_mouse_move( float mX, float mY)
 {
@@ -85,5 +66,12 @@ void Application::UI::InteractiveElement::handle_mouse_down()
 void Application::UI::InteractiveElement::handle_mouse_scroll(int delta)
 {
 	this->onMouseScroll(this, delta);
+}
+
+#pragma endregion 
+
+Application::UI::InteractiveElement* Application::UI::InteractiveElementDesc::new_instance()
+{
+	return this->create_func(this);
 }
 

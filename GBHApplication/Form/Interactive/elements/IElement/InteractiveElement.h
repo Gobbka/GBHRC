@@ -136,6 +136,8 @@ namespace Application
 			Render::Position pos{0,0};
 			Render::Resolution resolution{0,0};
 			Render::Color color{0,0,0,0};
+
+			InteractiveElement* new_instance();
 		};
 	}
 }

@@ -1,1 +1,1 @@
-print(GUI.new())
+print(GUI.new():add_child():add_child())

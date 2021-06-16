@@ -9,6 +9,14 @@ extern "C" {
 }
 
 
+int LuaEngine::LuaUi::gui_add_element(lua_State* state)
+{
+    DEBUG_LOG("ADDING ELEMENT");
+    assert(lua_isuserdata(state, 1));
+	
+    return 1;
+}
+
 int LuaEngine::LuaUi::gui_new(lua_State* state)
 {
     DEBUG_LOG("MAKING GUI...");
@@ -18,7 +26,6 @@ int LuaEngine::LuaUi::gui_new(lua_State* state)
     Application::Context::register_form((Application::InteractiveForm*)ptr);
 
     luaL_getmetatable(state, "GuiMetaTable");
-	
     lua_setmetatable(state, -2);
 	
     return 1;
@@ -35,12 +42,6 @@ int LuaEngine::LuaUi::gui_destroy(lua_State* state)
 
 LuaEngine::LuaUi::LuaUi(lua_State*state)
 {
-
-    luaL_newmetatable(state, "GuiMetaTable");
-    lua_pushstring(state, "__gc");
-    lua_pushcfunction(state, LuaUi::gui_destroy);
-    lua_settable(state, -3);
-	
     lua_newtable(state);
     int indextab = lua_gettop(state);
     lua_pushvalue(state, indextab);
@@ -48,4 +49,15 @@ LuaEngine::LuaUi::LuaUi(lua_State*state)
 
     lua_pushcfunction(state, LuaUi::gui_new);
     lua_setfield(state, -2, "new");
+    lua_pushcfunction(state, LuaUi::gui_add_element);
+    lua_setfield(state, -2, "add_child");
+
+
+    luaL_newmetatable(state, "GuiMetaTable");
+    lua_pushstring(state, "__gc");
+    lua_pushcfunction(state, LuaUi::gui_destroy);
+    lua_settable(state, -3);
+    lua_pushstring(state, "__index");
+    lua_pushvalue(state, indextab);
+    lua_settable(state, -3);
 }
