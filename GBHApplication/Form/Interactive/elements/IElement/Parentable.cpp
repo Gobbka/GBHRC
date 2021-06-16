@@ -82,6 +82,8 @@ void Application::UI::Parent::on_initialize()
 			element->initialize(this->pForm);
 			element->move_by(this->offset_position.x, this->offset_position.y);
 		});
+
+	this->initialized = true;
 }
 
 Application::UI::Parent::Parent(Render::Position position)
@@ -132,6 +134,8 @@ Application::UI::InteractiveElement* Application::UI::Parent::element_at(UINT in
 Application::UI::Parent* Application::UI::Parent::add_element(InteractiveElement* element)
 {
 	this->elements.push_back(element);
+	if(this->initialized)
+		element->initialize(this->pForm);
 	return this;
 }
 
