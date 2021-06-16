@@ -29,7 +29,7 @@ namespace Application
 		void drag_move(UI::InteractiveElement* element);
 		void free_drag_move();
 
-		void initialize_components(Render::Engine* pEngine) override;
+		//void initialize_components() override;
 
 		InteractiveForm* add_element(UI::InteractiveElement* element);
 		InteractiveForm* add_element(UI::InteractiveElementDesc* desc);

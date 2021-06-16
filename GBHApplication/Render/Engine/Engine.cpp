@@ -213,7 +213,7 @@ DirectX::XMMATRIX Engine::get_ortho_matrix()
 void Engine::update_scene()
 {
 	for (auto* scene : pScenes)
-		scene->update(this);
+		scene->update();
 }
 
 

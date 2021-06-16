@@ -9,7 +9,7 @@ void Application::Render::CanvasScene::render_components(Render::DrawEvent*draw_
 	if (this->pre_render_callback != nullptr)
 		pre_render_callback(draw_event);
 
-	for (auto* element : this->pElements)
+	for (auto* element : this->elements)
 		CanvasScene::draw_element(element, draw_event);
 
 	if (this->render_callback != nullptr)
@@ -22,21 +22,21 @@ void Application::Render::CanvasScene::draw_element(Canvas::CanvasElement* obj, 
 		event->draw_element(obj);
 }
 
-void Application::Render::CanvasScene::initialize_components(Application::Render::Engine* pEngine)
-{
-	D3D11Canvas::alloc_vbuffer(this->count_size());
+//void Application::Render::CanvasScene::initialize_components(Application::Render::Engine* pEngine)
+//{
+//	D3D11Canvas::alloc_vbuffer(this->count_size());
+//
+//	UINT size = 0;
+//
+//	CanvasScene::foreach([&size, this](Canvas::CanvasElement* obj)
+//		{
+//			obj->set_index(size);
+//			obj->initialize(this);
+//			size += obj->size();
+//		});
+//}
 
-	UINT size = 0;
-
-	CanvasScene::foreach([&size, this](Canvas::CanvasElement* obj)
-		{
-			obj->set_index(size);
-			obj->initialize(this);
-			size += obj->size();
-		});
-}
-
-void Application::Render::CanvasScene::update(Render::Engine* pEngine)
+void Application::Render::CanvasScene::update() const
 {
 	DRAW_ASSERT;
 
@@ -54,26 +54,25 @@ void Application::Render::CanvasScene::render(Render::DrawEvent* draw_event)
 
 void Application::Render::CanvasScene::foreach(std::function<void(Canvas::CanvasElement*)> const& callback)
 {
-	for (auto* element : this->pElements)
+	for (auto* element : this->elements)
 		callback(element);
 }
 
 UINT Application::Render::CanvasScene::count_size()
 {
 	UINT size = 0;
-	for (auto* element : this->pElements)
+	for (auto* element : this->elements)
 		size += element->size();
 	return size;
 }
 
 void Application::Render::CanvasScene::add_element(Canvas::CanvasElement* object)
 {
-	if(this->components_initialized == false)
-	{
-		this->pElements.push_back(object);
-		return;
-	}
-	// TODO: make realloc memory
+	object->set_index(D3D11Canvas::get_allocated_size());
+	D3D11Canvas::alloc_vertexes(object->size());
+
+	this->elements.push_back(object);
+	object->initialize(this);
 }
 
 void Application::Render::CanvasScene::set_indexes()
@@ -88,7 +87,7 @@ void Application::Render::CanvasScene::set_indexes()
 
 Application::Canvas::CanvasElement* Application::Render::CanvasScene::element_at(UINT index)
 {
-	return this->pElements[index];
+	return this->elements[index];
 }
 
 Application::Render::CanvasScene::CanvasScene(Render::Engine* pEngine)
@@ -98,5 +97,5 @@ Application::Render::CanvasScene::CanvasScene(Render::Engine* pEngine)
 
 size_t Application::Render::CanvasScene::elements_length() const
 {
-	return this->pElements.size();
+	return this->elements.size();
 }

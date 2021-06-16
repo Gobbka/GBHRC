@@ -10,15 +10,39 @@ namespace Application
 		class D3D11Canvas
 		{
 		private:
+			struct Allocator
+			{
+				UINT start_size;
+				UINT step_size;
+				UINT allocated;
+				Allocator(UINT start_size,UINT step_size)
+				{
+					this->start_size = start_size;
+					this->step_size = step_size;
+					this->allocated = 0;
+				}
+			};
+		private:
 			Render::Engine* engine;
+			Allocator allocator;
+			
+			GVertex::VertexBuffer* alloc_vbuffer(UINT size) const;
+			void set_vbuffer(GVertex::VertexBuffer* buffer);
+
+			
 		protected:
 			GVertex::VertexBuffer* vertex_buffer;
 
 		protected:
-			UINT size() const;
-
+			UINT buffer_size() const;
+			UINT get_allocated_size() const;
+			
+			Render::Engine* get_engine() const;
+			
 			void update() const;
-			void alloc_vbuffer(UINT size);
+
+			void alloc_vertexes(UINT size);
+			
 		public:
 			GVertex::Vertex* get_ptr() const;
 			GVertex::VertexBuffer* get_vbuffer() const;

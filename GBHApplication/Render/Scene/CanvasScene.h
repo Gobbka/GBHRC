@@ -20,8 +20,7 @@ namespace Application
 		{
 		private:
 
-			std::vector<Canvas::CanvasElement*> pElements;
-			bool components_initialized = false;
+			std::vector<Canvas::CanvasElement*> elements;
 
 		protected:
 			virtual void render_components(Render::DrawEvent*event);
@@ -33,9 +32,9 @@ namespace Application
 			bool hidden = false;
 		public:
 			// public void's
-			virtual void initialize_components(Application::Render::Engine* pEngine);
+			//virtual void initialize_components(Application::Render::Engine* pEngine);
 
-			void update(Render::Engine* pEngine);
+			void update() const;
 			void render(Render::DrawEvent*event);
 
 			void foreach(std::function<void(Canvas::CanvasElement*)> const& callback);

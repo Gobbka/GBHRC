@@ -103,7 +103,7 @@ void FiendListMarkup(Application::InteractiveForm* form, Application::Render::En
 		frls_button_inner->add_element(btn);
 	}
 
-	form->initialize_components(pEngine);
+	//form->initialize_components(pEngine);
 
 	
 	frls_button_inner->onMouseScroll = [](Application::UI::UIElementEventArgs args,int delta)

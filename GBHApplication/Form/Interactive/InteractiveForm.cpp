@@ -36,18 +36,18 @@ void Application::InteractiveForm::free_drag_move()
 	this->dragged = nullptr;
 }
 
-void Application::InteractiveForm::initialize_components(Render::Engine* pEngine)
-{
-	
-	for (auto* element : this->interactive_elements)
-		element->add_elements(this);
-
-	CanvasScene::initialize_components(pEngine);
-
-	for (auto* element : this->interactive_elements)
-		element->initialize(this);
-	
-}
+//void Application::InteractiveForm::initialize_components(Render::Engine* pEngine)
+//{
+//	
+//	for (auto* element : this->interactive_elements)
+//		element->add_elements(this);
+//
+//	CanvasScene::initialize_components(pEngine);
+//
+//	for (auto* element : this->interactive_elements)
+//		element->initialize(this);
+//	
+//}
 
 Application::InteractiveForm* Application::InteractiveForm::add_element(UI::InteractiveElement* element)
 {

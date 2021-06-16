@@ -25,16 +25,13 @@
 #include "Asserts/VersionAssert/ClientVersionAssers.h"
 #include "CheatApi/LuaEngine/LuaEngine.h"
 #include "Forms/FriendList/FriendList.h"
-
-
-
-// static_assert(offsetof(BrokeProtocol::ShBallistic, recoil) == 0X01E4,"WRONG OFFSET");
+#include "Forms/test/testScene.h"
 
 HINSTANCE DllInst;
-Application::InteractiveForm* menu;
-Application::InteractiveForm* friend_list;
-Application::Render::CanvasScene* esp_scene;
-//Application::Canvas::CanvasForm* test_scene;
+//Application::InteractiveForm* menu;
+//Application::InteractiveForm* friend_list;
+//Application::Render::CanvasScene* esp_scene;
+Application::Render::CanvasScene* test_scene;
 void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam);
 HWND main__window;
 
@@ -58,40 +55,40 @@ void init_callback(Application::Render::Engine* instance)
 
     DEBUG_LOG("USER WELCOMED");
 	
-    menu = Application::Context::create_form();
-    friend_list = Application::Context::create_form();
+    //menu = Application::Context::create_form();
+    //friend_list = Application::Context::create_form();
 
-    MainMenuMarkup(menu, instance);
-    FiendListMarkup(friend_list, instance);
-    
-    menu->hidden = true;
-    friend_list->hidden = true;
+    //MainMenuMarkup(menu);
+    //FiendListMarkup(friend_list, instance);
+    //
+    //menu->hidden = true;
+    //friend_list->hidden = true;
 
-    DEBUG_LOG("MENU FORM REGISTERED");
+    //DEBUG_LOG("MENU FORM REGISTERED");
 	
-    esp_scene = new Application::Render::CanvasScene(instance);
-    esp_scene->render_callback = GBHRC::Context::static_draw_callback;
-    esp_scene->hidden = false;
-    GBHRC::Context::instance()->set_esp_scene(esp_scene);
-    GBHRC::Context::instance()->make_esp_boxes();
+    //esp_scene = new Application::Render::CanvasScene(instance);
+    //esp_scene->render_callback = GBHRC::Context::static_draw_callback;
+    //esp_scene->hidden = false;
+    //GBHRC::Context::instance()->set_esp_scene(esp_scene);
+    //GBHRC::Context::instance()->make_esp_boxes();
 
-    //test_scene = new Application::Canvas::CanvasForm();
-    //TestSceneMarkup(test_scene,instance);
-    //test_scene->render_callback = test_scene_draw;
+    test_scene = new Application::Render::CanvasScene(instance);
+    TestSceneMarkup(test_scene,instance);
+    test_scene->render_callback = test_scene_draw;
 
     DEBUG_LOG("ESP REGISTERED");
 	
     instance
-        ->append_scene(menu)
-        ->append_scene(friend_list)
+        //->append_scene(menu)
+        //->append_scene(friend_list)
 
-        //->append_scene(test_scene)
-		->append_scene(esp_scene)	
+        ->append_scene(test_scene)
+		//->append_scene(esp_scene)	
 	;
 
     DEBUG_LOG("SCENE'S APPENDED");
 
-    esp_scene->initialize_components(instance);
+    //esp_scene->initialize_components(instance);
 
 	//
 	// LUA TEST
@@ -166,11 +163,11 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
 
         if (wParam == VK_INSERT)
         {
-            bool state = menu->hidden;
+            //bool state = menu->hidden;
 
-            menu->hidden = !state;
-            friend_list->hidden = !state;
-            Hooks::WndProc::setInputState(!state);
+            //menu->hidden = !state;
+            //friend_list->hidden = !state;
+            //Hooks::WndProc::setInputState(!state);
         }
 
         if (wParam == VK_F5)

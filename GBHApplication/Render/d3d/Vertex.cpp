@@ -45,6 +45,18 @@ HRESULT GVertex::VertexBuffer::create(ID3D11Device* pDevice, GVertex::Vertex* da
 	return pDevice->CreateBuffer(&vertexBufferDesc, &subresourceData, &buffer);
 }
 
+void GVertex::VertexBuffer::copy_to(VertexBuffer* buffer) const
+{
+	const auto copy_size = min(this->size,buffer->size);
+	
+	memcpy(buffer->data, this->data, copy_size * sizeof(GVertex::Vertex));
+}
+
+void GVertex::VertexBuffer::copy_to(void* buffer, UINT copy_size) const
+{
+	memcpy(buffer, this->data, copy_size * sizeof(GVertex::Vertex));
+}
+
 GVertex::VertexBuffer::~VertexBuffer()
 {
 	if (buffer)

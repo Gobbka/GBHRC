@@ -31,6 +31,9 @@ namespace GVertex
 
 		HRESULT create(ID3D11Device* pDevice, GVertex::Vertex* data, UINT size);
 
+		void copy_to(VertexBuffer* buffer) const;
+		void copy_to(void* buffer,UINT size) const;
+
 		~VertexBuffer();
 	};
 
