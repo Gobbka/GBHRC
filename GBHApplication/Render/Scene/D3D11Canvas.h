@@ -38,8 +38,8 @@ namespace Application
 			UINT get_allocated_size() const;
 			
 			Render::Engine* get_engine() const;
-			
-			void update() const;
+
+			virtual void update() const;
 
 			void alloc_vertexes(UINT size);
 			

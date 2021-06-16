@@ -1,4 +1,5 @@
 #include "Button.h"
+#include "../../InteractiveForm.h"
 #include "../../../../Render/Engine/Engine.h"
 #include "../Label/Label.h"
 
@@ -100,10 +101,8 @@ Application::Render::Position Application::UI::Button::get_position()
 	return this->back_rect.get_position();
 }
 
-void Application::UI::Button::add_elements(Render::CanvasScene* scene)
+void Application::UI::Button::on_initialize()
 {
-	scene->add_element(&this->back_rect);
+	this->pForm->add_canvas_element(&this->back_rect);
 	this->text.initialize(this->pForm);
 }
-
-

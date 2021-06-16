@@ -44,20 +44,15 @@ void Application::UI::Panel::draw(Render::DrawEvent* event)
 	
 }
 
-void Application::UI::Panel::add_elements(Render::CanvasScene* scene)
+void Application::UI::Panel::on_initialize()
 {
-	scene->add_element((Canvas::CanvasElement*) & rect);
-	Parent::add_elements(scene);
+	this->pForm->add_canvas_element((Canvas::CanvasElement*) & rect);
+	Parent::on_initialize();
 }
 
 Application::UI::ElementDescription Application::UI::Panel::get_desc()
 {
 	return { true,"PANEL" };
-}
-
-Application::UI::InteractiveElement* Application::UI::Panel::create(InteractiveElementDesc* desc)
-{
-	return new Panel(desc->pos, desc->resolution, desc->color);
 }
 
 Application::UI::Panel::Panel(Render::Position position, Render::Resolution resolution, Render::Color color)
@@ -75,22 +70,6 @@ bool Application::UI::Panel::point_belongs(Render::Position point)
 		(point.x >= position.x && point.x <= position.x + resolution.width) &&
 		(point.y <= position.y && point.y >= (position.y - resolution.height));
 }
-
-//void Application::UI::Panel::init()
-//{
-//	this->rect.initialize(this->pForm);
-//	Parent::init();
-//}
-
-//void Application::UI::Panel::init()
-//{
-//
-//	Parent::set_index_offset(4);
-//	Parent::init();
-//
-//	this->set_pos(position.x, position.y);
-//	this->set_color(color.r, color.g, color.b);
-//}
 
 void Application::UI::Panel::set_pos(float x, float y)
 {

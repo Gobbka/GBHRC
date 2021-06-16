@@ -28,7 +28,6 @@ namespace Application
 			void handle_mouse_move(float mX, float mY) override;
 			void handle_mouse_scroll(int delta) override;
 
-			void add_elements(Render::CanvasScene* scene) override;
 			void on_initialize() override;
 		public:
 

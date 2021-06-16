@@ -70,8 +70,3 @@ void Application::UI::InteractiveElement::handle_mouse_scroll(int delta)
 
 #pragma endregion 
 
-Application::UI::InteractiveElement* Application::UI::InteractiveElementDesc::new_instance()
-{
-	return this->create_func(this);
-}
-

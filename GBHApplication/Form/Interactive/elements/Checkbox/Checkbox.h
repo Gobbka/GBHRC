@@ -2,6 +2,7 @@
 #include "../../../Canvas/elements/rectangle/rectangle.h"
 #include "../IElement/InteractiveElement.h"
 
+
 namespace Application
 {
 	namespace UI
@@ -21,7 +22,7 @@ namespace Application
 			bool is_checked();
 			ElementDescription get_desc() override;
 
-			void add_elements(Render::CanvasScene* scene) override;
+			void on_initialize() override;
 			
 			EventCallback onChange = default_event_callback;
 

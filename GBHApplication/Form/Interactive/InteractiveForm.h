@@ -32,7 +32,6 @@ namespace Application
 		//void initialize_components() override;
 
 		InteractiveForm* add_element(UI::InteractiveElement* element);
-		InteractiveForm* add_element(UI::InteractiveElementDesc* desc);
 	public:
 		InteractiveForm(Render::Engine* pEngine);
 		~InteractiveForm();

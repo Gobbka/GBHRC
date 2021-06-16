@@ -259,17 +259,17 @@ void GBHRC::Context::make_esp_boxes()
         auto* element = new Application::Canvas::Rectangle{ {0,0},{30,30},{0,0.8,0} };
         element->render = false;
         element->wireframed = true;
-        esp_scene->add_element(element);
+        esp_scene->add_canvas_element(element);
 
         auto* max_health = new Application::Canvas::Rectangle{ {0,0},{30,10},{1.f,0,0} };
         max_health->render = false;
         max_health->wireframed = false;
-        esp_scene->add_element(max_health);
+        esp_scene->add_canvas_element(max_health);
 
         auto* health = new Application::Canvas::Rectangle{ {0,0},{30,10},{0,0.8,0} };
         health->render = false;
         health->wireframed = false;
-        esp_scene->add_element(health);
+        esp_scene->add_canvas_element(health);
 
         this->esp_boxes.push_back(
             new EspBox{

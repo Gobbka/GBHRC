@@ -28,7 +28,7 @@
 #include "Forms/test/testScene.h"
 
 HINSTANCE DllInst;
-//Application::InteractiveForm* menu;
+Application::InteractiveForm* menu;
 //Application::InteractiveForm* friend_list;
 //Application::Render::CanvasScene* esp_scene;
 Application::Render::CanvasScene* test_scene;
@@ -55,10 +55,10 @@ void init_callback(Application::Render::Engine* instance)
 
     DEBUG_LOG("USER WELCOMED");
 	
-    //menu = Application::Context::create_form();
+    menu = Application::Context::create_form();
     //friend_list = Application::Context::create_form();
 
-    //MainMenuMarkup(menu);
+    MainMenuMarkup(menu);
     //FiendListMarkup(friend_list, instance);
     //
     //menu->hidden = true;
@@ -79,10 +79,10 @@ void init_callback(Application::Render::Engine* instance)
     DEBUG_LOG("ESP REGISTERED");
 	
     instance
-        //->append_scene(menu)
+        ->append_scene(menu)
         //->append_scene(friend_list)
 
-        ->append_scene(test_scene)
+        //->append_scene(test_scene)
 		//->append_scene(esp_scene)	
 	;
 

@@ -46,5 +46,5 @@ extern DirectX::SpriteFont* VisbyRoundCFFont;
 
 void MainMenuMarkup(Application::InteractiveForm* form)
 {
-	form->add_element(background_panel);
+	form->add_element(background_panel->add_element(aim_checkbox));
 }

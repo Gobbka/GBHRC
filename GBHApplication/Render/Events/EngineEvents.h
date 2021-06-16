@@ -37,8 +37,8 @@ namespace Application
 			void draw_vertex(UINT count,UINT offset=0) const;
 
 			void mask_draw_begin() const;
-			void mask_discard_begin(bool increase = true);
-			void mask_discard_end(bool decrease = true);
+			void mask_discard_begin(bool increase_layer = true);
+			void mask_discard_end(bool decrease_layer = true);
 			void mask_set_depth(BYTE new_index);
 			BYTE mask_get_depth();
 			void mask_clear();

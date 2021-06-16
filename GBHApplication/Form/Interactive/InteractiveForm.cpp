@@ -52,12 +52,7 @@ void Application::InteractiveForm::free_drag_move()
 Application::InteractiveForm* Application::InteractiveForm::add_element(UI::InteractiveElement* element)
 {
 	this->interactive_elements.push_back(element);
-	return this;
-}
-
-Application::InteractiveForm* Application::InteractiveForm::add_element(UI::InteractiveElementDesc* desc)
-{
-	this->add_element(desc->new_instance());
+	element->initialize(this);
 	return this;
 }
 

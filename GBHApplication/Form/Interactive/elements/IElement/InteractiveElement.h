@@ -61,7 +61,7 @@ namespace Application
 			Parent*          _parent = nullptr;
 		protected:
 			static void default_event_callback (UIElementEventArgs args) {}
-			virtual void on_initialize(){};
+			virtual void on_initialize(){}
 		public:
 			// public variables
 			UINT unique_id = 0;
@@ -102,7 +102,6 @@ namespace Application
 			void draw(Render::DrawEvent* event) override PURE;
 
 			void initialize(InteractiveForm*form);
-			virtual void add_elements(Render::CanvasScene*scene) {};
 		protected:
 			
 		public:
@@ -129,15 +128,6 @@ namespace Application
 			virtual void handle_mouse_up();
 			virtual void handle_mouse_down();
 			virtual void handle_mouse_scroll(int delta);
-		};
-
-		struct InteractiveElementDesc {
-			InteractiveElement* (*create_func)(InteractiveElementDesc*);
-			Render::Position pos{0,0};
-			Render::Resolution resolution{0,0};
-			Render::Color color{0,0,0,0};
-
-			InteractiveElement* new_instance();
 		};
 	}
 }

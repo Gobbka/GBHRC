@@ -14,11 +14,9 @@ namespace Application
 			Canvas::Rectangle rect;
 			
 			void draw(Render::DrawEvent*event) override;
-			void add_elements(Render::CanvasScene* scene) override;
+			void on_initialize() override;
 		public:
 			ElementDescription get_desc() override;
-
-			static InteractiveElement* create(InteractiveElementDesc*desc);
 			
 			//UINT size() override
 			//{

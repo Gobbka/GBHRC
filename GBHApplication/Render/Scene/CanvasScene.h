@@ -32,13 +32,12 @@ namespace Application
 			bool hidden = false;
 		public:
 			// public void's
-			//virtual void initialize_components(Application::Render::Engine* pEngine);
 
-			void update() const;
+			void update() const override;
 			void render(Render::DrawEvent*event);
 
 			void foreach(std::function<void(Canvas::CanvasElement*)> const& callback);
-			void add_element(Canvas::CanvasElement* object);
+			void add_canvas_element(Canvas::CanvasElement* object);
 
 		private:
 			UINT count_size();

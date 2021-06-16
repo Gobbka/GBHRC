@@ -49,7 +49,7 @@ namespace Application
 
 			Render::Resolution get_resolution() override;
 			Render::Position get_position() override;
-			void add_elements(Render::CanvasScene* scene) override;
+			void on_initialize() override;
 
 			EventCallback onClick = default_event_callback;
 

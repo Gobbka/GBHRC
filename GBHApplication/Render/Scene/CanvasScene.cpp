@@ -66,7 +66,7 @@ UINT Application::Render::CanvasScene::count_size()
 	return size;
 }
 
-void Application::Render::CanvasScene::add_element(Canvas::CanvasElement* object)
+void Application::Render::CanvasScene::add_canvas_element(Canvas::CanvasElement* object)
 {
 	object->set_index(D3D11Canvas::get_allocated_size());
 	D3D11Canvas::alloc_vertexes(object->size());

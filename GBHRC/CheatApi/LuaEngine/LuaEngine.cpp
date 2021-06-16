@@ -90,16 +90,16 @@ int lua_workspace__index(lua_State*L)
 int lua_ui_new(lua_State*L)
 {
 	
-    Application::UI::InteractiveElementDesc* desc = (Application::UI::InteractiveElementDesc*)lua_newuserdata(L, sizeof(Application::UI::InteractiveElementDesc));
-    new (desc) Application::UI::InteractiveElementDesc;
+ //   Application::UI::InteractiveElementDesc* desc = (Application::UI::InteractiveElementDesc*)lua_newuserdata(L, sizeof(Application::UI::InteractiveElementDesc));
+ //   new (desc) Application::UI::InteractiveElementDesc;
 
-	if(lua_isstring(L,1) && strcmp("Panel",lua_tostring(L,1)) == 0)
-	{
-        desc->create_func = Application::UI::Panel::create;
-	}
+	//if(lua_isstring(L,1) && strcmp("Panel",lua_tostring(L,1)) == 0)
+	//{
+ //       desc->create_func = Application::UI::Panel::create;
+	//}
 
-    lua_pushinteger(L, (lua_Integer)desc);
-    return 1;
+ //   lua_pushinteger(L, (lua_Integer)desc);
+    return 0;
 }
 
 int lua_getworkspace_metatable(lua_State*L)

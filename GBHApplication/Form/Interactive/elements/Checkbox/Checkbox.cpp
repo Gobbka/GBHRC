@@ -1,5 +1,6 @@
 #include "Checkbox.h"
 #include "../../../../Render/Engine/Engine.h"
+#include "../../InteractiveForm.h"
 
 void Application::UI::Checkbox::draw(Render::DrawEvent* event)
 {
@@ -16,9 +17,9 @@ Application::UI::ElementDescription Application::UI::Checkbox::get_desc()
 	return { false,"CHECKBOX" };
 }
 
-void Application::UI::Checkbox::add_elements(Render::CanvasScene* scene)
+void Application::UI::Checkbox::on_initialize()
 {
-	scene->add_element(&this->rectangle);
+	this->pForm->add_canvas_element(&this->rectangle);
 }
 
 
