@@ -125,7 +125,6 @@ void MainMenuMarkup(Application::InteractiveForm* form)
 		)
 		;
 
-
 	{
 		auto resolut = background_panel->get_resolution();
 		background_panel->move_by(-200, resolut.height / 2);

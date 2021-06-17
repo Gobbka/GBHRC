@@ -135,7 +135,11 @@ Application::UI::Parent* Application::UI::Parent::add_element(InteractiveElement
 {
 	this->elements.push_back(element);
 	if(this->initialized)
+	{
 		element->initialize(this->pForm);
+		auto pos = this->get_position();
+		element->move_by(pos.x, pos.y);
+	}
 	return this;
 }
 
