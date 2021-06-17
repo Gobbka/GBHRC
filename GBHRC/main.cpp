@@ -30,7 +30,7 @@
 HINSTANCE DllInst;
 Application::InteractiveForm* menu;
 //Application::InteractiveForm* friend_list;
-//Application::Render::CanvasScene* esp_scene;
+Application::Render::CanvasScene* esp_scene;
 Application::Render::CanvasScene* test_scene;
 void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam);
 HWND main__window;
@@ -61,16 +61,16 @@ void init_callback(Application::Render::Engine* instance)
     MainMenuMarkup(menu);
     //FiendListMarkup(friend_list, instance);
     //
-    //menu->hidden = true;
+    menu->hidden = true;
     //friend_list->hidden = true;
 
     //DEBUG_LOG("MENU FORM REGISTERED");
 	
-    //esp_scene = new Application::Render::CanvasScene(instance);
-    //esp_scene->render_callback = GBHRC::Context::static_draw_callback;
-    //esp_scene->hidden = false;
-    //GBHRC::Context::instance()->set_esp_scene(esp_scene);
-    //GBHRC::Context::instance()->make_esp_boxes();
+    esp_scene = new Application::Render::CanvasScene(instance);
+    esp_scene->render_callback = GBHRC::Context::static_draw_callback;
+    esp_scene->hidden = false;
+    GBHRC::Context::instance()->set_esp_scene(esp_scene);
+    GBHRC::Context::instance()->make_esp_boxes();
 
     test_scene = new Application::Render::CanvasScene(instance);
     TestSceneMarkup(test_scene,instance);
@@ -83,7 +83,7 @@ void init_callback(Application::Render::Engine* instance)
         //->append_scene(friend_list)
 
         //->append_scene(test_scene)
-		//->append_scene(esp_scene)	
+		->append_scene(esp_scene)	
 	;
 
     DEBUG_LOG("SCENE'S APPENDED");
@@ -163,11 +163,11 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
 
         if (wParam == VK_INSERT)
         {
-            //bool state = menu->hidden;
+            bool state = menu->hidden;
 
-            //menu->hidden = !state;
+            menu->hidden = !state;
             //friend_list->hidden = !state;
-            //Hooks::WndProc::setInputState(!state);
+            Hooks::WndProc::setInputState(!state);
         }
 
         if (wParam == VK_F5)

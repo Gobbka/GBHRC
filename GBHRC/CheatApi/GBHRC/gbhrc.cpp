@@ -49,7 +49,7 @@ void GBHRC::Context::render_callback(Application::Render::DrawEvent* event)
             EspPlayer player;
             {
                 auto* sh_player = player_iterator.item();
-            	if(sh_player == local_player || sh_player->health <= 0)
+            	if(sh_player == local_player || sh_player == nullptr || sh_player->health <= 0)
                     continue;
                 auto* pos = sh_player->rotationT->get_position();
                 const auto point_top = Matrix4X4::worldToScreen(view_matrix, projection_m, { pos->x,pos->y + 1.5f,pos->z }, camera_resolution);

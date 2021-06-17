@@ -93,7 +93,6 @@ void MainMenuMarkup(Application::InteractiveForm* form)
 		->add_element(aim_button)
 		->add_element(misc_button)
 
-
 		// inners
 
 		// ESP INNER
@@ -123,7 +122,7 @@ void MainMenuMarkup(Application::InteractiveForm* form)
 			->add_element(new Application::UI::Label{ {60,-90},"NO RECOIL",VisbyRoundCFFont,{FLOAT_COLORS_WHITE} })
 			, false
 		)
-		;
+	;
 
 	{
 		auto resolut = background_panel->get_resolution();
