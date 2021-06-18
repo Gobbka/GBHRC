@@ -10,6 +10,9 @@ namespace LuaEngine
 	{
 	private:
 		static int instance_new(lua_State* state);
+		static int instance_destroy(lua_State* state);
+		static int instance_index(lua_State* state);
+		static int instance_new_index(lua_State* state);
 		
 		static int gui_add_element(lua_State*state);
 		static int gui_new(lua_State* state);

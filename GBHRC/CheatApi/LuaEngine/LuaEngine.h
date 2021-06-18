@@ -15,7 +15,7 @@ namespace LuaEngine
 		
 		LuaExecution(lua_State*state);
 		void dostring(char* command);
-		bool is_events_subscribed();
+		bool can_close();
 
 		~LuaExecution();
 	};

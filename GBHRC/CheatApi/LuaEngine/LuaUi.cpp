@@ -7,27 +7,35 @@
 using namespace Application;
 
 extern Application::Render::Engine* pRenderEngine;
+extern DirectX::SpriteFont* VisbyRoundCFFont;
+
 extern "C" {
 #include <lua.h>
 #include <lauxlib.h>
 }
 
-struct CreateInstanceDesc;
+struct LuaUIInstance;
 
-typedef UI::InteractiveElement* (*CreateInstanceFunc)(CreateInstanceDesc*);
+typedef UI::InteractiveElement* (*CreateInstanceFunc)(LuaUIInstance*);
 
-struct CreateInstanceDesc
+struct LuaUIInstance
 {
+    UI::InteractiveElement* element_ptr;
     CreateInstanceFunc create_func;
     Render::Position pos;
     Render::Color color;
     Render::Resolution resolution;
     DirectX::SpriteFont* font;
     const char* text;
+
+	UI::InteractiveElement* create()
+	{
+        return this->create_func(this);
+	}
 };
 
 
-UI::InteractiveElement* CreateButton(CreateInstanceDesc* desc)
+UI::InteractiveElement* CreateButton(LuaUIInstance* desc)
 {
     return new UI::Button(desc->pos, desc->resolution, desc->color, desc->font, desc->text);
 }
@@ -35,38 +43,67 @@ UI::InteractiveElement* CreateButton(CreateInstanceDesc* desc)
 int LuaEngine::LuaUi::instance_new(lua_State* state)
 {
     DEBUG_LOG("CREATE INSTANCE");
-	if(lua_isstring(state,1))
-	{
-        lua_pushnil(state);
-        return 1;
-	}
-
-    static std::map<const char*, CreateInstanceFunc>* name_func_map;
-	if(name_func_map ==nullptr)
-	{
-        name_func_map = new std::map<const char*, CreateInstanceFunc>();
-        (*name_func_map)["Button"] = CreateButton;
-	}
+    assert(lua_isstring(state, -1));
+    CreateInstanceFunc create_func=nullptr;
 	
-    auto* instance_type = lua_tostring(state, 1);
+    const auto* instance_type = lua_tostring(state, 1);
 
-    auto* create_func = (*name_func_map)[instance_type];
+    if (strcmp(instance_type, "Button") == 0)
+        create_func = CreateButton;
+    
 	if(!create_func)
 	{
+        DEBUG_LOG("PUSH NIL");
         lua_pushnil(state);
         return 1;
 	}
 
-    void* mem = lua_newuserdata(state, sizeof(CreateInstanceDesc));
-    // todo: connect with meta table
+    auto* mem = (LuaUIInstance*)lua_newuserdata(state, sizeof(LuaUIInstance));
+    luaL_setmetatable(state,"InstanceMetaTable");
+
+    mem->pos = { 0,0 };
+    mem->resolution = { 300,300 };
+    mem->color = { .4f,.4f,.4f,1.f };
+    mem->text = "NULL";
+    mem->create_func = create_func;
+    mem->font = VisbyRoundCFFont;
+	
 	
     return 1;
+}
+
+int LuaEngine::LuaUi::instance_destroy(lua_State* state)
+{
+    ((LuaUIInstance*)lua_touserdata(state, 1))->element_ptr->~InteractiveElement();
+    return 0;
+}
+
+int LuaEngine::LuaUi::instance_index(lua_State* state)
+{
+    lua_pushnumber(state, 228);
+    return 1;
+}
+
+int LuaEngine::LuaUi::instance_new_index(lua_State* state)
+{
+    assert(lua_isuserdata(state, -3)); // LuaUIInstance
+    assert(lua_isstring(state, -2)); // field
+	
+	
+    return 0;
 }
 
 int LuaEngine::LuaUi::gui_add_element(lua_State* state)
 {
     DEBUG_LOG("ADDING ELEMENT");
+    assert(lua_isuserdata(state, 2));
     assert(lua_isuserdata(state, 1));
+
+    auto* form = (InteractiveForm*)lua_touserdata(state, 1);
+    auto* gakba = (LuaUIInstance*)lua_touserdata(state, 2);
+    gakba->element_ptr = gakba->create();
+
+    form->add_element(gakba->element_ptr);
 	
     return 1;
 }
@@ -123,5 +160,15 @@ LuaEngine::LuaUi::LuaUi(lua_State*state)
     // instance function's
     lua_pushcfunction(state, LuaUi::instance_new);
     lua_setfield(state, -2, "new");
-	
+
+    luaL_newmetatable(state, "InstanceMetaTable");
+    lua_pushstring(state, "__gc");
+    lua_pushcfunction(state, LuaUi::instance_destroy);
+    lua_settable(state, -3);
+    lua_pushstring(state, "__index");
+    lua_pushcfunction(state, LuaUi::instance_index);
+    lua_settable(state, -3);
+    lua_pushstring(state, "__newindex");
+    lua_pushcfunction(state, LuaUi::instance_new_index);
+    lua_settable(state, -3);
 }

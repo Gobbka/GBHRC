@@ -1,3 +1,9 @@
--- print(GUI.new():add_child():add_child()) --
+local screen_gui = GUI.new();
+local button = Instance.new("Button");
 
-Instance.new()
+
+print(screen_gui);
+print(button);
+
+screen_gui:add_child(button);
+

@@ -157,9 +157,9 @@ void LuaEngine::LuaExecution::dostring(char* command)
     }
 }
 
-bool LuaEngine::LuaExecution::is_events_subscribed()
+bool LuaEngine::LuaExecution::can_close()
 {
-    return this->events_subscribed;
+    return false;
 }
 
 LuaEngine::LuaExecution::~LuaExecution()
@@ -177,7 +177,7 @@ void LuaEngine::Context::execute(char* command)
 
     auto* lua_exec = new LuaExecution(L);
     lua_exec->dostring(command);
-	if(lua_exec->is_events_subscribed())
+	if(!lua_exec->can_close())
 	{
         LuaEngineContext->lua_list.push_back(lua_exec);
 	}else

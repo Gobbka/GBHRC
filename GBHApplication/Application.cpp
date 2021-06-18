@@ -1,6 +1,7 @@
 #include "Application.h"
 #include "Form/Interactive/InteractiveForm.h"
 #include "Form/Interactive/Events/WinIntEventHandler.h"
+#include "Render/Engine/Engine.h"
 
 Application::Context* AppContext;
 
@@ -35,6 +36,7 @@ Application::InteractiveForm* Application::Context::create_form()
 void Application::Context::register_form(InteractiveForm* form)
 {
 	AppContext->_registered_forms.push_back(form);
+	AppContext->engine->append_scene(form);
 }
 
 void Application::Context::remove_form(InteractiveForm* form)
