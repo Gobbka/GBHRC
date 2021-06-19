@@ -39,14 +39,14 @@ namespace Application
 		struct ElementDescription
 		{
 			// flags
-
-			bool has_children : 1;
+			
+			bool can_be_parent : 1;
 
 			// other
 
 			const char* string_name;
 
-			ElementDescription(bool has_children, const char* string_name);
+			ElementDescription(bool can_be_parent, const char* string_name);
 		};
 
 

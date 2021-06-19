@@ -1,9 +1,9 @@
 #include "InteractiveElement.h"
 #include "../../InteractiveForm.h"
 
-Application::UI::ElementDescription::ElementDescription(bool has_children, const char* string_name)
+Application::UI::ElementDescription::ElementDescription(bool can_be_parent, const char* string_name)
 {
-	this->has_children = has_children;
+	this->can_be_parent = can_be_parent;
 	this->string_name = string_name;
 }
 

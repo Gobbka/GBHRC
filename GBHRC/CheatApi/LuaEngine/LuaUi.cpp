@@ -1,6 +1,7 @@
 ﻿#include "LuaUi.h"
 #include "Form/Interactive/InteractiveForm.h"
 #include "Form/Interactive/elements/Button/Button.h"
+#include "Form/Interactive/elements/Panel/Panel.h"
 #include <map>
 #include "LuaEngine.h"
 
@@ -14,60 +15,77 @@ extern "C" {
 #include <lauxlib.h>
 }
 
-struct LuaUIInstance;
-
-typedef UI::InteractiveElement* (*CreateInstanceFunc)(LuaUIInstance*);
-
-struct LuaUIInstance
+namespace LuaEngine
 {
-    UI::InteractiveElement* element_ptr;
-    CreateInstanceFunc create_func;
-    Render::Position pos;
-    Render::Color color;
-    Render::Resolution resolution;
-    DirectX::SpriteFont* font;
-    const char* text;
+    struct LuaUIInstance
+    {
+        UI::InteractiveElement* element_ptr;
+        Render::Position pos;
+        Render::Color color;
+        Render::Resolution resolution;
+        DirectX::SpriteFont* font;
+        const char* text;
+    };
 
-	UI::InteractiveElement* create()
-	{
-        return this->create_func(this);
-	}
-};
+}
 
-
-UI::InteractiveElement* CreateButton(LuaUIInstance* desc)
+Application::UI::InteractiveElement* LuaEngine::InstanceFactory::create_button(LuaEngine::LuaUIInstance*instance)
 {
-    return new UI::Button(desc->pos, desc->resolution, desc->color, desc->font, desc->text);
+    return new UI::Button(instance->pos, instance->resolution, instance->color, instance->font, instance->text);
+}
+
+Application::UI::InteractiveElement* LuaEngine::InstanceFactory::create_panel(LuaUIInstance* instance)
+{
+    return new UI::Panel(instance->pos, instance->resolution, instance->color);
+}
+
+bool LuaEngine::InstanceFactory::create_by_name(const char* name, LuaUIInstance* instance)
+{
+    // i try to make this using map, but map want index using strcmp
+	
+    if (strcmp(name, "Button") == 0)
+    {
+        instance->element_ptr = InstanceFactory::create_button(instance);
+        return true;
+    }
+
+    if (strcmp(name, "Panel") == 0)
+    {
+        instance->element_ptr = InstanceFactory::create_panel(instance);
+        return true;
+    }
+	
+    return false;
 }
 
 int LuaEngine::LuaUi::instance_new(lua_State* state)
 {
     DEBUG_LOG("CREATE INSTANCE");
     assert(lua_isstring(state, -1));
-    CreateInstanceFunc create_func=nullptr;
 	
     const auto* instance_type = lua_tostring(state, 1);
 
-    if (strcmp(instance_type, "Button") == 0)
-        create_func = CreateButton;
-    
-	if(!create_func)
+    auto* mem = (LuaUIInstance*)lua_newuserdata(state, sizeof(LuaUIInstance));
+    luaL_setmetatable(state, "InstanceMetaTable");
+
+    mem->pos = { 0,0 };
+    mem->resolution = { 300,300 };
+    mem->color = { .4f,.4f,.4f,1.f };
+    mem->text = "NULL";
+    mem->font = VisbyRoundCFFont;
+	
+	if(!InstanceFactory::create_by_name(instance_type,mem))
 	{
         DEBUG_LOG("PUSH NIL");
         lua_pushnil(state);
         return 1;
 	}
 
-    auto* mem = (LuaUIInstance*)lua_newuserdata(state, sizeof(LuaUIInstance));
-    luaL_setmetatable(state,"InstanceMetaTable");
-
-    mem->pos = { 0,0 };
-    mem->resolution = { 300,300 };
-    mem->color = { .4f,.4f,.4f,1.f };
-    mem->text = "NULL";
-    mem->create_func = create_func;
-    mem->font = VisbyRoundCFFont;
 	
+
+    // ash.MouseButton1Down:Connect(function()
+	
+
 	
     return 1;
 }
@@ -80,7 +98,18 @@ int LuaEngine::LuaUi::instance_destroy(lua_State* state)
 
 int LuaEngine::LuaUi::instance_index(lua_State* state)
 {
-    lua_pushnumber(state, 228);
+    if(lua_isstring(state,2))
+    {
+        DEBUG_LOG("STRING");
+        auto* field = lua_tostring(state, 2);
+    	if(strcmp(field,"add_child")==0)
+    	{
+            lua_pushcfunction(state, LuaEngine::LuaUi::instance_add_child);
+            return 1;
+    	}
+    }
+
+    lua_pushnil(state);
     return 1;
 }
 
@@ -89,8 +118,23 @@ int LuaEngine::LuaUi::instance_new_index(lua_State* state)
     assert(lua_isuserdata(state, -3)); // LuaUIInstance
     assert(lua_isstring(state, -2)); // field
 	
-	
     return 0;
+}
+
+int LuaEngine::LuaUi::instance_add_child(lua_State* state)
+{
+    assert(lua_isuserdata(state, 1));
+    assert(lua_isuserdata(state, 2));
+
+    auto* parent = (LuaUIInstance*)lua_touserdata(state, 1);
+    auto* new_child = (LuaUIInstance*)lua_touserdata(state, 2);
+
+    assert(parent->element_ptr != new_child->element_ptr);
+    assert(parent->element_ptr->get_desc().can_be_parent);
+
+    ((UI::Parent*)parent->element_ptr)->add_element(new_child->element_ptr);
+
+    return 1;
 }
 
 int LuaEngine::LuaUi::gui_add_element(lua_State* state)
@@ -101,7 +145,6 @@ int LuaEngine::LuaUi::gui_add_element(lua_State* state)
 
     auto* form = (InteractiveForm*)lua_touserdata(state, 1);
     auto* gakba = (LuaUIInstance*)lua_touserdata(state, 2);
-    gakba->element_ptr = gakba->create();
 
     form->add_element(gakba->element_ptr);
 	
