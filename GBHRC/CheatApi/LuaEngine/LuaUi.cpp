@@ -25,6 +25,17 @@ namespace LuaEngine
         Render::Resolution resolution;
         DirectX::SpriteFont* font;
         const char* text;
+
+    	void set_text(const char*text)
+    	{ 	
+    		if(this->element_ptr!=nullptr && this->element_ptr->get_desc().has_text)
+    		{
+    			// todo: complete
+    		}else
+    		{
+                this->text = text;
+    		}
+    	}
     };
 
 }
@@ -115,8 +126,19 @@ int LuaEngine::LuaUi::instance_index(lua_State* state)
 
 int LuaEngine::LuaUi::instance_new_index(lua_State* state)
 {
+	
     assert(lua_isuserdata(state, -3)); // LuaUIInstance
     assert(lua_isstring(state, -2)); // field
+	// -1 value
+
+    auto* instance = (LuaUIInstance*)lua_touserdata(state, -3);
+    auto* field = lua_tostring(state, -2);
+	
+	if(strcmp("text",field)==0 && lua_isstring(state,-1))
+	{
+        instance->set_text(lua_tostring(state, -1));
+        return 0;
+	}
 	
     return 0;
 }
@@ -125,10 +147,13 @@ int LuaEngine::LuaUi::instance_add_child(lua_State* state)
 {
     assert(lua_isuserdata(state, 1));
     assert(lua_isuserdata(state, 2));
-
-    auto* parent = (LuaUIInstance*)lua_touserdata(state, 1);
+	
     auto* new_child = (LuaUIInstance*)lua_touserdata(state, 2);
+    auto* parent = (LuaUIInstance*)lua_touserdata(state, 1);
 
+    assert(parent->element_ptr);
+    assert(new_child->element_ptr);
+	
     assert(parent->element_ptr != new_child->element_ptr);
     assert(parent->element_ptr->get_desc().can_be_parent);
 

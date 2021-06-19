@@ -5,6 +5,7 @@ Application::UI::ElementDescription::ElementDescription(bool can_be_parent, cons
 {
 	this->can_be_parent = can_be_parent;
 	this->string_name = string_name;
+	this->has_text = false;
 }
 
 void Application::UI::InteractiveElement::set_margin(float x, float y)

@@ -8,7 +8,7 @@ namespace Application
 	namespace UI
 	{
 
-		class Label final : public InteractiveElement, public Render::Text
+		class Label : public InteractiveElement, public Render::Text
 		{
 		private:
 			Render::Position position;

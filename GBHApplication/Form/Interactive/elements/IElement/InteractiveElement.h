@@ -41,6 +41,7 @@ namespace Application
 			// flags
 			
 			bool can_be_parent : 1;
+			bool has_text : 1;
 
 			// other
 
@@ -64,13 +65,11 @@ namespace Application
 			virtual void on_initialize(){}
 		public:
 			// public variables
+			
 			UINT unique_id = 0;
 
 			ElementStyles styles;
 			ElementState  state;
-			
-			// for debug purposes
-			// or what u wanna
 		public:
 			// public getters
 
@@ -96,7 +95,6 @@ namespace Application
 
 			void set_margin(float x,float y);
 			void set_margin(float x,float y,float z,float w);
-			
 		public:
 			// public voids
 			void draw(Render::DrawEvent* event) override PURE;
