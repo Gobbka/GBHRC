@@ -49,6 +49,15 @@ void Application::InteractiveForm::free_drag_move()
 //	
 //}
 
+bool Application::InteractiveForm::has_element(UI::InteractiveElement* element)
+{
+	for (auto* in_element : this->interactive_elements)
+		if (element == in_element)
+			return true;
+	return false;
+}
+
+
 Application::InteractiveForm* Application::InteractiveForm::add_element(UI::InteractiveElement* element)
 {
 	this->interactive_elements.push_back(element);

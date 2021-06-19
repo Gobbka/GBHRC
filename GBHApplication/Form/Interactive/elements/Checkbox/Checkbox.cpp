@@ -14,7 +14,7 @@ bool Application::UI::Checkbox::is_checked()
 
 Application::UI::ElementDescription Application::UI::Checkbox::get_desc()
 {
-	return { false,"CHECKBOX" };
+	return ElementDescription(false,"CHECKBOX" );
 }
 
 void Application::UI::Checkbox::on_initialize()

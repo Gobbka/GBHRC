@@ -23,7 +23,7 @@ namespace Application
 	namespace UI
 	{
 
-		class Button final : public InteractiveElement
+		class Button final : public Label
 		{
 		private:
 			void draw(Render::DrawEvent* event) override;
@@ -32,7 +32,6 @@ namespace Application
 		private:
 			Canvas::Rectangle back_rect;
 		public:
-			UI::Label text;
 
 			Render::Color non_active_color;
 

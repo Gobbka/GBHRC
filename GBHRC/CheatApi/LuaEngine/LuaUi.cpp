@@ -30,6 +30,7 @@ namespace LuaEngine
     	{ 	
     		if(this->element_ptr!=nullptr && this->element_ptr->get_desc().has_text)
     		{
+                ((UI::Label*)this->element_ptr)->set_text(text);
     			// todo: complete
     		}else
     		{
@@ -134,11 +135,17 @@ int LuaEngine::LuaUi::instance_new_index(lua_State* state)
     auto* instance = (LuaUIInstance*)lua_touserdata(state, -3);
     auto* field = lua_tostring(state, -2);
 	
-	if(strcmp("text",field)==0 && lua_isstring(state,-1))
+	if(strcmp("Text",field)==0 && lua_isstring(state,-1))
 	{
         instance->set_text(lua_tostring(state, -1));
         return 0;
 	}
+
+    if (strcmp("Visible", field) == 0 && lua_isboolean(state, -1))
+    {
+        instance->element_ptr->state.visible = (UI::VisibleState)lua_toboolean(state,-1);
+        return 0;
+    }
 	
     return 0;
 }

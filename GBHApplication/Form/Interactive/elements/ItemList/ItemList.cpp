@@ -30,7 +30,7 @@ Application::UI::ItemList::ItemList(Render::Position position, Render::Resolutio
 
 Application::UI::ElementDescription Application::UI::ItemList::get_desc()
 {
-	return { true,"ItemList" };
+	return ElementDescription( true,"ItemList" ,false);
 }
 
 void Application::UI::ItemList::handle_mouse_scroll(int delta)

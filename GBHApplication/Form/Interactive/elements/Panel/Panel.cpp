@@ -52,7 +52,7 @@ void Application::UI::Panel::on_initialize()
 
 Application::UI::ElementDescription Application::UI::Panel::get_desc()
 {
-	return { true,"PANEL" };
+	return ElementDescription(true, "PANEL");
 }
 
 Application::UI::Panel::Panel(Render::Position position, Render::Resolution resolution, Render::Color color)

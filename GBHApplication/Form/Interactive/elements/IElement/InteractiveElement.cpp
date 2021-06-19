@@ -1,11 +1,11 @@
 #include "InteractiveElement.h"
 #include "../../InteractiveForm.h"
 
-Application::UI::ElementDescription::ElementDescription(bool can_be_parent, const char* string_name)
+Application::UI::ElementDescription::ElementDescription(bool can_be_parent, const char* string_name,bool has_text)
 {
 	this->can_be_parent = can_be_parent;
 	this->string_name = string_name;
-	this->has_text = false;
+	this->has_text = has_text;
 }
 
 void Application::UI::InteractiveElement::set_margin(float x, float y)

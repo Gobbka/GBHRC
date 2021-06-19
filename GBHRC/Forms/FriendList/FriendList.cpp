@@ -20,7 +20,7 @@ extern HMODULE DllInst;
 void add_friend(Application::UI::InteractiveElement*element)
 {
 	auto* button = (Application::UI::Button*)element;
-	auto* friend_name = (wchar_t*)button->text.get_text();
+	auto* friend_name = (wchar_t*)button->get_text();
 	auto* context = GBHRC::Context::instance();
 	if (context->is_friend(friend_name))
 	{
@@ -58,7 +58,7 @@ void update_friend_list(int offset)
 			if (player == local_player)
 				goto check_player;
 
-			button->text.set_text((const wchar_t*)&iterator.item()->username->array);
+			button->set_text((const wchar_t*)&iterator.item()->username->array);
 			button->state.visible = Application::UI::VISIBLE_STATE_VISIBLE;
 
 			if (GBHRC::Context::instance()->is_friend(player->username->array))

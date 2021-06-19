@@ -47,7 +47,7 @@ namespace Application
 
 			const char* string_name;
 
-			ElementDescription(bool can_be_parent, const char* string_name);
+			ElementDescription(bool can_be_parent, const char* string_name,bool has_text=false);
 		};
 
 

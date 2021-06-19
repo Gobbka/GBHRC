@@ -6,17 +6,16 @@
 void Application::UI::Button::draw(Render::DrawEvent* event)
 {
 	event->draw_element(&this->back_rect);
-	this->text.draw(event);
+	Label::draw(event);
 }
 
 Application::UI::Button::Button(Render::Position position, Render::Resolution resolution, Render::Color color, DirectX::SpriteFont* font,
                                 const char* text)
-		: back_rect(position,resolution,color),
-			text(position,text,font,{1,1,1}),
-		non_active_color(color)
+	:
+	Label(position, text, font, {1,1,1}, resolution),
+	back_rect(position,resolution,color),
+	non_active_color(color)
 {
-	this->text.set_resolution(resolution);	
-	this->text.set_text(text);
 }
 
 bool Application::UI::Button::point_belongs(Render::Position point)
@@ -44,7 +43,7 @@ void Application::UI::Button::set_temp_color(Render::Color color)
 
 Application::UI::ElementDescription Application::UI::Button::get_desc()
 {
-	return { true,"BUTTON" };
+	return ElementDescription(false,"BUTTON",true );
 }
 
 void Application::UI::Button::set_color(Render::Color color)
@@ -56,13 +55,14 @@ void Application::UI::Button::set_color(Render::Color color)
 void Application::UI::Button::move_by(float x, float y)
 {
 	this->back_rect.move_by(x, y);
-	this->text.move_by(x, y);
+	Label::move_by(x, y);
 }
 
 Application::UI::InteractiveElement* Application::UI::Button::set_resolution(float width, float height)
 {
 	this->back_rect.set_resolution(width, height);
-	this->text.limitRect = { (UINT)width,(UINT)height };
+	Label::set_resolution(width, height);
+	
 	return this;
 }
 
@@ -104,5 +104,4 @@ Application::Render::Position Application::UI::Button::get_position()
 void Application::UI::Button::on_initialize()
 {
 	this->pForm->add_canvas_element(&this->back_rect);
-	this->text.initialize(this->pForm);
 }
