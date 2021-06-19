@@ -13,10 +13,6 @@ namespace Application
 		private:
 			Render::Position position;
 		public:
-
-			Render::Resolution get_resolution() override;
-			
-			ElementDescription get_desc() override;
 			
 			bool scalable = false;
 			
@@ -25,14 +21,18 @@ namespace Application
 			Label(Render::Position position, const char* text,DirectX::SpriteFont*font, Render::Color color);
 			Label(Render::Position position, const char* text,DirectX::SpriteFont*font, Render::Color color, Render::Resolution limitResolution);
 
-			bool point_belongs(Render::Position point) override;
-
 			InteractiveElement* set_resolution(float width, float height) override;
+			InteractiveElement* set_resolution(Render::Resolution resolution);
 			
 			void set_pos(float x, float y) override;
 			void set_color(Render::Color color) override;
 			void move_by(float x, float y) override;
-			Render::Position get_position() override;
+
+			bool point_belongs(Render::Position point) override;
+			
+			Render::Position   get_position() override;
+			Render::Resolution get_resolution() override;
+			ElementDescription get_desc() override;
 		};
 	}
 

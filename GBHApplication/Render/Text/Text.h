@@ -21,12 +21,13 @@ namespace Application
 			DirectX::SpriteFont* font;
 			const char* text;
 			Render::Resolution text_resolution;
-		public:
 			bool wchar = false;
+		public:
 			
 			TextAlign text_align;
 			Render::Color color;
 			Render::Resolution limitRect;
+			
 			
 		public:
 			Text(DirectX::SpriteFont* font, TextAlign text_align);
@@ -36,7 +37,7 @@ namespace Application
 			void set_text(const char*text);
 			void set_text(const wchar_t*text);
 
-			char* get_text();
+			virtual char* get_text();
 
 			Render::Resolution get_resolution();
 			

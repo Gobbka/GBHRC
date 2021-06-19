@@ -15,7 +15,7 @@ Application::UI::Button::Button(Render::Position position, Render::Resolution re
 			text(position,text,font,{1,1,1}),
 		non_active_color(color)
 {
-	this->text.limitRect = resolution;	
+	this->text.set_resolution(resolution);	
 	this->text.set_text(text);
 }
 

@@ -9,12 +9,12 @@ Application::Render::Resolution Application::UI::Label::get_resolution()
 
 Application::UI::ElementDescription Application::UI::Label::get_desc()
 {
-	return { false,"LABEl" };
+	return { false,"LABEL" };
 }
 
 void Application::UI::Label::draw(Render::DrawEvent* event)
 {
-	Text::DrawInRect(event, this->position,this->scalable);
+	Text::DrawInRect(event, this->position, this->scalable);
 }
 
 Application::UI::Label::Label(Render::Position position, const char* text, DirectX::SpriteFont* font, Render::Color color)
@@ -43,6 +43,13 @@ bool Application::UI::Label::point_belongs(Render::Position point)
 
 Application::UI::InteractiveElement* Application::UI::Label::set_resolution(float width, float height)
 {
+	this->limitRect = { (UINT)width,(UINT)height };
+	return this;
+}
+
+Application::UI::InteractiveElement* Application::UI::Label::set_resolution(Render::Resolution resolution)
+{
+	this->limitRect = resolution;
 	return this;
 }
 
