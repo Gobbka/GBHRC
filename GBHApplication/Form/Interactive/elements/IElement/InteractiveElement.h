@@ -58,8 +58,8 @@ namespace Application
 		protected:
 			// protected variables
 
-			InteractiveForm* pForm = nullptr;
-			Parent*          _parent = nullptr;
+			InteractiveForm* form = nullptr;
+			Parent*          parent = nullptr;
 		protected:
 			static void default_event_callback (UIElementEventArgs args) {}
 			virtual void on_initialize(){}
@@ -89,7 +89,7 @@ namespace Application
 		public:
 			// public setters
 
-			FIELD_SETTER(Parent*, _parent);
+			FIELD_SETTER(Parent*, parent);
 
 			virtual InteractiveElement* set_resolution(float width,float height) PURE;
 

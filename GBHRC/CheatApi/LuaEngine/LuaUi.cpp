@@ -146,6 +146,23 @@ int LuaEngine::LuaUi::instance_new_index(lua_State* state)
         instance->element_ptr->state.visible = (UI::VisibleState)lua_toboolean(state,-1);
         return 0;
     }
+
+	if(strcmp("Parent",field)==0 && lua_isuserdata(state,-1))
+	{
+        assert(lua_isuserdata(state, -1));
+
+        auto* parent = (LuaUIInstance*)lua_touserdata(state, -1);
+
+        assert(instance->element_ptr);
+        assert(parent->element_ptr);
+
+        assert(instance->element_ptr != parent->element_ptr);
+        assert(parent->element_ptr->get_desc().can_be_parent);
+
+        ((UI::Parent*)parent->element_ptr)->add_element(instance->element_ptr);
+
+        return 0;
+	}
 	
     return 0;
 }

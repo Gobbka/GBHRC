@@ -21,18 +21,18 @@ void Application::UI::InteractiveElement::set_margin(float x, float y, float z, 
 
 void Application::UI::InteractiveElement::initialize(InteractiveForm* form)
 {
-	this->pForm = form;
+	this->form = form;
 	this->on_initialize();
 }
 
 Application::UI::Parent* Application::UI::InteractiveElement::get_parent() const
 {
-	return this->_parent;
+	return this->parent;
 }
 
 Application::InteractiveForm* Application::UI::InteractiveElement::get_form() const
 {
-	return this->pForm;
+	return this->form;
 }
 
 #pragma region events handler

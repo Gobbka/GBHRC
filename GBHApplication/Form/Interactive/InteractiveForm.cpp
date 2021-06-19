@@ -6,7 +6,7 @@
 
 void Application::InteractiveForm::render_components(Render::DrawEvent* event)
 {
-	for(auto*element:this->interactive_elements)
+	for(auto*element:this->childs)
 	{
 		if (element->state.visible == UI::VISIBLE_STATE_VISIBLE)
 			element->draw(event);
@@ -17,7 +17,7 @@ void Application::InteractiveForm::render_components(Render::DrawEvent* event)
 
 void Application::InteractiveForm::foreach(std::function<void(UI::InteractiveElement* element)> callback)
 {
-	for(auto*element:this->interactive_elements)
+	for(auto*element:this->childs)
 		callback(element);
 }
 
@@ -51,7 +51,7 @@ void Application::InteractiveForm::free_drag_move()
 
 bool Application::InteractiveForm::has_element(UI::InteractiveElement* element)
 {
-	for (auto* in_element : this->interactive_elements)
+	for (auto* in_element : this->childs)
 		if (element == in_element)
 			return true;
 	return false;
@@ -60,7 +60,7 @@ bool Application::InteractiveForm::has_element(UI::InteractiveElement* element)
 
 Application::InteractiveForm* Application::InteractiveForm::add_element(UI::InteractiveElement* element)
 {
-	this->interactive_elements.push_back(element);
+	this->childs.push_back(element);
 	element->initialize(this);
 	return this;
 }
@@ -88,12 +88,12 @@ Application::Interaction::EventStatus Application::InteractiveForm::on_mouse_mov
 		return Interaction::EventStatus::handled;
 	}
 
-	const auto length = this->interactive_elements.size();
+	const auto length = this->childs.size();
 	auto e_handled = Interaction::EventStatus::none;
 
-	for (auto i = this->interactive_elements.size(); i > 0; i--)
+	for (auto i = this->childs.size(); i > 0; i--)
 	{
-		auto* element = this->interactive_elements[i-1];
+		auto* element = this->childs[i-1];
 		
 		if (
 			element->state.visible == UI::VISIBLE_STATE_VISIBLE &&

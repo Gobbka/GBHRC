@@ -21,7 +21,7 @@ namespace Application
 			UI::InteractiveElement* element;
 		};
 	private:
-		std::vector<UI::InteractiveElement*> interactive_elements;
+		std::vector<UI::InteractiveElement*> childs;
 		void render_components(Render::DrawEvent* event) override;
 		DragStruct* dragged = nullptr;
 	public:

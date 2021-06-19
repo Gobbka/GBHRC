@@ -19,7 +19,7 @@ namespace Application
 		{
 		private:
 			Render::Position offset_position;
-			std::vector<InteractiveElement*> elements;
+			std::vector<InteractiveElement*> childs;
 			bool initialized = false;
 		protected:
 			void handle_mouse_up() override;
