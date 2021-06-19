@@ -19,7 +19,7 @@ Application::UI::ElementDescription Application::UI::Checkbox::get_desc()
 
 void Application::UI::Checkbox::on_initialize()
 {
-	this->pForm->add_canvas_element(&this->rectangle);
+	this->form->add_canvas_element(&this->rectangle);
 }
 
 

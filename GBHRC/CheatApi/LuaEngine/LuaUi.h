@@ -1,4 +1,6 @@
 ﻿#pragma once
+#include "types/Color3.h"
+#include "types/Float2.h"
 
 
 namespace Application {
@@ -24,6 +26,10 @@ namespace LuaEngine
 	class LuaUi
 	{
 	private:
+
+		Color3 float3_table;
+		Float2 float2_table;
+		
 		static int instance_new(lua_State* state);
 		static int instance_destroy(lua_State* state);
 		static int instance_index(lua_State* state);

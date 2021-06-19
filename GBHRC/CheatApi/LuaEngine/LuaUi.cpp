@@ -163,6 +163,19 @@ int LuaEngine::LuaUi::instance_new_index(lua_State* state)
 
         return 0;
 	}
+
+	if(strcmp("Color",field)==0 && lua_istable(state,-1))
+	{
+        instance->element_ptr->set_color((Render::Color)Color3::to_xmfloat3(state, -1));
+        return 0;
+	}
+
+    if (strcmp("Size", field) == 0 && lua_istable(state, -1))
+    {
+        auto float2 = Float2::to_xmfloat2(state, -1);
+        instance->element_ptr->set_resolution(float2.x,float2.y);
+        return 0;
+    }
 	
     return 0;
 }
@@ -224,6 +237,9 @@ int LuaEngine::LuaUi::gui_destroy(lua_State* state)
 }
 
 LuaEngine::LuaUi::LuaUi(lua_State*state)
+	:
+	float3_table(state),
+	float2_table(state)
 {
     lua_newtable(state);
     int indextab = lua_gettop(state);
@@ -263,4 +279,6 @@ LuaEngine::LuaUi::LuaUi(lua_State*state)
     lua_pushstring(state, "__newindex");
     lua_pushcfunction(state, LuaUi::instance_new_index);
     lua_settable(state, -3);
+
+
 }

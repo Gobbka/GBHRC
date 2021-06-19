@@ -46,7 +46,7 @@ void Application::UI::Panel::draw(Render::DrawEvent* event)
 
 void Application::UI::Panel::on_initialize()
 {
-	this->pForm->add_canvas_element((Canvas::CanvasElement*) & rect);
+	this->form->add_canvas_element((Canvas::CanvasElement*) & rect);
 	Parent::on_initialize();
 }
 

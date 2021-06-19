@@ -103,5 +103,5 @@ Application::Render::Position Application::UI::Button::get_position()
 
 void Application::UI::Button::on_initialize()
 {
-	this->pForm->add_canvas_element(&this->back_rect);
+	this->form->add_canvas_element(&this->back_rect);
 }
