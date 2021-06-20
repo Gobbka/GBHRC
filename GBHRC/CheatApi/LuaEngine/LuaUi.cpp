@@ -176,6 +176,13 @@ int LuaEngine::LuaUi::instance_new_index(lua_State* state)
         instance->element_ptr->set_resolution(float2.x,float2.y);
         return 0;
     }
+
+	if(strcmp("Position",field)==0&&lua_istable(state,-1))
+	{
+        auto float2 = Float2::to_xmfloat2(state, -1);
+        instance->element_ptr->set_pos(float2.x, float2.y);
+        return 0;
+	}
 	
     return 0;
 }

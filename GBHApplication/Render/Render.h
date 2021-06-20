@@ -13,7 +13,7 @@ namespace Application
 			float r; float g; float b; float a;
 			Color(float r, float g, float b) : r(r), g(g), b(b), a(1.f) {};
 			Color(float r, float g, float b,float a) : r(r), g(g), b(b), a(a) {};
-			Color(DirectX::XMFLOAT3 f3) : r(f3.x), g(f3.y), b(f3.z) {};
+			Color(DirectX::XMFLOAT3 f3) : r(f3.x), g(f3.y), b(f3.z),a(1.f) {};
 		};
 
 		struct Resolution
