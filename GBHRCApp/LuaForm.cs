@@ -98,13 +98,9 @@ namespace GBHRCApp
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (!attached)
-            {
-                GBHRCApi.AttachToProcess();
-                attached = true;
-            }
-
+            GBHRCApi.AttachToProcess();
             GBHRCApi.send_lua(get_text());
+            GBHRCApi.DeAttachFromProcess();
         }
 
         private void panel1_MouseDown(object sender, MouseEventArgs e)

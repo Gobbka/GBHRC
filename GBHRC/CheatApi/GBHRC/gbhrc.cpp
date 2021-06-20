@@ -336,8 +336,8 @@ void GBHRC::Context::life_cycle()
             }
         }
 
-        char buffer[1024];
-        auto bytes_received = pipe_server->receive(buffer, 1024);
+        char*buffer = nullptr;
+        auto bytes_received = pipe_server->receive(&buffer, 1024);
 		
 		if(bytes_received>0)
 		{

@@ -23,8 +23,11 @@ namespace GBHRCApp.API
 
         static public bool send_lua(string script)
         {
-            script += '\n';
-            return SendLuaScript(script.ToArray());
+            script += ' ';
+            var array = script.ToList();
+            array.Add('\0');
+            SendLuaScript(array.ToArray());
+            return true;
         }
     }
 }

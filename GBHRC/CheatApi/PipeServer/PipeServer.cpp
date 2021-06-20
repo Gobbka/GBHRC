@@ -13,16 +13,14 @@ PipeServer::PipeServer(const char*address)
 	DWORD dwszOutputBuffer = sizeof(szOutputBuffer);
 
 	// CreateNamedPipe - Step 1
-	hCreateNamedPipe = CreateNamedPipe(
-		L"\\\\.\\pipe\\MYNAMEDPIPE228",
-		PIPE_ACCESS_DUPLEX,
-		PIPE_TYPE_MESSAGE | PIPE_READMODE_MESSAGE | PIPE_WAIT,
-		PIPE_UNLIMITED_INSTANCES,
-		dwszOutputBuffer,
-		dwszInputBuffer,
-		0,
-		NULL
-	);
+	hCreateNamedPipe = CreateNamedPipe(TEXT("\\\\.\\pipe\\GBHRC"),
+		PIPE_ACCESS_DUPLEX | PIPE_TYPE_BYTE | PIPE_READMODE_BYTE,
+		PIPE_WAIT,
+		1,
+		999999,
+		999999,
+		NMPWAIT_NOWAIT,
+		NULL);
 
 	if (hCreateNamedPipe == INVALID_HANDLE_VALUE) {
 		DEBUG_LOG("NamedPipe creation failed with error number: " << GetLastError());
@@ -41,24 +39,30 @@ PipeServer* PipeServer::create(const char* address)
 	return server;
 }
 
-DWORD PipeServer::receive(char* buffer, unsigned int size)
+DWORD PipeServer::receive(char** buffer, unsigned int size) const
 {
-	// Flush the File Buffer - Step 4
-	if (FlushFileBuffers(hCreateNamedPipe) == FALSE) {
-		DEBUG_LOG("FlushFileBuffer failed with error number: " << GetLastError());
-	}
-
-	// ReadFile - Step 5
-	DWORD bytes_readed = 0;
-	if (ReadFile(
-		hCreateNamedPipe,
-		buffer,
-		size,
-		&bytes_readed,
-		NULL
-	) == FALSE) {
-		return 0;
-	}
+	DWORD dwRead=0;
+	std::string wholescript;
+	char receive_buffer[256];
 	
-	return bytes_readed;
+	if (ConnectNamedPipe(hCreateNamedPipe, NULL) != FALSE)
+	{
+		while (ReadFile(hCreateNamedPipe, receive_buffer, sizeof(receive_buffer) - 1, &dwRead, NULL) != FALSE)
+		{
+			DEBUG_LOG("READED: " << dwRead);
+			wholescript += receive_buffer;
+		}
+
+	}
+	DisconnectNamedPipe(hCreateNamedPipe);
+
+
+	auto length = wholescript.size();
+	*buffer = new char[length];
+	wholescript.copy(*buffer, length+1);
+	(*buffer)[length] = '\0';
+	
+	DEBUG_LOG("FINAL: "<<*buffer);
+	
+	return length;
 }

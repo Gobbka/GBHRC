@@ -100,6 +100,10 @@ BOOL SendLuaScript(char*script)
 
 	const auto dwWriteFileBufferSize = strlen(script)+1;
 
+	std::ostringstream ost;
+	ost << "Sended: " << dwWriteFileBufferSize;
+	MessageBoxA(0, ost.str().c_str(), "NIGGER", MB_OK);
+	
 	// WriteFile
 	bWriteFile = WriteFile(
 		FileHandle,
@@ -120,7 +124,7 @@ BOOL AttachToProcess()
 {
 	// CreateFile for Pipe
 	FileHandle = CreateFile(
-		L"\\\\.\\pipe\\MYNAMEDPIPE228",
+		L"\\\\.\\pipe\\GBHRC",
 		GENERIC_READ | GENERIC_WRITE,
 		0,
 		NULL,
