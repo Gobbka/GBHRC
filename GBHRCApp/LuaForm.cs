@@ -182,5 +182,12 @@ namespace GBHRCApp
         {
             update_files_list();
         }
+
+        private void InjectButton_Click(object sender, EventArgs e)
+        {
+            var result = GBHRCApi.Inject();
+
+            console_log("INJECTION: " + result.get_response());
+        }
     }
 }

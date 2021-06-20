@@ -12,45 +12,38 @@ DWORD GetProcessId()
 {
 	int proc_id = 0;
 
-	while (1)
+	HANDLE hSnap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+
+	if (hSnap != INVALID_HANDLE_VALUE)
 	{
-		HANDLE hSnap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+		PROCESSENTRY32 procentry;
+		procentry.dwSize = sizeof(procentry);
 
-		if (hSnap != INVALID_HANDLE_VALUE)
+		if (Process32First(hSnap, &procentry))
 		{
-			PROCESSENTRY32 procentry;
-			procentry.dwSize = sizeof(procentry);
-
-			if (Process32First(hSnap, &procentry))
+			do
 			{
-				do
+
+				if (wcscmp(procentry.szExeFile, L"BrokeProtocol.exe") == 0)
 				{
+					proc_id = procentry.th32ProcessID;
+					CloseHandle(hSnap);
+					break;
+				}
 
-					if (_stricmp((char*)procentry.szExeFile, "BrokeProtocol.exe") == 0)
-					{
-						proc_id = procentry.th32ProcessID;
-						CloseHandle(hSnap);
-						break;
-					}
-
-				} while (Process32Next(hSnap, &procentry));
-			}
+			} while (Process32Next(hSnap, &procentry));
 		}
-
-		if (proc_id != NULL)
-			break;
-		Sleep(500);
 	}
+
 	return proc_id;
 }
 
-GBHRCAPI_RESPONSE inject()
+GBHRCAPI_RESPONSE Inject()
 {
-
 	DWORD process_id = GetProcessId();
-	if(process_id)
+
+	if(!process_id)
 	{
-		MessageBox(0, L"INJECTION ERROR", L"Process cannot be found", MB_OK | MB_ICONERROR);
 		return {FALSE,"Cannot find process"};
 	}
 
@@ -68,12 +61,12 @@ GBHRCAPI_RESPONSE inject()
 		return {FALSE,"Cannot alloc memory"};
 	}
 
-	char* dllname = (char*)malloc(MAX_PATH);
+	auto* dllname = (LPWSTR)malloc(MAX_PATH);
 
-	GetFullPathName(L"GBHRC.dll", MAX_PATH, (LPWSTR)dllname, NULL);
+	GetFullPathName(L"GBHRC.dll", MAX_PATH, dllname, NULL);
 
 	if (dllname != nullptr)
-		WriteProcessMemory(hProc, alloc, dllname, strlen(dllname) + 1, nullptr);
+		WriteProcessMemory(hProc, alloc, dllname, wcslen(dllname) + 1, nullptr);
 
 	const HANDLE hThread = CreateRemoteThread(hProc, 0, 0, (LPTHREAD_START_ROUTINE)LoadLibraryA, alloc, 0, 0);
 	if (hThread)

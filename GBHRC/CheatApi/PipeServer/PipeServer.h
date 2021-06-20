@@ -7,7 +7,7 @@ private:
 	PipeServer(const char* address);
 	~PipeServer();
 
-	HANDLE hCreateNamedPipe;
+	HANDLE _hCreateNamedPipe;
 	
 public:
 	

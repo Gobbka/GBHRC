@@ -18,7 +18,7 @@ extern "C"{
 	};
 
 	
-	DllExport GBHRCAPI_RESPONSE GBHRCAPI inject();
+	DllExport GBHRCAPI_RESPONSE GBHRCAPI Inject();
 	DllExport GBHRCAPI_RESPONSE GBHRCAPI SendLuaScript(char*script);
 	DllExport GBHRCAPI_RESPONSE GBHRCAPI AttachToProcess();
 	DllExport GBHRCAPI_RESPONSE GBHRCAPI DeAttachFromProcess();
