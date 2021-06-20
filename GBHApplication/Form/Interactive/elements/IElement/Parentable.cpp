@@ -136,6 +136,7 @@ Application::UI::Parent* Application::UI::Parent::add_element(InteractiveElement
 	if(element->get_parent()!=nullptr)
 		return this;
 	
+	element->set_parent(this);
 	this->childs.push_back(element);
 	if(this->initialized)
 	{
@@ -149,7 +150,6 @@ Application::UI::Parent* Application::UI::Parent::add_element(InteractiveElement
 Application::UI::Parent* Application::UI::Parent::add_element(InteractiveElement* element, bool visible)
 {
 	element->state.visible = (VisibleState) !element->state.visible;
-	element->set_parent(this);
 	return this->add_element(element);
 }
 

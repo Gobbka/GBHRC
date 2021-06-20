@@ -45,8 +45,8 @@ void init_callback(Application::Render::Engine* instance)
     DEBUG_LOG("INIT CALLBACK");
     MonoContext->mono_thread_attach(MonoContext->mono_get_root_domain());
 
-    //BrokeProtocol::show_local_message((char*)"<color=#39d668>[info]</color> GBHRC injected | press <color=#39d668>INSERT</color> to show menu!");
-	//BrokeProtocol::show_local_message((char*)"<color=#3966d6>[info]</color> join our discord: " DISCORD_CHANNEL);
+    BrokeProtocol::show_local_message((char*)"<color=#39d668>[info]</color> GBHRC injected | press <color=#39d668>INSERT</color> to show menu!");
+	BrokeProtocol::show_local_message((char*)"<color=#3966d6>[info]</color> join our discord: " DISCORD_CHANNEL);
 
     VisbyRoundCFFont = instance->create_font(
         (void*)LoadResource(DllInst, FindResourceW(DllInst, MAKEINTRESOURCEW(IDR_VISBY_ROUND), L"SPRITEFONT")),
@@ -66,11 +66,11 @@ void init_callback(Application::Render::Engine* instance)
 
     //DEBUG_LOG("MENU FORM REGISTERED");
 	
-    //esp_scene = new Application::Render::CanvasScene(instance);
-    //esp_scene->render_callback = GBHRC::Context::static_draw_callback;
-    //esp_scene->hidden = false;
-    //GBHRC::Context::instance()->set_esp_scene(esp_scene);
-    //GBHRC::Context::instance()->make_esp_boxes();
+    esp_scene = new Application::Render::CanvasScene(instance);
+    esp_scene->render_callback = GBHRC::Context::static_draw_callback;
+    esp_scene->hidden = false;
+    GBHRC::Context::instance()->set_esp_scene(esp_scene);
+    GBHRC::Context::instance()->make_esp_boxes();
 
     test_scene = new Application::Render::CanvasScene(instance);
     TestSceneMarkup(test_scene,instance);
@@ -82,7 +82,7 @@ void init_callback(Application::Render::Engine* instance)
         //->append_scene(friend_list)
 
         //->append_scene(test_scene)
-		//->append_scene(esp_scene)	
+		->append_scene(esp_scene)	
 	;
 
     DEBUG_LOG("SCENE'S APPENDED");

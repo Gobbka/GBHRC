@@ -105,6 +105,9 @@
     <ClCompile Include="CheatApi\LuaEngine\types\Color3.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="CheatApi\LuaEngine\libs\LuaMono.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CheatApi\Hooks\d3d11\d3d11hook.h">
@@ -234,6 +237,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="CheatApi\LuaEngine\types\Color3.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="CheatApi\LuaEngine\libs\LuaMono.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

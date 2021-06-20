@@ -142,7 +142,9 @@ lua_State* LuaEngine::LuaExecution::get_state()
 
 LuaEngine::LuaExecution::LuaExecution(lua_State* state)
 	:
-luaUi(state)
+luaUi(state),
+lua_mono(state)
+//mono(state)
 {
     this->state = state;
 }

@@ -1,13 +1,17 @@
 #pragma once
 #include "LuaUi.h"
 #include <vector>
-typedef struct lua_State lua_State;
+
+#include "libs/LuaMono.h"
+
 namespace LuaEngine
 {
 
 	class LuaExecution
 	{
 		LuaUi luaUi;
+		Libs::LuaMono lua_mono;
+
 		lua_State* state;
 		bool events_subscribed = false;
 	public:
