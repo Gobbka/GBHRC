@@ -44,6 +44,8 @@ namespace GBHRC
 	class Context
 	{
 	private:
+		static void receive_lua_thread();
+		
 		HMODULE DllInst;
 		UnityEngine::Transform* aim_target = nullptr;
 		

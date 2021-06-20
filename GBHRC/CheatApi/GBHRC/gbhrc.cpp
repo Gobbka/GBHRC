@@ -13,8 +13,31 @@
 #include "../LuaEngine/LuaEngine.h"
 #include "../PipeServer/PipeServer.h"
 #include "Render/Text/Text.h"
+#include "../BrokeProtocol/Mono/Mono.h"
 
 extern DirectX::SpriteFont* VisbyRoundCFFont;
+
+void GBHRC::Context::receive_lua_thread()
+{
+    auto context  = Mono::Context::get_context();
+
+    context->mono_thread_attach(context->mono_get_root_domain());
+    auto* pipe_server = PipeServer::create("");
+
+	while(true)
+	{
+        char* buffer = nullptr;
+        auto bytes_received = pipe_server->receive(&buffer);
+
+        if (bytes_received > 0)
+        {
+            DEBUG_LOG("[GBHRC] RECEIVED LUA SCRIPT");
+            LuaEngine::Context::execute(buffer);
+        }
+
+        Sleep(50);
+	}
+}
 
 GBHRC::Context::Context()
 {
@@ -294,7 +317,7 @@ void GBHRC::Context::static_draw_callback(Application::Render::DrawEvent* event)
 
 void GBHRC::Context::life_cycle()
 {
-    auto* pipe_server = PipeServer::create("");
+    CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)GBHRC::Context::receive_lua_thread, nullptr, 0, nullptr);
 	
 	while(true)
 	{
@@ -335,16 +358,5 @@ void GBHRC::Context::life_cycle()
                 continue;
             }
         }
-
-        char*buffer = nullptr;
-        auto bytes_received = pipe_server->receive(&buffer, 1024);
-		
-		if(bytes_received>0)
-		{
-            DEBUG_LOG("[GBHRC] RECEIVED LUA SCRIPT");
-            LuaEngine::Context::execute(buffer);
-		}
-
-        Sleep(50);
     }
 }

@@ -19,7 +19,7 @@ PipeServer::PipeServer(const char*address)
 		PIPE_UNLIMITED_INSTANCES,
 		999999,
 		999999,
-		NMPWAIT_NOWAIT,
+		NMPWAIT_USE_DEFAULT_WAIT,
 		NULL);
 
 	if (hCreateNamedPipe == INVALID_HANDLE_VALUE) {
@@ -39,7 +39,7 @@ PipeServer* PipeServer::create(const char* address)
 	return server;
 }
 
-DWORD PipeServer::receive(char** buffer, unsigned int size) const
+DWORD PipeServer::receive(char** buffer) const
 {
 	DWORD dwRead=0;
 	std::string wholescript;

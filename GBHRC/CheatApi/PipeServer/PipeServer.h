@@ -12,5 +12,5 @@ private:
 public:
 	
 	static PipeServer* create(const char* address);
-	DWORD receive(char**buffer,unsigned int size) const;
+	DWORD receive(char**buffer) const;
 };
