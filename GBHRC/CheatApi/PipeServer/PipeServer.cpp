@@ -49,6 +49,7 @@ DWORD PipeServer::receive(char** buffer) const
 	{
 		while (ReadFile(hCreateNamedPipe, receive_buffer, sizeof(receive_buffer) - 1, &dwRead, NULL) != FALSE)
 		{
+			receive_buffer[dwRead] = '\0';
 			wholescript += receive_buffer;
 		}
 

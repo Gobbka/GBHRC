@@ -44,28 +44,28 @@ DWORD GetProcessId()
 	return proc_id;
 }
 
-BOOL inject()
+GBHRCAPI_RESPONSE inject()
 {
 
 	DWORD process_id = GetProcessId();
 	if(process_id)
 	{
 		MessageBox(0, L"INJECTION ERROR", L"Process cannot be found", MB_OK | MB_ICONERROR);
-		return false;
+		return {FALSE,"Cannot find process"};
 	}
 
 	HANDLE hProc = OpenProcess(PROCESS_ALL_ACCESS, 0, process_id);
 
 	if (hProc == INVALID_HANDLE_VALUE)
 	{
-		return EXIT_FAILURE;
+		return {FALSE,"Cannot open process"};
 	}
 
 	void* alloc = VirtualAllocEx(hProc, 0, MAX_PATH, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
 
 	if (alloc == nullptr)
 	{
-		return EXIT_FAILURE;
+		return {FALSE,"Cannot alloc memory"};
 	}
 
 	char* dllname = (char*)malloc(MAX_PATH);
@@ -80,19 +80,19 @@ BOOL inject()
 		CloseHandle(hThread);
 	else
 	{
-		return 0;
+		return {FALSE,"Cannot create remote thread"};
 	}
 
 	VirtualFreeEx(hProc, alloc, MAX_PATH, MEM_RELEASE);
 
 	CloseHandle(hProc);
 
-	return EXIT_SUCCESS;
+	return GBHRCAPI_RESPONSE(TRUE,"ok");
 }
 
 HANDLE FileHandle;
 
-BOOL SendLuaScript(char*script)
+GBHRCAPI_RESPONSE SendLuaScript(char*script)
 {
 	// WriteFile Local Variable Definitions
 	BOOL bWriteFile;
@@ -109,14 +109,15 @@ BOOL SendLuaScript(char*script)
 		NULL
 	);
 	if (bWriteFile == FALSE) {
+		return { FALSE,"Cannot write file" };
 		MESALERT(L"WriteFile has failed with error number: ");
 	}
 	
-	return TRUE;
+	return GBHRCAPI_RESPONSE(TRUE,"ok");
 }
 
 
-BOOL AttachToProcess()
+GBHRCAPI_RESPONSE AttachToProcess()
 {
 	// CreateFile for Pipe
 	FileHandle = CreateFile(
@@ -130,16 +131,16 @@ BOOL AttachToProcess()
 	);
 	
 	if (INVALID_HANDLE_VALUE == FileHandle) {
-		std::ostringstream ost;
-		ost << "NamedPipeCreateFile.txt file creation has failed with error number: " << GetLastError();
-		MessageBoxA(0, ost.str().c_str(), "NIGGER", MB_OK);
-		return false;
+		//std::ostringstream ost;
+		//ost << "NamedPipeCreateFile.txt file creation has failed with error number: " << GetLastError();
+		//MessageBoxA(0, ost.str().c_str(), "NIGGER", MB_OK);
+		return {FALSE,"Cannot open pipe"};
 	}
-	return true;
+	return {TRUE,"ok"};
 }
 
-BOOL DeAttachFromProcess()
+GBHRCAPI_RESPONSE DeAttachFromProcess()
 {
 	CloseHandle(FileHandle);
-	return TRUE;
+	return GBHRCAPI_RESPONSE(TRUE,"ok");
 }

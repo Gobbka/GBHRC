@@ -9,25 +9,40 @@ namespace GBHRCApp.API
 {
     class GBHRCApi
     {
+        unsafe public struct ApiResponse
+        {
+            int status;
+            IntPtr response;
+
+            public bool success()
+            {
+                return Convert.ToBoolean(status);
+            }
+
+            public string get_response()
+            {
+                return Marshal.PtrToStringAnsi(response);
+            }
+        }
+
         [DllImport("GBHRC_API.dll", CharSet = CharSet.Ansi,CallingConvention =CallingConvention.StdCall)]
-        private static extern bool SendLuaScript(char[] lua_text);
+        private static extern ApiResponse SendLuaScript(char[] lua_text);
 
         [DllImport("GBHRC_API.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public static extern bool Inject();
+        public static extern ApiResponse Inject();
 
         [DllImport("GBHRC_API.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public static extern bool AttachToProcess();
+        public static extern ApiResponse AttachToProcess();
 
         [DllImport("GBHRC_API.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public static extern bool DeAttachFromProcess();
+        public static extern ApiResponse DeAttachFromProcess();
 
-        static public bool send_lua(string script)
+        static public ApiResponse send_lua(string script)
         {
             script += ' ';
             var array = script.ToList();
             array.Add('\0');
-            SendLuaScript(array.ToArray());
-            return true;
+            return SendLuaScript(array.ToArray());
         }
     }
 }

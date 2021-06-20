@@ -3,9 +3,23 @@
 #define GBHRCAPI __stdcall
 #include <Windows.h>
 
+
 extern "C"{
-	DllExport BOOL GBHRCAPI inject();
-	DllExport BOOL GBHRCAPI SendLuaScript(char*script);
-	DllExport BOOL GBHRCAPI AttachToProcess();
-	DllExport BOOL GBHRCAPI DeAttachFromProcess();
+	struct GBHRCAPI_RESPONSE
+	{
+		BOOL status;
+		const char* response;
+
+		GBHRCAPI_RESPONSE(BOOL status, const char* response)
+		{
+			this->status = status;
+			this->response = response;
+		}
+	};
+
+	
+	DllExport GBHRCAPI_RESPONSE GBHRCAPI inject();
+	DllExport GBHRCAPI_RESPONSE GBHRCAPI SendLuaScript(char*script);
+	DllExport GBHRCAPI_RESPONSE GBHRCAPI AttachToProcess();
+	DllExport GBHRCAPI_RESPONSE GBHRCAPI DeAttachFromProcess();
 }

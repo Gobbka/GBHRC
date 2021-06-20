@@ -34,12 +34,18 @@
             this.fastColoredTextBox1 = new FastColoredTextBoxNS.FastColoredTextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.hide_button = new System.Windows.Forms.Button();
+            this.exit_button = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.ScriptBox = new System.Windows.Forms.ListBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.CurrentFileLabel = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
+            this.ConsoleTextBox = new System.Windows.Forms.TextBox();
+            this.ClearConsoleButton = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.fastColoredTextBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -98,7 +104,7 @@
             this.fastColoredTextBox1.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
             this.fastColoredTextBox1.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("fastColoredTextBox1.ServiceColors")));
             this.fastColoredTextBox1.ServiceLinesColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.fastColoredTextBox1.Size = new System.Drawing.Size(627, 351);
+            this.fastColoredTextBox1.Size = new System.Drawing.Size(627, 279);
             this.fastColoredTextBox1.TabIndex = 3;
             this.fastColoredTextBox1.Zoom = 100;
             this.fastColoredTextBox1.TextChanged += new System.EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(this.fastColoredTextBox1_TextChanged);
@@ -119,12 +125,42 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.hide_button);
+            this.panel1.Controls.Add(this.exit_button);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(801, 16);
+            this.panel1.Size = new System.Drawing.Size(801, 20);
             this.panel1.TabIndex = 5;
             this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseDown);
+            // 
+            // hide_button
+            // 
+            this.hide_button.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.hide_button.FlatAppearance.BorderSize = 0;
+            this.hide_button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.hide_button.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(139)))), ((int)(((byte)(139)))));
+            this.hide_button.Location = new System.Drawing.Point(747, -1);
+            this.hide_button.Name = "hide_button";
+            this.hide_button.Size = new System.Drawing.Size(24, 23);
+            this.hide_button.TabIndex = 9;
+            this.hide_button.Text = "-";
+            this.hide_button.UseVisualStyleBackColor = false;
+            this.hide_button.Click += new System.EventHandler(this.hide_button_Click);
+            // 
+            // exit_button
+            // 
+            this.exit_button.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.exit_button.FlatAppearance.BorderSize = 0;
+            this.exit_button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.exit_button.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(139)))), ((int)(((byte)(139)))));
+            this.exit_button.Location = new System.Drawing.Point(771, -1);
+            this.exit_button.Name = "exit_button";
+            this.exit_button.Size = new System.Drawing.Size(23, 23);
+            this.exit_button.TabIndex = 10;
+            this.exit_button.Text = "X";
+            this.exit_button.UseVisualStyleBackColor = false;
+            this.exit_button.Click += new System.EventHandler(this.exit_button_Click);
             // 
             // label1
             // 
@@ -143,9 +179,9 @@
             this.ScriptBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.ScriptBox.ForeColor = System.Drawing.SystemColors.Menu;
             this.ScriptBox.FormattingEnabled = true;
-            this.ScriptBox.Location = new System.Drawing.Point(6, 48);
+            this.ScriptBox.Location = new System.Drawing.Point(6, 87);
             this.ScriptBox.Name = "ScriptBox";
-            this.ScriptBox.Size = new System.Drawing.Size(155, 351);
+            this.ScriptBox.Size = new System.Drawing.Size(155, 312);
             this.ScriptBox.TabIndex = 6;
             this.ScriptBox.SelectedIndexChanged += new System.EventHandler(this.ScriptBox_SelectedIndexChanged);
             // 
@@ -161,7 +197,7 @@
             // CurrentFileLabel
             // 
             this.CurrentFileLabel.AutoSize = true;
-            this.CurrentFileLabel.ForeColor = System.Drawing.SystemColors.Control;
+            this.CurrentFileLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(208)))), ((int)(((byte)(194)))));
             this.CurrentFileLabel.Location = new System.Drawing.Point(3, 5);
             this.CurrentFileLabel.Name = "CurrentFileLabel";
             this.CurrentFileLabel.Size = new System.Drawing.Size(52, 13);
@@ -187,12 +223,70 @@
             this.label3.TabIndex = 8;
             this.label3.Text = "Files";
             // 
+            // ConsoleTextBox
+            // 
+            this.ConsoleTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.ConsoleTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.ConsoleTextBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(208)))), ((int)(((byte)(194)))));
+            this.ConsoleTextBox.Location = new System.Drawing.Point(167, 333);
+            this.ConsoleTextBox.Multiline = true;
+            this.ConsoleTextBox.Name = "ConsoleTextBox";
+            this.ConsoleTextBox.ReadOnly = true;
+            this.ConsoleTextBox.Size = new System.Drawing.Size(604, 66);
+            this.ConsoleTextBox.TabIndex = 9;
+            this.ConsoleTextBox.Text = "--- Console ---\r\n";
+            // 
+            // ClearConsoleButton
+            // 
+            this.ClearConsoleButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.ClearConsoleButton.FlatAppearance.BorderSize = 0;
+            this.ClearConsoleButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ClearConsoleButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(139)))), ((int)(((byte)(139)))));
+            this.ClearConsoleButton.Location = new System.Drawing.Point(771, 333);
+            this.ClearConsoleButton.Name = "ClearConsoleButton";
+            this.ClearConsoleButton.Size = new System.Drawing.Size(24, 23);
+            this.ClearConsoleButton.TabIndex = 10;
+            this.ClearConsoleButton.Text = "-";
+            this.ClearConsoleButton.UseVisualStyleBackColor = false;
+            this.ClearConsoleButton.Click += new System.EventHandler(this.ClearConsoleButton_Click);
+            // 
+            // button3
+            // 
+            this.button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.button3.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
+            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(139)))), ((int)(((byte)(139)))));
+            this.button3.Location = new System.Drawing.Point(326, 405);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(153, 39);
+            this.button3.TabIndex = 11;
+            this.button3.Text = "DISCORD";
+            this.button3.UseVisualStyleBackColor = false;
+            // 
+            // button4
+            // 
+            this.button4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.button4.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
+            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(139)))), ((int)(((byte)(139)))));
+            this.button4.Location = new System.Drawing.Point(6, 48);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(155, 33);
+            this.button4.TabIndex = 12;
+            this.button4.Text = "REFRESH";
+            this.button4.UseVisualStyleBackColor = false;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
             // LuaForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(38)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.button4);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.ClearConsoleButton);
+            this.Controls.Add(this.ConsoleTextBox);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.ScriptBox);
@@ -201,6 +295,7 @@
             this.Controls.Add(this.fastColoredTextBox1);
             this.Controls.Add(this.button2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "LuaForm";
             this.Text = "GBHRC::LUA";
             ((System.ComponentModel.ISupportInitialize)(this.fastColoredTextBox1)).EndInit();
@@ -211,6 +306,7 @@
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -225,5 +321,11 @@
         private System.Windows.Forms.Label CurrentFileLabel;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button hide_button;
+        private System.Windows.Forms.Button exit_button;
+        private System.Windows.Forms.TextBox ConsoleTextBox;
+        private System.Windows.Forms.Button ClearConsoleButton;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button4;
     }
 }
