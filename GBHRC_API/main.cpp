@@ -99,10 +99,6 @@ BOOL SendLuaScript(char*script)
 	DWORD dwNoBytesWrite;
 
 	const auto dwWriteFileBufferSize = strlen(script)+1;
-
-	std::ostringstream ost;
-	ost << "Sended: " << dwWriteFileBufferSize;
-	MessageBoxA(0, ost.str().c_str(), "NIGGER", MB_OK);
 	
 	// WriteFile
 	bWriteFile = WriteFile(

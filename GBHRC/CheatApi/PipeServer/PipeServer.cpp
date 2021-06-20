@@ -16,7 +16,7 @@ PipeServer::PipeServer(const char*address)
 	hCreateNamedPipe = CreateNamedPipe(TEXT("\\\\.\\pipe\\GBHRC"),
 		PIPE_ACCESS_DUPLEX | PIPE_TYPE_BYTE | PIPE_READMODE_BYTE,
 		PIPE_WAIT,
-		1,
+		PIPE_UNLIMITED_INSTANCES,
 		999999,
 		999999,
 		NMPWAIT_NOWAIT,
@@ -49,20 +49,16 @@ DWORD PipeServer::receive(char** buffer, unsigned int size) const
 	{
 		while (ReadFile(hCreateNamedPipe, receive_buffer, sizeof(receive_buffer) - 1, &dwRead, NULL) != FALSE)
 		{
-			DEBUG_LOG("READED: " << dwRead);
 			wholescript += receive_buffer;
 		}
 
 	}
 	DisconnectNamedPipe(hCreateNamedPipe);
 
-
 	auto length = wholescript.size();
 	*buffer = new char[length];
 	wholescript.copy(*buffer, length+1);
 	(*buffer)[length] = '\0';
-	
-	DEBUG_LOG("FINAL: "<<*buffer);
 	
 	return length;
 }
