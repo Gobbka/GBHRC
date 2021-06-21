@@ -19,11 +19,11 @@ namespace Application
 				ptr[3].pos = DirectX::XMFLOAT3(x + width, y-height, 1.f);
 			}
 
-			static void set_color(GVertex::Vertex* ptr, float r, float g, float b,float a=1.f)
+			static void set_color(GVertex::Vertex* ptr, float r, float g, float b)
 			{
 				for (int i = 0; i < 4; i++)
 				{
-					ptr[i].color = DirectX::XMFLOAT4{ r,g,b,a };
+					ptr[i].color = DirectX::XMFLOAT3{ r,g,b };
 				}
 			}
 
@@ -31,7 +31,7 @@ namespace Application
 			{
 				for (int i = 0; i < 4; i++)
 				{
-					ptr[i].color = DirectX::XMFLOAT4{ color.r,color.g,color.b,color.a };
+					ptr[i].color = DirectX::XMFLOAT3{ color.r,color.g,color.b};
 				}
 			}
 		};

@@ -3,8 +3,9 @@
 
 struct ConstantBuffer
 {
-	float xOffset;
-	float yOffset;
+	float alpha;
 	DirectX::XMMATRIX mProjection;
+
+	
 };
 

@@ -46,6 +46,7 @@ namespace Application
 			bool create_const_buffer();
 			ID3DBlob* create_vs_shader();
 			ID3DBlob* create_ps_shader(ID3DBlob* blob);
+			void apply_constant_buffer(ConstantBuffer constant_buffer);
 
 			DirectX::XMMATRIX get_ortho_matrix();
 			ID3D11RenderTargetView* get_render_target(IDXGISwapChain* pSwap) const;

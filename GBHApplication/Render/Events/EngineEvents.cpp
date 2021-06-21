@@ -65,7 +65,8 @@ void Application::Render::D3D11DrawEvent::reset_render_state()
 	this->engine->set_vbuffer(this->scene->get_vbuffer());
 }
 
-Application::Render::D3D11DrawEvent::D3D11DrawEvent(Engine* engine, CanvasScene* scene, ID3D11RasterizerState* old_state)
+Application::Render::D3D11DrawEvent::D3D11DrawEvent(Engine* engine, CanvasScene* scene, ID3D11RasterizerState* old_state,ConstantBuffer c_buffer)
+	:cb(c_buffer)
 {
 	this->engine = engine;
 	this->scene = scene;

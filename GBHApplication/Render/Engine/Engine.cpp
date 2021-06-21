@@ -143,6 +143,11 @@ ID3DBlob* Engine::create_ps_shader(ID3DBlob* blob)
 	return blob;
 }
 
+void Engine::apply_constant_buffer(ConstantBuffer constant_buffer)
+{
+	this->pDevContext->UpdateSubresource(this->pConstantBuffer, 0, nullptr, &constant_buffer, 0, 0);
+}
+
 GVertex::VertexBuffer* Engine::make_vertex_buffer(const UINT size) const
 {
 	auto* ptr = new GVertex::VertexBuffer();
@@ -219,14 +224,10 @@ void Engine::update_scene()
 
 void Engine::render_prepare()
 {
-	ConstantBuffer cb;
-	cb.mProjection = DirectX::XMMatrixTranspose(mOrtho);
-	cb.xOffset = 0;
-	cb.yOffset = 0;
+
 
 	this->pDevContext->OMSetRenderTargets(1, &pRenderTargetView, this->get_mask()->get_stencil_view());
 
-	this->pDevContext->UpdateSubresource(this->pConstantBuffer, 0, nullptr, &cb, 0, 0);
 	this->pDevContext->VSSetConstantBuffers(0, 1, &this->pConstantBuffer);
 
 	this->pDevContext->IASetInputLayout(pVertexLayout);
@@ -248,10 +249,15 @@ void Engine::present()
 	this->render_prepare();
 
 	this->blend_engine->set_blend_state();
+
+	ConstantBuffer cb;
+	cb.mProjection = DirectX::XMMatrixTranspose(mOrtho);
+	cb.alpha = 1.f;
+	this->apply_constant_buffer(cb);
 	
 	ID3D11RasterizerState* r_state;
 	this->pDevContext->RSGetState(&r_state);
-	Render::D3D11DrawEvent event(this,nullptr,r_state);
+	Render::D3D11DrawEvent event(this,nullptr,r_state,cb);
 	
 	for (auto* scene : this->pScenes)
 	{

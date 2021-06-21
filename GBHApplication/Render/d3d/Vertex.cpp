@@ -3,19 +3,19 @@
 GVertex::Vertex::Vertex()
 {
 	this->pos = DirectX::XMFLOAT3{ 0.f,0.f,1.f };
-	this->color = DirectX::XMFLOAT4{ 0.f,0.f,0.f,0.f };
+	this->color = DirectX::XMFLOAT3{ 0.f,0.f,0.f };
 }
 
-GVertex::Vertex::Vertex(float x, float y, float z, float r, float g, float b, float a)
+GVertex::Vertex::Vertex(float x, float y, float z, float r, float g, float b)
 {
 	this->pos = DirectX::XMFLOAT3{ x,y,z };
-	this->color = DirectX::XMFLOAT4{ r,g,b,a };
+	this->color = DirectX::XMFLOAT3{ r,g,b };
 }
 
-GVertex::Vertex::Vertex(float x, float y, float r, float g, float b, float a)
+GVertex::Vertex::Vertex(float x, float y, float r, float g, float b)
 {
 	this->pos = DirectX::XMFLOAT3{ x,y,1.f };
-	this->color = DirectX::XMFLOAT4{ r,g,b,a };
+	this->color = DirectX::XMFLOAT3{ r,g,b };
 }
 
 ID3D11Buffer* GVertex::VertexBuffer::get_buffer() const

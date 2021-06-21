@@ -68,7 +68,7 @@ void Application::Canvas::Rectangle::set_color(Render::Color color)
 
 void Application::Canvas::Rectangle::set_alpha(float alpha)
 {
-	Managers::Rectangle::set_color(this->get_ptr(), color.r, color.g, color.b,alpha);
+	Managers::Rectangle::set_color(this->get_ptr(), color.r, color.g, color.b);
 }
 
 void Application::Canvas::Rectangle::set_resolution(UINT width, UINT height)

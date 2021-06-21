@@ -2,6 +2,7 @@
 #include <d3d11.h>
 
 #include "../Render.h"
+#include "../d3d/ConstantBuffer.h"
 
 namespace Application {
 	namespace Canvas {
@@ -26,6 +27,7 @@ namespace Application
 			Engine* engine;
 			CanvasScene* scene;
 			ID3D11RasterizerState* old_state;
+			ConstantBuffer cb;
 			
 			unsigned int scenes_completed;
 		private:
@@ -47,7 +49,7 @@ namespace Application
 			ID3D11DeviceContext* get_context() const;
 			void reset_render_state();
 
-			D3D11DrawEvent(Engine* engine, CanvasScene* scene, ID3D11RasterizerState* old_state);
+			D3D11DrawEvent(Engine* engine, CanvasScene* scene, ID3D11RasterizerState* old_state,ConstantBuffer c_buffer);
 		};
 
 	}
