@@ -91,8 +91,9 @@ void init_callback(Application::Render::Engine* instance)
 
 	//
 	// LUA TEST
-	
+#ifdef LUA_SUPPORT
     LuaEngine::Context::execute((char*)LoadResource(DllInst, FindResourceW(DllInst, MAKEINTRESOURCEW(IDR_TEXT1), L"TEXT")));
+#endif
 }
 
 

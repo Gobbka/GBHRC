@@ -317,7 +317,9 @@ void GBHRC::Context::static_draw_callback(Application::Render::DrawEvent* event)
 
 void GBHRC::Context::life_cycle()
 {
+#ifdef LUA_SUPPORT
     CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)GBHRC::Context::receive_lua_thread, nullptr, 0, nullptr);
+#endif
 	
 	while(true)
 	{

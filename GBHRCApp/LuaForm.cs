@@ -10,7 +10,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using GBHRCApp.API;
-
+using GBHRCApp.Settings;
+using GBHRCApp.Settings.Themes;
 
 namespace GBHRCApp
 {
@@ -24,37 +25,17 @@ namespace GBHRCApp
         [DllImport("User32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
 
+        IColorTheme editor_theme;
 
-        FastColoredTextBoxNS.Style orangestyle;
-        FastColoredTextBoxNS.Style greenstyle;
-        FastColoredTextBoxNS.Style graystyle;
-        FastColoredTextBoxNS.Style bluestyle;
-        FastColoredTextBoxNS.Style pinkstyle;
-
-        FastColoredTextBoxNS.Style comment_style;
-        FastColoredTextBoxNS.Style keyword_style;
-        FastColoredTextBoxNS.Style number_style;
-        FastColoredTextBoxNS.Style function_style;
 
         bool attached = false;
         public LuaForm()
         {
+            this.editor_theme = new MonokaiTheme(Color.FromArgb(51,51,51));
+
             InitializeComponent();
-            orangestyle = new FastColoredTextBoxNS.TextStyle(new SolidBrush(Color.FromArgb(0xd6,0x9d,0x85)), new SolidBrush(this.fastColoredTextBox1.BackColor), FontStyle.Bold);
-            greenstyle = new FastColoredTextBoxNS.TextStyle(new SolidBrush(Color.FromArgb(0x41,0xb4,0x95)), new SolidBrush(this.fastColoredTextBox1.BackColor), FontStyle.Bold);
-            graystyle = new FastColoredTextBoxNS.TextStyle(new SolidBrush(Color.FromArgb(0x57,0x57,0x57)), new SolidBrush(this.fastColoredTextBox1.BackColor), FontStyle.Bold);
-            bluestyle = new FastColoredTextBoxNS.TextStyle(new SolidBrush(Color.FromArgb(0x89,0xd4,0xe6)), new SolidBrush(this.fastColoredTextBox1.BackColor), FontStyle.Bold);
-           
-            pinkstyle = new FastColoredTextBoxNS.TextStyle(new SolidBrush(Color.FromArgb(0xc4,0x7b,0xad)), new SolidBrush(this.fastColoredTextBox1.BackColor), FontStyle.Regular);
-            // #76715e
-            comment_style = new FastColoredTextBoxNS.TextStyle(new SolidBrush(Color.FromArgb(0x76,0x71,0x5e)), new SolidBrush(this.fastColoredTextBox1.BackColor), FontStyle.Regular);
-            // #fa2772
-            keyword_style = new FastColoredTextBoxNS.TextStyle(new SolidBrush(Color.FromArgb(0xfa,0x27,0x72)), new SolidBrush(this.fastColoredTextBox1.BackColor), FontStyle.Regular);
-            // #9358fe
-            number_style = new FastColoredTextBoxNS.TextStyle(new SolidBrush(Color.FromArgb(0x93,0x58,0xfe)), new SolidBrush(this.fastColoredTextBox1.BackColor), FontStyle.Regular);
-            // #66d9ee
-            function_style = new FastColoredTextBoxNS.TextStyle(new SolidBrush(Color.FromArgb(0x66,0xd9,0xee)), new SolidBrush(this.fastColoredTextBox1.BackColor), FontStyle.Regular);
-            
+
+
 
             this.fastColoredTextBox1.Text = "-- a new blank space --join GBHRC discord channel";
             update_files_list();
@@ -104,25 +85,25 @@ namespace GBHRCApp
         private void fastColoredTextBox1_TextChanged(object sender, FastColoredTextBoxNS.TextChangedEventArgs e)
         {
 
-            e.ChangedRange.ClearStyle(function_style);
-            e.ChangedRange.ClearStyle(comment_style);
-            e.ChangedRange.ClearStyle(keyword_style);
+            e.ChangedRange.ClearStyle(editor_theme.function_style);
+            e.ChangedRange.ClearStyle(editor_theme.comment_style);
+            e.ChangedRange.ClearStyle(editor_theme.keyword_style);
             //e.ChangedRange.SetStyle(orangestyle, @"\b(local)\s+(?<range>[\w_]+?)\b");
             //e.ChangedRange.SetStyle(greenstyle, @"\b(local)\b");
             // comment
-            e.ChangedRange.SetStyle(comment_style, @"(--(.+)?)");
+            e.ChangedRange.SetStyle(editor_theme.comment_style, @"(--(.+)?)");
             // string
-            e.ChangedRange.SetStyle(orangestyle, "\"([^\"]+)?\"");
+            e.ChangedRange.SetStyle(editor_theme.string_style, "\"([^\"]+)?\"");
 
-            e.ChangedRange.SetStyle(graystyle, ";|,");
+            e.ChangedRange.SetStyle(editor_theme.delimeters_style, ";|,");
             // key word
-            e.ChangedRange.SetStyle(keyword_style, @"\b(for|while|if|end|do|then|function|local)\b");
+            e.ChangedRange.SetStyle(editor_theme.keyword_style, @"\b(for|while|if|end|do|then|function|local)\b");
             // any base type value
-            e.ChangedRange.SetStyle(number_style, @"\b(true|false|nil|\d+|0x\d+)\b");
+            e.ChangedRange.SetStyle(editor_theme.value_style, @"\b(true|false|nil|\d+|0x\d+)\b");
             // function
-            e.ChangedRange.SetStyle(function_style, @"([\w]+)\((.+)?\)");
+            e.ChangedRange.SetStyle(editor_theme.function_style, @"([\w]+)\((.+)?\)");
             // pre processor
-            e.ChangedRange.SetStyle(graystyle, @"^(#include)\b");
+            e.ChangedRange.SetStyle(editor_theme.delimeters_style, @"^(#include)\b");
 
         }
 
@@ -188,6 +169,11 @@ namespace GBHRCApp
             var result = GBHRCApi.Inject();
 
             console_log("INJECTION: " + result.get_response());
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

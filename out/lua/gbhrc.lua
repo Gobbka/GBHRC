@@ -1,3 +1,6 @@
+-- This this GBHRC lua code
+-- to edit this you should read documentation and having lua knowledge
+
 local screen_gui = GUI.new();
 local button = Instance.new("Button");
 local panel = Instance.new("Panel");
