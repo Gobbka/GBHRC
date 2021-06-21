@@ -11,11 +11,14 @@
 #include "FloatColors.h"
 #include "../BrokeProtocol/classes/Guns/ShBallistic.h"
 #include "../LuaEngine/LuaEngine.h"
-#include "../PipeServer/PipeServer.h"
+
 #include "Render/Text/Text.h"
 #include "../BrokeProtocol/Mono/Mono.h"
 
 extern DirectX::SpriteFont* VisbyRoundCFFont;
+
+#ifdef LUA_SUPPORT
+#include "../PipeServer/PipeServer.h"
 
 void GBHRC::Context::receive_lua_thread()
 {
@@ -38,6 +41,8 @@ void GBHRC::Context::receive_lua_thread()
         Sleep(50);
 	}
 }
+
+#endif
 
 GBHRC::Context::Context()
 {
