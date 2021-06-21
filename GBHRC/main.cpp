@@ -107,9 +107,11 @@ void MainThread()
     freopen("CONOUT$", "w", stdout);
     freopen("CONIN$", "r", stdin);
 #endif
-	
+
     {
         MonoContext = Mono::Context::get_context();
+
+        Mono::Dumper::dump_object((Mono::MonoObject*)BrokeProtocol::get_evaluator()->GlobalTypes->player);
 
         MonoContext->mono_thread_attach(MonoContext->mono_get_root_domain());
         DEBUG_LOG("CHECKING VERSION...");
