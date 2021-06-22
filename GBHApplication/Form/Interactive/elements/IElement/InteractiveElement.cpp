@@ -8,6 +8,11 @@ Application::UI::ElementDescription::ElementDescription(bool can_be_parent, cons
 	this->has_text = has_text;
 }
 
+void Application::UI::InteractiveElement::set_alpha(float alpha)
+{
+	this->alpha = alpha;
+}
+
 void Application::UI::InteractiveElement::set_margin(float x, float y)
 {
 	this->styles.margin.x = this->styles.margin.z = x;

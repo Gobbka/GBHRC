@@ -98,7 +98,7 @@ void Application::UI::Parent::draw(Render::DrawEvent* event)
 			element->draw(event);
 }
 
-void Application::UI::Parent::set_color(Render::Color color)
+void Application::UI::Parent::set_color(Render::Color4 color)
 {
 	for (auto* element : this->childs)
 		element->set_color(color);

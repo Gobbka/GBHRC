@@ -23,12 +23,12 @@ namespace Application
 			//	return 4;// + Parent::size();
 			//}
 			
-			Panel(Render::Position position,Render::Resolution resolution, Render::Color color);
+			Panel(Render::Position position,Render::Resolution resolution, Render::Color4 color);
 			
 			bool point_belongs(Render::Position point) override;
 			void set_pos(float x, float y) override;
-			void set_color(Render::Color color) override;
-			void set_alpha(float alpha);
+			void set_color(Render::Color4 color) override;
+			//void set_alpha(float alpha);
 			void move_by(float x, float y) override;
 
 			Render::Position get_position() override;

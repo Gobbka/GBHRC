@@ -23,9 +23,10 @@ void Application::UI::Checkbox::on_initialize()
 }
 
 
-Application::UI::Checkbox::Checkbox(Render::Position position, Render::Resolution resolution, Render::Color color)
-	:rectangle(position,resolution,color)
+Application::UI::Checkbox::Checkbox(Render::Position position, Render::Resolution resolution, Render::Color4 color)
+	:rectangle(position,resolution, { 0.305f,0.305f,0.305f })
 {
+	this->active_color = color;
 }
 
 void Application::UI::Checkbox::set_pos(float x, float y)
@@ -33,7 +34,7 @@ void Application::UI::Checkbox::set_pos(float x, float y)
 	this->rectangle.set_pos(x, y);
 }
 
-void Application::UI::Checkbox::set_color(Render::Color color)
+void Application::UI::Checkbox::set_color(Render::Color4 color)
 {
 	this->rectangle.set_color(color);
 }

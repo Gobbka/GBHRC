@@ -27,22 +27,22 @@ namespace Application
 		{
 		private:
 			void draw(Render::DrawEvent* event) override;
-			void set_temp_color(Render::Color color);
+			void set_temp_color(Render::Color4 color);
 
 		private:
 			Canvas::Rectangle back_rect;
 		public:
 
-			Render::Color non_active_color;
+			Render::Color4 non_active_color;
 
 			ElementDescription get_desc() override;
 
-			Button(Render::Position position, Render::Resolution resolution, Render::Color color,DirectX::SpriteFont*font,const char*text);
+			Button(Render::Position position, Render::Resolution resolution, Render::Color4 color,DirectX::SpriteFont*font,const char*text);
 
 			bool point_belongs(Render::Position point) override;
 
 			void set_pos(float x, float y) override;
-			void set_color(Render::Color color) override;
+			void set_color(Render::Color4 color) override;
 			void move_by(float x, float y) override;
 			UI::InteractiveElement* set_resolution(float width, float height) override;
 

@@ -18,14 +18,14 @@ namespace Application
 			
 			void draw(Render::DrawEvent* event) override;
 			
-			Label(Render::Position position, const char* text,DirectX::SpriteFont*font, Render::Color color);
-			Label(Render::Position position, const char* text,DirectX::SpriteFont*font, Render::Color color, Render::Resolution limitResolution);
+			Label(Render::Position position, const char* text,DirectX::SpriteFont*font, Render::Color4 color);
+			Label(Render::Position position, const char* text,DirectX::SpriteFont*font, Render::Color4 color, Render::Resolution limitResolution);
 
 			InteractiveElement* set_resolution(float width, float height) override;
 			InteractiveElement* set_resolution(Render::Resolution resolution);
 			
 			void set_pos(float x, float y) override;
-			void set_color(Render::Color color) override;
+			void set_color(Render::Color4 color) override;
 			void move_by(float x, float y) override;
 
 			bool point_belongs(Render::Position point) override;

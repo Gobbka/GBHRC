@@ -25,7 +25,7 @@ namespace Application
 		public:
 			
 			TextAlign text_align;
-			Render::Color color;
+			Render::Color4 color;
 			Render::Resolution limitRect;
 			
 			

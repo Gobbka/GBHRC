@@ -17,7 +17,7 @@ void Application::UI::Label::draw(Render::DrawEvent* event)
 	Text::DrawInRect(event, this->position, this->scalable);
 }
 
-Application::UI::Label::Label(Render::Position position, const char* text, DirectX::SpriteFont* font, Render::Color color)
+Application::UI::Label::Label(Render::Position position, const char* text, DirectX::SpriteFont* font, Render::Color4 color)
 	: Text(font,Render::TextAlign::Center)
 {	
 	Text::set_text(text);
@@ -26,7 +26,7 @@ Application::UI::Label::Label(Render::Position position, const char* text, Direc
 }
 
 Application::UI::Label::Label(Render::Position position, const char* text, DirectX::SpriteFont* font,
-	Render::Color color, Render::Resolution limitResolution)
+	Render::Color4 color, Render::Resolution limitResolution)
 	: Text(font, Render::TextAlign::Center)
 {
 	Text::set_text(text);
@@ -58,7 +58,7 @@ void Application::UI::Label::set_pos(float x, float y)
 	this->position = { x, y };
 }
 
-void Application::UI::Label::set_color(Render::Color color)
+void Application::UI::Label::set_color(Render::Color4 color)
 {
 	this->color = color;
 }

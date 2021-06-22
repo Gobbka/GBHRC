@@ -10,7 +10,7 @@ namespace Application
 		public:
 			void on_initialize() override;
 			int list_offset = 0;
-			ItemList(Render::Position position, Render::Resolution resolution, Render::Color color);
+			ItemList(Render::Position position, Render::Resolution resolution, Render::Color4 color);
 		public:
 			ElementDescription get_desc() override;
 

@@ -4,10 +4,15 @@
 
 void Application::UI::Panel::draw(Render::DrawEvent* event)
 {
+	if(this->unique_id == 0x228)
+	{
+		this->unique_id = 0x228;
+	}
+	
 	if(this->styles.overflow == VISIBLE_STATE_HIDDEN)
 	{
 		event->mask_draw_begin();
-		event->set_alpha(0.5f);
+		event->set_alpha(this->alpha);
 		event->draw_element(&this->rect);
 		event->set_alpha(1.f);
 		
@@ -18,7 +23,7 @@ void Application::UI::Panel::draw(Render::DrawEvent* event)
 	{
 		event->mask_discard_begin(false);
 		
-		event->set_alpha(0.5f);
+		event->set_alpha(this->alpha);
 		event->draw_element(&this->rect);
 		event->set_alpha(1.f);
 		Parent::draw(event);
@@ -59,10 +64,12 @@ Application::UI::ElementDescription Application::UI::Panel::get_desc()
 	return ElementDescription(true, "PANEL");
 }
 
-Application::UI::Panel::Panel(Render::Position position, Render::Resolution resolution, Render::Color color)
-	:Parent(position),
+Application::UI::Panel::Panel(Render::Position position, Render::Resolution resolution, Render::Color4 color)
+	:
+	Parent(position),
 	rect(position,resolution,color)
 {
+	this->set_alpha(color.a);
 }
 
 bool Application::UI::Panel::point_belongs(Render::Position point)
@@ -83,15 +90,15 @@ void Application::UI::Panel::set_pos(float x, float y)
 	this->move_by(move_x, move_y);
 }
 
-void Application::UI::Panel::set_color(Render::Color color)
+void Application::UI::Panel::set_color(Render::Color4 color)
 {
 	this->rect.set_color(color);
 }
 
-void Application::UI::Panel::set_alpha(float alpha)
-{
-	this->rect.set_alpha(alpha);
-}
+//void Application::UI::Panel::set_alpha(float alpha)
+//{
+//	this->rect.set_alpha(alpha);
+//}
 
 void Application::UI::Panel::move_by(float x, float y)
 {

@@ -8,13 +8,23 @@ namespace Application
 {
 	namespace Render
 	{
-		struct Color
+		struct Color3
 		{
-			float r; float g; float b; float a;
-			Color(float r, float g, float b) : r(r), g(g), b(b), a(1.f) {};
-			Color(float r, float g, float b,float a) : r(r), g(g), b(b), a(a) {};
-			Color(DirectX::XMFLOAT3 f3) : r(f3.x), g(f3.y), b(f3.z),a(1.f) {};
+			float r; float g; float b;
+			Color3(float r, float g, float b) : r(r), g(g), b(b) {};
+			Color3(float r, float g, float b, float a) : r(r), g(g), b(b) {};
+			Color3(DirectX::XMFLOAT3 f3) : r(f3.x), g(f3.y), b(f3.z) {};
 		};
+		
+		struct Color4 : Color3
+		{
+			float a = 1.f;
+			Color4(float r, float g, float b, float a) : Color3(r,g,b), a(a) {};
+			Color4(float r, float g, float b) : Color3(r,g,b) {};
+			Color4(Color3 c) : Color3(c) {}
+		};
+
+
 
 		struct Resolution
 		{

@@ -9,7 +9,7 @@ void Application::UI::Button::draw(Render::DrawEvent* event)
 	Label::draw(event);
 }
 
-Application::UI::Button::Button(Render::Position position, Render::Resolution resolution, Render::Color color, DirectX::SpriteFont* font,
+Application::UI::Button::Button(Render::Position position, Render::Resolution resolution, Render::Color4 color, DirectX::SpriteFont* font,
                                 const char* text)
 	:
 	Label(position, text, font, {1,1,1}, resolution),
@@ -36,7 +36,7 @@ void Application::UI::Button::set_pos(float x, float y)
 	//this->text.set_pos(x, y);
 }
 
-void Application::UI::Button::set_temp_color(Render::Color color)
+void Application::UI::Button::set_temp_color(Render::Color4 color)
 {
 	back_rect.set_color(color);
 }
@@ -46,7 +46,7 @@ Application::UI::ElementDescription Application::UI::Button::get_desc()
 	return ElementDescription(false,"BUTTON",true );
 }
 
-void Application::UI::Button::set_color(Render::Color color)
+void Application::UI::Button::set_color(Render::Color4 color)
 {
 	this->non_active_color = color;
 	this->set_temp_color(color);

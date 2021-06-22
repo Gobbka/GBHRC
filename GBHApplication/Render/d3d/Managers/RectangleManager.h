@@ -27,7 +27,7 @@ namespace Application
 				}
 			}
 
-			static void set_color(GVertex::Vertex* ptr, Render::Color color)
+			static void set_color(GVertex::Vertex* ptr, Render::Color4 color)
 			{
 				for (int i = 0; i < 4; i++)
 				{

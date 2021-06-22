@@ -63,6 +63,8 @@ namespace Application
 		protected:
 			static void default_event_callback (UIElementEventArgs args) {}
 			virtual void on_initialize(){}
+		protected:
+			float alpha = 1.f;
 		public:
 			// public variables
 			
@@ -93,6 +95,8 @@ namespace Application
 
 			virtual InteractiveElement* set_resolution(float width,float height) PURE;
 
+			void set_alpha(float alpha);
+			
 			void set_margin(float x,float y);
 			void set_margin(float x,float y,float z,float w);
 		public:

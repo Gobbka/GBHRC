@@ -22,7 +22,7 @@ void Application::UI::ItemList::on_initialize()
 		});
 }
 
-Application::UI::ItemList::ItemList(Render::Position position, Render::Resolution resolution, Render::Color color)
+Application::UI::ItemList::ItemList(Render::Position position, Render::Resolution resolution, Render::Color4 color)
 	: Panel(position,resolution,color)
 {
 	Panel::styles.overflow = VISIBLE_STATE_HIDDEN;

@@ -16,8 +16,8 @@ namespace Application
 
 			Canvas::Rectangle rectangle;
 		public:
-			Render::Color active_color { 0.27f,0.73f,0.39f };
-			Render::Color non_active_color{ 0.305f,0.305f,0.305f };
+			Render::Color4 active_color { 0.27f,0.73f,0.39f };
+			Render::Color4 non_active_color{ 0.305f,0.305f,0.305f };
 		public:
 			bool is_checked();
 			ElementDescription get_desc() override;
@@ -26,10 +26,10 @@ namespace Application
 			
 			EventCallback onChange = default_event_callback;
 
-			Checkbox(Render::Position position,Render::Resolution resolution, Render::Color color);
+			Checkbox(Render::Position position,Render::Resolution resolution, Render::Color4 color);
 
 			void set_pos(float x, float y) override;
-			void set_color(Render::Color color) override;
+			void set_color(Render::Color4 color) override;
 
 			Render::Position get_position() override;
 
