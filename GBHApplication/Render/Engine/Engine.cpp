@@ -45,10 +45,7 @@ Engine::Engine(const HWND hwnd, ID3D11Device* pDevice,
 
 	this->spriteBatch = new DirectX::SpriteBatch(pDevContext);
 	
-	RECT rect;
-	GetClientRect(hwnd, &rect);
-
-	this->mask_engine = new MaskEngine(pDevice, pDevContext,this->pRenderTargetView, rect.right, rect.bottom);
+	this->mask_engine = new MaskEngine(pDevice, pDevContext,this->pRenderTargetView, this->pViewports->Width, this->pViewports->Height);
 	this->blend_engine = new BlendEngine(this);
 }
 
