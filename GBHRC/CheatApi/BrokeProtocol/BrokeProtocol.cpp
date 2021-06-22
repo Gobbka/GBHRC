@@ -59,7 +59,7 @@ BrokeProtocol::Managers::ShManager* BrokeProtocol::get_manager()
 {
     auto* gtypes = get_global_types();
 	if(gtypes!=nullptr)
-		return get_global_types()->manager;
+		return gtypes->manager;
     return nullptr;
 }
 
@@ -83,12 +83,21 @@ KeyedCollection<BrokeProtocol::Players::ShPlayer*>* BrokeProtocol::GetPlayersCol
 
         mono_context->mono_get_static_field_value(
             pClass, 
-            BPTokens::EntityCollection_HUMANS, // ENTITY_COLLECTION::HUMANS
+            BPTokens::EntityCollection_HUMANS,
             &players
         );
 	}
 	
     return players;
+}
+
+void* BrokeProtocol::get_can_equip_function()
+{
+    STATIC_METHOD("BrokeProtocol.Entities.ShPlayer:CanEquip(ShEquipable)", true);
+
+	
+    return pMethod;
+	// CanEquip
 }
 
 void BrokeProtocol::fire()

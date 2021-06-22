@@ -50,7 +50,7 @@ namespace BrokeProtocol {
 			char pad_002C[28]; //0x002C
 		}; //Size: 0x0048
 
-		class Mountable
+		class ShMountable
 		{
 		public:
 			char pad_0000[392]; //0x0000

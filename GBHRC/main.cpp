@@ -111,7 +111,6 @@ void MainThread()
     {
         MonoContext = Mono::Context::get_context();
 
-        Mono::Dumper::dump_object((Mono::MonoObject*)BrokeProtocol::get_evaluator()->GlobalTypes->player);
 
         MonoContext->mono_thread_attach(MonoContext->mono_get_root_domain());
         DEBUG_LOG("CHECKING VERSION...");
@@ -122,8 +121,6 @@ void MainThread()
             return;
         }
     }
-
-    DEBUG_LOG("INSTALLED LAST VERSION");
 	
     Hooks::D3D11::fnPresent present_addres;
     auto hr = Hooks::D3D11::GetPresentAddress(&present_addres);
@@ -174,11 +171,9 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
 
         if (wParam == VK_F5)
         {
-            Mono::Dumper::dump_object(
-                (Mono::MonoObject*)BrokeProtocol::GetLocalPlayer()
-            );
-
-            BrokeProtocol::GetLocalPlayer()->mainT->set_position(UnityTypes::Vector3::make(0, 0, 0));
+            auto* player = BrokeProtocol::GetLocalPlayer();
+            (*player->bindings)[0] = nullptr;
+            (*player->bindings)[1] = nullptr;
         }
 
         if(wParam == VK_F4)

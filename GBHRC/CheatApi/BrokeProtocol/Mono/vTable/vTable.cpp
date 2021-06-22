@@ -45,4 +45,6 @@ void Mono::vTable::implement()
 	this->mono_image_get_name = (const char*(WINAPI*)(MonoImage*))GetProcAddress(module, "mono_image_get_name");
 	this->mono_object_get_size = (UINT(WINAPI*)(MonoObject*))GetProcAddress(module, "mono_object_get_size");
 	this->mono_class_instance_size = (UINT(WINAPI*)(MonoClass*))GetProcAddress(module, "mono_class_instance_size");
+	this->mono_method_get_object  = (MonoObject*(WINAPI*)(MonoMethod*))GetProcAddress(module, "mono_method_get_object");
+	this->mono_method_get_unmanaged_thunk = (void*(WINAPI*)(MonoMethod*))GetProcAddress(module, "mono_method_get_unmanaged_thunk");
 }

@@ -21,7 +21,7 @@ namespace Mono
 		MonoMethod* (WINAPI* mono_class_get_method_from_name)(MonoClass* klass, const char* name, int param_count);
 		MonoMethod* (WINAPI* mono_property_get_get_method)(MonoProperty* prop);
 		MonoMethod* (WINAPI* mono_property_get_set_method)(MonoProperty* prop);
-
+		MonoObject* (WINAPI* mono_method_get_object)(MonoMethod* method);
 
 		const char* (WINAPI* mono_class_get_name)(MonoClass* klass);
 		UINT(WINAPI* mono_method_get_token)(MonoMethod* method);
@@ -33,6 +33,7 @@ namespace Mono
 
 		MonoClass* (WINAPI* mono_class_from_name)(MonoImage* image, const char* namespace_name, const char* name);
 		MonoClass* (WINAPI* mono_object_get_class)(MonoObject* obj);
+		
 		MonoClass* (WINAPI* mono_class_get_parent)(MonoClass* klass);
 		UINT (WINAPI* mono_class_instance_size)(MonoClass* klass);
 

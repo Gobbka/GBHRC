@@ -328,7 +328,8 @@ void GBHRC::Context::life_cycle()
 	
 	while(true)
 	{
-        if (BrokeProtocol::get_manager() != nullptr && BrokeProtocol::get_manager()->host != nullptr)
+        auto* shManager = BrokeProtocol::get_manager();
+        if (shManager != nullptr && shManager->host != nullptr)
         {
             auto* local_player = BrokeProtocol::GetLocalPlayer();
 

@@ -16,6 +16,8 @@ namespace BrokeProtocol
 	Players::ShPlayer* GetLocalPlayer();
 	Collections::KeyedCollection<Players::ShPlayer*>* GetPlayersCollection();
 
+	void* get_can_equip_function();
+	
 	void fire();
 	
 	void SendToServer(PacketFlags flags, BrokeProtocol::SvPacket packet, Mono::MonoArray* array);
