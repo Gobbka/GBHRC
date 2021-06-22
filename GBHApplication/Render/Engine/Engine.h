@@ -24,6 +24,7 @@ namespace Application
 			ID3D11DeviceContext* pDevContext;
 			DirectX::SpriteBatch* get_batch() const;
 			MaskEngine* get_mask() const;
+			BlendEngine* get_blend_engine();
 		private:
 			ID3D11RenderTargetView* pRenderTargetView;
 			//
@@ -46,7 +47,6 @@ namespace Application
 			bool create_const_buffer();
 			ID3DBlob* create_vs_shader();
 			ID3DBlob* create_ps_shader(ID3DBlob* blob);
-			void apply_constant_buffer(ConstantBuffer constant_buffer);
 
 			DirectX::XMMATRIX get_ortho_matrix();
 			ID3D11RenderTargetView* get_render_target(IDXGISwapChain* pSwap) const;
@@ -55,6 +55,9 @@ namespace Application
 			std::vector<Application::Render::CanvasScene*> pScenes;
 
 		public:
+			void apply_constant_buffer(ConstantBuffer constant_buffer);
+
+			
 			void set_vbuffer(GVertex::VertexBuffer* buffer);
 			void render_prepare();
 

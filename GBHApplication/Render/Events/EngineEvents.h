@@ -34,6 +34,7 @@ namespace Application
 			UINT element_index;
 			BYTE mask_layer_depth;
 		public:
+			void set_alpha(float alpha);
 			
 			void draw_element(Canvas::CanvasElement*object);
 			void draw_vertex(UINT count,UINT offset=0) const;

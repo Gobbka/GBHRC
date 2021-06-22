@@ -1,5 +1,7 @@
 ﻿#pragma once
 #include <d3d11.h>
+
+struct ConstantBuffer;
 namespace Application
 {
 	namespace Render
@@ -14,6 +16,8 @@ namespace Application
 			BlendEngine(Engine*engine);
 
 			void set_blend_state();
+
+			void set_alpha(ConstantBuffer buffer,float alpha);
 		};
 	}
 }

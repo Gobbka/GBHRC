@@ -82,6 +82,11 @@ MaskEngine* Engine::get_mask() const
 	return this->mask_engine;
 }
 
+BlendEngine* Engine::get_blend_engine()
+{
+	return this->blend_engine;
+}
+
 bool Engine::initialize()
 {
 

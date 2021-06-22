@@ -1,6 +1,12 @@
 #include "EngineEvents.h"
 #include "../Engine/Engine.h"
 #include "../Scene/CanvasScene.h"
+#include "../Engine/BlendEngine.h"
+
+void Application::Render::D3D11DrawEvent::set_alpha(float alpha)
+{
+	this->engine->get_blend_engine()->set_alpha(this->cb, alpha);
+}
 
 void Application::Render::D3D11DrawEvent::draw_element(Canvas::CanvasElement* object)
 {

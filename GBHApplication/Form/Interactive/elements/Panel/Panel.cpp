@@ -7,7 +7,9 @@ void Application::UI::Panel::draw(Render::DrawEvent* event)
 	if(this->styles.overflow == VISIBLE_STATE_HIDDEN)
 	{
 		event->mask_draw_begin();
+		event->set_alpha(0.5f);
 		event->draw_element(&this->rect);
+		event->set_alpha(1.f);
 		
 		event->mask_discard_begin();
 		Parent::draw(event);
@@ -16,7 +18,9 @@ void Application::UI::Panel::draw(Render::DrawEvent* event)
 	{
 		event->mask_discard_begin(false);
 		
+		event->set_alpha(0.5f);
 		event->draw_element(&this->rect);
+		event->set_alpha(1.f);
 		Parent::draw(event);
 		
 		event->mask_discard_end(false);
