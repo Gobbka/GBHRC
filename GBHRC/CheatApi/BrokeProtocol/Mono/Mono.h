@@ -22,6 +22,7 @@ namespace Mono
 		MonoImage*             get_script_image();
 		MonoImage*             get_mscorlib();
 		MonoImage*             get_UE_CoreModule();
+		MonoImage*             get_physic_image();
 
 		Context();
 

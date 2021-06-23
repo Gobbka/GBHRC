@@ -97,6 +97,13 @@ Mono::MonoImage* Context::get_UE_CoreModule()
 	return image;
 }
 
+Mono::MonoImage* Context::get_physic_image()
+{
+	static MonoImage* image = Context::mono_image_loaded("UnityEngine.PhysicsModule");
+
+	return image;
+}
+
 Context::Context()
 {
 	vTable::implement();

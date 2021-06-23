@@ -1,6 +1,7 @@
 #include "gbhrc.h"
 
 #include <codecvt>
+#include <ctime>
 
 #include "../../resource.h"
 #include <SpriteFont.h>
@@ -322,20 +323,26 @@ void GBHRC::Context::static_draw_callback(Application::Render::DrawEvent* event)
 
 void GBHRC::Context::life_cycle()
 {
+	
 #ifdef LUA_SUPPORT
     CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)GBHRC::Context::receive_lua_thread, nullptr, 0, nullptr);
 #endif
 	
 	while(true)
 	{
+		
+		
         auto* shManager = BrokeProtocol::get_manager();
         if (shManager != nullptr && shManager->host != nullptr)
         {
             auto* local_player = BrokeProtocol::GetLocalPlayer();
 
+
             if (config->fly_active && GetAsyncKeyState(VK_SPACE))
             {
                 local_player->jump();
+                Sleep(30);
+            	
             }
 
             if (config->car_speed && local_player->curMount != nullptr)
@@ -362,9 +369,12 @@ void GBHRC::Context::life_cycle()
             {
                 local_player->rotationT->lookAt(aim_target);
 
-                Sleep(5);
                 continue;
             }
+
+            Sleep(5);
         }
     }
+
+    DEBUG_LOG("END OF LIFE CICLE");
 }

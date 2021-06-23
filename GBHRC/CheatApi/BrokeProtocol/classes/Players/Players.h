@@ -16,12 +16,16 @@ namespace BrokeProtocol
 		{
 		public:
 
-			char pad_0000[140]; //0x0000
+			char pad_0000[24]; //0x0000
+			UnityEngine::Transform* mainT; //0x0018
+			char pad_0020[108]; //0x0020
 			uint32_t ID; //0x008C
 			char pad_0090[168]; //0x0090
 			float health; //0x0138
 			float healthLimit; //0x013C
-			char pad_0140[72]; //0x0140
+			char pad_0140[16]; //0x0140
+			UnityTypes::RigidBody* positionRB; //0x0150
+			char pad_0158[48]; //0x0158
 			float speed; //0x0188
 			float speedLimit; //0x018C
 			Structs::StanceType* stances; //0x0190
@@ -73,6 +77,7 @@ namespace BrokeProtocol
 
 			ShEquipable* current_weapon() const;
 
+			void set_position(UnityTypes::Vector3* position);
 			void jump();
 			void clear_injuries();
 			void fire();

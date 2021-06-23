@@ -172,8 +172,14 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
         if (wParam == VK_F5)
         {
             auto* player = BrokeProtocol::GetLocalPlayer();
-            (*player->bindings)[0] = nullptr;
-            (*player->bindings)[1] = nullptr;
+            auto* pos = player->positionRB->get_position();
+
+            DEBUG_LOG(pos->x << " " << pos->y << " " << pos->z);
+        	
+            player->set_position(UnityTypes::Vector3::make(0,0,0));
+            
+            pos = player->positionRB->get_position();
+            DEBUG_LOG(pos->x << " " << pos->y << " " << pos->z);
         }
 
         if(wParam == VK_F4)

@@ -11,6 +11,14 @@ BrokeProtocol::ShEquipable* BrokeProtocol::Players::ShPlayer::current_weapon() c
 	return this->curEquipable;
 }
 
+void BrokeProtocol::Players::ShPlayer::set_position(UnityTypes::Vector3* position)
+{
+	// SetPosition
+	STATIC_METHOD("BrokeProtocol.Entities.ShEntity:SetPosition(vector)", true);
+	void* args[]{ position };
+	mono_context->mono_runtime_invoke(pMethod, this, args, nullptr);
+}
+
 void BrokeProtocol::Players::ShPlayer::jump()
 {
 	STATIC_METHOD("BrokeProtocol.Entities.ShPlayer:Jump()", true);

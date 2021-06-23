@@ -58,7 +58,7 @@ void UnityEngine::Transform::set_position(UnityTypes::Vector3* vector)
 		mono_context->mono_class_from_name(mono_context->get_UE_CoreModule(), "UnityEngine", "Transform"),
 		"position"
 	));
-	void* params[]{ &vector };
+	void* params[]{ vector };
 	mono_context->mono_runtime_invoke(pSetPosMethod, this, params, nullptr);
 }
 
