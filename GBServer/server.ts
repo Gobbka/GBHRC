@@ -16,7 +16,7 @@ cryptedServer.on("connection", (socket) => {
 
 
     socket.on("data", (data: Buffer) => {
-        console.log(data);
+        console.log("New data", data.toString());
         
     });
 

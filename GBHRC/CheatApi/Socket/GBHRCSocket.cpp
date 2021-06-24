@@ -23,6 +23,11 @@ Network::GBHRCSocket::GBHRCSocket()
 		*buffer = new char[to_recv];
 		recv(socket, *buffer, to_recv, 0);
 		
-		return to_recv;
+		return message_size;
+	};
+
+	_send_function = [](SOCKET socket, char* buffer, long size)
+	{
+		send(socket, buffer, size, 0);
 	};
 }

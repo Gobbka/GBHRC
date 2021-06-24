@@ -19,13 +19,11 @@
 #include <sstream>
 
 #include "resource.h"
+#include "Asserts/AuthAssert/AuthAssert.h"
 #include "CheatApi/BrokeProtocol/classes/Guns/ShBallistic.h"
 #include "includes/clientdefs.h"
 
 #include "Asserts/VersionAssert/ClientVersionAssers.h"
-#include "CheatApi/LuaEngine/LuaEngine.h"
-#include "CheatApi/Socket/GBHRCSocket.h"
-#include "Forms/FriendList/FriendList.h"
 #include "Forms/test/testScene.h"
 
 HINSTANCE DllInst;
@@ -109,17 +107,8 @@ void MainThread()
     freopen("CONIN$", "r", stdin);
 #endif
 
+    AuthAssert::check_subscription();
 
-    Network::GBHRCSocket socket;
-
-    if(!socket.connect_to("127.0.0.1",1337))
-    {
-        DEBUG_LOG("NIGGA WONT CONNECT");
-    	
-    }
-    char* nigger;
-    socket.receive_from(&nigger);
-	
     {
         MonoContext = Mono::Context::get_context();
 

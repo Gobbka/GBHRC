@@ -43,10 +43,10 @@ bool Network::WinClient::connect_to(const char* ip, long port)
 
 void Network::WinClient::send_data(char* data, long size) const
 {
-	send(_socket, data, size, 0);
+	_send_function(_socket, data, size);
 }
 
-long Network::WinClient::receive_from(char** out_data) const
+long Network::WinClient::receive_to(char** out_data) const
 {
 	return _receive_function(_socket,out_data);
 }

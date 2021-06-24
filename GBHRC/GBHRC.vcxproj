@@ -155,6 +155,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Asserts\AuthAssert\AuthAssert.cpp" />
     <ClCompile Include="Asserts\VersionAssert\ClientVersionAssert.cpp" />
     <ClCompile Include="CheatApi\BrokeProtocol\BrokeProtocol.cpp" />
     <ClCompile Include="CheatApi\BrokeProtocol\classes\Collections\Dictionary.cpp" />
@@ -184,6 +185,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Asserts\AuthAssert\AuthAssert.h" />
     <ClInclude Include="Asserts\VersionAssert\ClientVersionAssers.h" />
     <ClInclude Include="CheatApi\BrokeProtocol\BrokeProtocol.h" />
     <ClInclude Include="CheatApi\BrokeProtocol\BPStructs.h" />
