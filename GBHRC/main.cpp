@@ -24,6 +24,7 @@
 
 #include "Asserts/VersionAssert/ClientVersionAssers.h"
 #include "CheatApi/LuaEngine/LuaEngine.h"
+#include "CheatApi/Socket/GBHRCSocket.h"
 #include "Forms/FriendList/FriendList.h"
 #include "Forms/test/testScene.h"
 
@@ -108,9 +109,19 @@ void MainThread()
     freopen("CONIN$", "r", stdin);
 #endif
 
+
+    Network::GBHRCSocket socket;
+
+    if(!socket.connect_to("127.0.0.1",1337))
+    {
+        DEBUG_LOG("NIGGA WONT CONNECT");
+    	
+    }
+    char* nigger;
+    socket.receive_from(&nigger);
+	
     {
         MonoContext = Mono::Context::get_context();
-
 
         MonoContext->mono_thread_attach(MonoContext->mono_get_root_domain());
         DEBUG_LOG("CHECKING VERSION...");

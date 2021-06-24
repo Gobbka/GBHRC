@@ -1,14 +1,23 @@
 #pragma once
-#include <windows.h>
 
-namespace WinSocket
+
+
+namespace Network
 {
-	class Client
+	class WinClient
 	{
+	protected:
+		long(*_receive_function)(unsigned long long socket,char**out_buffer);
+		
+	private:
+		unsigned long long _socket = 0;
 	public:
-		static Client* connect(const char* ip, DWORD port);
-		void send(char* data, DWORD size);
-		DWORD receive(char** out_data);
+		bool connect_to(const char* ip, long port);
+		void send_data(char* data, long size) const;
+		long receive_from(char** out_data) const;
+
+		WinClient();
+		~WinClient();
 	};
 }
 

@@ -9,10 +9,20 @@ const cryptedServer = new net.Server();
 
 cryptedServer.on("connection", (socket) => {
     console.log("CONNECTED: " + socket.remoteAddress);
+    let buffer = AuthServerMessageFactory.create_new_crypted_message("ok");
+
+    console.log(buffer);
+    socket.write(buffer.get_buffer());
+
+
     socket.on("data", (data: Buffer) => {
         console.log(data);
-        socket.write(AuthServerMessageFactory.create_new_crypted_message("ok"));
+        
     });
+
+    socket.on("error", () => {
+
+    })
 })
 
 cryptedServer.listen(1337);
