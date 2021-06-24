@@ -36,6 +36,36 @@
     <Content Include="tsconfig.json" />
     <Content Include="package.json" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="database\" />
+    <Folder Include="interfaces\" />
+    <Folder Include="events\" />
+    <Folder Include="server\" />
+    <Folder Include="server\AuthServer\" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="database\IDataBase.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="database\UserDB.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="events\IEvent.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="events\Eventable.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="server\AuthServer\AuthServer.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="server\AuthServer\AuthServerMessage.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="server\AuthServer\AuthServerMessageFactory.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+  </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
   <ProjectExtensions>
     <VisualStudio>

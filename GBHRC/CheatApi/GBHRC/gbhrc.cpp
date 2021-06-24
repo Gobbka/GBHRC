@@ -90,7 +90,7 @@ void GBHRC::Context::render_callback(Application::Render::DrawEvent* event)
             }
         	
         	// draw player
-            if (this->config->esp_active)
+            if (this->config->esp.active)
             {
                 auto* pos = player.player->rotationT->get_position();
                 player.bottom_point = Matrix4X4::worldToScreen(view_matrix, projection_m, { pos->x,pos->y - player.player->stance->capsuleHeight,pos->z }, camera_resolution);
@@ -101,7 +101,7 @@ void GBHRC::Context::render_callback(Application::Render::DrawEvent* event)
             }
 
         	// check player for aim target status
-        	if(this->config->aim_assist)
+        	if(this->config->aim.assist)
         	{
         		if(player.top_point.z > 0 && this->is_aim_target(&min_aimbot_target,&player))
         		{
@@ -153,7 +153,7 @@ void GBHRC::Context::draw_player(Application::Render::DrawEvent* event,UINT elem
         //box->set_resolution((float)abs(point_top.x - point_bottom.x), (float)abs(point_top.y - point_bottom.y));
         //box->render = true;
     }
-    if (this->config->esp_health_active)
+    if (this->config->esp.draw_health)
     {
         auto* max_h_box = esp_box->max_health_box;
         max_h_box->set_pos(point_top.x,point_top.y);
@@ -181,7 +181,7 @@ void GBHRC::Context::draw_player(Application::Render::DrawEvent* event,UINT elem
     event->engine->get_batch()->Begin();
     auto rect = VisbyRoundCFFont->MeasureDrawBounds((wchar_t*)player->player->username->array, DirectX::XMFLOAT2(0, 0));
 
-    if (this->config->esp_draw_name)
+    if (this->config->esp.draw_name)
         VisbyRoundCFFont->DrawString(
             engine->get_batch(),
             (wchar_t*)&player->player->username->array,
@@ -195,7 +195,7 @@ void GBHRC::Context::draw_player(Application::Render::DrawEvent* event,UINT elem
             DirectX::XMFLOAT2(0.5f, 0.5f)
         );
 
-    if (this->config->esp_draw_gun_name)
+    if (this->config->esp.draw_gun_name)
         VisbyRoundCFFont->DrawString(
             engine->get_batch(),
             (wchar_t*)&player->player->curEquipable->itemName->array,
@@ -216,20 +216,17 @@ bool GBHRC::Context::is_aim_target(EspPlayer* old_player, EspPlayer* new_player)
 	if(old_player->player!=nullptr)
 	{
         return (
-            new_player->display_distance <= this->config->fov_size &&
+            new_player->display_distance <= this->config->aim.fov_size &&
             new_player->display_distance <= old_player->display_distance
             );
     }
 
-	return new_player->display_distance <= this->config->fov_size;
+	return new_player->display_distance <= this->config->aim.fov_size;
 }
 
 void GBHRC::Context::set_esp(bool status)
 {
-    this->config->esp_active = status;
-    this->config->esp_health_active = status;
-    this->config->esp_draw_gun_name = status;
-    this->config->esp_draw_name = status;
+    this->config->esp.active = status;
 
 	if(status == false)
 	{
@@ -351,7 +348,7 @@ void GBHRC::Context::life_cycle()
                 local_player->curMount->speedLimit = 500.f;
             }
 
-        	if(config->no_recoil && local_player->curEquipable != nullptr)
+        	if(config->aim.no_recoil && local_player->curEquipable != nullptr)
         	{
                 auto* weapon = BrokeProtocol::GetLocalPlayer()->current_weapon();
 
@@ -365,7 +362,7 @@ void GBHRC::Context::life_cycle()
                 }
         	}
 
-            if (config->aim_assist == true && aim_active && aim_target != nullptr)
+            if (config->aim.assist == true && aim_active && aim_target != nullptr)
             {
                 local_player->rotationT->lookAt(aim_target);
 

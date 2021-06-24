@@ -138,7 +138,7 @@ void MainMenuMarkup(Application::InteractiveForm* form)
 
 	aim_checkbox->onChange = [](Application::UI::UIElementEventArgs args)
 	{
-		GBHRC::Context::instance()->config->aim_assist = ((Application::UI::Checkbox*)args)->is_checked();
+		GBHRC::Context::instance()->config->aim.assist = ((Application::UI::Checkbox*)args)->is_checked();
 	};
 
 	esp_checkbox->onChange = [](Application::UI::UIElementEventArgs args)
@@ -158,7 +158,7 @@ void MainMenuMarkup(Application::InteractiveForm* form)
 
 	no_recoil_checkbox->onChange = [](Application::UI::UIElementEventArgs args)
 	{
-		GBHRC::Context::instance()->config->no_recoil = (((Application::UI::Checkbox*)args)->is_checked());
+		GBHRC::Context::instance()->config->aim.no_recoil = (((Application::UI::Checkbox*)args)->is_checked());
 	};
 
 	using namespace Application::UI;

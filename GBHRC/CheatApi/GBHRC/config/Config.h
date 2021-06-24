@@ -3,24 +3,33 @@
 
 namespace GBHRC
 {
+	struct EspConfig
+	{
+		bool active = false;
+		bool draw_name = true;
+		bool draw_health = true;
+		bool draw_gun_name = true;
+	};
+
+	struct AimConfig
+	{
+		bool assist = false;
+		bool no_recoil = false;
+		float draw_distance = 300.f;
+		float fov_size = 150.f;
+	};
+	
 	class Config
 	{
 	public:
 		// public flags
 
-		bool esp_active        = false;
-		bool esp_draw_name     = false;
-		bool esp_health_active = false;
-		bool esp_draw_gun_name = false;
-		bool aim_assist        = false;
-		bool no_recoil         = false;
+		EspConfig esp;
+		AimConfig aim;
+		
 		bool fly_active		   = false;
 		bool inf_inventory     = false;
 		bool car_speed         = false;
-
-		float draw_distance = 300.f;
-		float fov_size      = 150.f;
-
 		//
 
 		std::string filename;

@@ -16,7 +16,7 @@ namespace GBHRCApp
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new LuaForm());
+            Application.Run(new AuthForm());
         }
     }
 }
