@@ -22,11 +22,9 @@ ID3D11RenderTargetView* Engine::get_render_target(IDXGISwapChain* pSwap) const
 	return this->pRenderTargetView;
 }
 
-Resolution Engine::get_resolution(const HWND hwnd)
+Resolution Engine::get_resolution()
 {
-	RECT rect;
-	GetClientRect(hwnd, &rect);
-	return Resolution{ (UINT)(rect.right - rect.left),(UINT)(rect.bottom - rect.top) };
+	return Resolution{ (UINT)this->pViewports->Width,(UINT)this->pViewports->Height };
 }
 
 Engine::Engine(const HWND hwnd, ID3D11Device* pDevice,
@@ -144,6 +142,7 @@ ID3DBlob* Engine::create_ps_shader(ID3DBlob* blob)
 
 	return blob;
 }
+
 
 void Engine::apply_constant_buffer(ConstantBuffer constant_buffer)
 {

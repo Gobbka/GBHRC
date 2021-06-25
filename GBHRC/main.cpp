@@ -107,7 +107,6 @@ void MainThread()
     freopen("CONIN$", "r", stdin);
 #endif
 
-    AuthAssert::check_subscription();
 
     {
         MonoContext = Mono::Context::get_context();

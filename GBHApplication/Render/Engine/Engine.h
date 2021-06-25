@@ -50,11 +50,12 @@ namespace Application
 
 			DirectX::XMMATRIX get_ortho_matrix();
 			ID3D11RenderTargetView* get_render_target(IDXGISwapChain* pSwap) const;
-			static Application::Render::Resolution get_resolution(HWND hwnd);
+			Render::Resolution get_resolution();
 			//
 			std::vector<Application::Render::CanvasScene*> pScenes;
 
 		public:
+			
 			void apply_constant_buffer(ConstantBuffer constant_buffer);
 
 			

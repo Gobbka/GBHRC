@@ -4,6 +4,7 @@
 
 #include "FloatColors.h"
 #include "../../resource.h"
+#include "../../Asserts/AuthAssert/AuthAssert.h"
 #include "Render/Engine/Engine.h"
 #include "Form/Interactive/elements/Panel/Panel.h"
 #include "Form/Interactive/elements/Checkbox/Checkbox.h"
@@ -146,6 +147,8 @@ void MainMenuMarkup(Application::InteractiveForm* form)
 		GBHRC::Context::instance()->set_esp(((Application::UI::Checkbox*)args)->is_checked());
 	};
 
+	DEBUG_LOG("AUTH: " << (AuthAssert::check_subscription() ? "OK" : "NOT OK"));
+	
 	jump_checkbox->onChange = [](Application::UI::UIElementEventArgs args)
 	{
 		GBHRC::Context::instance()->config->fly_active = (((Application::UI::Checkbox*)args)->is_checked());
