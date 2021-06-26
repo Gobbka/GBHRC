@@ -7,6 +7,11 @@
 #include "MaskEngine.h"
 #include "../Render.h"
 #include "../d3d/Vertex.h"
+#include "../d3d/Buffers/VertexBuffer.h"
+
+namespace Render {
+	class ConstantBuffer;
+}
 
 namespace Application
 {
@@ -25,6 +30,7 @@ namespace Application
 			DirectX::SpriteBatch* get_batch() const;
 			MaskEngine* get_mask() const;
 			BlendEngine* get_blend_engine();
+			::Render::ConstantBuffer* get_constant_buffer();
 		private:
 			ID3D11RenderTargetView* pRenderTargetView;
 			//
@@ -32,7 +38,7 @@ namespace Application
 			ID3D11InputLayout* pVertexLayout = nullptr;
 			ID3D11PixelShader* pPixelShader = nullptr;
 			//
-			ID3D11Buffer* pConstantBuffer = nullptr;
+			::Render::ConstantBuffer* _constantBuffer = nullptr;
 			//
 			DirectX::XMMATRIX mOrtho;
 			
@@ -44,7 +50,7 @@ namespace Application
 			BlendEngine* blend_engine;
 		private:
 			bool initialize();
-			bool create_const_buffer();
+
 			ID3DBlob* create_vs_shader();
 			ID3DBlob* create_ps_shader(ID3DBlob* blob);
 
@@ -55,11 +61,7 @@ namespace Application
 			std::vector<Application::Render::CanvasScene*> pScenes;
 
 		public:
-			
-			void apply_constant_buffer(ConstantBuffer constant_buffer);
 
-			
-			void set_vbuffer(GVertex::VertexBuffer* buffer);
 			void render_prepare();
 
 			void set_shaders();
@@ -73,7 +75,7 @@ namespace Application
 			void update_scene();
 			void present();
 
-			GVertex::VertexBuffer* make_vertex_buffer(UINT size) const;
+			::Render::VertexBuffer* make_vertex_buffer(UINT size);
 
 			static bool compile_shader(const char* szShader, const char* szEntrypoint, const char* szTarget, ID3D10Blob** pBlob);
 		};

@@ -1,6 +1,6 @@
 ﻿#include "BlendEngine.h"
 #include "Engine.h"
-#include "../../Render/d3d/ConstantBuffer.h"
+#include "../../Render/d3d/Buffers/ConstantBuffer.h"
 
 Application::Render::BlendEngine::BlendEngine(Render::Engine* engine)
 {
@@ -35,8 +35,8 @@ void Application::Render::BlendEngine::set_blend_state()
 	this->engine->pDevContext->OMSetBlendState(this->blend_state, NULL, 0xFFFFFFFF);
 }
 
-void Application::Render::BlendEngine::set_alpha(ConstantBuffer cb,float alpha)
+void Application::Render::BlendEngine::set_alpha(::Render::ConstantBuffer* cb,float alpha)
 {
-	cb.alpha = alpha;
-	this->engine->apply_constant_buffer(cb);
+	cb->set_alpha(alpha);
+	cb->update();
 }

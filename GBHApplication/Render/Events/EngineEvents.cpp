@@ -2,10 +2,11 @@
 #include "../Engine/Engine.h"
 #include "../Scene/CanvasScene.h"
 #include "../Engine/BlendEngine.h"
+#include "../d3d/Buffers/VertexBuffer.h"
 
 void Application::Render::D3D11DrawEvent::set_alpha(float alpha)
 {
-	this->engine->get_blend_engine()->set_alpha(this->cb, alpha);
+	this->engine->get_blend_engine()->set_alpha(engine->get_constant_buffer(),alpha);
 }
 
 void Application::Render::D3D11DrawEvent::draw_element(Canvas::CanvasElement* object)
@@ -68,11 +69,11 @@ void Application::Render::D3D11DrawEvent::reset_render_state()
 	// TODO: know what needed to reset to draw fine
 	this->engine->render_prepare();
 	engine->pDevContext->RSSetState((ID3D11RasterizerState*)this->old_state);
-	this->engine->set_vbuffer(this->scene->get_vbuffer());
+	this->scene->get_vbuffer()->bind();
+	//this->engine->set_vbuffer(this->scene->get_vbuffer());
 }
 
-Application::Render::D3D11DrawEvent::D3D11DrawEvent(Engine* engine, CanvasScene* scene, ID3D11RasterizerState* old_state,ConstantBuffer c_buffer)
-	:cb(c_buffer)
+Application::Render::D3D11DrawEvent::D3D11DrawEvent(Engine* engine, CanvasScene* scene, ID3D11RasterizerState* old_state)
 {
 	this->engine = engine;
 	this->scene = scene;

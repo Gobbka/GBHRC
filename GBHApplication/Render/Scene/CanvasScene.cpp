@@ -47,7 +47,8 @@ void Application::Render::CanvasScene::render(Render::DrawEvent* draw_event)
 {
 	DRAW_ASSERT;
 
-	draw_event->engine->set_vbuffer(this->get_vbuffer());
+	
+	this->get_vbuffer()->bind();
 
 	this->render_components(draw_event);
 }

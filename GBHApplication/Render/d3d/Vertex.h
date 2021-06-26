@@ -21,20 +21,4 @@ namespace GVertex
 		{"COLOR", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0}
 	};
 
-	struct VertexBuffer
-	{
-		ID3D11Buffer* buffer = nullptr;
-		GVertex::Vertex* data = nullptr;
-		UINT size = 0;
-
-		ID3D11Buffer* get_buffer() const;
-
-		HRESULT create(ID3D11Device* pDevice, GVertex::Vertex* data, UINT size);
-
-		void copy_to(VertexBuffer* buffer) const;
-		void copy_to(void* buffer,UINT size) const;
-
-		~VertexBuffer();
-	};
-
 }

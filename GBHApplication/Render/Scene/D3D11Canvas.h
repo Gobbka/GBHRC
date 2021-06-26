@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "../d3d/Vertex.h"
+#include "../d3d/Buffers/VertexBuffer.h"
 
 namespace Application
 {
@@ -26,12 +27,10 @@ namespace Application
 			Render::Engine* engine;
 			Allocator allocator;
 			
-			GVertex::VertexBuffer* alloc_vbuffer(UINT size) const;
-			void set_vbuffer(GVertex::VertexBuffer* buffer);
+			::Render::VertexBuffer* alloc_vbuffer(UINT size) const;
+			void set_vbuffer(::Render::VertexBuffer* buffer);
 
-			
-		protected:
-			GVertex::VertexBuffer* vertex_buffer;
+			::Render::VertexBuffer* vertex_buffer;
 
 		protected:
 			UINT buffer_size() const;
@@ -45,10 +44,10 @@ namespace Application
 			
 		public:
 			GVertex::Vertex* get_ptr() const;
-			GVertex::VertexBuffer* get_vbuffer() const;
+			::Render::VertexBuffer* get_vbuffer() const;
 
 
-			D3D11Canvas(Render::Engine* pEngine,GVertex::VertexBuffer* buffer);
+			D3D11Canvas(Render::Engine* pEngine,::Render::VertexBuffer* buffer);
 			D3D11Canvas(Render::Engine* pEngine);
 			~D3D11Canvas();
 		};

@@ -6,9 +6,9 @@ GVertex::Vertex* Application::Render::D3D11Canvas::get_ptr() const
 	return this->vertex_buffer->data;
 }
 
-GVertex::VertexBuffer* Application::Render::D3D11Canvas::get_vbuffer() const
+Render::VertexBuffer* Application::Render::D3D11Canvas::get_vbuffer() const
 {
-	return  this->vertex_buffer;
+	return this->vertex_buffer;
 }
 
 UINT Application::Render::D3D11Canvas::buffer_size() const
@@ -31,11 +31,12 @@ void Application::Render::D3D11Canvas::update() const
 	if (this->vertex_buffer->size <= 0)
 		return;
 
-	auto* pContext = engine->pDevContext;
-	D3D11_MAPPED_SUBRESOURCE subdata;
-	pContext->Map(this->vertex_buffer->buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &subdata);
-	this->vertex_buffer->copy_to(subdata.pData, this->allocator.allocated);
-	pContext->Unmap(this->vertex_buffer->buffer, 0);
+	this->vertex_buffer->update(this->allocator.allocated);
+	//auto* pContext = engine->pDevContext;
+	//D3D11_MAPPED_SUBRESOURCE subdata;
+	//pContext->Map(this->vertex_buffer->buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &subdata);
+	//this->vertex_buffer->copy_to(subdata.pData, this->allocator.allocated);
+	//pContext->Unmap(this->vertex_buffer->buffer, 0);
 }
 
 void Application::Render::D3D11Canvas::alloc_vertexes(UINT size)
@@ -52,18 +53,18 @@ void Application::Render::D3D11Canvas::alloc_vertexes(UINT size)
 	this->allocator.allocated += size;
 }
 
-GVertex::VertexBuffer* Application::Render::D3D11Canvas::alloc_vbuffer(UINT size) const
+::Render::VertexBuffer* Application::Render::D3D11Canvas::alloc_vbuffer(UINT size) const
 {
 	return engine->make_vertex_buffer(size);
 }
 
-void Application::Render::D3D11Canvas::set_vbuffer(GVertex::VertexBuffer* buffer)
+void Application::Render::D3D11Canvas::set_vbuffer(::Render::VertexBuffer* buffer)
 {
 	delete this->vertex_buffer;
 	this->vertex_buffer = buffer;
 }
 
-Application::Render::D3D11Canvas::D3D11Canvas(Render::Engine* pEngine,GVertex::VertexBuffer* buffer)
+Application::Render::D3D11Canvas::D3D11Canvas(Render::Engine* pEngine,::Render::VertexBuffer* buffer)
 	:allocator(100,100)
 {
 	this->vertex_buffer = buffer;

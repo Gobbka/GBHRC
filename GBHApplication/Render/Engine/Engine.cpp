@@ -2,8 +2,8 @@
 #include "../Render.h"
 #include "../Scene/CanvasScene.h"
 #include "../d3d/szShadez.h"
-#include "../d3d/ConstantBuffer.h"
 #include "BlendEngine.h"
+#include "../d3d/Buffers/ConstantBuffer.h"
 
 using namespace Application::Render;
 
@@ -39,22 +39,14 @@ Engine::Engine(const HWND hwnd, ID3D11Device* pDevice,
 
 	this->initialize();
 	this->mOrtho = get_ortho_matrix();
-	this->create_const_buffer();
 
+	_constantBuffer = new ::Render::ConstantBuffer(this, mOrtho, 1);
+	
 	this->spriteBatch = new DirectX::SpriteBatch(pDevContext);
 	
 	this->mask_engine = new MaskEngine(pDevice, pDevContext,this->pRenderTargetView, this->pViewports->Width, this->pViewports->Height);
 	this->blend_engine = new BlendEngine(this);
 }
-
-void Engine::set_vbuffer(GVertex::VertexBuffer* buffer)
-{
-	UINT stride = sizeof(GVertex::Vertex);
-	UINT offset = 0;
-
-	this->pDevContext->IASetVertexBuffers(0, 1, &buffer->buffer, &stride, &offset);
-}
-
 
 DirectX::SpriteFont* Engine::create_font(void* font_source, UINT source_size)
 {
@@ -83,6 +75,11 @@ MaskEngine* Engine::get_mask() const
 BlendEngine* Engine::get_blend_engine()
 {
 	return this->blend_engine;
+}
+
+::Render::ConstantBuffer* Engine::get_constant_buffer()
+{
+	return _constantBuffer;
 }
 
 bool Engine::initialize()
@@ -116,6 +113,7 @@ bool Engine::initialize()
 	return true;
 }
 
+
 ID3D10Blob* Engine::create_vs_shader()
 {
 	ID3D10Blob* pBlob = nullptr;
@@ -143,18 +141,10 @@ ID3DBlob* Engine::create_ps_shader(ID3DBlob* blob)
 	return blob;
 }
 
-
-void Engine::apply_constant_buffer(ConstantBuffer constant_buffer)
+::Render::VertexBuffer* Engine::make_vertex_buffer(const UINT size)
 {
-	this->pDevContext->UpdateSubresource(this->pConstantBuffer, 0, nullptr, &constant_buffer, 0, 0);
-}
-
-GVertex::VertexBuffer* Engine::make_vertex_buffer(const UINT size) const
-{
-	auto* ptr = new GVertex::VertexBuffer();
-	auto* pArray = new GVertex::Vertex[size];
-	ptr->create(this->pDevice, pArray, size);
-	return ptr;
+	auto* data = new GVertex::Vertex[size];
+	return new ::Render::VertexBuffer(this, data, size, true);
 }
 
 bool Engine::compile_shader(const char* szShader, const char* szEntrypoint, const char* szTarget,
@@ -173,32 +163,6 @@ bool Engine::compile_shader(const char* szShader, const char* szEntrypoint, cons
 		}
 		return false;
 	}
-	return true;
-}
-
-bool Engine::create_const_buffer()
-{
-	HRESULT hr;
-
-	ConstantBuffer _constantBuffer;
-	_constantBuffer.mProjection = this->mOrtho;
-
-	D3D11_BUFFER_DESC vertexBufferDesc{ 0 };
-	vertexBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	vertexBufferDesc.ByteWidth = sizeof(ConstantBuffer);
-	vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-
-	D3D11_SUBRESOURCE_DATA vertexBufferData;
-	ZeroMemory(&vertexBufferData, sizeof(vertexBufferData));
-	vertexBufferData.pSysMem = &_constantBuffer;
-
-	hr = this->pDevice->CreateBuffer(&vertexBufferDesc, &vertexBufferData, &this->pConstantBuffer);
-
-	if (FAILED(hr))
-	{
-		DEBUG_LOG("CANNOT CREATE CONSTANT BUFFER");
-	}
-
 	return true;
 }
 
@@ -225,11 +189,9 @@ void Engine::update_scene()
 
 void Engine::render_prepare()
 {
-
-
 	this->pDevContext->OMSetRenderTargets(1, &pRenderTargetView, this->get_mask()->get_stencil_view());
 
-	this->pDevContext->VSSetConstantBuffers(0, 1, &this->pConstantBuffer);
+	_constantBuffer->bind();
 
 	this->pDevContext->IASetInputLayout(pVertexLayout);
 	this->pDevContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
@@ -251,14 +213,13 @@ void Engine::present()
 
 	this->blend_engine->set_blend_state();
 
-	ConstantBuffer cb;
-	cb.mProjection = DirectX::XMMatrixTranspose(mOrtho);
-	cb.alpha = 1.f;
-	this->apply_constant_buffer(cb);
+	_constantBuffer->set_alpha(1.f);
+	_constantBuffer->set_projection(DirectX::XMMatrixTranspose(mOrtho));
+	_constantBuffer->update();
 	
 	ID3D11RasterizerState* r_state;
 	this->pDevContext->RSGetState(&r_state);
-	Render::D3D11DrawEvent event(this,nullptr,r_state,cb);
+	Render::D3D11DrawEvent event(this,nullptr,r_state);
 	
 	for (auto* scene : this->pScenes)
 	{
