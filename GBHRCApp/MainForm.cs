@@ -42,5 +42,27 @@ namespace GBHRCApp
             this.luaForm.Show();
 
         }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+                var vers = RubtidApi.get_version();
+                if(vers != 1)
+                {
+                    MessageBox.Show("Would you like to update?", "Outdated", MessageBoxButtons.YesNo,MessageBoxIcon.Warning);
+                }
+
+                var response = GBHRCApi.Inject();
+                if (!response.success())
+                {
+                    MessageBox.Show(response.get_response(), "Injection error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }catch(Exception exc)
+            {
+                MessageBox.Show("Server returns: " + exc.Message, "Error");
+                return;
+            }
+        }
     }
 }

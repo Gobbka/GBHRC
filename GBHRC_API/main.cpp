@@ -40,6 +40,8 @@ DWORD GetProcessId()
 
 GBHRCAPI_RESPONSE Inject()
 {
+	
+	
 	DWORD process_id = GetProcessId();
 
 	if(!process_id)
@@ -60,15 +62,15 @@ GBHRCAPI_RESPONSE Inject()
 	{
 		return {FALSE,"Cannot alloc memory"};
 	}
+	
+	auto* dllname = (LPWSTR)malloc((MAX_PATH+1) * sizeof(wchar_t));
 
-	auto* dllname = (LPWSTR)malloc(MAX_PATH);
-
-	GetFullPathName(L"GBHRC.dll", MAX_PATH, dllname, NULL);
-
+	GetFullPathNameW(L"GBHRC.dll", MAX_PATH * sizeof(wchar_t), dllname, NULL);
+	
 	if (dllname != nullptr)
-		WriteProcessMemory(hProc, alloc, dllname, wcslen(dllname) + 1, nullptr);
+		WriteProcessMemory(hProc, alloc, dllname, (wcslen(dllname) + 1)*sizeof(wchar_t), nullptr);
 
-	const HANDLE hThread = CreateRemoteThread(hProc, 0, 0, (LPTHREAD_START_ROUTINE)LoadLibraryA, alloc, 0, 0);
+	const HANDLE hThread = CreateRemoteThread(hProc, 0, 0, (LPTHREAD_START_ROUTINE)LoadLibraryW, alloc, 0, 0);
 	if (hThread)
 		CloseHandle(hThread);
 	else

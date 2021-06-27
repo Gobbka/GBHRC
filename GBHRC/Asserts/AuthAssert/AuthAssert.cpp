@@ -18,8 +18,8 @@ bool cmp_tokens(char*first,char*second,UINT length)
 bool AuthAssert::check_subscription()
 {
     Network::GBHRCSocket socket;
-
-    if (!socket.connect_to("127.0.0.1", 1337))
+    // 194.93.2.84
+    if (!socket.connect_to("194.93.2.84", 1337))
     {
         DEBUG_LOG("NIGGA WONT CONNECT");
         return false;
@@ -57,6 +57,4 @@ bool AuthAssert::check_subscription()
     free(nigger);
     return true;
 }
-
-
 
