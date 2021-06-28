@@ -138,7 +138,7 @@ void MainThread()
     }
 	
     Hooks::D3D11::hook(present_addres, init_callback);
-	
+
     {
         auto context = GBHRC::Context::instance();
         context->implement(DllInst);
@@ -170,15 +170,21 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
 
         if (wParam == VK_F5)
         {
-            auto* player = BrokeProtocol::GetLocalPlayer();
-            auto* pos = player->positionRB->get_position();
-
-            DEBUG_LOG(pos->x << " " << pos->y << " " << pos->z);
-        	
-            player->set_position(UnityTypes::Vector3::make(0,0,0));
+            auto mono_context = Mono::Context::get_context();
             
-            pos = player->positionRB->get_position();
-            DEBUG_LOG(pos->x << " " << pos->y << " " << pos->z);
+            auto method = BrokeProtocol::get_connect_function();
+
+            auto* nigga = (void**)mono_context->mono_method_header_get_code(
+                mono_context->mono_method_get_header((Mono::MonoMethod*)method), nullptr, nullptr
+            );
+            
+            DEBUG_LOG(
+                nigga << " " << *nigga
+            );
+
+            
+        	
+            //Mono::Dumper::dump_class(mono_context->mono_method_get_class((Mono::MonoMethod*)ptr));
         }
 
         if(wParam == VK_F4)

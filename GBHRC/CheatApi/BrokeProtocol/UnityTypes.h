@@ -34,5 +34,8 @@ namespace UnityTypes
 		void set_mass(float mass);
 		
 		void MovePosition(UnityTypes::Vector3* vector);
+
+		void add_force(UnityTypes::Vector3* vector);
+		void add_force(float x,float y,float z);
 	};
 }

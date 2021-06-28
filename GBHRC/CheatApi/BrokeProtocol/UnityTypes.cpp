@@ -73,3 +73,22 @@ void UnityTypes::RigidBody::MovePosition(UnityTypes::Vector3* vector)
 	void* params[]{ vector };
 	mono_context->mono_runtime_invoke(pMethod, this, params, nullptr);
 }
+
+void UnityTypes::RigidBody::add_force(UnityTypes::Vector3* vector)
+{
+	auto* mono_context = Mono::Context::get_context();
+	static Mono::MonoMethod* pMethod = mono_context->mono_get_method_from_image(mono_context->get_physic_image(), "UnityEngine.Rigidbody:AddForce(vector)", true, 1);
+	void* params[]{ vector };
+	mono_context->mono_runtime_invoke(pMethod, this, params, nullptr);
+}
+
+void UnityTypes::RigidBody::add_force(float x, float y, float z)
+{
+	//AddForce
+	auto* mono_context = Mono::Context::get_context();
+	static Mono::MonoMethod* pMethod = mono_context->mono_get_method_from_image(mono_context->get_physic_image(), "UnityEngine.Rigidbody:AddForce(float,float,float)", true, 4);
+	int nigga = 0x2; // VelocityChange
+	void* params[]{ &x,&y,&z,&nigga };
+	mono_context->mono_runtime_invoke(pMethod, this, params, nullptr);
+}
+

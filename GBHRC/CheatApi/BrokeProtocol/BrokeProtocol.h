@@ -16,6 +16,9 @@ namespace BrokeProtocol
 	Players::ShPlayer* GetLocalPlayer();
 	Collections::KeyedCollection<Players::ShPlayer*>* GetPlayersCollection();
 
+	void* get_connect_function();
+
+	
 	void* get_can_equip_function();
 	
 	void fire();

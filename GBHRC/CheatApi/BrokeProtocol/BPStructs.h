@@ -50,14 +50,22 @@ namespace BrokeProtocol {
 			char pad_002C[28]; //0x002C
 		}; //Size: 0x0048
 
+		class ClVehicle
+		{
+		public:
+			void MoveOn();
+		};
+		
 		class ShMountable
 		{
 		public:
 			char pad_0000[392]; //0x0000
 			float maxSpeed; //0x0188
 			float speedLimit; //0x018C
-			char pad_0190[4]; //0x0190
-		}; //Size: 0x0208
+			char pad_0190[88]; //0x0190
+			ClVehicle* clVehicle; //0x01E8
+
+		}; //Size: 0x01F0
 
 		class GlobalTypes
 		{

@@ -157,6 +157,7 @@
   <ItemGroup>
     <ClCompile Include="Asserts\AuthAssert\AuthAssert.cpp" />
     <ClCompile Include="Asserts\VersionAssert\ClientVersionAssert.cpp" />
+    <ClCompile Include="CheatApi\BrokeProtocol\BPStructs.cpp" />
     <ClCompile Include="CheatApi\BrokeProtocol\BrokeProtocol.cpp" />
     <ClCompile Include="CheatApi\BrokeProtocol\classes\Collections\Dictionary.cpp" />
     <ClCompile Include="CheatApi\BrokeProtocol\classes\Guns\ShBallistic.cpp" />

@@ -2,6 +2,9 @@
 #include "../MonoDefs.h"
 namespace Mono
 {
+	typedef struct _MonoJitInfo MonoJitInfo;
+	typedef struct _MonoMethodHeader MonoMethodHeader;
+	
 	struct vTable
 	{
 	public:
@@ -22,6 +25,7 @@ namespace Mono
 		MonoMethod* (WINAPI* mono_property_get_get_method)(MonoProperty* prop);
 		MonoMethod* (WINAPI* mono_property_get_set_method)(MonoProperty* prop);
 		MonoObject* (WINAPI* mono_method_get_object)(MonoMethod* method);
+		MonoClass* (WINAPI* mono_method_get_class)(MonoMethod* method);
 
 		const char* (WINAPI* mono_class_get_name)(MonoClass* klass);
 		UINT(WINAPI* mono_method_get_token)(MonoMethod* method);
@@ -46,6 +50,17 @@ namespace Mono
 		UINT(WINAPI* mono_field_get_offset)(MonoClassField* field);
 		UINT(WINAPI* mono_class_get_field_token)(MonoClassField* field);
 		MonoProperty* (WINAPI* mono_class_get_property_from_name)(MonoClass* klass, const char* name);
+
+		
+		MonoJitInfo* (WINAPI* mono_jit_info_table_find)(MonoDomain* domain,char* addr);
+		LPVOID (WINAPI* mono_jit_info_get_code_start)(MonoJitInfo*);
+		MonoMethod* (WINAPI* mono_jit_info_get_method)(MonoJitInfo*);
+
+		
+		MonoMethodHeader* (WINAPI* mono_method_get_header)(MonoMethod*);
+		LPVOID (WINAPI* mono_method_header_get_code)(MonoMethodHeader*, unsigned* code_size, unsigned* maxstack);
+		
+		LPVOID (WINAPI* mono_disasm_code)(__int64, void*,void*,void*);
 
 		//============================
 		// ITERATORS

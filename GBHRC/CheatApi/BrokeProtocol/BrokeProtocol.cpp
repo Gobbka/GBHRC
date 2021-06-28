@@ -91,6 +91,13 @@ KeyedCollection<BrokeProtocol::Players::ShPlayer*>* BrokeProtocol::GetPlayersCol
     return players;
 }
 
+void* BrokeProtocol::get_connect_function()
+{
+    STATIC_METHOD("BrokeProtocol.Managers.ShManager:Connect(ShEquipable)", true);
+
+    return pMethod;
+}
+
 void* BrokeProtocol::get_can_equip_function()
 {
     STATIC_METHOD("BrokeProtocol.Entities.ShPlayer:CanEquip(ShEquipable)", true);

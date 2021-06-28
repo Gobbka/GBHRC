@@ -46,5 +46,12 @@ void Mono::vTable::implement()
 	this->mono_object_get_size = (UINT(WINAPI*)(MonoObject*))GetProcAddress(module, "mono_object_get_size");
 	this->mono_class_instance_size = (UINT(WINAPI*)(MonoClass*))GetProcAddress(module, "mono_class_instance_size");
 	this->mono_method_get_object  = (MonoObject*(WINAPI*)(MonoMethod*))GetProcAddress(module, "mono_method_get_object");
+	this->mono_method_get_class = (MonoClass*(WINAPI*)(MonoMethod*))GetProcAddress(module, "mono_method_get_class");
 	this->mono_method_get_unmanaged_thunk = (void*(WINAPI*)(MonoMethod*))GetProcAddress(module, "mono_method_get_unmanaged_thunk");
+	this->mono_jit_info_table_find = (MonoJitInfo*(WINAPI*)(MonoDomain*,char*))GetProcAddress(module, "mono_jit_info_table_find");
+	this->mono_jit_info_get_code_start = (LPVOID(WINAPI*)(MonoJitInfo*))GetProcAddress(module, "mono_jit_info_get_code_start");
+	this->mono_jit_info_get_method = (MonoMethod*(WINAPI*)(MonoJitInfo*))GetProcAddress(module, "mono_jit_info_get_method");
+	this->mono_method_get_header = (MonoMethodHeader*(WINAPI*)(MonoMethod*))GetProcAddress(module, "mono_method_get_header");
+	this->mono_method_header_get_code = (LPVOID(WINAPI*)(MonoMethodHeader*,unsigned*,unsigned*))GetProcAddress(module, "mono_method_header_get_code");
+	this->mono_disasm_code = (LPVOID(WINAPI*)(__int64,void*,void*,void*))GetProcAddress(module, "mono_disasm_code");
 }

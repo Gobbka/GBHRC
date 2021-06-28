@@ -151,7 +151,8 @@ void MainMenuMarkup(Application::InteractiveForm* form)
 	
 	jump_checkbox->onChange = [](Application::UI::UIElementEventArgs args)
 	{
-		GBHRC::Context::instance()->config->fly_active = (((Application::UI::Checkbox*)args)->is_checked());
+		BrokeProtocol::GetLocalPlayer()->positionRB->set_use_gravity(!((Application::UI::Checkbox*)args)->is_checked());
+		GBHRC::Context::instance()->config->fly_active = ((Application::UI::Checkbox*)args)->is_checked();
 	};
 
 	car_sh_checkbox->onChange = [](Application::UI::UIElementEventArgs args)

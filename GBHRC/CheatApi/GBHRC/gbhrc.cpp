@@ -335,11 +335,16 @@ void GBHRC::Context::life_cycle()
             auto* local_player = BrokeProtocol::GetLocalPlayer();
 
 
-            if (config->fly_active && GetAsyncKeyState(VK_SPACE))
+            if (config->fly_active )
             {
-                local_player->jump();
-                Sleep(30);
-            	
+                if(GetAsyncKeyState(VK_SPACE))
+                {
+                    local_player->positionRB->add_force(0, 0.5f, 0);
+                }
+            	if(GetAsyncKeyState(VK_CONTROL))
+            	{
+                    local_player->positionRB->add_force(0, -0.5f, 0);
+            	}
             }
 
             if (config->car_speed && local_player->curMount != nullptr)
