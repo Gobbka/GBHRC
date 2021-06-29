@@ -95,11 +95,6 @@ void Application::UI::Panel::set_color(Render::Color4 color)
 	this->rect.set_color(color);
 }
 
-//void Application::UI::Panel::set_alpha(float alpha)
-//{
-//	this->rect.set_alpha(alpha);
-//}
-
 void Application::UI::Panel::move_by(float x, float y)
 {
 	this->rect.move_by(x, y);

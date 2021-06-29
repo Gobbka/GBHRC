@@ -14,6 +14,13 @@ namespace Application
 {
 	namespace UI
 	{
+
+		class ParentChilds {
+			std::vector<UI::InteractiveElement*> _childs;
+
+		public:
+			void append(UI::InteractiveElement* child);
+		};
 		
 		class Parent : public InteractiveElement
 		{

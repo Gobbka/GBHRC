@@ -6,7 +6,6 @@
 #include "CheatApi/Hooks/wndproc/wndprochook.h"
 
 #include "Form/Interactive/InteractiveForm.h"
-#include "Form/Canvas/CanvasForm.h"
 
 #include "Forms/Menu/MenuMain.h"
 
@@ -19,8 +18,6 @@
 #include <sstream>
 
 #include "resource.h"
-#include "Asserts/AuthAssert/AuthAssert.h"
-#include "CheatApi/BrokeProtocol/classes/Guns/ShBallistic.h"
 #include "includes/clientdefs.h"
 
 #include "Asserts/VersionAssert/ClientVersionAssers.h"

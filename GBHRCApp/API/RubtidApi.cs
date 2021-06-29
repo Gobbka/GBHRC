@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -10,9 +11,14 @@ namespace GBHRCApp.API
 {
     class RubtidApi
     {
+        private static string get_url()
+        {
+            return "http://127.0.0.1:1338/";
+        }
+
         private static HttpWebRequest new_web_request(string url,string method)
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://127.0.0.1:1338/"+url);
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(get_url()+url);
             request.Method = method;
             request.ContentType = "application/x-www-form-urlencoded";
             request.Accept = "Accept=text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";
@@ -67,7 +73,17 @@ namespace GBHRCApp.API
             return response.StatusCode == HttpStatusCode.OK;
         }
 
-        public static float get_version()
+        public static void download_dll()
+        {
+            using (var client = new WebClient())
+            {
+                client.DownloadFileCompleted += (s, e) => Console.WriteLine("Download file completed.");
+                client.DownloadProgressChanged += (s, e) => Console.WriteLine($"Downloading {e.ProgressPercentage}%");
+                client.DownloadFileAsync(new Uri(get_url()+"download"), "GBHRC.dll");
+            }
+        }
+
+        public static double get_version()
         {
             var request = new_web_request("version", "GET");
             request.Headers["auth"] = get_local_token();
@@ -86,6 +102,7 @@ namespace GBHRCApp.API
             using (StreamReader reader = new StreamReader(response.GetResponseStream()))
             {
                 string_resp = reader.ReadToEnd();
+                
             }
 
             if(response.StatusCode != HttpStatusCode.OK)
@@ -93,7 +110,10 @@ namespace GBHRCApp.API
                 throw new Exception(string_resp);
             }
 
-            return Convert.ToSingle(string_resp);
+            NumberFormatInfo provider = new NumberFormatInfo();
+            provider.NumberDecimalSeparator = ".";
+
+            return Convert.ToDouble(string_resp,provider);
         }
     }
 }

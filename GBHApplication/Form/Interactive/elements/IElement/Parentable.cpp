@@ -133,17 +133,19 @@ Application::UI::InteractiveElement* Application::UI::Parent::element_at(UINT in
 
 Application::UI::Parent* Application::UI::Parent::add_element(InteractiveElement* element)
 {
-	if(element->get_parent()!=nullptr)
+	if (element->have_parent())
 		return this;
 	
 	element->set_parent(this);
 	this->childs.push_back(element);
+	
 	if(this->initialized)
 	{
 		element->initialize(this->form);
 		auto pos = this->get_position();
 		element->move_by(pos.x, pos.y);
 	}
+	
 	return this;
 }
 

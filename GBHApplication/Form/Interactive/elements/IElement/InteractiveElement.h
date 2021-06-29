@@ -75,6 +75,8 @@ namespace Application
 		public:
 			// public getters
 
+			bool have_parent() const;
+
 			// return's screen position
 			virtual Render::Position get_position() PURE;
 

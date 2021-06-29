@@ -8,6 +8,11 @@ Application::UI::ElementDescription::ElementDescription(bool can_be_parent, cons
 	this->has_text = has_text;
 }
 
+bool Application::UI::InteractiveElement::have_parent() const
+{
+	return this->parent != nullptr;
+}
+
 void Application::UI::InteractiveElement::set_alpha(float alpha)
 {
 	this->alpha = alpha;

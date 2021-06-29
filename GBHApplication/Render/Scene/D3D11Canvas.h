@@ -49,6 +49,7 @@ namespace Application
 
 			D3D11Canvas(Render::Engine* pEngine,::Render::VertexBuffer* buffer);
 			D3D11Canvas(Render::Engine* pEngine);
+		protected:
 			~D3D11Canvas();
 		};
 	}

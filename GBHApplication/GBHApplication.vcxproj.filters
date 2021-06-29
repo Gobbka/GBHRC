@@ -30,9 +30,6 @@
     <ClCompile Include="Form\Interactive\elements\Panel\Panel.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Form\Canvas\CanvasForm.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="Form\Canvas\elements\rectangle\rectangle.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
@@ -117,9 +114,6 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Render\Scene\IRenderObject.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Form\Canvas\CanvasForm.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Form\Canvas\elements\rectangle\rectangle.h">

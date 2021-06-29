@@ -12,7 +12,7 @@
 #include "FloatColors.h"
 #include "../BrokeProtocol/classes/Guns/ShBallistic.h"
 #include "../LuaEngine/LuaEngine.h"
-
+#include "Render/Scene/CanvasScene.h"
 #include "Render/Text/Text.h"
 #include "../BrokeProtocol/Mono/Mono.h"
 

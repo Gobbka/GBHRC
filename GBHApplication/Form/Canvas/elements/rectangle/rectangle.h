@@ -1,5 +1,4 @@
 #pragma once
-#include "../../CanvasForm.h"
 #include "../IElement/CanvasElement.h"
 namespace Application
 {

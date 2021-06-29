@@ -6,7 +6,6 @@
 #include "D3D11Canvas.h"
 #include "IRenderObject.h"
 
-#include "../Render.h"
 #include "../../configuration/drawconf.h"
 #include "../../Form/Canvas/elements/IElement/CanvasElement.h"
 
@@ -26,6 +25,7 @@ namespace Application
 			virtual void render_components(Render::DrawEvent*event);
 			static void draw_element(Canvas::CanvasElement* obj, Render::DrawEvent*event);
 		public:
+			virtual ~CanvasScene() = default;
 			// public variables
 			void(__cdecl* render_callback)(Render::DrawEvent*event)     = nullptr;
 			void(__cdecl* pre_render_callback)(Render::DrawEvent*event) = nullptr;

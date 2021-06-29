@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -23,12 +24,24 @@ namespace GBHRCApp
         [DllImport("User32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
 
-        LuaForm luaForm;
-
         public MainForm()
         {
             InitializeComponent();
-            this.luaForm = new LuaForm();
+
+            try
+            {
+                var vers = RubtidApi.get_version();
+                if (vers != Properties.Settings.Default.dll_version || !File.Exists("GBHRC.dll"))
+                {
+                    RubtidApi.download_dll();
+                    Properties.Settings.Default.Save();
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+
         }
 
         private void run_proccess_button_Click(object sender, EventArgs e)
@@ -48,19 +61,15 @@ namespace GBHRCApp
 
         private void button2_Click_1(object sender, EventArgs e)
         {
-            this.luaForm.Show();
 
         }
 
         private void button1_Click_1(object sender, EventArgs e)
         {
+
             try
             {
-                var vers = RubtidApi.get_version();
-                if(vers != 1)
-                {
-                    MessageBox.Show("Would you like to update?", "Outdated", MessageBoxButtons.YesNo,MessageBoxIcon.Warning);
-                }
+                RubtidApi.get_version();
 
                 var response = GBHRCApi.Inject();
                 if (!response.success())

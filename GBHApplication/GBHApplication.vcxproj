@@ -151,7 +151,6 @@
     <ClCompile Include="configuration\drawconf.h">
       <FileType>CppHeader</FileType>
     </ClCompile>
-    <ClCompile Include="Form\Canvas\CanvasForm.cpp" />
     <ClCompile Include="Form\Canvas\elements\IElement\CanvasElement.cpp" />
     <ClCompile Include="Form\Canvas\elements\rectangle\rectangle.cpp" />
     <ClCompile Include="Form\Interactive\elements\Button\Button.cpp" />
@@ -181,7 +180,6 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="configuration\projectconf.h" />
     <ClInclude Include="FloatColors.h" />
-    <ClInclude Include="Form\Canvas\CanvasForm.h" />
     <ClInclude Include="Form\Canvas\elements\IElement\CanvasElement.h" />
     <ClInclude Include="Form\Canvas\elements\rectangle\rectangle.h" />
     <ClInclude Include="Form\Forms.h" />
