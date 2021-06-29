@@ -173,17 +173,9 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
             auto mono_context = Mono::Context::get_context();
             
             auto method = BrokeProtocol::get_connect_function();
-
-            auto* nigga = (void**)mono_context->mono_method_header_get_code(
-                mono_context->mono_method_get_header((Mono::MonoMethod*)method), nullptr, nullptr
-            );
-            
-            DEBUG_LOG(
-                nigga << " " << *nigga
-            );
-
-            
         	
+            DEBUG_LOG(mono_context->mono_compile_method((Mono::MonoMethod*)method));
+        
             //Mono::Dumper::dump_class(mono_context->mono_method_get_class((Mono::MonoMethod*)ptr));
         }
 

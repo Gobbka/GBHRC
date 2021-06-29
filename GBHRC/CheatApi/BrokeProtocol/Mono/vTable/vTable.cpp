@@ -54,4 +54,6 @@ void Mono::vTable::implement()
 	this->mono_method_get_header = (MonoMethodHeader*(WINAPI*)(MonoMethod*))GetProcAddress(module, "mono_method_get_header");
 	this->mono_method_header_get_code = (LPVOID(WINAPI*)(MonoMethodHeader*,unsigned*,unsigned*))GetProcAddress(module, "mono_method_header_get_code");
 	this->mono_disasm_code = (LPVOID(WINAPI*)(__int64,void*,void*,void*))GetProcAddress(module, "mono_disasm_code");
+	this->mono_compile_method = (LPVOID(WINAPI*)(MonoMethod*))GetProcAddress(module, "mono_compile_method");
+	this->mono_domain_assembly_open = (MonoAssembly*(WINAPI*)(MonoDomain*,const char*))GetProcAddress(module, "mono_domain_assembly_open");
 }

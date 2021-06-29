@@ -4,6 +4,7 @@ namespace Mono
 {
 	typedef struct _MonoJitInfo MonoJitInfo;
 	typedef struct _MonoMethodHeader MonoMethodHeader;
+	typedef struct _MonoAssembly MonoAssembly;
 	
 	struct vTable
 	{
@@ -56,9 +57,13 @@ namespace Mono
 		LPVOID (WINAPI* mono_jit_info_get_code_start)(MonoJitInfo*);
 		MonoMethod* (WINAPI* mono_jit_info_get_method)(MonoJitInfo*);
 
-		
+
+		MonoAssembly* (WINAPI* mono_domain_assembly_open)(MonoDomain*,const char*name);
+
+				
 		MonoMethodHeader* (WINAPI* mono_method_get_header)(MonoMethod*);
 		LPVOID (WINAPI* mono_method_header_get_code)(MonoMethodHeader*, unsigned* code_size, unsigned* maxstack);
+		LPVOID (WINAPI* mono_compile_method)(MonoMethod*);
 		
 		LPVOID (WINAPI* mono_disasm_code)(__int64, void*,void*,void*);
 

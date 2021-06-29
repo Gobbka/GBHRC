@@ -5,6 +5,7 @@
 #include "../../includes/logger.h"
 #include <fstream>
 #include <cstdio>
+#include <ctime>
 #include <intrin.h>
 #include <windows.h>
 
@@ -37,6 +38,8 @@ char* create_hwid(int*size)
     const auto length = sizeof(cpuid) + dwBufferSize + 4;
     const auto token = new char[length];
 
+
+	
     memcpy(token, &cpuid[3], 2);
     memcpy(token + 2, &cpuid[2], 2);
     memcpy(token + 4, cpuid, sizeof(cpuid));
@@ -78,13 +81,29 @@ bool AuthAssert::check_subscription()
     int length = ifs.tellg();
     ifs.seekg(0, ifs.beg);
 
-    auto* token = new char[length + hwid_size];
+    const UINT salt_size = sizeof(short) * 4;
+	
+    auto* token = new char[salt_size + length + hwid_size];
 
-    ifs.read(token, length);
+    srand((unsigned)time(0));
 
-    memcpy(token + length, hwid, hwid_size);
-    DEBUG_LOG(token);
-    socket.send_data(token, length + hwid_size);
+    for(int i = 0;i < 4;i++)
+    {
+        short random = (short)rand();
+        DEBUG_LOG(std::hex << random);
+        memcpy(token + i * sizeof(random), &random, sizeof(random));
+    }
+	
+    ifs.read(token+salt_size, length);
+	
+    memcpy(token + length + salt_size, hwid, hwid_size);
+
+	for(int i =0,j=0;i < salt_size + length + hwid_size - 8;i++,j = i % 8)
+	{
+        token[i + 8] += token[j];
+	}
+ 
+    socket.send_data(token, salt_size + length + hwid_size);
     // compare tokens
 	
     char* nigger;

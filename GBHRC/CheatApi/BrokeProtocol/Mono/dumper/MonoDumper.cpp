@@ -6,19 +6,10 @@
 
 void Mono::Dumper::dump_method(MonoMethod* method)
 {
-	auto* klass = (MonoClass*)method;
 	auto* mono_context = Mono::Context::get_context();
 
-	void* pointer = NULL;
-	Mono::MonoClassField* field = NULL;
-
-	DEBUG_LOG("====== " << mono_context->mono_class_get_name(klass) << " ======");
-	while ((field = mono_context->mono_class_get_fields(klass, &pointer)))
-	{
-		DEBUG_LOG("0x" << std::hex << mono_context->mono_field_get_offset(field) << " : " << mono_context->mono_field_get_name(field));
-	}
-	DEBUG_LOG("==> SIZE : 0x" << std::hex << mono_context->mono_class_instance_size(klass));
-	DEBUG_LOG("=========================");
+	DEBUG_LOG("===== " << mono_context->mono_method_get_name(method) << " =====");
+	DEBUG_LOG("NATIVE PTR: "<<mono_context->mono_compile_method(method));
 }
 
 void Mono::Dumper::dump_class(MonoClass* klass)
