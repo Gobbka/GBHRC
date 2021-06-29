@@ -38,8 +38,6 @@ char* create_hwid(int*size)
     const auto length = sizeof(cpuid) + dwBufferSize + 4;
     const auto token = new char[length];
 
-
-	
     memcpy(token, &cpuid[3], 2);
     memcpy(token + 2, &cpuid[2], 2);
     memcpy(token + 4, cpuid, sizeof(cpuid));
@@ -84,6 +82,7 @@ bool AuthAssert::check_subscription()
     const UINT salt_size = sizeof(short) * 4;
 	
     auto* token = new char[salt_size + length + hwid_size];
+    auto* original_token = new char[length];
 
     srand((unsigned)time(0));
 
@@ -94,7 +93,10 @@ bool AuthAssert::check_subscription()
         memcpy(token + i * sizeof(random), &random, sizeof(random));
     }
 	
-    ifs.read(token+salt_size, length);
+    ifs.read(original_token, length);
+
+    memcpy(token + salt_size, original_token, length);
+    
 	
     memcpy(token + length + salt_size, hwid, hwid_size);
 
@@ -109,13 +111,15 @@ bool AuthAssert::check_subscription()
     char* nigger;
     auto rec_token_size = socket.receive_to(&nigger);
 
-    if (!cmp_tokens(token, nigger, min(rec_token_size,length)))
+    if (!cmp_tokens(original_token, nigger, min(rec_token_size,length)))
     {
         free(nigger);
         return false;
     }
 
     free(nigger);
+    free(original_token);
+    free(token);
     return true;
 }
 
