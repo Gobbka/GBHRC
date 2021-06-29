@@ -35,6 +35,8 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.button5 = new System.Windows.Forms.Button();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // button4
@@ -76,6 +78,7 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(186)))), ((int)(((byte)(99)))));
+            this.panel2.Controls.Add(this.button5);
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(486, 20);
@@ -118,6 +121,19 @@
             this.label1.TabIndex = 14;
             this.label1.Text = "GBHRC by Gobka#6664\r\nfuck lissin\r\n";
             // 
+            // button5
+            // 
+            this.button5.FlatAppearance.BorderSize = 0;
+            this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(229)))), ((int)(((byte)(229)))));
+            this.button5.Location = new System.Drawing.Point(458, 0);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(25, 20);
+            this.button5.TabIndex = 0;
+            this.button5.Text = "X";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -134,6 +150,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "MainForm";
             this.Text = "GBHRC::";
+            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -147,6 +164,7 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button button5;
     }
 }
 

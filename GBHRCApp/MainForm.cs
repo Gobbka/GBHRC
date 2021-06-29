@@ -82,5 +82,10 @@ namespace GBHRCApp
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
             }
         }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
