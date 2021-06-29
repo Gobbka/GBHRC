@@ -7,7 +7,7 @@ void Application::UI::ItemList::on_initialize()
 	auto this_resolution = this->get_resolution();
 
 	float offset = 0;
-	Panel::foreach([&](InteractiveElement* element)
+	Panel::children()->foreach([&](InteractiveElement* element)
 		{
 			auto element_resolution = element->get_resolution();
 			auto margin = element->styles.margin;
@@ -45,7 +45,7 @@ void Application::UI::ItemList::handle_mouse_scroll(int delta)
 
 	list_offset -= delta;
 	
-	Panel::foreach([delta](InteractiveElement* element)
+	Panel::children()->foreach([delta](InteractiveElement* element)
 		{
 			element->move_by(0, (float)delta*-1);
 		});

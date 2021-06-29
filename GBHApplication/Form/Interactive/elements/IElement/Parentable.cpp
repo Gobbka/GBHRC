@@ -2,23 +2,47 @@
 
 #include "../../../../Render/Scene/CanvasScene.h"
 
+
+void Application::UI::ChildrenCollection::foreach(std::function<void(Application::UI::InteractiveElement* element)> iterator)
+{
+	for(auto*element:this->_children)
+		iterator(element);
+	
+}
+
+void Application::UI::ChildrenCollection::append(UI::InteractiveElement* child)
+{
+	this->_children.push_back(child);
+}
+
+size_t Application::UI::ChildrenCollection::count()
+{
+	return this->_children.size();
+}
+
+Application::UI::InteractiveElement* Application::UI::ChildrenCollection::operator[](UINT index)
+{
+	return this->_children[index];
+}
+
+
 void Application::UI::Parent::handle_mouse_up()
 {
-	for (auto* element : this->childs)
-	{
+	this->_children.foreach([&](UI::InteractiveElement* element) {
 		if (element->state.hovered)
 			element->handle_mouse_up();
-	}
+	});
+	
 	InteractiveElement::handle_mouse_up();
 }
 
 void Application::UI::Parent::handle_mouse_down()
 {
-	for(auto*element:this->childs)
-	{
+	this->_children.foreach([&](UI::InteractiveElement* element) {
 		if (element->state.hovered)
 			element->handle_mouse_down();
-	}
+	});
+	
 	InteractiveElement::handle_mouse_down();
 }
 
@@ -29,19 +53,21 @@ void Application::UI::Parent::handle_mouse_enter()
 
 void Application::UI::Parent::handle_mouse_leave()
 {
-	for (auto* element : this->childs)
+	this->_children.foreach([&](UI::InteractiveElement* element) {
 		element->handle_mouse_leave();
+	});
+	
 	InteractiveElement::handle_mouse_leave();
 }
 
 void Application::UI::Parent::handle_mouse_move(float mX, float mY)
 {
-	const auto length = this->childs.size() - 1;
+	const auto length = this->_children.count() - 1;
 	bool e_handled = false;
 
 	for (long long i = length; i >= 0; i--)
 	{
-		auto* element = (UI::InteractiveElement*)this->childs[i];
+		auto* element = (UI::InteractiveElement*)this->_children[i];
 		
 		if (
 			e_handled == false &&
@@ -67,23 +93,27 @@ void Application::UI::Parent::handle_mouse_move(float mX, float mY)
 
 void Application::UI::Parent::handle_mouse_scroll(int delta)
 {
-	for (auto* element : this->childs)
-	{
+	this->_children.foreach([&](UI::InteractiveElement* element) {
 		if (element->state.hovered)
 			element->handle_mouse_scroll(delta);
-	}
+	});
+	
 	InteractiveElement::handle_mouse_scroll(delta);
 }
 
 void Application::UI::Parent::on_initialize()
 {
-	this->foreach([this](InteractiveElement* element)
-		{
-			element->initialize(this->form);
-			element->move_by(this->offset_position.x, this->offset_position.y);
-		});
+	this->_children.foreach([&](UI::InteractiveElement* element) {
+		element->initialize(this->form);
+		element->move_by(this->offset_position.x, this->offset_position.y);
+	});
 
 	this->initialized = true;
+}
+
+Application::UI::ChildrenCollection* Application::UI::Parent::children()
+{
+	return &this->_children;
 }
 
 Application::UI::Parent::Parent(Render::Position position)
@@ -93,21 +123,24 @@ Application::UI::Parent::Parent(Render::Position position)
 
 void Application::UI::Parent::draw(Render::DrawEvent* event)
 {
-	for (auto* element : this->childs)
+	this->_children.foreach([&](UI::InteractiveElement* element) {
 		if (element->state.visible == VisibleState::VISIBLE_STATE_VISIBLE)
 			element->draw(event);
+	});
 }
 
 void Application::UI::Parent::set_color(Render::Color4 color)
 {
-	for (auto* element : this->childs)
+	this->_children.foreach([&](UI::InteractiveElement* element) {
 		element->set_color(color);
+	});
 }
 
 void Application::UI::Parent::move_by(float x, float y)
 {
-	for (auto* element : this->childs)
-		element->move_by(x,y);
+	this->_children.foreach([&](UI::InteractiveElement* element) {
+		element->move_by(x, y);
+	});
 }
 
 //void Application::UI::Parent::init()
@@ -118,17 +151,10 @@ void Application::UI::Parent::move_by(float x, float y)
 //	}
 //}
 
-void Application::UI::Parent::foreach(std::function<void(InteractiveElement* element)> iterator)
-{
-	for (auto* element : childs)
-	{
-		iterator(element);
-	}
-}
 
 Application::UI::InteractiveElement* Application::UI::Parent::element_at(UINT index)
 {
-	return this->childs[index];
+	return this->_children[index];
 }
 
 Application::UI::Parent* Application::UI::Parent::add_element(InteractiveElement* element)
@@ -137,7 +163,7 @@ Application::UI::Parent* Application::UI::Parent::add_element(InteractiveElement
 		return this;
 	
 	element->set_parent(this);
-	this->childs.push_back(element);
+	this->_children.append(element);
 	
 	if(this->initialized)
 	{

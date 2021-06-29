@@ -15,18 +15,25 @@ namespace Application
 	namespace UI
 	{
 
-		class ParentChilds {
-			std::vector<UI::InteractiveElement*> _childs;
+		class ChildrenCollection {
+			std::vector<UI::InteractiveElement*> _children;
 
 		public:
+			
+			void foreach(std::function<void(InteractiveElement* element)> iterator);
+			
 			void append(UI::InteractiveElement* child);
+			size_t count();
+
+			UI::InteractiveElement* operator[](UINT index);
 		};
 		
 		class Parent : public InteractiveElement
 		{
 		private:
 			Render::Position offset_position;
-			std::vector<InteractiveElement*> childs;
+			ChildrenCollection _children;
+			//std::vector<InteractiveElement*> childs;
 			bool initialized = false;
 		protected:
 			void handle_mouse_up() override;
@@ -38,14 +45,14 @@ namespace Application
 
 			void on_initialize() override;
 		public:
-
+			ChildrenCollection* children();
+			
 			Parent(Render::Position position);
 			
 			void draw(Render::DrawEvent*event) override;
 			void set_color(Render::Color4 color) override;
 			void move_by(float x, float y) override;
 
-			void foreach(std::function<void(InteractiveElement* element)> iterator);
 			InteractiveElement* element_at(UINT index);
 			
 			virtual Parent* add_element(InteractiveElement* element);
