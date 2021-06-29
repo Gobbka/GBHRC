@@ -15,24 +15,28 @@ namespace Application
 	namespace UI
 	{
 
-		class ChildrenCollection {
+		class ReadChildrenCollection {
+		protected:
 			std::vector<UI::InteractiveElement*> _children;
 
 		public:
-			
 			void foreach(std::function<void(InteractiveElement* element)> iterator);
 			
-			void append(UI::InteractiveElement* child);
 			size_t count();
 
 			UI::InteractiveElement* operator[](UINT index);
+		};
+
+		class ReadWriteChildrenCollection : public ReadChildrenCollection {
+		public:
+			void append(UI::InteractiveElement* child);
 		};
 		
 		class Parent : public InteractiveElement
 		{
 		private:
 			Render::Position offset_position;
-			ChildrenCollection _children;
+			ReadWriteChildrenCollection _children;
 			//std::vector<InteractiveElement*> childs;
 			bool initialized = false;
 		protected:
@@ -45,7 +49,7 @@ namespace Application
 
 			void on_initialize() override;
 		public:
-			ChildrenCollection* children();
+			ReadChildrenCollection* children();
 			
 			Parent(Render::Position position);
 			

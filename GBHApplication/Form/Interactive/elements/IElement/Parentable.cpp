@@ -3,24 +3,24 @@
 #include "../../../../Render/Scene/CanvasScene.h"
 
 
-void Application::UI::ChildrenCollection::foreach(std::function<void(Application::UI::InteractiveElement* element)> iterator)
+void Application::UI::ReadChildrenCollection::foreach(std::function<void(Application::UI::InteractiveElement* element)> iterator)
 {
 	for(auto*element:this->_children)
 		iterator(element);
 	
 }
 
-void Application::UI::ChildrenCollection::append(UI::InteractiveElement* child)
+void Application::UI::ReadWriteChildrenCollection::append(UI::InteractiveElement* child)
 {
 	this->_children.push_back(child);
 }
 
-size_t Application::UI::ChildrenCollection::count()
+size_t Application::UI::ReadChildrenCollection::count()
 {
 	return this->_children.size();
 }
 
-Application::UI::InteractiveElement* Application::UI::ChildrenCollection::operator[](UINT index)
+Application::UI::InteractiveElement* Application::UI::ReadChildrenCollection::operator[](UINT index)
 {
 	return this->_children[index];
 }
@@ -111,7 +111,7 @@ void Application::UI::Parent::on_initialize()
 	this->initialized = true;
 }
 
-Application::UI::ChildrenCollection* Application::UI::Parent::children()
+Application::UI::ReadChildrenCollection* Application::UI::Parent::children()
 {
 	return &this->_children;
 }
