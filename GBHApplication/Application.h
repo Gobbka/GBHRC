@@ -37,6 +37,7 @@ namespace Application
 		static void set_engine(Render::Engine* engine);
 		
 		static InteractiveForm* create_form();
+		static Render::CanvasScene* create_canvas();
 		static void register_form(InteractiveForm* form);
 		static void remove_form(InteractiveForm* form);
 

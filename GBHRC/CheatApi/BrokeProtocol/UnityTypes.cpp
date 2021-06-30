@@ -26,7 +26,7 @@ void UnityTypes::RigidBody::set_position(UnityTypes::Vector3* vector)
 		mono_context->mono_class_from_name(mono_context->get_physic_image(), "UnityEngine", "Rigidbody"),
 		"position"
 	));
-	void* params[]{ vector };
+	void* params[]{ &vector };
 	mono_context->mono_runtime_invoke(set_method, this, params, nullptr);
 }
 
@@ -40,6 +40,30 @@ UnityTypes::Vector3* UnityTypes::RigidBody::get_position()
 	));
 
 	return (Vector3*)mono_context->mono_runtime_invoke(get_method, this, nullptr, nullptr);
+}
+
+UnityTypes::Vector3* UnityTypes::RigidBody::get_velocity()
+{
+	auto mono_context = Mono::Context::get_context();
+
+	static auto* get_method = mono_context->mono_property_get_get_method(mono_context->mono_class_get_property_from_name(
+		mono_context->mono_class_from_name(mono_context->get_physic_image(), "UnityEngine", "Rigidbody"),
+		"velocity"
+	));
+
+	return (Vector3*)mono_context->mono_runtime_invoke(get_method, this, nullptr, nullptr);
+}
+
+void UnityTypes::RigidBody::set_velocity(Vector3* ref_value)
+{
+	auto mono_context = Mono::Context::get_context();
+
+	static auto* set_method = mono_context->mono_property_get_set_method(mono_context->mono_class_get_property_from_name(
+		mono_context->mono_class_from_name(mono_context->get_physic_image(), "UnityEngine", "Rigidbody"),
+		"velocity"
+	));
+	void* params[]{ ref_value };
+	mono_context->mono_runtime_invoke(set_method, this, params, nullptr);
 }
 
 void UnityTypes::RigidBody::set_use_gravity(bool use)

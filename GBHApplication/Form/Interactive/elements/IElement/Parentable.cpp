@@ -5,30 +5,30 @@
 
 void Application::UI::ReadChildrenCollection::foreach(std::function<void(Application::UI::InteractiveElement* element)> iterator)
 {
-	for(auto*element:this->_children)
+	for(auto*element: _children)
 		iterator(element);
 	
 }
 
 void Application::UI::ReadWriteChildrenCollection::append(UI::InteractiveElement* child)
 {
-	this->_children.push_back(child);
+	_children.push_back(child);
 }
 
 size_t Application::UI::ReadChildrenCollection::count()
 {
-	return this->_children.size();
+	return _children.size();
 }
 
 Application::UI::InteractiveElement* Application::UI::ReadChildrenCollection::operator[](UINT index)
 {
-	return this->_children[index];
+	return _children[index];
 }
 
 
 void Application::UI::Parent::handle_mouse_up()
 {
-	this->_children.foreach([&](UI::InteractiveElement* element) {
+	_children.foreach([&](UI::InteractiveElement* element) {
 		if (element->state.hovered)
 			element->handle_mouse_up();
 	});
@@ -38,7 +38,7 @@ void Application::UI::Parent::handle_mouse_up()
 
 void Application::UI::Parent::handle_mouse_down()
 {
-	this->_children.foreach([&](UI::InteractiveElement* element) {
+	_children.foreach([&](UI::InteractiveElement* element) {
 		if (element->state.hovered)
 			element->handle_mouse_down();
 	});
@@ -53,7 +53,7 @@ void Application::UI::Parent::handle_mouse_enter()
 
 void Application::UI::Parent::handle_mouse_leave()
 {
-	this->_children.foreach([&](UI::InteractiveElement* element) {
+	_children.foreach([&](UI::InteractiveElement* element) {
 		element->handle_mouse_leave();
 	});
 	
@@ -62,12 +62,12 @@ void Application::UI::Parent::handle_mouse_leave()
 
 void Application::UI::Parent::handle_mouse_move(float mX, float mY)
 {
-	const auto length = this->_children.count() - 1;
+	const auto length = _children.count() - 1;
 	bool e_handled = false;
 
 	for (long long i = length; i >= 0; i--)
 	{
-		auto* element = (UI::InteractiveElement*)this->_children[i];
+		auto* element = (UI::InteractiveElement*)_children[i];
 		
 		if (
 			e_handled == false &&
@@ -105,7 +105,7 @@ void Application::UI::Parent::on_initialize()
 {
 	this->_children.foreach([&](UI::InteractiveElement* element) {
 		element->initialize(this->form);
-		element->move_by(this->offset_position.x, this->offset_position.y);
+		element->move_by(_offset_position.x, _offset_position.y);
 	});
 
 	this->initialized = true;
@@ -118,7 +118,7 @@ Application::UI::ReadChildrenCollection* Application::UI::Parent::children()
 
 Application::UI::Parent::Parent(Render::Position position)
 {
-	this->offset_position = position;
+	_offset_position = position;
 }
 
 void Application::UI::Parent::draw(Render::DrawEvent* event)
@@ -142,15 +142,6 @@ void Application::UI::Parent::move_by(float x, float y)
 		element->move_by(x, y);
 	});
 }
-
-//void Application::UI::Parent::init()
-//{
-//	for (auto* element : this->elements)
-//	{
-//		element->initialize(this->pForm);
-//	}
-//}
-
 
 Application::UI::InteractiveElement* Application::UI::Parent::element_at(UINT index)
 {

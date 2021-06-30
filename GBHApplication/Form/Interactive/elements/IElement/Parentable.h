@@ -35,9 +35,8 @@ namespace Application
 		class Parent : public InteractiveElement
 		{
 		private:
-			Render::Position offset_position;
+			Render::Position _offset_position;
 			ReadWriteChildrenCollection _children;
-			//std::vector<InteractiveElement*> childs;
 			bool initialized = false;
 		protected:
 			void handle_mouse_up() override;

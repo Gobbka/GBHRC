@@ -56,13 +56,13 @@ void init_callback(Application::Render::Engine* instance)
 
     MainMenuMarkup(menu);
     //FiendListMarkup(friend_list, instance);
-    //
+
     menu->hidden = true;
     //friend_list->hidden = true;
 
     //DEBUG_LOG("MENU FORM REGISTERED");
 	
-    esp_scene = new Application::Render::CanvasScene(instance);
+    esp_scene = Application::Context::create_canvas();
     esp_scene->render_callback = GBHRC::Context::static_draw_callback;
     esp_scene->hidden = false;
     GBHRC::Context::instance()->set_esp_scene(esp_scene);
@@ -73,13 +73,6 @@ void init_callback(Application::Render::Engine* instance)
     test_scene->render_callback = test_scene_draw;
 
     DEBUG_LOG("ESP REGISTERED");
-	
-    instance
-        //->append_scene(friend_list)
-
-        //->append_scene(test_scene)
-		->append_scene(esp_scene)	
-	;
 
     DEBUG_LOG("SCENE'S APPENDED");
 
@@ -165,13 +158,32 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
             Hooks::WndProc::setInputState(!state);
         }
 
+        if(GBHRC::Context::instance()->config->fly_active)
+        {
+            if (wParam == VK_CONTROL)
+            {
+                auto* rigid_body = BrokeProtocol::GetLocalPlayer()->positionRB;
+                auto* vector = rigid_body->get_velocity();
+                vector->y *= -1;
+                rigid_body->add_force(0, vector->y, 0);
+            }
+
+            if (wParam == VK_SPACE)
+            {
+                auto* rigid_body = BrokeProtocol::GetLocalPlayer()->positionRB;
+                auto* vector = rigid_body->get_velocity();
+                vector->y *= -1;
+                rigid_body->add_force(0, vector->y, 0);
+            }
+        }
+
         if (wParam == VK_F5)
         {
-            auto mono_context = Mono::Context::get_context();
-            
-            auto method = BrokeProtocol::get_connect_function();
         	
-            DEBUG_LOG(mono_context->mono_compile_method((Mono::MonoMethod*)method));
+            //auto* vel = (UnityTypes::Vector3*)BrokeProtocol::GetLocalPlayer()->positionRB->get_velocity();
+            BrokeProtocol::GetLocalPlayer()->positionRB->set_velocity(UnityTypes::Vector3::make(2, 2, 2));
+            //BrokeProtocol::GetLocalPlayer()->positionRB->set_velocity(UnityTypes::Vector3::make(1,0,1));
+            //DEBUG_LOG(vel->x << " " << vel->y << " " << vel->z);
         
             //Mono::Dumper::dump_class(mono_context->mono_method_get_class((Mono::MonoMethod*)ptr));
         }
@@ -182,12 +194,8 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
         }
 
     	if(wParam == VK_F2){
-            auto playrator = BrokeProtocol::GetPlayersCollection()->items->iterator();
-    		while(playrator.next())
-    		{
-                auto* item = playrator.item();
-                DEBUG_LOG("ID: " << item->ID << " " << item->health);
-    		}
+            auto* vel =(UnityTypes::Vector3::make(2, 2, 2));
+            BrokeProtocol::GetLocalPlayer()->positionRB->set_velocity((UnityTypes::Vector3*)&vel);
     	}
 
     	if(wParam == VK_LEFT)

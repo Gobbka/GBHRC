@@ -16,7 +16,6 @@ void Application::UI::ItemList::on_initialize()
 				element_resolution.height
 			);
 			element->move_by(margin.x, offset - margin.y);
-			//element->set_pos(margin.x, offset - margin.y);
 
 			offset -= (element_resolution.height + margin.y + margin.w);
 		});

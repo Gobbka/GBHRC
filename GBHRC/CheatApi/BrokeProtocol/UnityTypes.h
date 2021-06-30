@@ -29,6 +29,9 @@ namespace UnityTypes
 		void set_position(UnityTypes::Vector3* vector);
 		Vector3* get_position();
 
+		Vector3* get_velocity();
+		void set_velocity(Vector3*ref_value);
+
 		void set_use_gravity(bool use);
 		
 		void set_mass(float mass);

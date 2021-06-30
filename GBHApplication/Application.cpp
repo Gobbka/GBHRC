@@ -33,6 +33,13 @@ Application::InteractiveForm* Application::Context::create_form()
 	return form;
 }
 
+Application::Render::CanvasScene* Application::Context::create_canvas()
+{
+	auto* canvas = new Render::CanvasScene(AppContext->engine);
+	AppContext->engine->append_scene(canvas);
+	return canvas;
+}
+
 void Application::Context::register_form(InteractiveForm* form)
 {
 	AppContext->_registered_forms.push_back(form);
