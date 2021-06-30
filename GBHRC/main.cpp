@@ -180,8 +180,9 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
         if (wParam == VK_F5)
         {
         	
-            //auto* vel = (UnityTypes::Vector3*)BrokeProtocol::GetLocalPlayer()->positionRB->get_velocity();
-            BrokeProtocol::GetLocalPlayer()->positionRB->set_velocity(UnityTypes::Vector3::make(2, 2, 2));
+            Mono::Dumper::dump_object(
+                (Mono::MonoObject*)BrokeProtocol::GetLocalPlayer()->curMount
+            );
             //BrokeProtocol::GetLocalPlayer()->positionRB->set_velocity(UnityTypes::Vector3::make(1,0,1));
             //DEBUG_LOG(vel->x << " " << vel->y << " " << vel->z);
         

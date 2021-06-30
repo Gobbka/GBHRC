@@ -337,19 +337,22 @@ void GBHRC::Context::life_cycle()
 
             if (config->fly_active )
             {
+                UnityTypes::RigidBody* position = local_player->curMount == nullptr ? local_player->positionRB : local_player->curMount->positionRB;
+                position->set_use_gravity(false);
+            	
                 if(GetAsyncKeyState(VK_SPACE))
                 {
-                    local_player->positionRB->add_force(0, 0.5f, 0);
+                    position->add_force(0, 0.5f, 0);
                 }
             	if(GetAsyncKeyState(VK_CONTROL))
             	{
-                    local_player->positionRB->add_force(0, -0.5f, 0);
+                    position->add_force(0, -0.5f, 0);
             	}
             }
 
             if (config->car_speed && local_player->curMount != nullptr)
             {
-                local_player->curMount->maxSpeed = 500.f;
+                local_player->curMount->speed = 500.f;
                 local_player->curMount->speedLimit = 500.f;
             }
 

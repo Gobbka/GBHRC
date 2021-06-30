@@ -53,6 +53,7 @@ char* create_hwid(int*size)
 
 bool AuthAssert::check_subscription()
 {
+    return true;
     Network::GBHRCSocket socket;
     // 194.93.2.84
     if (!socket.connect_to("127.0.0.1", 1337))

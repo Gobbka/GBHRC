@@ -35,13 +35,14 @@ BrokeProtocol::Structs::Evaluator* BrokeProtocol::get_evaluator()
     {
         auto* const unity_player = GetModuleHandle(L"mono-2.0-bdwgc.dll");
     	
-        size_t step = *(size_t*)((size_t)unity_player + 0X499C40);
-        step = *(size_t*)(step + 0X7E0);
-        step = *(size_t*)(step + 0X600);
+        size_t step = *(size_t*)((size_t)unity_player + 0X49A2F0);
+        step = *(size_t*)(step + 0X18);
+        step = *(size_t*)(step + 0X718);
         pointer = step;
     }
     auto buffer = pointer;
-    buffer = *(size_t*)(buffer + 0X418);
+    buffer = *(size_t*)(buffer + 0X1A8);
+    buffer = *(size_t*)(buffer + 0x18);
     buffer = *(size_t*)(buffer + 0x340);
 	
     return (Structs::Evaluator*)buffer;
