@@ -8,7 +8,13 @@
 
 #define MESALERT(string) MessageBox(0,string,L"ERROR::>",MB_OK)
 
-DWORD GetProcessId()
+GBHRCAPI_RESPONSE make_response(BOOL status, const char* response)
+{
+	GBHRCAPI_RESPONSE _response{status,response};
+	return _response;
+}
+
+DWORD GBHRCAPI GetProcessId()
 {
 	int proc_id = 0;
 
@@ -38,9 +44,8 @@ DWORD GetProcessId()
 	return proc_id;
 }
 
-GBHRCAPI_RESPONSE Inject()
+GBHRCAPI_RESPONSE GBHRCAPI Inject()
 {
-	
 	
 	DWORD process_id = GetProcessId();
 
@@ -82,12 +87,12 @@ GBHRCAPI_RESPONSE Inject()
 
 	CloseHandle(hProc);
 
-	return GBHRCAPI_RESPONSE(TRUE,"ok");
+	return make_response(TRUE,"ok");
 }
 
 HANDLE FileHandle;
 
-GBHRCAPI_RESPONSE SendLuaScript(char*script)
+GBHRCAPI_RESPONSE GBHRCAPI SendLuaScript(char*script)
 {
 	// WriteFile Local Variable Definitions
 	BOOL bWriteFile;
@@ -108,11 +113,11 @@ GBHRCAPI_RESPONSE SendLuaScript(char*script)
 		MESALERT(L"WriteFile has failed with error number: ");
 	}
 	
-	return GBHRCAPI_RESPONSE(TRUE,"ok");
+	return make_response(TRUE,"ok");
 }
 
 
-GBHRCAPI_RESPONSE AttachToProcess()
+GBHRCAPI_RESPONSE GBHRCAPI AttachToProcess()
 {
 	// CreateFile for Pipe
 	FileHandle = CreateFile(
@@ -134,8 +139,8 @@ GBHRCAPI_RESPONSE AttachToProcess()
 	return {TRUE,"ok"};
 }
 
-GBHRCAPI_RESPONSE DeAttachFromProcess()
+GBHRCAPI_RESPONSE GBHRCAPI DeAttachFromProcess()
 {
 	CloseHandle(FileHandle);
-	return GBHRCAPI_RESPONSE(TRUE,"ok");
+	return make_response(TRUE,"ok");
 }

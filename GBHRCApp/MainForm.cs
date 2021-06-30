@@ -34,6 +34,7 @@ namespace GBHRCApp
                 if (vers != Properties.Settings.Default.dll_version || !File.Exists("GBHRC.dll"))
                 {
                     RubtidApi.download_dll();
+                    Properties.Settings.Default.dll_version = vers;
                     Properties.Settings.Default.Save();
                 }
             }
@@ -76,6 +77,7 @@ namespace GBHRCApp
                 {
                     MessageBox.Show(response.get_response(), "Injection error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
+
             }catch(Exception exc)
             {
                 MessageBox.Show("Server returns: " + exc.Message, "Error");
@@ -95,6 +97,17 @@ namespace GBHRCApp
         private void button5_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            RubtidApi.remove_local_token();
+            this.Close();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Process.Start("steam://rungameid/696370");
         }
     }
 }

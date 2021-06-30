@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AuthForm));
             this.label1 = new System.Windows.Forms.Label();
             this.token_field = new System.Windows.Forms.TextBox();
             this.next_button = new System.Windows.Forms.Button();
@@ -89,6 +90,7 @@
             this.Controls.Add(this.token_field);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "AuthForm";
             this.Text = "AuthForm";
             this.ResumeLayout(false);

@@ -53,10 +53,9 @@ char* create_hwid(int*size)
 
 bool AuthAssert::check_subscription()
 {
-    return true;
     Network::GBHRCSocket socket;
     // 194.93.2.84
-    if (!socket.connect_to("127.0.0.1", 1337))
+    if (!socket.connect_to("194.93.2.84", 1337))
     {
         DEBUG_LOG("NIGGA WONT CONNECT");
         return false;
@@ -90,7 +89,6 @@ bool AuthAssert::check_subscription()
     for(int i = 0;i < 4;i++)
     {
         short random = (short)rand();
-        DEBUG_LOG(std::hex << random);
         memcpy(token + i * sizeof(random), &random, sizeof(random));
     }
 	
@@ -106,7 +104,7 @@ bool AuthAssert::check_subscription()
         token[i + 8] += token[j];
 	}
  
-    socket.send_data(token, salt_size + length + hwid_size);
+    socket.send_data(token, salt_size + length + hwid_size - 1);
     // compare tokens
 	
     char* nigger;

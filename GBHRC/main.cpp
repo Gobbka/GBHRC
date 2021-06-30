@@ -195,8 +195,7 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
         }
 
     	if(wParam == VK_F2){
-            auto* vel =(UnityTypes::Vector3::make(2, 2, 2));
-            BrokeProtocol::GetLocalPlayer()->positionRB->set_velocity((UnityTypes::Vector3*)&vel);
+            BrokeProtocol::send_global_chat((char*)("BUY BROKEPROTOCOL HACK RIGHT NOW IN " DISCORD_CHANNEL));
     	}
 
     	if(wParam == VK_LEFT)

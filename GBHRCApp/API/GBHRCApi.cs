@@ -25,16 +25,16 @@ namespace GBHRCApp.API
             }
         }
 
-        [DllImport("GBHRC_API.dll", CharSet = CharSet.Ansi,CallingConvention =CallingConvention.StdCall)]
+        [DllImport("GBHRC_API.dll", CharSet = CharSet.Ansi,CallingConvention =CallingConvention.Cdecl)]
         private static extern ApiResponse SendLuaScript(char[] lua_text);
 
-        [DllImport("GBHRC_API.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("GBHRC_API.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         public static extern ApiResponse Inject();
 
-        [DllImport("GBHRC_API.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("GBHRC_API.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         public static extern ApiResponse AttachToProcess();
 
-        [DllImport("GBHRC_API.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("GBHRC_API.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         public static extern ApiResponse DeAttachFromProcess();
 
         static public ApiResponse send_lua(string script)

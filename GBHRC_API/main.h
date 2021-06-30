@@ -1,21 +1,16 @@
 #pragma once
 #define DllExport __declspec(dllexport)
-#define GBHRCAPI __stdcall
+#define GBHRCAPI __cdecl
 #include <Windows.h>
 
 
 extern "C"{
-	struct GBHRCAPI_RESPONSE
+	
+	typedef struct 
 	{
 		BOOL status;
 		const char* response;
-
-		GBHRCAPI_RESPONSE(BOOL status, const char* response)
-		{
-			this->status = status;
-			this->response = response;
-		}
-	};
+	} GBHRCAPI_RESPONSE;
 
 	
 	DllExport GBHRCAPI_RESPONSE GBHRCAPI Inject();

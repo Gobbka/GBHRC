@@ -23,12 +23,15 @@ namespace GBHRCApp.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public double dll_version {
             get {
                 return ((double)(this["dll_version"]));
+            }
+            set {
+                this["dll_version"] = value;
             }
         }
     }

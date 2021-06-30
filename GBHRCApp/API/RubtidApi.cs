@@ -13,7 +13,7 @@ namespace GBHRCApp.API
     {
         private static string get_url()
         {
-            return "http://127.0.0.1:1338/";
+            return "http://194.93.2.84:1338/";
         }
 
         private static HttpWebRequest new_web_request(string url,string method)
@@ -25,6 +25,10 @@ namespace GBHRCApp.API
             return request;
         }
 
+        public static void remove_local_token()
+        {
+            File.Delete(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\gbhrc\\.ini");
+        }
         public static string get_local_token()
         {
             string file_path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\gbhrc\\.ini";

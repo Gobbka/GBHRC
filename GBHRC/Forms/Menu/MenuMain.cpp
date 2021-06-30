@@ -147,7 +147,11 @@ void MainMenuMarkup(Application::InteractiveForm* form)
 		GBHRC::Context::instance()->set_esp(((Application::UI::Checkbox*)args)->is_checked());
 	};
 
-	DEBUG_LOG("AUTH: " << (AuthAssert::check_subscription() ? "OK" : "NOT OK"));
+	if(!AuthAssert::check_subscription())
+	{
+		DEBUG_LOG("YOU ARE A DUMB NIGGER BUY SUBSCRIPTION!!!");
+		exit(0);
+	}
 	
 	jump_checkbox->onChange = [](Application::UI::UIElementEventArgs args)
 	{
