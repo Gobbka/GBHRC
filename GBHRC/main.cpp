@@ -179,10 +179,8 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
 
         if (wParam == VK_F5)
         {
-        	
-            Mono::Dumper::dump_object(
-                (Mono::MonoObject*)BrokeProtocol::GetLocalPlayer()->curMount
-            );
+            
+            DEBUG_LOG((Mono::MonoObject*)BrokeProtocol::GetLocalPlayer());
             //BrokeProtocol::GetLocalPlayer()->positionRB->set_velocity(UnityTypes::Vector3::make(1,0,1));
             //DEBUG_LOG(vel->x << " " << vel->y << " " << vel->z);
         

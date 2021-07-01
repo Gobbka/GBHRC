@@ -56,9 +56,9 @@ Mono::MonoObject* Context::create_csharp_string(char* ptr)
 	auto* pClass = Context::mono_class_from_name(image, "System.Runtime.InteropServices", "Marshal");
 	auto* method = mono_class_get_method_from_name(pClass, "PtrToStringUTF8", -1);
 
-	void* params[2];
-	params[0] = &ptr;
-	params[1] = new size_t(strlen(ptr));
+	auto length = strlen(ptr);
+	
+	void* params[]{&ptr,&length};
 
 	MonoObject* excepion = nullptr;
 

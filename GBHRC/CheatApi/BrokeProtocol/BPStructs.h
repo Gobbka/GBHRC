@@ -91,8 +91,8 @@ namespace BrokeProtocol {
 		public:
 			char pad_0000[16]; //0x0000
 			uint32_t index; //0x0010
-			float capsuleHeight; //0x0014
-			float offset; //0x0018
+			float offset; //0x0014
+			float capsuleHeight; //0x0018
 			float input; //0x001C
 			bool setable; //0x0020
 			bool ragdoll; //0x0021

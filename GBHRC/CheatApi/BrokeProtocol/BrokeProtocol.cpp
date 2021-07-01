@@ -125,7 +125,7 @@ void BrokeProtocol::SendToServer(PacketFlags flags, BrokeProtocol::SvPacket pack
 
     Mono::MonoObject* exception = nullptr;
 
-    void* args[3] {&flags,&packet,array};
+    void* args[] {&flags,&packet,array};
     Mono::Context::get_context()->mono_runtime_invoke(pMethod, BrokeProtocol::GetLocalPlayer()->clPlayer->clManager, args, &exception);
 
     if (exception != nullptr)
