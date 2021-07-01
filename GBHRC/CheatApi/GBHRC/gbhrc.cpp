@@ -194,11 +194,11 @@ void GBHRC::Context::draw_player(Application::Render::DrawEvent* event,UINT elem
             DirectX::XMFLOAT2(0.0f, 0.0f),
             DirectX::XMFLOAT2(0.5f, 0.5f)
         );
-
-    if (this->config->esp.draw_gun_name)
+    auto* eq_name = (wchar_t*)&player->player->curEquipable->itemName->array;
+    if (this->config->esp.draw_gun_name && eq_name)
         VisbyRoundCFFont->DrawString(
             engine->get_batch(),
-            (wchar_t*)&player->player->curEquipable->itemName->array,
+            eq_name,
             DirectX::XMFLOAT2(
                 point_bottom.x + camera_resolution.width / 2 - (rect.right) / 2 * 0.5f,
                 camera_resolution.height / 2 - point_bottom.y + (rect.bottom) * 0.5f
@@ -226,7 +226,18 @@ bool GBHRC::Context::is_aim_target(EspPlayer* old_player, EspPlayer* new_player)
 
 void GBHRC::Context::set_speed_hack(bool enable)
 {
-    this->config->player_speed = true;
+    this->config->player_speed = enable;
+}
+
+void GBHRC::Context::set_fly(bool enable)
+{
+    auto* shManager = BrokeProtocol::get_manager();
+    if (shManager != nullptr && shManager->host != nullptr)
+    {
+        BrokeProtocol::GetLocalPlayer()->positionRB->set_use_gravity(!enable);
+    }
+    this->config->fly_active = enable;
+
 }
 
 void GBHRC::Context::set_esp(bool status)
@@ -366,7 +377,7 @@ void GBHRC::Context::life_cycle()
                 positionRB->add_force(0, -5, 0);
             }else
             {
-                local_player->speed = 12;
+                local_player->speed      = 12;
                 local_player->speedLimit = 12;
             }
         	

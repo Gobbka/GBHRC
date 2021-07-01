@@ -57,6 +57,7 @@ namespace GBHRC
 		std::vector<wchar_t*> friend_list;
 	public:
 		void set_speed_hack(bool enable);
+		void set_fly(bool enable);
 		
 		void set_esp(bool status);
 		bool is_friend(wchar_t* nickname);
