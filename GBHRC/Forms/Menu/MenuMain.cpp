@@ -40,6 +40,7 @@ auto* misc_inner = new Application::UI::Panel{ {0,-80},{400,420},{0,0,0,0} };
 auto* jump_checkbox = new Application::UI::Checkbox({ 20,-10 }, { 20,20 }, Color4(FLOAT_COLORS_GREEN));
 auto* car_sh_checkbox = new Application::UI::Checkbox({ 20,-50 }, { 20,20 }, Color4(FLOAT_COLORS_GREEN));
 auto* no_recoil_checkbox = new Application::UI::Checkbox({ 20,-90 }, { 20,20 }, Color4(FLOAT_COLORS_GREEN));
+auto* speed_hack_checkbox = new Application::UI::Checkbox({ 20,-130 }, { 20,20 }, Color4(FLOAT_COLORS_GREEN));
 
 
 #pragma endregion 
@@ -73,7 +74,7 @@ void MainMenuMarkup(Application::InteractiveForm* form)
 		//->add_element(new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "NIGGER_BUTTON"))
 		//->add_element(new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "NIGGER_BUTTON"))
 		//->add_element(new Application::UI::Button({ 0,0 }, { 0,50 }, { COLOR_FROM_RGB(32,32,32) }, VisbyRoundCFFont, "NIGGER_BUTTON"))
-		;
+	;
 
 	auto* alpha_background = new Application::UI::Panel({ -10000,10000 }, { 20000, 20000 }, { FLOAT_COLORS_BLACK,0.5f });
 
@@ -120,9 +121,11 @@ void MainMenuMarkup(Application::InteractiveForm* form)
 			->add_element(jump_checkbox)
 			->add_element(car_sh_checkbox)
 			->add_element(no_recoil_checkbox)
+			->add_element(speed_hack_checkbox)
 			->add_element(new Application::UI::Label{ {60,-10},"FLY",VisbyRoundCFFont,{FLOAT_COLORS_WHITE} })
 			->add_element(new Application::UI::Label{ {60,-50},"CAR SPEED",VisbyRoundCFFont,{FLOAT_COLORS_WHITE} })
 			->add_element(new Application::UI::Label{ {60,-90},"NO RECOIL",VisbyRoundCFFont,{FLOAT_COLORS_WHITE} })
+			->add_element(new Application::UI::Label{ {60,-130},"SPEED HACK",VisbyRoundCFFont,{FLOAT_COLORS_WHITE} })
 			, false
 		)
 	;
@@ -171,12 +174,18 @@ void MainMenuMarkup(Application::InteractiveForm* form)
 
 	using namespace Application::UI;
 
+	speed_hack_checkbox->onChange = [](Application::UI::UIElementEventArgs args)
+	{
+		GBHRC::Context::instance()->set_speed_hack(((Checkbox*)args)->is_checked());
+	};
+
 	esp_button->onClick = [](Application::UI::UIElementEventArgs args)
 	{
 		esp_inner->state.visible = VISIBLE_STATE_VISIBLE;
 		aim_inner->state.visible = VISIBLE_STATE_HIDDEN;
 		misc_inner->state.visible = VISIBLE_STATE_HIDDEN;
 	};
+	
 
 	aim_button->onClick = [](Application::UI::UIElementEventArgs args)
 	{

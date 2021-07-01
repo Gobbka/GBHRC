@@ -53,6 +53,7 @@ GBHRCAPI_RESPONSE GBHRCAPI Inject()
 	{
 		return {FALSE,"Cannot find process"};
 	}
+	
 
 	HANDLE hProc = OpenProcess(PROCESS_ALL_ACCESS, 0, process_id);
 
@@ -74,7 +75,7 @@ GBHRCAPI_RESPONSE GBHRCAPI Inject()
 	
 	if (dllname != nullptr)
 		WriteProcessMemory(hProc, alloc, dllname, (wcslen(dllname) + 1)*sizeof(wchar_t), nullptr);
-
+	
 	const HANDLE hThread = CreateRemoteThread(hProc, 0, 0, (LPTHREAD_START_ROUTINE)LoadLibraryW, alloc, 0, 0);
 	if (hThread)
 		CloseHandle(hThread);
@@ -82,6 +83,7 @@ GBHRCAPI_RESPONSE GBHRCAPI Inject()
 	{
 		return {FALSE,"Cannot create remote thread"};
 	}
+
 
 	VirtualFreeEx(hProc, alloc, MAX_PATH, MEM_RELEASE);
 

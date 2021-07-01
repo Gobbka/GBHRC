@@ -224,6 +224,11 @@ bool GBHRC::Context::is_aim_target(EspPlayer* old_player, EspPlayer* new_player)
 	return new_player->display_distance <= this->config->aim.fov_size;
 }
 
+void GBHRC::Context::set_speed_hack(bool enable)
+{
+    this->config->player_speed = true;
+}
+
 void GBHRC::Context::set_esp(bool status)
 {
     this->config->esp.active = status;
@@ -333,23 +338,38 @@ void GBHRC::Context::life_cycle()
         if (shManager != nullptr && shManager->host != nullptr)
         {
             auto* local_player = BrokeProtocol::GetLocalPlayer();
+        	if(local_player == nullptr)
+                continue;
+            UnityTypes::RigidBody* positionRB = local_player->curMount == nullptr ? local_player->positionRB : local_player->curMount->positionRB;
+
 
 
             if (config->fly_active )
             {
-                UnityTypes::RigidBody* position = local_player->curMount == nullptr ? local_player->positionRB : local_player->curMount->positionRB;
-                position->set_use_gravity(false);
+                positionRB->set_use_gravity(false);
             	
                 if(GetAsyncKeyState(VK_SPACE))
                 {
-                    position->add_force(0, 0.5f, 0);
+                    positionRB->add_force(0, 0.5f, 0);
                 }
             	if(GetAsyncKeyState(VK_CONTROL))
             	{
-                    position->add_force(0, -0.5f, 0);
+                    positionRB->add_force(0, -0.5f, 0);
             	}
             }
 
+        	
+            if(config->player_speed && local_player->mode && !config->fly_active && local_player->curMount == nullptr)
+            {
+                local_player->speed = 46;
+                local_player->speedLimit = 46;
+                positionRB->add_force(0, -5, 0);
+            }else
+            {
+                local_player->speed = 12;
+                local_player->speedLimit = 12;
+            }
+        	
             if (config->car_speed && local_player->curMount != nullptr)
             {
                 local_player->curMount->speed = 500.f;

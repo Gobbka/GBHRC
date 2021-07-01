@@ -30,6 +30,7 @@ namespace GBHRC
 		bool fly_active		   = false;
 		bool inf_inventory     = false;
 		bool car_speed         = false;
+		bool player_speed         = false;
 		//
 
 		std::string filename;

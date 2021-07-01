@@ -11,7 +11,6 @@ extern "C"{
 		BOOL status;
 		const char* response;
 	} GBHRCAPI_RESPONSE;
-
 	
 	DllExport GBHRCAPI_RESPONSE GBHRCAPI Inject();
 	DllExport GBHRCAPI_RESPONSE GBHRCAPI SendLuaScript(char*script);

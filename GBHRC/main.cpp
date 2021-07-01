@@ -196,16 +196,16 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
             BrokeProtocol::send_global_chat((char*)("BUY BROKEPROTOCOL HACK RIGHT NOW IN " DISCORD_CHANNEL));
     	}
 
-    	if(wParam == VK_LEFT)
-    	{
-            BrokeProtocol::GetLocalPlayer()->speed -= 2.f;
-            DEBUG_LOG("SPEED: "<<BrokeProtocol::GetLocalPlayer()->speed);
-    	}
-    	if(wParam == VK_RIGHT)
-    	{
-            BrokeProtocol::GetLocalPlayer()->speed += 2.f;
-            DEBUG_LOG("SPEED: " << BrokeProtocol::GetLocalPlayer()->speed);
-    	}
+    	//if(wParam == VK_LEFT)
+    	//{
+     //       BrokeProtocol::GetLocalPlayer()->speed -= 2.f;
+     //       DEBUG_LOG("SPEED: "<<BrokeProtocol::GetLocalPlayer()->speed);
+    	//}
+    	//if(wParam == VK_RIGHT)
+    	//{
+     //       BrokeProtocol::GetLocalPlayer()->speed += 2.f;
+     //       DEBUG_LOG("SPEED: " << BrokeProtocol::GetLocalPlayer()->speed);
+    	//}
     }
 
 	if(msg == WM_LBUTTONDOWN)
