@@ -24,13 +24,16 @@ namespace Application
 	
 	class Animator
 	{
-		std::vector<Animation> animations;
-		bool playing = false;
-		HANDLE thread;
+		std::vector<Animation*> _animations;
+		bool _playing = false;
+		HANDLE _thread;
 
 		static void handle_animations(Animator*animator);
 		static void def_anim_float(void* flt, uint32_t step);
 	public:
+		Animator();
+		~Animator();
+		
 		void add_anim(float* value, UINT during, Animation::AnimationHandler = def_anim_float);
 		void remove_anim(UINT index);
 		

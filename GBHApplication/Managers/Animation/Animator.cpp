@@ -25,12 +25,12 @@ bool Application::Animation::play_step()
 
 void Application::Animator::handle_animations(Animator* animator)
 {
-	while(animator->playing)
+	while(animator->_playing)
 	{
-		for(int i = 0;i<animator->animations.size();i++)
+		for(int i = 0;i<animator->_animations.size();i++)
 		{
-			auto anim = animator->animations[i];
-			if(!anim.play_step())
+			auto* anim = animator->_animations[i];
+			if(!anim->play_step())
 			{
 				// remove animation from anim list;
 				animator->remove_anim(i);
@@ -47,26 +47,36 @@ void Application::Animator::def_anim_float(void* flt, uint32_t step)
 	
 }
 
+Application::Animator::Animator()
+{
+	_thread = nullptr;
+}
+
+Application::Animator::~Animator()
+{
+}
+
 void Application::Animator::add_anim(float* value, UINT during, Animation::AnimationHandler anim)
 {
-	this->animations.push_back(Animation(value,during,anim));
+	_animations.push_back(new Animation(value,during,anim));
 }
 
 void Application::Animator::remove_anim(UINT index)
 {
-	this->animations.erase(this->animations.begin() + index);
+	delete _animations[index];
+	_animations.erase(_animations.begin() + index);
 }
 
 void Application::Animator::start()
 {
-	if(this->playing==false)
+	if(_playing==false)
 	{
-		this->playing = true;
+		_playing = true;
 		CreateThread(nullptr, NULL, (LPTHREAD_START_ROUTINE)handle_animations, this, NULL, nullptr);
 	}
 }
 
 void Application::Animator::end()
 {
-	this->playing = false;
+	_playing = false;
 }

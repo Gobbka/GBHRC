@@ -199,4 +199,6 @@ void MainMenuMarkup(Application::InteractiveForm* form)
 		aim_inner->state.visible = VISIBLE_STATE_HIDDEN;
 		misc_inner->state.visible = VISIBLE_STATE_VISIBLE;
 	};
+	float value = 2.f;
+	Application::Context::get_animator()->add_anim(&value, 50);
 }
