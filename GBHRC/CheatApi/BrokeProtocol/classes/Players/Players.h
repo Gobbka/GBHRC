@@ -41,7 +41,7 @@ namespace BrokeProtocol
 		public:
 			Structs::StanceType* stances; //0x0190
 			UnityEngine::Transform* rotationT; //0x0198
-			class ClPlayer* clPlayer; //0x01A0
+			ClPlayer* clPlayer; //0x01A0
 			void* svPlayer; //0x01A8
 			UnityTypes::String* hands; //0x01B0
 			UnityTypes::String* surrender; //0x01B8
@@ -98,9 +98,9 @@ namespace BrokeProtocol
 		class ClPlayer
 		{
 		public:
-			char pad_0000[48]; //0x0000
-			Managers::ClManager* clManager; //0x0030
-			char pad_0038[212]; //0x0038
-		}; //Size: 0x010C
+			char pad_0000[56]; //0x0000
+			class ClManager* clManager; //0x0038
+			char pad_0040[212]; //0x0040
+		}; //Size: 0x0114
 	}
 }

@@ -179,8 +179,8 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
 
         if (wParam == VK_F5)
         {
-            
-            DEBUG_LOG((Mono::MonoObject*)BrokeProtocol::GetLocalPlayer());
+            BrokeProtocol::send_global_chat((char*)"nigger");
+            //Mono::Dumper::dump_object((Mono::MonoObject*)BrokeProtocol::GetLocalPlayer()->clPlayer->clManager);
         }
 
         if(wParam == VK_F4)
@@ -192,7 +192,6 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
     		
             auto* items = BrokeProtocol::GetLocalPlayer()->otherEntity->myItems;
             auto* values = items->get_values();
-            auto* enumerator = values->get_enumerator();
 
             auto*array= MonoContext->mono_array_new(
                 MonoContext->mono_get_root_domain(),
@@ -201,14 +200,23 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
             );
 
             values->copy_to(array, 0);
-    		
-            auto* nigger = BrokeProtocol::get_manager()->clManager->searchingMenu;
-    		
+
+            Mono::MonoArray* theArray = MonoContext->mono_array_new(MonoContext->mono_get_root_domain(), MonoContext->get_object_class(), 5);
+            int magic_number = 11;
+            theArray->vector[0] = &magic_number;
+
     		for(int i = items->count; i --> 0;)
     		{
                 auto* inv_item = (BrokeProtocol::Structs::InventoryItem*)array->vector[i];
                 auto* item = inv_item->item;
-                nigger->take_amount(item->index, inv_item->count);
+
+                theArray->vector[0] = &item->index;
+                theArray->vector[1] = &item->index;
+                theArray->vector[2] = &item->index;
+                theArray->vector[3] = &item->index;
+                theArray->vector[4] = &item->index;
+
+                BrokeProtocol::SendToServer(BrokeProtocol::PacketFlags::Reliable, BrokeProtocol::SvPacket::TransferSearch, theArray);
     		}
     		
             /*while(enumerator->MoveNext())

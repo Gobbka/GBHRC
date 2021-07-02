@@ -160,7 +160,7 @@ void BrokeProtocol::send_global_chat(char* text)
     Mono::MonoArray* theArray = mono_context->mono_array_new(mono_context->mono_get_root_domain(), mono_context->get_object_class(), 1);
     theArray->vector[0] = ptr;
 
-    BrokeProtocol::SendToServer(PacketFlags::Reliable, SvPacket::GlobalMessage, theArray);
+    SendToServer(PacketFlags::Reliable, SvPacket::GlobalMessage, theArray);
 }
 
 void BrokeProtocol::ShowTextMenu(float xMin, float yMin, float xMax, float yMax,const char* title,const char* text)

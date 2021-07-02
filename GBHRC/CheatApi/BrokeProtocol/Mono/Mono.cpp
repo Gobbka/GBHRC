@@ -43,11 +43,16 @@ Mono::MonoMethod* Context::mono_get_method_from_image(MonoImage* image, const ch
 
 void Context::mono_print_system_exception(void* exception)
 {
+	DEBUG_LOG("ERROR: " << std::hex << exception);
 	auto* klass = Context::mono_class_from_name(get_mscorlib(), "System", "Exception");
+	
 	auto* field = Context::mono_class_get_field_from_name(klass, "_message");
+
 	UnityTypes::String* value;
+	
 	mono_field_get_value((MonoObject*)exception, field, &value);
-	std::wcout << (wchar_t*)(&value->array);
+	
+	std::wcout << (wchar_t*)(&value->array) << '\n';
 }
 
 Mono::MonoObject* Context::create_csharp_string(char* ptr)
