@@ -55,6 +55,12 @@ namespace Mono
 		/* total number of elements of the array */
 		UINT max_length;
 		/* we use double to ensure proper alignment on platforms that need it */
-		__int64 vector[1];
+		void* vector[10];
 	} MonoArray;
+
+	typedef struct
+	{
+		char pad_0000[16]; //0x0000
+		char* nigger[10]; //0x0010
+	} CSharpArray;
 }

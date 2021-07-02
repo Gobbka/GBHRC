@@ -3,6 +3,10 @@
 #include "classes/Transform/Transform.h"
 #include "classes/Transform/Camera.h"
 
+namespace BrokeProtocol {
+	class ShEquipable;
+}
+
 namespace UnityEngine {
 	class Camera;
 	class Transform;
@@ -39,6 +43,15 @@ namespace BrokeProtocol {
 			Managers::ClManager* ClManager; //0x0058
 			Players::ShPlayer* ShPlayer; //0x0060
 		};
+
+		class InventoryItem
+		{
+		public:
+			char pad_0000[16]; //0x0000
+			ShEquipable* item; //0x0010
+			int32_t count; //0x0018
+			int32_t currentValue; //0x001C
+		}; //Size: 0x0020
 
 		class Location
 		{

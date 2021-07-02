@@ -2,6 +2,10 @@
 #include "../../BPStructs.h"
 #include "../Guns/ShEquipable.h"
 
+namespace Collections {
+	class Dictionary;
+}
+
 namespace BrokeProtocol
 {
 	namespace Players {
@@ -17,7 +21,9 @@ namespace BrokeProtocol
 		public:
 			char pad_0000[24]; //0x0000
 			void* mainT; //0x0018
-			char pad_0020[108]; //0x0020
+			char pad_0020[48]; //0x0020
+			Collections::Dictionary* myItems; //0x0050
+			char pad_0058[52]; //0x0058
 			uint32_t ID; //0x008C
 			char pad_0090[168]; //0x0090
 			float health; //0x0138
@@ -35,7 +41,7 @@ namespace BrokeProtocol
 		public:
 			Structs::StanceType* stances; //0x0190
 			UnityEngine::Transform* rotationT; //0x0198
-			ClPlayer* clPlayer; //0x01A0
+			class ClPlayer* clPlayer; //0x01A0
 			void* svPlayer; //0x01A8
 			UnityTypes::String* hands; //0x01B0
 			UnityTypes::String* surrender; //0x01B8
@@ -45,7 +51,7 @@ namespace BrokeProtocol
 			void* wearableOptions; //0x01D8
 			void* capsule; //0x01E0
 			char pad_01E8[8]; //0x01E8
-			void* (*bindings)[2]; //0x01F0
+			char(*bindings)[2][8]; //0x01F0
 			ShEquipable* curEquipable; //0x01F8
 			class Wearable* curWearables; //0x0200
 			char pad_0208[16]; //0x0208
@@ -54,7 +60,8 @@ namespace BrokeProtocol
 			Structs::StanceType* stance; //0x0228
 			char pad_0230[16]; //0x0230
 			float(*stats)[3]; //0x0240
-			char pad_0248[16]; //0x0248
+			void* originT; //0x0248
+			ShPlayer* otherEntity; //0x0250
 			uint32_t ground; //0x0258
 			char pad_025C[44]; //0x025C
 			class Location* Location; //0x0288
@@ -77,7 +84,7 @@ namespace BrokeProtocol
 			char pad_02D8[12]; //0x02D8
 			float weigth; //0x02E4
 			float weightLimit; //0x02E8
-			char pad_02EC[8]; //0x02EC
+			char pad_02EC[4]; //0x02EC
 		public:
 
 			ShEquipable* current_weapon() const;

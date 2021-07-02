@@ -38,6 +38,7 @@ namespace Mono
 
 		MonoClass* (WINAPI* mono_class_from_name)(MonoImage* image, const char* namespace_name, const char* name);
 		MonoClass* (WINAPI* mono_object_get_class)(MonoObject* obj);
+		const char* (WINAPI* mono_class_get_namespace)(MonoClass* obj);
 		
 		MonoClass* (WINAPI* mono_class_get_parent)(MonoClass* klass);
 		UINT (WINAPI* mono_class_instance_size)(MonoClass* klass);

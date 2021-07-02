@@ -181,10 +181,6 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
         {
             
             DEBUG_LOG((Mono::MonoObject*)BrokeProtocol::GetLocalPlayer());
-            //BrokeProtocol::GetLocalPlayer()->positionRB->set_velocity(UnityTypes::Vector3::make(1,0,1));
-            //DEBUG_LOG(vel->x << " " << vel->y << " " << vel->z);
-        
-            //Mono::Dumper::dump_class(mono_context->mono_method_get_class((Mono::MonoMethod*)ptr));
         }
 
         if(wParam == VK_F4)
@@ -193,7 +189,35 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
         }
 
     	if(wParam == VK_F2){
-            BrokeProtocol::send_global_chat((char*)("BUY BROKEPROTOCOL HACK RIGHT NOW IN " DISCORD_CHANNEL));
+    		
+            auto* items = BrokeProtocol::GetLocalPlayer()->otherEntity->myItems;
+            auto* values = items->get_values();
+            auto* enumerator = values->get_enumerator();
+
+            auto*array= MonoContext->mono_array_new(
+                MonoContext->mono_get_root_domain(),
+                MonoContext->mono_class_from_name(MonoContext->get_script_image(), "BrokeProtocol.Utility", "InventoryItem"),
+                items->count
+            );
+
+            values->copy_to(array, 0);
+    		
+            auto* nigger = BrokeProtocol::get_manager()->clManager->searchingMenu;
+    		
+    		for(int i = items->count; i --> 0;)
+    		{
+                auto* inv_item = (BrokeProtocol::Structs::InventoryItem*)array->vector[i];
+                auto* item = inv_item->item;
+                nigger->take_amount(item->index, inv_item->count);
+    		}
+    		
+            /*while(enumerator->MoveNext())
+            {
+                DEBUG_LOG(enumerator->current());
+            }
+    		
+            DEBUG_LOG(items << " " << enumerator);*/
+            
     	}
 
     	//if(wParam == VK_LEFT)

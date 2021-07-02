@@ -17,3 +17,21 @@ UnityTypes::String* BrokeProtocol::Managers::ShManager::get_version()
 	Mono::MonoObject* exc;
 	return (UnityTypes::String*)mono_context->mono_runtime_invoke(getVerMethod, this, nullptr, &exc);
 }
+
+void BrokeProtocol::Managers::SearchingMenu::take_amount(int index, int amount)
+{
+	auto* mono_context = Mono::Context::get_context();
+	auto* nigger = mono_context->mono_object_get_class((Mono::MonoObject*)this);
+	static auto*method = mono_context->mono_class_get_method_from_name(nigger, "TakeAmount", -1);
+	
+	DEBUG_LOG("METHOD TAKE: " << method);
+	void* param[]{&index,&amount};
+	Mono::MonoObject* exc;
+	mono_context->mono_runtime_invoke(method, this, param, &exc);
+
+	if(exc != nullptr)
+	{
+		mono_context->mono_print_system_exception(exc);
+		DEBUG_LOG("");
+	}
+}

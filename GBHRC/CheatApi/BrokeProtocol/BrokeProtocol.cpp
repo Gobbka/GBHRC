@@ -121,7 +121,7 @@ void BrokeProtocol::fire()
 
 void BrokeProtocol::SendToServer(PacketFlags flags, BrokeProtocol::SvPacket packet, Mono::MonoArray* array)
 {
-    STATIC_METHOD("BrokeProtocol.Managers.ClManager:SendToServer(string)", true);
+    STATIC_METHOD("BrokeProtocol.Managers.ClManager:SendToServer(n,n,n)", true);
 
     Mono::MonoObject* exception = nullptr;
 
@@ -131,6 +131,8 @@ void BrokeProtocol::SendToServer(PacketFlags flags, BrokeProtocol::SvPacket pack
     if (exception != nullptr)
     {
         DEBUG_LOG("[BP] CANNOT SEND TO SERVER");
+        Mono::Context::get_context()->mono_print_system_exception(exception);
+        DEBUG_LOG("");
     }
 }
 
@@ -156,7 +158,7 @@ void BrokeProtocol::send_global_chat(char* text)
     auto* ptr = mono_context->create_csharp_string(text);
 
     Mono::MonoArray* theArray = mono_context->mono_array_new(mono_context->mono_get_root_domain(), mono_context->get_object_class(), 1);
-    theArray->vector[0] = (__int64)ptr;
+    theArray->vector[0] = ptr;
 
     BrokeProtocol::SendToServer(PacketFlags::Reliable, SvPacket::GlobalMessage, theArray);
 }
