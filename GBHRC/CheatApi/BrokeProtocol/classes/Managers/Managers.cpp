@@ -24,6 +24,7 @@ void BrokeProtocol::Managers::SearchingMenu::take_amount(int index, int amount)
 	auto* nigger = mono_context->mono_object_get_class((Mono::MonoObject*)this);
 	static auto*method = mono_context->mono_class_get_method_from_name(nigger, "TakeAmount", -1);
 	
+	
 	void* param[]{&index,&amount};
 	Mono::MonoObject* exc;
 	mono_context->mono_runtime_invoke(method, this, param, &exc);

@@ -114,6 +114,22 @@ Context::Context()
 	vTable::implement();
 }
 
+MonoInt* Context::make_int(int number)
+{
+	auto*klass = mono_class_from_name(get_mscorlib(), "System", "Int32");
+	auto* integer = (MonoInt*)mono_object_new(mono_get_root_domain(), klass);
+	integer->value = number;
+	return integer;	
+}
+
+MonoByte* Context::make_byte(BYTE number)
+{
+	auto* klass = mono_class_from_name(get_mscorlib(), "System", "Byte");
+	auto* byte = (MonoByte*)mono_object_new(mono_get_root_domain(), klass);
+	byte->value = number;
+	return byte;
+}
+
 Mono::Context* Context::get_context()
 {
 	if (MonoContext == nullptr)
@@ -121,4 +137,6 @@ Mono::Context* Context::get_context()
 	
 	return MonoContext;
 }
+
+
 

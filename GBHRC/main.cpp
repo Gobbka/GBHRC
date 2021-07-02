@@ -200,21 +200,17 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
             );
 
             values->copy_to(array, 0);
-
-            Mono::MonoArray* theArray = MonoContext->mono_array_new(MonoContext->mono_get_root_domain(), MonoContext->get_object_class(), 5);
-            int magic_number = 11;
-            theArray->vector[0] = &magic_number;
-
+            auto* mono_context = Mono::Context::get_context();
+    		
     		for(int i = items->count; i --> 0;)
     		{
                 auto* inv_item = (BrokeProtocol::Structs::InventoryItem*)array->vector[i];
                 auto* item = inv_item->item;
 
-                theArray->vector[0] = &item->index;
-                theArray->vector[1] = &item->index;
-                theArray->vector[2] = &item->index;
-                theArray->vector[3] = &item->index;
-                theArray->vector[4] = &item->index;
+                Mono::MonoArray* theArray = mono_context->mono_array_new(mono_context->mono_get_root_domain(), mono_context->get_object_class(), 3);
+                theArray->vector[0] = mono_context->make_byte(11);
+                theArray->vector[1] = mono_context->make_int(item->index);
+                theArray->vector[2] = mono_context->make_int(inv_item->count);
 
                 BrokeProtocol::SendToServer(BrokeProtocol::PacketFlags::Reliable, BrokeProtocol::SvPacket::TransferSearch, theArray);
     		}

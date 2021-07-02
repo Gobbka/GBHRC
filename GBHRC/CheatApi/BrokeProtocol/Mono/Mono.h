@@ -26,6 +26,9 @@ namespace Mono
 
 		Context();
 
+		MonoInt* make_int(int number);
+		MonoByte* make_byte(BYTE number);
+		
 		static Mono::Context* get_context();
 	};
 

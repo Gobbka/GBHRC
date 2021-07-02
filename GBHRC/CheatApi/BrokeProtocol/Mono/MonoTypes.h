@@ -7,6 +7,12 @@ struct MonoInt
 	int32_t value; //0x0010
 };
 
+struct MonoByte
+{
+	char pad_0000[16]; //0x0000
+	BYTE value; //0x0010
+};
+
 struct MonoBool
 {
 	char pad_0000[16]; //0x0000
