@@ -63,7 +63,7 @@ void MainMenuMarkup(Application::InteractiveForm* form)
 	test_button->set_margin(5, 5);
 	test_button->onClick = [](Application::UI::UIElementEventArgs args)
 	{
-		Application::Context::get_animator()->add_anim(nullptr, 20);
+		//Application::Context::get_animator()->add_anim(nullptr, 20);
 	};
 
 	items_list
@@ -220,6 +220,4 @@ void MainMenuMarkup(Application::InteractiveForm* form)
 		aim_inner->state.visible = VISIBLE_STATE_HIDDEN;
 		misc_inner->state.visible = VISIBLE_STATE_VISIBLE;
 	};
-	float value = 2.f;
-	Application::Context::get_animator()->add_anim(&value, 50);
 }

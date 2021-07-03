@@ -88,12 +88,11 @@ Application::Interaction::EventStatus Application::InteractiveForm::on_mouse_mov
 		return Interaction::EventStatus::handled;
 	}
 
-	const auto length = this->childs.size();
 	auto e_handled = Interaction::EventStatus::none;
 
-	for (auto i = this->childs.size(); i > 0; i--)
+	for (auto i = this->childs.size(); i --> 0;)
 	{
-		auto* element = this->childs[i-1];
+		auto* element = this->childs[i];
 		
 		if (
 			element->state.visible == UI::VISIBLE_STATE_VISIBLE &&

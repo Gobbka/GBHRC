@@ -1,22 +1,30 @@
 #include "Animator.h"
 
+#include <utility>
+
 #include "../../../GBHRC/includes/logger.h"
 
 
-Application::Animation::Animation(void* p_value, uint32_t during, AnimationHandler handler)
+Application::Animation::Animation(float from_value, float to_value, UINT during, Animation::tSetFunction set_function, Animation::tAnimFunc anim_handle)
 {
-	this->during = during;
-	this->p_value = p_value;
-	this->handler = handler;
-	this->step = 0;
+	_end_time = during;
+	_during = 0;
+	_value = from_value;
+	_step = (to_value - from_value) / (float)during;
+
+	_set_function = std::move(set_function);
+	_anim_func = anim_handle;
 }
 
-bool Application::Animation::play_step()
+bool Application::Animation::play_step(int delta_time)
 {
-	if(this->during > 0)
+	if(_during < _end_time)
 	{
-		DEBUG_LOG("ANIMATION: "<<this->during);
-		this->during -= 10;
+		_value += _step * _anim_func(_during) * delta_time;
+		
+		_set_function(_value);
+		
+		_during += delta_time;
 		return true;
 	}
 	
@@ -30,7 +38,7 @@ void Application::Animator::handle_animations(Animator* animator)
 		for(int i = 0;i<animator->_animations.size();i++)
 		{
 			auto* anim = animator->_animations[i];
-			if(!anim->play_step())
+			if(!anim->play_step(10))
 			{
 				// remove animation from anim list;
 				animator->remove_anim(i);
@@ -42,11 +50,6 @@ void Application::Animator::handle_animations(Animator* animator)
 	ExitThread(0);
 }
 
-void Application::Animator::def_anim_float(void* flt, uint32_t step)
-{
-	
-}
-
 Application::Animator::Animator()
 {
 	_thread = nullptr;
@@ -56,9 +59,9 @@ Application::Animator::~Animator()
 {
 }
 
-void Application::Animator::add_anim(float* value, UINT during, Animation::AnimationHandler anim)
+void Application::Animator::add_animation(Animation* animation)
 {
-	_animations.push_back(new Animation(value,during,anim));
+	_animations.push_back(animation);
 }
 
 void Application::Animator::remove_anim(UINT index)

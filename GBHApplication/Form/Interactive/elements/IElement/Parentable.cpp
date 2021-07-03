@@ -62,10 +62,9 @@ void Application::UI::Parent::handle_mouse_leave()
 
 void Application::UI::Parent::handle_mouse_move(float mX, float mY)
 {
-	const auto length = _children.count() - 1;
 	bool e_handled = false;
 
-	for (long long i = length; i >= 0; i--)
+	for (auto i = _children.count(); i --> 0;)
 	{
 		auto* element = (UI::InteractiveElement*)_children[i];
 		

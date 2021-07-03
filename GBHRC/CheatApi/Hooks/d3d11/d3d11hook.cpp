@@ -80,6 +80,13 @@ void Hooks::D3D11::hook(fnPresent present_func, fnInitCallback init_callback)
 {
 	DEBUG_LOG("[D3D] PRESENT ADDRESS: " << std::hex << std::uppercase << (size_t)present_func);
 
+	if(abs((long long)present_func - (long long)HookedPresentFunction) > 0xFFFFFFFF)
+	{
+		DEBUG_LOG("[D3D] TOO LONG JUMP");
+		return;
+	}
+
+	
 	DWORD oldProt;
 
 	VirtualProtect(original_present_func_bytes, 5, PAGE_READWRITE, &oldProt);
@@ -94,7 +101,7 @@ void Hooks::D3D11::hook(fnPresent present_func, fnInitCallback init_callback)
 	memcpy(original_present_func_bytes, (char*)present_func, 5);
 
 	hook_init_callback = init_callback;
-
+	
 	DEBUG_LOG("[D3D] REPLACING BYTES");
 	place_catch_bytes((size_t)present_func);
 	DEBUG_LOG("[D3D] PLACED");

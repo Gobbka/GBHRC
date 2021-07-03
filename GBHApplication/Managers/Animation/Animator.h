@@ -6,21 +6,39 @@
 namespace Application
 {
 
+	struct AnimFunction
+	{
+		static float linear(int time)
+		{
+			return 1.f;
+		}
+	};
+	
+	
 	struct Animation
 	{
 	public:
-		typedef std::function<void(void* p_value, uint32_t step)> AnimationHandler;
+		typedef std::function<void(float value)> tSetFunction;
+
+		// returns 0 <= value <= 1
+		typedef float(*tAnimFunc)(int time);
+
 	private:
 		
-		AnimationHandler handler;
-		void* p_value;
-		uint32_t step;
-		volatile int during;
-	public:
-		Animation(void* p_value, uint32_t during, AnimationHandler handler);
+		tSetFunction _set_function;
+		tAnimFunc _anim_func;
 
-		bool play_step();
+		float _step;
+		float _value;
+		int _during;
+		int _end_time;
+	public:
+		Animation(float from_value,float to_value, UINT during_ms, Animation::tSetFunction set_function, Animation::tAnimFunc anim_handle = AnimFunction::linear);
+
+		bool play_step(int delta_time);
 	};
+
+	
 	
 	class Animator
 	{
@@ -29,12 +47,11 @@ namespace Application
 		HANDLE _thread;
 
 		static void handle_animations(Animator*animator);
-		static void def_anim_float(void* flt, uint32_t step);
 	public:
 		Animator();
 		~Animator();
 		
-		void add_anim(float* value, UINT during, Animation::AnimationHandler = def_anim_float);
+		void add_animation(Animation*animation);
 		void remove_anim(UINT index);
 		
 		void start();

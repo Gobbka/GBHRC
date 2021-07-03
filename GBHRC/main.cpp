@@ -92,11 +92,8 @@ void MainThread()
     main__window = Hooks::D3D11::FindMainWindow(GetCurrentProcessId());
 	
 #ifdef DEBUG
-    AllocConsole();
-    freopen("CONOUT$", "w", stdout);
-    freopen("CONIN$", "r", stdin);
+    EMBED_LOGGER();
 #endif
-
 
     {
         MonoContext = Mono::Context::get_context();
@@ -110,9 +107,16 @@ void MainThread()
             return;
         }
     }
+
+
+    {
+        Hooks::WndProc::init_hook(main__window);
+        Hooks::WndProc::callback(wnd_key_hook);
+    }
 	
-    Hooks::D3D11::fnPresent present_addres;
-    auto hr = Hooks::D3D11::GetPresentAddress(&present_addres);
+	
+    Hooks::D3D11::fnPresent present_address;
+    auto hr = Hooks::D3D11::GetPresentAddress(&present_address);
 
     Application::Context::implement(main__window);
 
@@ -122,12 +126,7 @@ void MainThread()
         return;
     }
 
-    {
-        Hooks::WndProc::init_hook(main__window);
-        Hooks::WndProc::callback(wnd_key_hook);
-    }
-	
-    Hooks::D3D11::hook(present_addres, init_callback);
+    Hooks::D3D11::hook(present_address, init_callback);
 
     {
         auto context = GBHRC::Context::instance();

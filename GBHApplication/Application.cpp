@@ -119,22 +119,13 @@ void Application::Context::on_mouse_move(int mx, int my)
 {
 	this->cursor_point = (Render::Position{ (float)mx,(float)my });
 
-	for (auto iteration = AppContext->_registered_forms.size(); iteration >0; iteration--)
+	for (auto iteration = AppContext->_registered_forms.size(); iteration --> 0;)
 	{
-		if (AppContext->_registered_forms[iteration-1]->on_mouse_move(cursor_point.x,cursor_point.y) == Interaction::EventStatus::handled)
+		if (AppContext->_registered_forms[iteration]->on_mouse_move(cursor_point.x,cursor_point.y) == Interaction::EventStatus::handled)
 		{
 			return;
 		}
 	}
-	
-	//for (auto* form : AppContext->_registered_forms)
-	//{
-	//	if (form->on_mouse_move(mx, my) == Interaction::EventStatus::handled)
-	//	{
-	//		DEBUG_LOG("NIGGER");
-	//		return;
-	//	}
-	//}
 		
 }
 
