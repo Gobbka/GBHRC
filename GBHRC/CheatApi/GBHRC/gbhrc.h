@@ -32,6 +32,8 @@ namespace GBHRC
 		Application::Canvas::Rectangle* box;
 		Application::Canvas::Rectangle* max_health_box;
 		Application::Canvas::Rectangle* health_box;
+
+		void disable();
 	};
 
 	class EspPlayer

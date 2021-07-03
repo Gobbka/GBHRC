@@ -6,9 +6,9 @@ namespace GBHRC
 	struct EspConfig
 	{
 		bool active = false;
-		bool draw_name = true;
-		bool draw_health = true;
-		bool draw_gun_name = true;
+		bool draw_name = false;
+		bool draw_health = false;
+		bool draw_gun_name = false;
 	};
 
 	struct AimConfig
@@ -30,7 +30,7 @@ namespace GBHRC
 		bool fly_active		   = false;
 		bool inf_inventory     = false;
 		bool car_speed         = false;
-		bool player_speed         = false;
+		bool player_speed      = false;
 		//
 
 		std::string filename;

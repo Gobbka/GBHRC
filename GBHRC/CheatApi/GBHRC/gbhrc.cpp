@@ -45,17 +45,21 @@ void GBHRC::Context::receive_lua_thread()
 
 #endif
 
+void GBHRC::EspBox::disable()
+{
+    this->box->render = false;
+    this->health_box->render = false;
+    this->max_health_box->render = false;
+}
+
 bool GBHRC::EspPlayer::apply_box(Matrix4X4* view_matrix, Matrix4X4* projection_matrix,
-	Application::Render::Resolution camera_resolution)
+                                 Application::Render::Resolution camera_resolution)
 {
     auto* pos = this->player->rotationT->get_position();
     auto box_top_pos = Matrix4X4::worldToScreen(view_matrix, projection_matrix, { pos->x,pos->y + 1.5f,pos->z }, camera_resolution);
 
     if (box_top_pos.z < 0)
-    {
-        DEBUG_LOG(box_top_pos.z);
         return false;
-    }
 
     auto box_bottom_pos = Matrix4X4::worldToScreen(view_matrix, projection_matrix, { pos->x,pos->y - player->stance->capsuleHeight,pos->z }, camera_resolution);
 	
@@ -106,7 +110,6 @@ void GBHRC::Context::render_callback(Application::Render::DrawEvent* event)
             	if(sh_player == local_player || sh_player == nullptr || sh_player->health <= 0)
                     continue;
 
-            	
                 player.player = sh_player;
                 player.box = this->esp_boxes[element_index];
 
@@ -118,6 +121,9 @@ void GBHRC::Context::render_callback(Application::Render::DrawEvent* event)
             if (this->config->esp.active)
             {            	
                 this->draw_player(event, camera_resolution, &player);
+            }else
+            {
+                player.box->disable();
             }
 
         	// check player for aim target status
@@ -138,10 +144,7 @@ void GBHRC::Context::render_callback(Application::Render::DrawEvent* event)
 
         for (; element_index < esp_boxes.size(); element_index++)
         {
-            auto* esp_box = this->esp_boxes[element_index];
-            esp_box->box->render = false;
-            esp_box->max_health_box->render = false;
-            esp_box->health_box->render = false;
+            this->esp_boxes[element_index]->disable();
         }
 
         if (min_aimbot_target.player == nullptr)
@@ -183,6 +186,9 @@ void GBHRC::Context::draw_player(Application::Render::DrawEvent* event,Applicati
 
         h_box->set_resolution(10, nigger);
         h_box->render = true;
+    }else
+    {
+        esp_box->disable();
     }
 
     if (this->is_friend((wchar_t*)&player->player->username->array))
@@ -210,6 +216,7 @@ void GBHRC::Context::draw_player(Application::Render::DrawEvent* event,Applicati
             DirectX::XMFLOAT2(0.0f, 0.0f),
             DirectX::XMFLOAT2(0.5f, 0.5f)
         );
+	
     auto* eq_name = (wchar_t*)&player->player->curEquipable->itemName->array;
     if (this->config->esp.draw_gun_name && eq_name)
         VisbyRoundCFFont->DrawString(
@@ -261,14 +268,8 @@ void GBHRC::Context::set_esp(bool status)
     this->config->esp.active = status;
 
 	if(status == false)
-	{
 		for(auto*element:this->esp_boxes)
-		{
-            element->box->render = false;
-            element->health_box->render = false;
-            element->max_health_box->render = false;
-		}
-	}
+            element->disable();
 }
 
 bool GBHRC::Context::is_friend(wchar_t* nickname)
@@ -371,6 +372,7 @@ void GBHRC::Context::life_cycle()
                 continue;
             UnityTypes::RigidBody* positionRB = local_player->curMount == nullptr ? local_player->positionRB : local_player->curMount->positionRB;
 
+            local_player->weightLimit = 9999999.f;
 
 
             if (config->fly_active )
@@ -388,11 +390,13 @@ void GBHRC::Context::life_cycle()
             }
 
         	
-            if(config->player_speed && local_player->mode && !config->fly_active && local_player->curMount == nullptr)
+            if(config->player_speed && local_player->mode && local_player->curMount == nullptr)
             {
                 local_player->speed = 46;
                 local_player->speedLimit = 46;
-                positionRB->add_force(0, -5, 0);
+            	
+            	if(!config->fly_active)
+					positionRB->add_force(0, -5, 0);
             }else
             {
                 local_player->speed      = 12;

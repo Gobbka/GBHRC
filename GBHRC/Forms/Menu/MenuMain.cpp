@@ -27,7 +27,9 @@ Application::UI::Panel* topbar_panel = new Application::UI::Panel({ 0,0 }, { 400
 auto* esp_inner = new Application::UI::Panel{ {0,-80},{400,420},{0,0,0,0} };
 // ELEMENTS
 auto* esp_checkbox = new Application::UI::Checkbox({ 20,-10 }, { 20,20 }, Color4(FLOAT_COLORS_GREEN));
-auto* name_checkbox = new Application::UI::Checkbox({ 20,-50 }, { 20,20 }, Color4(FLOAT_COLORS_GREEN));
+auto* esp_health_checkbox = new Application::UI::Checkbox({ 20,-50 }, { 20,20 }, Color4(FLOAT_COLORS_GREEN));
+auto* esp_name_checkbox = new Application::UI::Checkbox({ 20,-90 }, { 20,20 }, Color4(FLOAT_COLORS_GREEN));
+auto* esp_gun_checkbox = new Application::UI::Checkbox({ 20,-130 }, { 20,20 }, Color4(FLOAT_COLORS_GREEN));
 
 
 auto* aim_inner = new Application::UI::Panel{ {0,-80},{400,420},Color4(0,0,0,0) };
@@ -103,9 +105,13 @@ void MainMenuMarkup(Application::InteractiveForm* form)
 		->add_element(
 			esp_inner
 			->add_element(esp_checkbox)
-			->add_element(name_checkbox)
+			->add_element(esp_health_checkbox)
+			->add_element(esp_name_checkbox)
+			->add_element(esp_gun_checkbox)
 			->add_element(new Application::UI::Label{ {60,-10},"ESP ACTIVE",VisbyRoundCFFont,{FLOAT_COLORS_WHITE} })
-			->add_element(new Application::UI::Label{ {60,-50},"NAME ESP",VisbyRoundCFFont,{FLOAT_COLORS_WHITE} })
+			->add_element(new Application::UI::Label{ {60,-50},"SHOW HEALTH",VisbyRoundCFFont,{FLOAT_COLORS_WHITE} })
+			->add_element(new Application::UI::Label{ {60,-90},"SHOW NAME",VisbyRoundCFFont,{FLOAT_COLORS_WHITE} })
+			->add_element(new Application::UI::Label{ {60,-130},"SHOW GUN",VisbyRoundCFFont,{FLOAT_COLORS_WHITE} })
 		)
 		// END ESP INNER
 		// AIM INNER
@@ -148,6 +154,21 @@ void MainMenuMarkup(Application::InteractiveForm* form)
 	esp_checkbox->onChange = [](Application::UI::UIElementEventArgs args)
 	{
 		GBHRC::Context::instance()->set_esp(((Application::UI::Checkbox*)args)->is_checked());
+	};
+
+	esp_health_checkbox->onChange = [](Application::UI::UIElementEventArgs args)
+	{
+		GBHRC::Context::instance()->config->esp.draw_health = ((Application::UI::Checkbox*)args)->is_checked();
+	};
+
+	esp_name_checkbox->onChange = [](Application::UI::UIElementEventArgs args)
+	{
+		GBHRC::Context::instance()->config->esp.draw_name = ((Application::UI::Checkbox*)args)->is_checked();
+	};
+
+	esp_gun_checkbox->onChange = [](Application::UI::UIElementEventArgs args)
+	{
+		GBHRC::Context::instance()->config->esp.draw_gun_name = ((Application::UI::Checkbox*)args)->is_checked();
 	};
 
 	if(!AuthAssert::check_subscription())
