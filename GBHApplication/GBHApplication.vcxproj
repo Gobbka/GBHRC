@@ -210,6 +210,7 @@
     <ClInclude Include="Form\Interactive\elements\IElement\InteractiveElement.h" />
     <ClInclude Include="Form\Interactive\elements\Panel\Panel.h" />
     <ClInclude Include="Render\Text\Text.h" />
+    <ClInclude Include="Types\IForm.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="D:\DirectxTK\DirectXTK_Desktop_2019_Win10.vcxproj">

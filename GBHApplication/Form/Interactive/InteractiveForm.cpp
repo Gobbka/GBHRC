@@ -77,7 +77,7 @@ Application::InteractiveForm::~InteractiveForm()
 
 Application::Interaction::EventStatus Application::InteractiveForm::on_mouse_move(int mx,int my)
 {
-	if (this->hidden == true)
+	if (this->hidden())
 		return Interaction::EventStatus::none;
 
 	const Render::Position cursor = Application::Context::point_to_center(Render::Position{ (float)mx,(float)my });
@@ -118,7 +118,7 @@ Application::Interaction::EventStatus Application::InteractiveForm::on_mouse_mov
 
 Application::Interaction::EventStatus Application::InteractiveForm::on_mouse_scroll(short direction)
 {
-	if (this->hidden == true)
+	if (this->hidden())
 		return Interaction::EventStatus::none;
 	
 	this->foreach([direction](UI::InteractiveElement* element)
@@ -131,7 +131,7 @@ Application::Interaction::EventStatus Application::InteractiveForm::on_mouse_scr
 
 Application::Interaction::EventStatus Application::InteractiveForm::on_lbmouse_up()
 {
-	if (this->hidden == true)
+	if (this->hidden())
 		return Interaction::EventStatus::none;
 	
 	this->foreach([](UI::InteractiveElement* element)
@@ -147,7 +147,7 @@ Application::Interaction::EventStatus Application::InteractiveForm::on_lbmouse_u
 
 Application::Interaction::EventStatus Application::InteractiveForm::on_lbmouse_down()
 {
-	if (this->hidden == true)
+	if (this->hidden())
 		return Interaction::EventStatus::none;
 	
 	this->foreach([](UI::InteractiveElement* element)

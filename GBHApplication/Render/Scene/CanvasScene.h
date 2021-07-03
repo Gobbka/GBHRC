@@ -8,6 +8,7 @@
 
 #include "../../configuration/drawconf.h"
 #include "../../Form/Canvas/elements/IElement/CanvasElement.h"
+#include "../../Types/IForm.h"
 
 namespace Application
 {
@@ -15,10 +16,12 @@ namespace Application
 	{
 		class Engine;
 		
-		class CanvasScene : public D3D11Canvas
+		class CanvasScene : public IScene
 		{
 		private:
 
+			D3D11Canvas _canvas;
+			
 			std::vector<Canvas::CanvasElement*> elements;
 
 		protected:
@@ -29,12 +32,11 @@ namespace Application
 			// public variables
 			void(__cdecl* render_callback)(Render::DrawEvent*event)     = nullptr;
 			void(__cdecl* pre_render_callback)(Render::DrawEvent*event) = nullptr;
-			bool hidden = false;
 		public:
 			// public void's
 
-			void update() const override;
-			void render(Render::DrawEvent*event);
+			void update() override;
+			void render(Render::DrawEvent*event) override;
 
 			void foreach(std::function<void(Canvas::CanvasElement*)> const& callback);
 			void add_canvas_element(Canvas::CanvasElement* object);
@@ -45,6 +47,8 @@ namespace Application
 			void set_indexes();
 		public:
 			// public getters
+
+			D3D11Canvas* canvas();
 
 			size_t elements_length() const;
 

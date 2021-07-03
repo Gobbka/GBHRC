@@ -69,7 +69,7 @@ void Application::Render::D3D11DrawEvent::reset_render_state()
 	// TODO: know what needed to reset to draw fine
 	this->engine->render_prepare();
 	engine->pDevContext->RSSetState((ID3D11RasterizerState*)this->old_state);
-	this->scene->get_vbuffer()->bind();
+	this->scene->canvas()->get_vbuffer()->bind();
 	//this->engine->set_vbuffer(this->scene->get_vbuffer());
 }
 

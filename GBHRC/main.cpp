@@ -57,14 +57,14 @@ void init_callback(Application::Render::Engine* instance)
     MainMenuMarkup(menu);
     //FiendListMarkup(friend_list, instance);
 
-    menu->hidden = true;
+    menu->hide();
     //friend_list->hidden = true;
 
     //DEBUG_LOG("MENU FORM REGISTERED");
 	
     esp_scene = Application::Context::create_canvas();
     esp_scene->render_callback = GBHRC::Context::static_draw_callback;
-    esp_scene->hidden = false;
+    esp_scene->show();
     GBHRC::Context::instance()->set_esp_scene(esp_scene);
     GBHRC::Context::instance()->make_esp_boxes();
 
@@ -150,9 +150,9 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
 
         if (wParam == VK_INSERT)
         {
-            bool state = menu->hidden;
-
-            menu->hidden = !state;
+            bool state = menu->hidden();
+            state ? menu->show() : menu->hide();
+            
             //friend_list->hidden = !state;
             Hooks::WndProc::setInputState(!state);
         }

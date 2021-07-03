@@ -28,5 +28,5 @@ void Application::Canvas::CanvasElement::initialize(Render::CanvasScene* pForm)
 
 GVertex::Vertex* Application::Canvas::CanvasElement::get_ptr() const
 {
-	return this->canvas_scene->get_ptr() + this->index;
+	return this->canvas_scene->canvas()->get_ptr() + this->index;
 }

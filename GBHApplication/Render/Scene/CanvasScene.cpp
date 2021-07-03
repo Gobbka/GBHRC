@@ -2,7 +2,7 @@
 #include "../../Render/Engine/Engine.h"
 #include "../../Application.h"
 
-#define DRAW_ASSERT if(this->hidden==true) return
+#define DRAW_ASSERT if(this->hidden()) return
 
 void Application::Render::CanvasScene::render_components(Render::DrawEvent*draw_event)
 {
@@ -22,33 +22,18 @@ void Application::Render::CanvasScene::draw_element(Canvas::CanvasElement* obj, 
 		event->draw_element(obj);
 }
 
-//void Application::Render::CanvasScene::initialize_components(Application::Render::Engine* pEngine)
-//{
-//	D3D11Canvas::alloc_vbuffer(this->count_size());
-//
-//	UINT size = 0;
-//
-//	CanvasScene::foreach([&size, this](Canvas::CanvasElement* obj)
-//		{
-//			obj->set_index(size);
-//			obj->initialize(this);
-//			size += obj->size();
-//		});
-//}
-
-void Application::Render::CanvasScene::update() const
+void Application::Render::CanvasScene::update()
 {
 	DRAW_ASSERT;
 
-	D3D11Canvas::update();
+	_canvas.update();
 }
 
 void Application::Render::CanvasScene::render(Render::DrawEvent* draw_event)
 {
 	DRAW_ASSERT;
 
-	
-	this->get_vbuffer()->bind();
+	_canvas.get_vbuffer()->bind();
 
 	this->render_components(draw_event);
 }
@@ -69,8 +54,8 @@ UINT Application::Render::CanvasScene::count_size()
 
 void Application::Render::CanvasScene::add_canvas_element(Canvas::CanvasElement* object)
 {
-	object->set_index(D3D11Canvas::get_allocated_size());
-	D3D11Canvas::alloc_vertexes(object->size());
+	object->set_index(_canvas.get_allocated_size());
+	_canvas.alloc_vertexes(object->size());
 
 	this->elements.push_back(object);
 	object->initialize(this);
@@ -86,13 +71,18 @@ void Application::Render::CanvasScene::set_indexes()
 		});
 }
 
+Application::Render::D3D11Canvas* Application::Render::CanvasScene::canvas()
+{
+	return &_canvas;
+}
+
 Application::Canvas::CanvasElement* Application::Render::CanvasScene::element_at(UINT index)
 {
 	return this->elements[index];
 }
 
 Application::Render::CanvasScene::CanvasScene(Render::Engine* pEngine)
-	: D3D11Canvas(pEngine)
+	: _canvas(pEngine)
 {
 }
 
