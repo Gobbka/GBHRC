@@ -180,7 +180,6 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
         if (wParam == VK_F5)
         {
             BrokeProtocol::send_global_chat((char*)"nigger");
-            //Mono::Dumper::dump_object((Mono::MonoObject*)BrokeProtocol::GetLocalPlayer()->clPlayer->clManager);
         }
 
         if(wParam == VK_F4)
@@ -189,10 +188,16 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
         }
 
     	if(wParam == VK_F2){
+
+            if (BrokeProtocol::GetLocalPlayer()->otherEntity == nullptr)
+                return;
     		
             auto* items = BrokeProtocol::GetLocalPlayer()->otherEntity->myItems;
             auto* values = items->get_values();
 
+            if (items->count <= 0)
+                return;
+    		
             auto*array= MonoContext->mono_array_new(
                 MonoContext->mono_get_root_domain(),
                 MonoContext->mono_class_from_name(MonoContext->get_script_image(), "BrokeProtocol.Utility", "InventoryItem"),
@@ -214,26 +219,7 @@ void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam)
 
                 BrokeProtocol::SendToServer(BrokeProtocol::PacketFlags::Reliable, BrokeProtocol::SvPacket::TransferSearch, theArray);
     		}
-    		
-            /*while(enumerator->MoveNext())
-            {
-                DEBUG_LOG(enumerator->current());
-            }
-    		
-            DEBUG_LOG(items << " " << enumerator);*/
-            
     	}
-
-    	//if(wParam == VK_LEFT)
-    	//{
-     //       BrokeProtocol::GetLocalPlayer()->speed -= 2.f;
-     //       DEBUG_LOG("SPEED: "<<BrokeProtocol::GetLocalPlayer()->speed);
-    	//}
-    	//if(wParam == VK_RIGHT)
-    	//{
-     //       BrokeProtocol::GetLocalPlayer()->speed += 2.f;
-     //       DEBUG_LOG("SPEED: " << BrokeProtocol::GetLocalPlayer()->speed);
-    	//}
     }
 
 	if(msg == WM_LBUTTONDOWN)
