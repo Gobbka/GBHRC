@@ -45,6 +45,33 @@ void GBHRC::Context::receive_lua_thread()
 
 #endif
 
+bool GBHRC::EspPlayer::apply_box(Matrix4X4* view_matrix, Matrix4X4* projection_matrix,
+	Application::Render::Resolution camera_resolution)
+{
+    auto* pos = this->player->rotationT->get_position();
+    auto box_top_pos = Matrix4X4::worldToScreen(view_matrix, projection_matrix, { pos->x,pos->y + 1.5f,pos->z }, camera_resolution);
+
+    if (box_top_pos.z < 0)
+    {
+        DEBUG_LOG(box_top_pos.z);
+        return false;
+    }
+
+    auto box_bottom_pos = Matrix4X4::worldToScreen(view_matrix, projection_matrix, { pos->x,pos->y - player->stance->capsuleHeight,pos->z }, camera_resolution);
+	
+    box->box_position = { box_top_pos.x,box_top_pos.y };
+    box->box_resolution = { (UINT)round(abs(box_top_pos.x - box_bottom_pos.x)),(UINT)round(abs(box_top_pos.y - box_bottom_pos.y)) };
+    return true;
+}
+
+GBHRC::EspPlayer::EspPlayer(EspBox* box)
+{
+    this->box = box;
+    this->player = nullptr;
+    this->display_distance = 0;
+    this->map_distance = 0;
+}
+
 GBHRC::Context::Context()
 {
 	this->config = new Config();
@@ -57,56 +84,50 @@ void GBHRC::Context::render_callback(Application::Render::DrawEvent* event)
     if(BrokeProtocol::get_manager() != nullptr && BrokeProtocol::get_manager()->host != nullptr)
     {
         auto* local_player = BrokeProtocol::GetLocalPlayer();
-        if (local_player == nullptr)
-            return;
-        auto* local_pos = local_player->rotationT->get_position();
+        if (local_player == nullptr) return;
+
         auto* local_camera = BrokeProtocol::get_camera();
+    	
         auto* view_matrix = local_camera->worldCamera->worldToCameraMatrix();
         auto* projection_m = local_camera->worldCamera->projectionMatrix();
         auto  camera_resolution = Application::Render::Resolution{ (UINT)local_camera->worldCamera->get_pixelWidth() ,(UINT)local_camera->worldCamera->get_pixelHeight() };
 
         auto player_iterator = BrokeProtocol::GetPlayersCollection()->items->iterator();
 
-        const auto elements_size = esp_boxes.size();
         UINT element_index = 0;
     	
-        EspBox* min_target_box = nullptr;
-        EspPlayer min_aimbot_target{ nullptr };
+        EspPlayer min_aimbot_target(nullptr);
     	
-        while (player_iterator.next())
+        while(player_iterator.next())
         {
-            EspPlayer player;
+            EspPlayer player(nullptr);
             {
                 auto* sh_player = player_iterator.item();
             	if(sh_player == local_player || sh_player == nullptr || sh_player->health <= 0)
                     continue;
-                auto* pos = sh_player->rotationT->get_position();
-                const auto point_top = Matrix4X4::worldToScreen(view_matrix, projection_m, { pos->x,pos->y + 1.5f,pos->z }, camera_resolution);
 
-                if (point_top.z < 0)
-                    continue;
             	
-                player = { sh_player,point_top,0,0,0};
+                player.player = sh_player;
+                player.box = this->esp_boxes[element_index];
+
+                if(!player.apply_box(view_matrix,projection_m,camera_resolution))
+                    continue;
             }
         	
         	// draw player
             if (this->config->esp.active)
-            {
-                auto* pos = player.player->rotationT->get_position();
-                player.bottom_point = Matrix4X4::worldToScreen(view_matrix, projection_m, { pos->x,pos->y - player.player->stance->capsuleHeight,pos->z }, camera_resolution);
-                player.display_distance = sqrt(pow(player.top_point.x, 2) + pow(player.top_point.y, 2));
-                player.map_distance = sqrt(pow(local_pos->x - pos->x, 2) + pow(local_pos->z - pos->z, 2));
-            	
-                this->draw_player(event,element_index, camera_resolution, &player);
+            {            	
+                this->draw_player(event, camera_resolution, &player);
             }
 
         	// check player for aim target status
         	if(this->config->aim.assist)
         	{
-        		if(player.top_point.z > 0 && this->is_aim_target(&min_aimbot_target,&player))
-        		{
+                player.display_distance = sqrt(pow(player.box->box_position.x, 2) + pow(player.box->box_position.y, 2));
+        		
+        		if(this->is_aim_target(&min_aimbot_target,&player))
+        		{	
                     min_aimbot_target = player;
-                    min_target_box = this->esp_boxes[element_index];
         			
                     this->aim_target = player.player->rotationT;
         		}
@@ -115,7 +136,7 @@ void GBHRC::Context::render_callback(Application::Render::DrawEvent* event)
             element_index++;
         }
 
-        for (; element_index < elements_size; element_index++)
+        for (; element_index < esp_boxes.size(); element_index++)
         {
             auto* esp_box = this->esp_boxes[element_index];
             esp_box->box->render = false;
@@ -123,36 +144,30 @@ void GBHRC::Context::render_callback(Application::Render::DrawEvent* event)
             esp_box->health_box->render = false;
         }
 
-        if (min_target_box == nullptr)
+        if (min_aimbot_target.player == nullptr)
         {
             aim_target = nullptr;
         }
         else
         {
-            min_target_box->box->set_color({ 0.5f, 0, 0 });
+            min_aimbot_target.box->box->set_color({ 0.5f, 0, 0 });
         }
+
     }
 }
 
-void GBHRC::Context::draw_player(Application::Render::DrawEvent* event,UINT element_index,Application::Render::Resolution camera_resolution ,EspPlayer* player)
+void GBHRC::Context::draw_player(Application::Render::DrawEvent* event,Application::Render::Resolution camera_resolution ,EspPlayer* player)
 {
-    if (player->top_point.z <= 0)
-        return;
 	
     auto* engine = event->engine;
-
-    auto point_top = player->top_point;
-    auto point_bottom = player->bottom_point;
 	
-    const auto player_height = round(abs(point_top.y - point_bottom.y));
+    const auto player_height = player->box->box_resolution.height;
 
-    auto* esp_box = this->esp_boxes[element_index];
-    {
-        //auto* box = esp_box->box;
-        //box->set_pos(point_top.x, point_top.y);
-        //box->set_resolution((float)abs(point_top.x - point_bottom.x), (float)abs(point_top.y - point_bottom.y));
-        //box->render = true;
-    }
+    auto* esp_box = player->box;
+
+    auto point_top = esp_box->box_position;
+    Application::Render::Position point_bottom = {point_top.x,point_top.y - player_height};
+	
     if (this->config->esp.draw_health)
     {
         auto* max_h_box = esp_box->max_health_box;
@@ -179,6 +194,7 @@ void GBHRC::Context::draw_player(Application::Render::DrawEvent* event,UINT elem
     }
 
     event->engine->get_batch()->Begin();
+	
     auto rect = VisbyRoundCFFont->MeasureDrawBounds((wchar_t*)player->player->username->array, DirectX::XMFLOAT2(0, 0));
 
     if (this->config->esp.draw_name)
@@ -315,6 +331,8 @@ void GBHRC::Context::make_esp_boxes()
 
         this->esp_boxes.push_back(
             new EspBox{
+            	{0,0},
+            	{0,0},
                 element,
                 max_health,
             	health

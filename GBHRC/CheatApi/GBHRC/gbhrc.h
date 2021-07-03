@@ -4,6 +4,8 @@
 #include "config/Config.h"
 #include "../BrokeProtocol/BrokeProtocol.h"
 #include "../../../GBHApplication/configuration/drawconf.h"
+#include "../../../GBHApplication/Render/Render.h"
+
 
 namespace Application {
 	namespace Canvas {
@@ -24,18 +26,26 @@ namespace GBHRC
 
 	struct EspBox
 	{
+		Application::Render::Position box_position;
+		Application::Render::Resolution box_resolution;
+		
 		Application::Canvas::Rectangle* box;
 		Application::Canvas::Rectangle* max_health_box;
 		Application::Canvas::Rectangle* health_box;
 	};
 
-	struct EspPlayer
+	class EspPlayer
 	{
+	public:
+		EspBox* box;
 		BrokeProtocol::Players::ShPlayer* player;
-		Vector3 top_point;
-		Vector3 bottom_point;
 		float map_distance;
 		float display_distance;
+
+
+		bool apply_box(Matrix4X4* view_matrix, Matrix4X4* projection_matrix, Application::Render::Resolution camera_resolution);
+		
+		EspPlayer(EspBox*box);
 	};
 	
 	class Context
@@ -49,7 +59,7 @@ namespace GBHRC
 		Context();
 
 		void render_callback(Application::Render::DrawEvent*event);
-		void draw_player(Application::Render::DrawEvent* event,UINT element_index,Application::Render::Resolution camera_resolution,EspPlayer*player);
+		void draw_player(Application::Render::DrawEvent* event,Application::Render::Resolution camera_resolution,EspPlayer*player);
 		bool is_aim_target(EspPlayer* old_player, EspPlayer* new_player) const;
 
 		std::vector<EspBox*> esp_boxes;

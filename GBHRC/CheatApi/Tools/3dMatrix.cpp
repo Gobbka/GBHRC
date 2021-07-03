@@ -15,24 +15,6 @@ void Matrix4X4::mul(Matrix4X4* matrix)
 		if(other_matrix[i]!=0.f)
 			my_matrix[i] *= other_matrix[i];
 	}
-	return;
-	
-	this->m00 *= matrix->m00;
-	this->m10 *= matrix->m10;
-	this->m20 *= matrix->m20;
-	this->m30 *= matrix->m30;
-	this->m01 *= matrix->m01;
-	this->m11 *= matrix->m11;
-	this->m21 *= matrix->m21;
-	this->m31 *= matrix->m31;
-	this->m02 *= matrix->m02;
-	this->m12 *= matrix->m12;
-	this->m22 *= matrix->m22;
-	this->m32 *= matrix->m32;
-	this->m03 *= matrix->m03;
-	this->m13 *= matrix->m13;
-	this->m23 *= matrix->m23;
-	this->m33 *= matrix->m33;
 }
 
 Vector4 Matrix4X4::multiply(Vector4 pos)
