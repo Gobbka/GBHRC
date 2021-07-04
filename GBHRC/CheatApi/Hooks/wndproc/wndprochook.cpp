@@ -5,6 +5,8 @@ WNDPROC prev_wndproc = 0;
 Hooks::WndProc::tWndProcCallback t_callback = 0;
 bool input_state = true;
 
+IMPORT_LOGGER();
+
 void Hooks::WndProc::init_hook(HWND hwnd)
 {
 	DEBUG_LOG("[WND] HWND: " << std::hex << std::uppercase << hwnd);

@@ -15,6 +15,8 @@
 
 #pragma endregion
 
+IMPORT_LOGGER();
+
 using namespace Application::Render;
 
 #pragma region elements

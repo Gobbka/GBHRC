@@ -250,6 +250,7 @@
     <Text Include="lua\code.lua">
       <FileType>Document</FileType>
     </Text>
+    <None Include="cpp.hint" />
     <None Include="ribbon1.mfcribbon-ms" />
     <None Include="spritefo.bin" />
   </ItemGroup>

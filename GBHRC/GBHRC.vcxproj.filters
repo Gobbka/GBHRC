@@ -244,6 +244,7 @@
     <None Include="ribbon1.mfcribbon-ms">
       <Filter>Файлы ресурсов</Filter>
     </None>
+    <None Include="cpp.hint" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="todo.txt" />

@@ -1,7 +1,7 @@
 #include "MaskEngine.h"
 
 #include "../../../GBHRC/includes/logger.h"
-
+IMPORT_LOGGER();
 
 Application::Render::MaskEngine::MaskEngine(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, ID3D11RenderTargetView* pRenderTarget,UINT width,UINT height)
 {

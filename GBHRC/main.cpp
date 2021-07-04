@@ -22,6 +22,7 @@
 
 #include "Asserts/VersionAssert/ClientVersionAssers.h"
 #include "Forms/test/testScene.h"
+#include <fstream>
 
 HINSTANCE DllInst;
 Application::InteractiveForm* menu;
@@ -30,6 +31,9 @@ Application::Render::CanvasScene* esp_scene;
 Application::Render::CanvasScene* test_scene;
 void wnd_key_hook(UINT msg, WPARAM wParam, LPARAM lParam);
 HWND main__window;
+
+DEFINE_LOGGER()
+
 
 DirectX::SpriteFont* VisbyRoundCFFont;
 
@@ -91,10 +95,8 @@ void MainThread()
 	
     main__window = Hooks::D3D11::FindMainWindow(GetCurrentProcessId());
 	
-#ifdef DEBUG
     EMBED_LOGGER();
-#endif
-
+	
     {
         MonoContext = Mono::Context::get_context();
 

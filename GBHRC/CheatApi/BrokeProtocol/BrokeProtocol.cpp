@@ -6,6 +6,7 @@
 #include "Enum/Tokens.h"
 
 using namespace Collections;
+IMPORT_LOGGER();
 
 #define STATIC_METHOD(name,inc_namespace) static Mono::MonoMethod* pMethod = Mono::ScriptImage::mono_get_method_from_name(name, inc_namespace)
 

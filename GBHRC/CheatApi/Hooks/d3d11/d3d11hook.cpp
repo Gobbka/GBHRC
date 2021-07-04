@@ -9,6 +9,8 @@ struct HandleData
 	HWND hWnd;
 };
 
+IMPORT_LOGGER();
+
 Application::Render::Engine* pRenderEngine = nullptr;
 Hooks::D3D11::fnInitCallback hook_init_callback;
 //

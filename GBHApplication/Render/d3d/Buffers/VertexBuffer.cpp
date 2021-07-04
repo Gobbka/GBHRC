@@ -1,6 +1,8 @@
 ﻿#include "VertexBuffer.h"
 #include "../../Engine/Engine.h"
 
+IMPORT_LOGGER();
+
 void Render::VertexBuffer::copy_to(VertexBuffer* buffer) const
 {
 	const auto copy_size = min(this->size, buffer->size);

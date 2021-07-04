@@ -3,6 +3,7 @@
 #include "../../../../includes/logger.h"
 
 using namespace Collections;
+IMPORT_LOGGER();
 
 bool Enumerator::MoveNext()
 {

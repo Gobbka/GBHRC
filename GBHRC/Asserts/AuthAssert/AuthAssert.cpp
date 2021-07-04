@@ -9,6 +9,8 @@
 #include <intrin.h>
 #include <windows.h>
 
+IMPORT_LOGGER();
+
 bool cmp_tokens(char*first,char*second,UINT length)
 {
     for(UINT i = 0;i < length;i++)
@@ -51,8 +53,10 @@ char* create_hwid(int*size)
 	return token;
 }
 
+
 bool AuthAssert::check_subscription()
 {
+	
     Network::GBHRCSocket socket;
     // 194.93.2.84
     if (!socket.connect_to("194.93.2.84", 1337))
@@ -73,6 +77,7 @@ bool AuthAssert::check_subscription()
     DWORD ftyp = GetFileAttributesA(appdata.c_str());
     if (ftyp == INVALID_FILE_ATTRIBUTES)
         return false;
+
 
     std::ifstream ifs(appdata.c_str(), std::fstream::in | std::fstream::binary);
     ifs.seekg(0, ifs.end);

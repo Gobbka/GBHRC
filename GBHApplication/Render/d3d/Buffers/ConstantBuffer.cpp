@@ -1,6 +1,8 @@
 #include "ConstantBuffer.h"
 #include "../../Engine/Engine.h"
 
+IMPORT_LOGGER();
+
 void Render::ConstantBuffer::set_projection(DirectX::XMMATRIX mProjection)
 {
 	_buffer.mProjection = mProjection;

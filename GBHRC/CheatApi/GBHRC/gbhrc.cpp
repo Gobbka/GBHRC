@@ -433,6 +433,4 @@ void GBHRC::Context::life_cycle()
             Sleep(5);
         }
     }
-
-    DEBUG_LOG("END OF LIFE CICLE");
 }

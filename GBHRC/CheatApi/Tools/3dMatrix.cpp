@@ -6,6 +6,8 @@
 #include "../BrokeProtocol/Mono/Mono.h"
 #include "Render/Render.h"
 
+IMPORT_LOGGER();
+
 void Matrix4X4::mul(Matrix4X4* matrix)
 {
 	float* other_matrix = &matrix->m00;

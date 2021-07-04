@@ -2,6 +2,8 @@
 #include "Engine.h"
 #include "../../Render/d3d/Buffers/ConstantBuffer.h"
 
+IMPORT_LOGGER();
+
 Application::Render::BlendEngine::BlendEngine(Render::Engine* engine)
 {
 

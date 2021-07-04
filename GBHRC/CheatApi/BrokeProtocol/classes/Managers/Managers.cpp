@@ -4,6 +4,8 @@
 #include "../../../../includes/logger.h"
 #include "../../Mono/Mono.h"
 
+IMPORT_LOGGER();
+
 UnityTypes::String* BrokeProtocol::Managers::ShManager::get_version()
 {
 

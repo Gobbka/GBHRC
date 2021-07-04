@@ -6,6 +6,8 @@
 
 using namespace Mono;
 
+IMPORT_LOGGER();
+
 Mono::Context* MonoContext;
 
 void Context::mono_field_from_name_get_value(MonoObject* object, const char* name, void* pValue)

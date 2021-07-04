@@ -6,6 +6,7 @@
 #include "../d3d/Buffers/ConstantBuffer.h"
 
 using namespace Application::Render;
+IMPORT_LOGGER();
 
 ID3D11RenderTargetView* Engine::get_render_target(IDXGISwapChain* pSwap) const
 {

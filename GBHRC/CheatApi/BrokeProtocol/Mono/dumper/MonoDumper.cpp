@@ -4,6 +4,8 @@
 #include "../Mono.h"
 #include "../../../../includes/logger.h"
 
+IMPORT_LOGGER();
+
 void Mono::Dumper::dump_method(MonoMethod* method)
 {
 	auto* mono_context = Mono::Context::get_context();
